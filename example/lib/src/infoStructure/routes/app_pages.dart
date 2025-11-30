@@ -1,4 +1,4 @@
-import 'package:example/src/pages/seller/products/models/seller_products_screen.dart';
+import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/splash/commons/splash_binding.dart';
 import 'package:example/src/pages/splash/view/splash_screen.dart';
 import 'package:get/get.dart';

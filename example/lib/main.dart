@@ -1,10 +1,9 @@
+import 'package:example/src/infoStructure/di/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'app.dart';
-import 'src/infoStructure/languages/localization_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(LocalizationController(), permanent: true);
+  await setupLocator();
   runApp(const App());
 }

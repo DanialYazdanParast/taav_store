@@ -14,7 +14,6 @@ import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class SellerProductsScreen extends StatefulWidget {
   SellerProductsScreen({super.key});
@@ -31,12 +30,12 @@ class _SellerProductsScreenState extends State<SellerProductsScreen> {
   Widget build(BuildContext context) {
     final locController = Get.find<LocalizationController>();
 
-    final _usernameCtrl = TextEditingController();
-    final _passwordCtrl = TextEditingController();
-    final _phoneCtrl = TextEditingController();
+    final usernameCtrl = TextEditingController();
+    final passwordCtrl = TextEditingController();
+    final phoneCtrl = TextEditingController();
 
     // متغیر برای نمایش/مخفی کردن پسورد
-    bool _isPasswordVisible = false;
+    bool isPasswordVisible = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -137,7 +136,7 @@ class _SellerProductsScreenState extends State<SellerProductsScreen> {
             AppSize.p8.height,
 
             AppTextField(
-              controller: _usernameCtrl,
+              controller: usernameCtrl,
               labelText: "نام کاربری",
               hintText: "مثلاً: ali_reza",
               prefixWidget: const Icon(Icons.person_outline),
@@ -161,25 +160,25 @@ class _SellerProductsScreenState extends State<SellerProductsScreen> {
             AppSize.p8.height,
 
             AppTextField(
-              controller: _passwordCtrl,
+              controller: passwordCtrl,
               labelText: "رمز عبور",
               hintText: "••••••••",
               // مدیریت وضعیت نمایش متن
-              isObscureText: !_isPasswordVisible,
+              isObscureText: !isPasswordVisible,
               maxLines: 1,
               prefixWidget: const Icon(Icons.lock_outline),
 
               // دکمه چشم در انتهای فیلد
               suffixWidget: IconButton(
                 icon: Icon(
-                  _isPasswordVisible
+                  isPasswordVisible
                       ? Icons.visibility_off_outlined
                       : Icons.visibility_outlined,
                   color: Colors.grey,
                 ),
                 onPressed: () {
                   setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
+                    isPasswordVisible = !isPasswordVisible;
                   });
                 },
               ),
@@ -194,7 +193,7 @@ class _SellerProductsScreenState extends State<SellerProductsScreen> {
             AppSize.p8.height,
 
             AppTextField(
-              controller: _phoneCtrl,
+              controller: phoneCtrl,
               labelText: "شماره موبایل",
               hintText: "0912...",
               keyboardType: TextInputType.phone,

@@ -14,9 +14,7 @@ class AppColorScheme {
             ? DarkThemeColors.onprimaryColor
             : LightThemeColors.onprimaryColor;
     final secondary =
-        isDark
-            ? DarkThemeColors.secondaryColor
-            : LightThemeColors.secondaryColor;
+        isDark ? DarkThemeColors.textPrimary : LightThemeColors.primaryColor;
     final onSecondary =
         isDark
             ? DarkThemeColors.onsecondaryColor

@@ -12,27 +12,34 @@ class AppTextTheme {
 
     return TextTheme(
       titleLarge: TextStyle(
-        fontFamily: fontFamily,
+        //  fontFamily: fontFamily,
         color: textPrimary,
         fontSize: 24,
         fontWeight: FontWeight.w600,
       ),
       titleSmall: TextStyle(
-        fontFamily: fontFamily,
+        //   fontFamily: fontFamily,
         color: textPrimary,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
       titleMedium: TextStyle(
-        fontFamily: fontFamily,
+        //   fontFamily: fontFamily,
         color: textSecondary,
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),
       bodyMedium: TextStyle(
-        fontFamily: fontFamily,
+        //   fontFamily: fontFamily,
         color: textPrimary,
         fontSize: 14,
+      ),
+
+      bodySmall: TextStyle(
+        //  fontFamily: fontFamily,
+        color: textSecondary,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
       ),
     );
   }

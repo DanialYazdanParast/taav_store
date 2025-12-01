@@ -12,30 +12,22 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. تزریق کنترلر زبان (همینجا Put می‌کنیم تا زبان ذخیره شده رو لود کنه)
-    final langController = Get.put(LocalizationController());
+    final langController = Get.find<LocalizationController>();
 
     return GetMaterialApp(
       title: 'Taav Store',
       debugShowCheckedModeBanner: false,
+
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
 
-      // --- روتینگ ---
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
 
-      // --- تنظیمات زبان (اصلاح شده) ---
       translations: AppTranslations(),
-
-      // 2. استفاده از زبان ذخیره شده در کنترلر (بجای Get.locale خالی)
       locale: langController.currentLocale,
-
-      // 3. زبان زاپاس (اگر زبان گوشی کاربر پشتیبانی نمیشد)
-      fallbackLocale: const Locale('en', 'US'),
-
-      // 4. لیست زبان‌های پشتیبانی شده (برای راست‌چین شدن صحیح فلاتر)
+      fallbackLocale: langController.fallbackLocale,
       supportedLocales: langController.supportedLocales,
 
       localizationsDelegates: const [

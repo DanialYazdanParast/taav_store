@@ -20,4 +20,5 @@ const Map<String, String> faIR = {
   // پیام‌ها
   TKeys.welcomeMsg: 'خوش آمدی @name',
   TKeys.errorMsg: 'خطایی رخ داده است',
+  TKeys.version: 'نسخه',
 };

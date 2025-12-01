@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'config/app_color_scheme.dart';
 import 'config/app_colors.dart';
 import 'config/app_text_theme.dart';
@@ -10,6 +11,7 @@ class AppTheme {
       primaryColor: LightThemeColors.primaryColor,
       textPrimary: const Color.fromARGB(255, 56, 43, 43),
       textSecondary: LightThemeColors.textSecondary,
+      backgroundColor: LightThemeColors.backgroundColor,
     );
   }
 
@@ -19,6 +21,7 @@ class AppTheme {
       primaryColor: DarkThemeColors.primaryColor,
       textPrimary: DarkThemeColors.textPrimary,
       textSecondary: DarkThemeColors.textSecondary,
+      backgroundColor: DarkThemeColors.backgroundColor,
     );
   }
 
@@ -27,6 +30,7 @@ class AppTheme {
     required Color primaryColor,
     required Color textPrimary,
     required Color textSecondary,
+    required Color backgroundColor,
   }) {
     final colorScheme = AppColorScheme.getScheme(
       isDark: isDark,
@@ -43,15 +47,21 @@ class AppTheme {
       brightness: isDark ? Brightness.dark : Brightness.light,
       colorScheme: colorScheme,
       textTheme: textTheme,
-      scaffoldBackgroundColor: primaryColor,
+      scaffoldBackgroundColor: backgroundColor,
       iconTheme: IconThemeData(color: textPrimary),
 
       appBarTheme: AppBarTheme(
-        backgroundColor: primaryColor,
-        foregroundColor: textPrimary,
-        elevation: 0,
-        centerTitle: true,
-        titleTextStyle: textTheme.titleLarge,
+        backgroundColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness:
+              isDark ? Brightness.light : Brightness.dark,
+          statusBarIconBrightness:
+              isDark ? Brightness.light : Brightness.dark, // Android
+          statusBarBrightness:
+              isDark ? Brightness.dark : Brightness.light, // iOS
+        ),
       ),
     );
   }

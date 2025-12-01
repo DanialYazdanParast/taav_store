@@ -20,4 +20,5 @@ const Map<String, String> enUS = {
   // Messages
   TKeys.welcomeMsg: 'Welcome @name',
   TKeys.errorMsg: 'An error occurred',
+  TKeys.version: 'Version',
 };

@@ -1,22 +1,22 @@
 abstract class TKeys {
-  // اطلاعات اپ
-  static const appTitle = 'app_title';
+  static const String appTitle = 'app_title';
 
-  // دکمه‌ها
-  static const loginBtn = 'login_btn';
-  static const registerBtn = 'register_btn';
-  static const changeLangBtn = 'change_lang_btn';
+  // Buttons
+  static const String loginBtn = 'login_btn';
+  static const String registerBtn = 'register_btn';
+  static const String changeLangBtn = 'change_lang_btn';
 
-  // فرم‌ها
-  static const username = 'username';
-  static const password = 'password';
-  static const rememberMe = 'remember_me';
+  // Forms
+  static const String username = 'username';
+  static const String password = 'password';
+  static const String rememberMe = 'remember_me';
 
-  // نقش‌ها (طبق داکیومنت)
-  static const buyer = 'buyer';
-  static const seller = 'seller';
+  // Roles
+  static const String buyer = 'buyer';
+  static const String seller = 'seller';
 
-  // پیام‌ها (با پارامتر)
-  static const welcomeMsg = 'welcome_msg'; // مثال: سلام @name
-  static const errorMsg = 'error_msg';
+  // Messages
+  static const String welcomeMsg = 'welcome_msg';
+  static const String errorMsg = 'error_msg';
+  static const String version = 'version';
 }

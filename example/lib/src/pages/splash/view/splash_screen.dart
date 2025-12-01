@@ -1,13 +1,22 @@
+import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/splash_controller.dart';
+import '../widgets/splash_body.dart';
 
-class SplashScreen extends GetView<SplashController> {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Splash Screen')));
+    return Scaffold(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Responsive(
+          mobile: SplashBody(logoWidth: Get.width * 0.6),
+          desktop: SplashBody(logoWidth: 350),
+        ),
+      ),
+    );
   }
 }

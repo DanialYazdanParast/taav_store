@@ -1,3 +1,4 @@
+import 'package:example/src/infoStructure/languages/localization_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_png.dart';
@@ -19,10 +20,13 @@ class AnimatedLogo extends StatelessWidget {
           child: Opacity(opacity: value.clamp(0.0, 1.0), child: child),
         );
       },
-      child: Image.asset(
-        AppPng.logo,
-        width: width,
-        color: context.theme.colorScheme.secondary,
+      child: GestureDetector(
+        onTap: () => Get.find<LocalizationController>().toggleLocale(),
+        child: Image.asset(
+          AppPng.logo,
+          width: width,
+          color: context.theme.colorScheme.secondary,
+        ),
       ),
     );
   }

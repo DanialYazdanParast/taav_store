@@ -1,3 +1,4 @@
+import 'package:example/src/commons/constants/app_png.dart';
 import 'package:example/src/infoStructure/languages/localization_controller.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,7 @@ class SellerProductsScreen extends StatelessWidget {
                 ],
               ),
             ),
+            Image.asset(AppPng.logo, width: 400, height: 400),
           ],
         ),
       ),

@@ -18,8 +18,6 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       title: 'Taav Store',
       debugShowCheckedModeBanner: false,
-
-      // --- تم‌ها ---
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,

@@ -2,7 +2,6 @@ import 'package:example/src/commons/widgets/text/app_input_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 
@@ -21,19 +20,24 @@ class AppPasswordTextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
   final ValueChanged<String>? onFieldSubmitted;
 
-  // Customization
   final Color? bgColor;
   final double? width;
   final bool isTapOutsideActive;
+
+  final FocusNode? focusNode;
+  final TextDirection? textDirection;
+  final TextDirection? hintTextDirection;
+  final bool isEyeIconStart;
+  final AutovalidateMode? autoValidateMode;
 
   const AppPasswordTextField({
     super.key,
     this.controller,
     this.labelText = "رمز عبور",
-    this.hintText = "••••••••",
+    this.hintText = "",
     this.helperText,
     this.isEnabled = true,
-    this.showCriteria = true, // پیش‌فرض روشن
+    this.showCriteria = true,
     this.onChanged,
     this.validator,
     this.textInputAction,
@@ -42,6 +46,11 @@ class AppPasswordTextField extends StatefulWidget {
     this.bgColor,
     this.width,
     this.isTapOutsideActive = true,
+    this.focusNode,
+    this.textDirection,
+    this.hintTextDirection,
+    this.isEyeIconStart = false,
+    this.autoValidateMode,
   });
 
   @override
@@ -49,9 +58,10 @@ class AppPasswordTextField extends StatefulWidget {
 }
 
 class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
-  // State Variables
   late TextEditingController _controller;
-  final FocusNode _focusNode = FocusNode();
+
+  late FocusNode _focusNode;
+  bool _isInternalFocusNode = false;
 
   bool _isObscureText = true;
   bool _isFocused = false;
@@ -67,14 +77,18 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
 
-    // لیسنر فوکوس برای نمایش/مخفی کردن باکس معیارها
+    if (widget.focusNode != null) {
+      _focusNode = widget.focusNode!;
+      _isInternalFocusNode = false;
+    } else {
+      _focusNode = FocusNode();
+      _isInternalFocusNode = true;
+    }
+
     _focusNode.addListener(() {
-      if (mounted) {
-        setState(() => _isFocused = _focusNode.hasFocus);
-      }
+      if (mounted) setState(() => _isFocused = _focusNode.hasFocus);
     });
 
-    // لیسنر متن برای محاسبه قدرت پسورد به صورت ریل‌تایم
     _controller.addListener(_onTextChanged);
   }
 
@@ -93,11 +107,13 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
     } else {
       _controller.removeListener(_onTextChanged);
     }
-    _focusNode.dispose();
+
+    if (_isInternalFocusNode) _focusNode.dispose();
+
     super.dispose();
   }
 
-  // --- Logic Checks ---
+  // Logic Getters
   bool get hasUppercase => _password.contains(_hasUppercase);
   bool get hasLowercase => _password.contains(_hasLowercase);
   bool get hasDigit => _password.contains(_hasDigit);
@@ -111,7 +127,6 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
     if (hasDigit) score++;
     if (hasSpecialChar) score++;
     if (hasMinLength) score++;
-
     if (score <= 2) return PasswordStrength.weak;
     if (score <= 4) return PasswordStrength.moderate;
     return PasswordStrength.strong;
@@ -119,12 +134,21 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final eyeWidget = IconButton(
+      icon: Icon(
+        _isObscureText
+            ? Icons.visibility_off_outlined
+            : Icons.visibility_outlined,
+        color: context.theme.colorScheme.secondary,
+      ),
+      onPressed: () => setState(() => _isObscureText = !_isObscureText),
+    );
+
     return SizedBox(
       width: widget.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. Text Field
           TextFormField(
             controller: _controller,
             focusNode: _focusNode,
@@ -133,23 +157,25 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
             textInputAction: widget.textInputAction,
             keyboardType: TextInputType.visiblePassword,
             style: AppInputStyles.textStyle,
+            textDirection: widget.textDirection,
 
             onFieldSubmitted: widget.onFieldSubmitted,
             onEditingComplete: widget.onEditingComplete,
-
             validator: widget.validator,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: widget.autoValidateMode,
 
             onTapOutside: (event) {
-              if (widget.isTapOutsideActive) {
+              if (widget.isTapOutsideActive && _isInternalFocusNode) {
                 FocusScope.of(context).unfocus();
               }
             },
 
-            // جلوگیری از تایپ فارسی یا فاصله (Space)
             inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\s')), // حذف فاصله
-              // FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9!@#\$%^&*(),.?":{}|<>]')), // فقط کاراکترهای مجاز
+              FilteringTextInputFormatter.deny(RegExp(r'\s')), // حذف اسپیس
+              // فقط حروف انگلیسی و اعداد و سیمبل‌ها
+              FilteringTextInputFormatter.allow(
+                RegExp(r'[a-zA-Z0-9!@#\$%^&*(),.?":{}|<>]'),
+              ),
             ],
 
             decoration: InputDecoration(
@@ -157,12 +183,13 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
               labelStyle: AppInputStyles.labelStyle,
               hintText: widget.hintText,
               hintStyle: AppInputStyles.hintStyle,
+              hintTextDirection:
+                  widget.hintTextDirection ?? widget.textDirection,
               helperText: widget.helperText,
               helperStyle: AppInputStyles.helperStyle,
               filled: widget.bgColor != null,
               fillColor: widget.bgColor,
 
-              // Borders from AppInputStyles
               border: AppInputStyles.normalBorder,
               enabledBorder: AppInputStyles.normalBorder,
               focusedBorder: AppInputStyles.focusedBorder,
@@ -174,25 +201,13 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
                 horizontal: AppSize.p16,
                 vertical: AppSize.p12,
               ),
-
-              // Toggle Eye Icon
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _isObscureText
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: Get.theme.colorScheme.onSurfaceVariant,
-                ),
-                onPressed:
-                    () => setState(() => _isObscureText = !_isObscureText),
-              ),
+              prefixIcon: widget.isEyeIconStart ? eyeWidget : null,
+              suffixIcon: widget.isEyeIconStart ? null : eyeWidget,
             ),
           ),
 
-          // 2. Criteria Card (هنگام فوکوس نمایش داده می‌شود)
           if (widget.showCriteria && _isFocused) _buildCriteriaCard(),
 
-          // 3. Strength Indicator (هنگام عدم فوکوس و وجود متن نمایش داده می‌شود)
           if (!_isFocused && _password.isNotEmpty && widget.showCriteria) ...[
             AppSize.p8.height,
             _buildStrengthIndicator(),
@@ -203,13 +218,12 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
   }
 
   // --- Helper Widgets ---
-
   Widget _buildCriteriaCard() {
     return Container(
       margin: EdgeInsets.only(top: AppSize.p8),
       padding: EdgeInsets.all(AppSize.p12),
       decoration: ShapeDecoration(
-        color: Get.theme.colorScheme.surfaceContainer, // رنگ پس‌زمینه باکس
+        color: Get.theme.colorScheme.surfaceContainer,
         shape: RoundedRectangleBorder(
           borderRadius: AppSize.brMedium,
           side: BorderSide(
@@ -254,7 +268,6 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
                     isMet
                         ? Get.theme.colorScheme.onSurface
                         : Get.theme.colorScheme.onSurfaceVariant,
-                // اگر شرط پاس شده، متن خط بخورد (اختیاری)
                 decoration: isMet ? TextDecoration.none : null,
               ),
             ),
@@ -266,7 +279,6 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
 
   Widget _buildStrengthIndicator() {
     final strength = _strength;
-
     Color getColor(int index) {
       if (strength == PasswordStrength.weak) {
         return index == 0
@@ -286,8 +298,9 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
       children: [
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: List.generate(3, (index) {
-            return Container(
+          children: List.generate(
+            3,
+            (index) => Container(
               width: 40,
               height: 4,
               margin: EdgeInsets.only(right: 4),
@@ -295,8 +308,8 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
                 color: getColor(index),
                 borderRadius: BorderRadius.circular(2),
               ),
-            );
-          }),
+            ),
+          ),
         ),
       ],
     );

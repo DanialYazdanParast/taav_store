@@ -16,7 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SellerProductsScreen extends StatefulWidget {
-  SellerProductsScreen({super.key});
+  const SellerProductsScreen({super.key});
 
   @override
   State<SellerProductsScreen> createState() => _SellerProductsScreenState();
@@ -168,20 +168,6 @@ class _SellerProductsScreenState extends State<SellerProductsScreen> {
               maxLines: 1,
               prefixWidget: const Icon(Icons.lock_outline),
 
-              // دکمه چشم در انتهای فیلد
-              suffixWidget: IconButton(
-                icon: Icon(
-                  isPasswordVisible
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isPasswordVisible = !isPasswordVisible;
-                  });
-                },
-              ),
             ),
 
             const Divider(height: 40),

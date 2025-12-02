@@ -17,6 +17,8 @@ class AppTextField extends StatefulWidget {
   final VoidCallback? onTap;
   final FormFieldSetter<String>? onSaved;
 
+  final FocusNode? focusNode;
+
   final bool isEnabled;
   final bool isReadOnly;
   final bool isObscureText;
@@ -36,7 +38,6 @@ class AppTextField extends StatefulWidget {
   final String? helperText;
   final String? hintText;
 
-  // Prefix & Suffix
   final String? prefixText;
   final Widget? prefixWidget;
   final String? suffixText;
@@ -50,8 +51,8 @@ class AppTextField extends StatefulWidget {
 
   final bool isShowCheckmark;
   final EdgeInsets? contentPadding;
-  final bool isFaConvert; // تبدیل اعداد فارسی به انگلیسی
-  final bool isPersianOnly; // فقط حروف فارسی
+  final bool isFaConvert;
+  final bool isPersianOnly;
   final bool hideErrorText;
   final bool enableScrollPadding;
 
@@ -67,6 +68,7 @@ class AppTextField extends StatefulWidget {
     this.onTap,
     this.onSaved,
     this.onEditingComplete,
+    this.focusNode, // دریافت از بیرون
     this.isEnabled = true,
     this.isObscureText = false,
     this.isReadOnly = false,
@@ -103,19 +105,30 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
-  // برای نمایش تیک سبز ولیدیشن
   final ValueNotifier<bool> _isValidNotifier = ValueNotifier(false);
+
   late FocusNode _focusNode;
+  bool _isInternalFocusNode = false;
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
+    // اگر فوکوس نود از بیرون آمد، همان را استفاده کن. اگر نه، یکی بساز.
+    if (widget.focusNode != null) {
+      _focusNode = widget.focusNode!;
+      _isInternalFocusNode = false;
+    } else {
+      _focusNode = FocusNode();
+      _isInternalFocusNode = true;
+    }
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    // فقط اگر خودمان ساختیم، نابودش کنیم
+    if (_isInternalFocusNode) {
+      _focusNode.dispose();
+    }
     _isValidNotifier.dispose();
     super.dispose();
   }
@@ -126,37 +139,33 @@ class _AppTextFieldState extends State<AppTextField> {
       width: widget.width,
       height: widget.height,
       child: TextFormField(
-        // --- Core Properties ---
         controller: widget.controller,
         initialValue: widget.initialValue,
         enabled: widget.isEnabled,
         readOnly: widget.isReadOnly,
         obscureText: widget.isObscureText,
         autofocus: widget.isAutoFocus,
-        focusNode: _focusNode,
+        focusNode: _focusNode, // استفاده از نود صحیح
 
-        // --- Actions ---
         onChanged: widget.onChanged,
-        onFieldSubmitted: widget.onFieldSubmitted,
+        onFieldSubmitted: widget.onFieldSubmitted, // اتصال دکمه کیبورد
         onEditingComplete: widget.onEditingComplete,
         onSaved: widget.onSaved,
         onTap: widget.onTap,
         onTapOutside: (event) {
-          // بستن کیبورد وقتی بیرون کلیک شد
-          FocusScope.of(context).unfocus();
+          if (_isInternalFocusNode) {
+            FocusScope.of(context).unfocus();
+          }
         },
 
-        // --- Styling ---
         style: AppInputStyles.textStyle,
         textAlign: widget.textAlign,
         textDirection: widget.textDirection,
         cursorColor: Get.theme.colorScheme.primary,
 
-        // --- Validation ---
         autovalidateMode: widget.autoValidateMode,
         validator: (value) {
           final result = widget.validator?.call(value);
-          // آپدیت وضعیت برای نمایش تیک سبز
           if (mounted) {
             _isValidNotifier.value =
                 result == null && (value?.isNotEmpty ?? false);
@@ -164,35 +173,15 @@ class _AppTextFieldState extends State<AppTextField> {
           return result;
         },
 
-        // --- Input Configuration ---
         maxLength: widget.maxLength,
         minLines: widget.minLines,
         maxLines: widget.maxLines == 0 ? null : widget.maxLines,
         textInputAction: widget.textInputAction,
         keyboardType: widget.keyboardType,
 
-        // --- Formatters ---
         inputFormatters: [
-          // تبدیل اعداد فارسی به انگلیسی
-          // if (widget.isFaConvert) FaToEnFormatter(),
-
-          // محدودیت تایپ فارسی
-          /*
-          if (widget.isPersianOnly)
-            PersianInputFormatter(
-              onInvalidCharacter: () {
-                ToastUtil.show(
-                  'لطفاً زبان کیبورد را فارسی کنید',
-                  type: ToastType.warning,
-                );
-              },
-            ),
-           */
-
-          // فقط عدد
           if (widget.keyboardType == TextInputType.number)
             FilteringTextInputFormatter.digitsOnly,
-
           ...?widget.inputFormatters,
         ],
 
@@ -203,49 +192,37 @@ class _AppTextFieldState extends State<AppTextField> {
                 )
                 : const EdgeInsets.all(20.0),
 
-        // --- Decoration ---
         decoration: InputDecoration(
-          // Text & Labels
           labelText: widget.labelText,
           labelStyle: AppInputStyles.labelStyle,
           hintText: widget.hintText,
           hintStyle: AppInputStyles.hintStyle,
           helperText: widget.helperText,
           helperStyle: AppInputStyles.helperStyle,
-          counterText: '', // مخفی کردن کانتر پیش‌فرض
-          // Colors & Fill
+          counterText: '',
           filled: widget.bgColor != null,
           fillColor: widget.bgColor,
-
-          // Borders (از کلاس AppInputStyles)
           border: AppInputStyles.normalBorder,
           enabledBorder: AppInputStyles.normalBorder,
           focusedBorder: AppInputStyles.focusedBorder,
           errorBorder: AppInputStyles.errorBorder,
           focusedErrorBorder: AppInputStyles.focusedErrorBorder,
           disabledBorder: AppInputStyles.disabledBorder,
-
-          // Error Text Visibility
           errorStyle:
               widget.hideErrorText
-                  ? const TextStyle(height: 0, fontSize: 0) // مخفی کردن کامل
+                  ? const TextStyle(height: 0, fontSize: 0)
                   : AppInputStyles.errorStyle,
-
           contentPadding:
               widget.contentPadding ??
               EdgeInsets.symmetric(
                 horizontal: AppSize.p16,
                 vertical: AppSize.p10,
               ),
-
-          // --- Prefix ---
           prefixText: widget.prefixText,
           prefixStyle: AppInputStyles.prefixStyle,
           prefixIcon: _buildPrefix(),
-
-          // --- Suffix ---
           suffixText: widget.suffixText,
-          suffixStyle: AppInputStyles.prefixStyle, // استفاده از همان استایل
+          suffixStyle: AppInputStyles.prefixStyle,
           suffixIconConstraints: widget.suffixIconConstraints,
           suffixIcon: widget.suffixIcon,
           suffix: widget.suffixWidget,
@@ -254,32 +231,22 @@ class _AppTextFieldState extends State<AppTextField> {
     );
   }
 
-  /// ساخت ویجت Prefix شامل کاستوم ویجت و تیک سبز ولیدیشن
   Widget? _buildPrefix() {
-    // اگر نه ویجت داریم نه تیک سبز می‌خواهیم، نال برگردان
     if (widget.prefixWidget == null && !widget.isShowCheckmark) return null;
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.p8),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // فاصله کوچک
           AppSize.p4.width,
-
-          // ویجت کاستوم کاربر
           if (widget.prefixWidget != null) widget.prefixWidget!,
-
-          // تیک سبز (فقط اگر ولیدیشن پاس شده باشد)
           if (widget.isShowCheckmark)
             ValueListenableBuilder<bool>(
               valueListenable: _isValidNotifier,
               builder: (context, isValid, child) {
                 if (!isValid) return const SizedBox.shrink();
                 return Padding(
-                  padding: EdgeInsets.only(
-                    right: AppSize.p8,
-                  ), // فاصله با آیکون قبلی
+                  padding: EdgeInsets.only(right: AppSize.p8),
                   child: const Icon(
                     Icons.check_circle_outline_rounded,
                     color: Colors.green,

@@ -1,4 +1,5 @@
 import 'package:example/src/commons/services/app_info_service.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
@@ -14,9 +15,9 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
 
-    // Future.delayed(const Duration(seconds: 3), () {
-    //   Get.offAllNamed(AppRoutes.sellerProducts);
-    // });
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.offAllNamed(AppRoutes.register);
+    });
   }
 
   void _loadVersion() {

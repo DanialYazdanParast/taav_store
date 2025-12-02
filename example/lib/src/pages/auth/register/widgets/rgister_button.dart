@@ -19,7 +19,7 @@ class RegisterButton extends GetView<RegisterController> {
                   // controller.register();
                 }
                 : null,
-            isLoading: controller.isLoading.value,
+          //  isLoading: controller.isLoading.value,
             isEnabled: controller.acceptTerms.value,
           ).material(),
     );

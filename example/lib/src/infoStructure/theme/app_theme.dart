@@ -8,20 +8,20 @@ class AppTheme {
   static ThemeData get light {
     return _buildTheme(
       isDark: false,
-      primaryColor: LightThemeColors.primaryColor,
+      primaryColor: LightColors.primaryColor,
       textPrimary: const Color.fromARGB(255, 56, 43, 43),
-      textSecondary: LightThemeColors.textSecondary,
-      backgroundColor: LightThemeColors.backgroundColor,
+      textSecondary: LightColors.textSecondary,
+      backgroundColor: LightColors.backgroundColor,
     );
   }
 
   static ThemeData get dark {
     return _buildTheme(
       isDark: true,
-      primaryColor: DarkThemeColors.primaryColor,
-      textPrimary: DarkThemeColors.textPrimary,
-      textSecondary: DarkThemeColors.textSecondary,
-      backgroundColor: DarkThemeColors.backgroundColor,
+      primaryColor: DarkColors.primaryColor,
+      textPrimary: DarkColors.textPrimary,
+      textSecondary: DarkColors.textSecondary,
+      backgroundColor: DarkColors.backgroundColor,
     );
   }
 
@@ -40,6 +40,7 @@ class AppTheme {
     final textTheme = AppTextTheme.getTheme(
       textPrimary: textPrimary,
       textSecondary: textSecondary,
+      primaryColor: primaryColor,
     );
 
     return ThemeData(

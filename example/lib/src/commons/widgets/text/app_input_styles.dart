@@ -8,17 +8,17 @@ class AppInputStyles {
   // --- Border Styles ---
 
   static OutlineInputBorder get normalBorder => OutlineInputBorder(
-    borderSide: BorderSide(color: Get.theme.colorScheme.outline, width: 1),
+    borderSide: BorderSide(color: Get.theme.colorScheme.outline, width: 2),
     borderRadius: AppSize.brMedium,
   );
 
   static OutlineInputBorder get focusedBorder => OutlineInputBorder(
-    borderSide: BorderSide(color: Get.theme.colorScheme.outline, width: 1.5),
+    borderSide: BorderSide(color: Get.theme.colorScheme.primary, width: 2),
     borderRadius: AppSize.brMedium,
   );
 
   static OutlineInputBorder get errorBorder => OutlineInputBorder(
-    borderSide: BorderSide(color: Get.theme.colorScheme.error, width: 1),
+    borderSide: BorderSide(color: Get.theme.colorScheme.error, width: 2),
     borderRadius: AppSize.brMedium,
   );
 

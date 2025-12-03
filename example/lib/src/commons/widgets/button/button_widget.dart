@@ -47,7 +47,7 @@ class ButtonWidget {
   // 1. Material Button (Original Logic Updated)
   // ---------------------------------------------------------------------------
   Widget material({
-    final double? minWidth,
+    final double minWidth = double.infinity,
     final Color? textColor,
     final Color? disabledColor,
   }) {
@@ -56,17 +56,17 @@ class ButtonWidget {
       elevation: 1,
       disabledElevation: 0,
       onPressed: _shouldDisable ? null : action,
-      disabledColor: disabledColor ?? Colors.grey.shade300,
+      disabledColor: disabledColor ?? Get.theme.colorScheme.outlineVariant,
       color: bgColor ?? Get.theme.colorScheme.primary,
       padding: padding ?? EdgeInsets.symmetric(horizontal: AppSize.p16),
-      textColor: textColor ?? Get.theme.colorScheme.onPrimary,
+      textColor: textColor ?? Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius:
             radius == null ? AppSize.brMedium : AppSize.brCircular(radius!),
       ),
       minWidth: minWidth,
       child: _buildContent(
-        color: textColor ?? Get.theme.colorScheme.onPrimary,
+        color: textColor ?? Get.theme.scaffoldBackgroundColor,
         isMaterial: true,
       ),
     );
@@ -122,7 +122,7 @@ class ButtonWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (state == CurrentState.loading)
-            AppLoading.circular(size: 20)
+            AppLoading.circular(size: 20 ,color:Get.theme.scaffoldBackgroundColor )
           else ...[
             if (title != null)
               Text(
@@ -376,10 +376,10 @@ class ButtonWidget {
       if (isMaterial || isLoadingWhite) {
         return ConstrainedBox(
           constraints: const BoxConstraints(),
-          child: AppLoading.circular(size: 20),
+          child: AppLoading.circular(size: 20 ,color: Get.theme.scaffoldBackgroundColor),
         );
       }
-      return AppLoading.circular(size: 20);
+      return AppLoading.circular(size: 20 ,color: Get.theme.scaffoldBackgroundColor);
     }
 
     return Row(
@@ -400,7 +400,7 @@ class ButtonWidget {
             style: TextStyle(
               color: color,
               fontSize: fontSize ?? AppSize.f16, // Large
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
       ],

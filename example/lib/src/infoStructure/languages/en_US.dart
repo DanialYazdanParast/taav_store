@@ -2,23 +2,51 @@ import 'translation_keys.dart';
 
 const Map<String, String> enUS = {
   TKeys.appTitle: 'Taav Store',
+  TKeys.version: 'Version',
 
-  // Buttons
-  TKeys.loginBtn: 'Login',
-  TKeys.registerBtn: 'Register',
-  TKeys.changeLangBtn: 'Change Language',
-
-  // Forms
+  // ═══ Auth - Common ═══
   TKeys.username: 'Username',
   TKeys.password: 'Password',
-  TKeys.rememberMe: 'Remember Me',
+  TKeys.confirmPassword: 'Confirm Password',
+  TKeys.enterUsername: 'Enter your username',
+  TKeys.enterPassword: 'Enter your password',
+  TKeys.rememberMe: 'Remember me',
+  TKeys.forgotPassword: 'Forgot password?',
 
-  // Roles
+  // ═══ Login ═══
+  TKeys.welcome: 'Welcome',
+  TKeys.loginToContinue: 'Login to continue',
+  TKeys.loginToAccount: 'Login to your account to continue',
+  TKeys.login: 'Login',
+  TKeys.noAccount: "Don't have an account?",
+  TKeys.signUp: 'Sign up',
+  TKeys.helloEmoji: 'Hello! 👋',
+
+  // ═══ Register ═══
+  TKeys.createAccount: 'Create Account',
+  TKeys.enterInfoToStart: 'Enter your information to get started',
+  TKeys.signUpEmoji: 'Sign up ✨',
+  TKeys.createNewAccount: 'Create a new account',
+  TKeys.joinUs: 'Join Us',
+  TKeys.thousandsUsersTrust: 'Thousands of users trust us',
+  TKeys.chooseUsername: 'Choose a username',
+  TKeys.minCharacters: 'At least 8 characters',
+  TKeys.repeatPassword: 'Repeat password',
+  TKeys.accountType: 'Account Type',
   TKeys.buyer: 'Buyer',
   TKeys.seller: 'Seller',
+  TKeys.acceptTermsText: 'By signing up, I accept the ',
+  TKeys.termsAndConditions: 'Terms and Conditions',
+  TKeys.acceptTermsSuffix: '.',
+  TKeys.alreadyHaveAccount: 'Already have an account?',
+  TKeys.signIn: 'Sign in',
 
-  // Messages
-  TKeys.welcomeMsg: 'Welcome @name',
-  TKeys.errorMsg: 'An error occurred',
-  TKeys.version: 'Version',
+  // ═══ Branding Panel ═══
+  TKeys.welcomeToApp: 'Welcome to the App',
+  TKeys.smartBusinessManagement: 'Smart business management',
+
+  // ═══ Features ═══
+  TKeys.highSpeed: 'High Speed',
+  TKeys.fullSecurity: 'Full Security',
+  TKeys.support247: '24/7 Support',
 };

@@ -6,11 +6,9 @@ import 'package:example/src/pages/auth/register/models/dto.dart';
 import 'package:example/src/pages/auth/register/models/user_model.dart';
 
 abstract class IRegisterRepository {
-  Future<Either<Failure, List<UserModel>>> getUsers();
-
-  Future<Either<Failure, UserModel>> getUserById(String id);
-
   Future<Either<Failure, UserModel>> createUser(CreateUserDto user);
+
+  Future<Either<Failure, bool>> checkUserExists(String username);
 }
 
 class RegisterRepository extends BaseRepository implements IRegisterRepository {
@@ -19,23 +17,16 @@ class RegisterRepository extends BaseRepository implements IRegisterRepository {
   RegisterRepository({required NetworkService network}) : _network = network;
 
   @override
-  Future<Either<Failure, List<UserModel>>> getUsers() {
-    return safeCall<List<UserModel>>(
-      request: () => _network.get('/users'),
+  Future<Either<Failure, bool>> checkUserExists(String username) {
+    return safeCall<bool>(
+      request:
+          () => _network.get('/users', queryParameters: {'username': username}),
       fromJson: (json) {
         if (json is List) {
-          return json.map((e) => UserModel.fromJson(e)).toList();
+          return json.isNotEmpty;
         }
-        return <UserModel>[];
+        return false;
       },
-    );
-  }
-
-  @override
-  Future<Either<Failure, UserModel>> getUserById(String id) {
-    return safeCall<UserModel>(
-      request: () => _network.get('/users/$id'),
-      fromJson: (json) => UserModel.fromJson(json),
     );
   }
 

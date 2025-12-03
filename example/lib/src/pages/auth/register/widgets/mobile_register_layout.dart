@@ -60,7 +60,7 @@ class MobileRegisterLayout extends GetView<RegisterController> {
                   AuthLinkText(
                     prefixText: TKeys.alreadyHaveAccount.tr,
                     linkText: TKeys.signIn.tr,
-                    onTap: () => Get.toNamed(AppRoutes.login),
+                    onTap: () => Get.offNamed(AppRoutes.login),
                   ),
                   24.height,
                 ],

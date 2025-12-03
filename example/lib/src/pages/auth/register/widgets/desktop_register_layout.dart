@@ -19,7 +19,6 @@ class DesktopRegisterLayout extends StatelessWidget {
     return Row(
       textDirection: TextDirection.ltr,
       children: [
-        // ✅ ویجت مشترک
         Expanded(
           flex: 5,
           child: AuthBrandingPanel(
@@ -56,17 +55,15 @@ class DesktopRegisterLayout extends StatelessWidget {
                         ),
                       ),
                       36.height,
-                      // ✅ ویجت مشترک
                       AuthFormCard(
                         variant: AuthFormVariant.desktop,
                         child: RegisterFormContent(isMobile: false),
                       ),
                       28.height,
-                      // ✅ ویجت مشترک
                       AuthLinkText(
                         prefixText: TKeys.alreadyHaveAccount.tr,
                         linkText: TKeys.signIn.tr,
-                        onTap: () => Get.toNamed(AppRoutes.login),
+                        onTap: () => Get.offNamed(AppRoutes.login),
                       ),
                     ],
                   ),

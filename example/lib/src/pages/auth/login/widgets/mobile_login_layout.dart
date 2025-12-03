@@ -57,7 +57,7 @@ class MobileLoginLayout extends GetView<LoginControllr> {
                   AuthLinkText(
                     prefixText: TKeys.noAccount.tr,
                     linkText: TKeys.signUp.tr,
-                    onTap: () => Get.toNamed(AppRoutes.register),
+                    onTap: () => Get.offNamed(AppRoutes.register),
                   ),
                   32.height,
                 ],

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,21 +11,22 @@ class ToastUtil {
   static Timer? _debounceTimer;
 
   static void show(
-    String message, {
-    ToastType type = ToastType.error,
-    Duration duration = const Duration(seconds: 3),
-    SnackPosition position = SnackPosition.BOTTOM,
-  }) {
+      String message, {
+        ToastType type = ToastType.error,
+        Duration duration = const Duration(seconds: 3),
+        SnackPosition position = SnackPosition.TOP,
+      }) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 250), () {
       final style = _getToastStyle(type);
 
       if (Get.context == null) return;
 
+
       Get.snackbar(
         '',
         '',
-        titleText: const SizedBox(height: 0, width: 0),
+        titleText: const SizedBox.shrink(),
         icon: null,
         messageText: Row(
           mainAxisSize: MainAxisSize.min,
@@ -32,7 +34,7 @@ class ToastUtil {
           children: [
             Icon(style.icon, color: style.iconColor, size: 24),
             const SizedBox(width: 12),
-            Expanded(
+            Flexible(
               child: Text(
                 message,
                 style: TextStyle(
@@ -48,10 +50,14 @@ class ToastUtil {
             ),
           ],
         ),
-
+        maxWidth: Responsive.isDesktop ? 350 : double.infinity,
         backgroundColor: style.backgroundColor,
         snackStyle: SnackStyle.FLOATING,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: EdgeInsets.only(
+          top: 20,
+          left: 20,
+          right: Responsive.isDesktop ? Get.width - 370 : 20,
+        ),
         borderRadius: 12,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         snackPosition: position,

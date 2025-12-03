@@ -1,3 +1,4 @@
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,10 @@ class RegisterButton extends GetView<RegisterController> {
       () =>
           ButtonWidget(
             TKeys.createAccount.tr,
-            controller.acceptTerms.value
-                ? () {
-                  // controller.register();
-                }
-                : null,
-          //  isLoading: controller.isLoading.value,
-            isEnabled: controller.acceptTerms.value,
+             () {
+                 controller.register();
+                },
+            isLoading: controller.registerState.value == CurrentState.loading,
           ).material(),
     );
   }

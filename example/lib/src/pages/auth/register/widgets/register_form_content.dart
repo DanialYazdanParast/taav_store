@@ -19,85 +19,95 @@ class RegisterFormContent extends GetView<RegisterController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        UserTypeSelector(),
-        (isMobile ? 20 : 24).height,
+    return Form(
+      key: controller.fkRegister,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          UserTypeSelector(),
+          (isMobile ? 20 : 24).height,
 
-        AuthInputLabel(
-          text: TKeys.username.tr,
-          icon: Icons.person_outline_rounded,
-          style: AuthInputLabelStyle.secondary,
-        ),
-
-        (isMobile ? 10 : 8).height,
-
-        AppTextField(
-          focusNode: controller.usernameFocus,
-          labelText: TKeys.username.tr,
-          hintText: TKeys.chooseUsername.tr,
-          textInputAction: TextInputAction.next,
-          onFieldSubmitted: (_) {
-            FocusScope.of(context).requestFocus(controller.passwordFocus);
-          },
-          autoValidateMode: AutovalidateMode.onUserInteraction,
-          validator: ValidationUtil().username,
-        ),
-        (isMobile ? 16 : 20).height,
-
-        AuthInputLabel(
-          text: TKeys.password.tr,
-          icon: Icons.lock_outline_rounded,
-          style: AuthInputLabelStyle.secondary,
-        ),
-
-        (isMobile ? 10 : 8).height,
-
-        AppPasswordTextField(
-          focusNode: controller.passwordFocus,
-          hintText: TKeys.minCharacters.tr,
-          labelText: TKeys.password.tr,
-          showCriteria: true,
-          validator: ValidationUtil().password,
-          autoValidateMode: AutovalidateMode.onUserInteraction,
-          textInputAction: TextInputAction.next,
-          onFieldSubmitted: (_) {
-            FocusScope.of(
-              context,
-            ).requestFocus(controller.confirmPasswordFocus);
-          },
-        ),
-
-        (isMobile ? 16 : 20).height,
-
-        AuthInputLabel(
-          text: TKeys.confirmPassword.tr,
-          icon: Icons.lock_outline_rounded,
-          style: AuthInputLabelStyle.secondary,
-        ),
-        (isMobile ? 10 : 8).height,
-        AppPasswordTextField(
-          focusNode: controller.confirmPasswordFocus,
-          hintText: TKeys.repeatPassword.tr,
-          labelText: TKeys.password.tr,
-          showCriteria: false,
-          autoValidateMode: AutovalidateMode.onUserInteraction,
-          textInputAction: TextInputAction.done,
-          onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-        ),
-        (isMobile ? 20 : 24).height,
-
-        Obx(
-          () => TermsCheckbox(
-            value: controller.acceptTerms.value,
-            onChanged: () => controller.acceptTerms.toggle(),
+          AuthInputLabel(
+            text: TKeys.username.tr,
+            icon: Icons.person_outline_rounded,
+            style: AuthInputLabelStyle.secondary,
           ),
-        ),
-        (isMobile ? 24 : 28).height,
 
-        RegisterButton(),
-      ],
+          (isMobile ? 10 : 8).height,
+
+          AppTextField(
+            controller:  controller.usernameController,
+            focusNode: controller.usernameFocus,
+            labelText: TKeys.username.tr,
+            hintText: TKeys.chooseUsername.tr,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(controller.passwordFocus);
+            },
+            autoValidateMode: controller.avmRegister.value,
+            validator: ValidationUtil().username,
+          ),
+          (isMobile ? 16 : 20).height,
+
+          AuthInputLabel(
+            text: TKeys.password.tr,
+            icon: Icons.lock_outline_rounded,
+            style: AuthInputLabelStyle.secondary,
+          ),
+
+          (isMobile ? 10 : 8).height,
+
+          AppPasswordTextField(
+            controller: controller.passwordController,
+            focusNode: controller.passwordFocus,
+            hintText: TKeys.minCharacters.tr,
+            labelText: TKeys.password.tr,
+            showCriteria: true,
+            validator: ValidationUtil().password,
+            autoValidateMode: controller.avmRegister.value,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(
+                context,
+              ).requestFocus(controller.confirmPasswordFocus);
+            },
+          ),
+
+          (isMobile ? 16 : 20).height,
+
+          AuthInputLabel(
+            text: TKeys.confirmPassword.tr,
+            icon: Icons.lock_outline_rounded,
+            style: AuthInputLabelStyle.secondary,
+          ),
+          (isMobile ? 10 : 8).height,
+          AppPasswordTextField(
+            controller: controller.confirmPasswordController,
+            focusNode: controller.confirmPasswordFocus,
+            hintText: TKeys.repeatPassword.tr,
+            labelText: TKeys.password.tr,
+            showCriteria: false,
+            autoValidateMode: controller.avmRegister.value,
+            validator: (value) => ValidationUtil().passwordConfirm(
+              value,
+              controller.passwordController.text, // ← اینجا text بفرست
+            ),
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
+          ),
+          (isMobile ? 20 : 24).height,
+
+          Obx(
+            () => TermsCheckbox(
+              value: controller.acceptTerms.value,
+              onChanged: () => controller.acceptTerms.toggle(),
+            ),
+          ),
+          (isMobile ? 24 : 28).height,
+
+          RegisterButton(),
+        ],
+      ),
     );
   }
 }

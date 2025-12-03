@@ -13,29 +13,12 @@ class RegisterScreen extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() {
-        return Column(
-          children: [
-            Text(controller.userList.length.toString()),
-            SizedBox(
-              height: 500,
-              child: ListView.builder(
-                itemCount: controller.userList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: Text(controller.userList.length.toString()),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
-      }),
+      body:
 
-      //  Responsive(
-      //   mobile: const MobileRegisterLayout(),
-      //   desktop: const DesktopRegisterLayout(),
-      // ),
+       Responsive(
+        mobile: const MobileRegisterLayout(),
+        desktop: const DesktopRegisterLayout(),
+      ),
     );
   }
 }

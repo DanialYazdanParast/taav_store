@@ -58,15 +58,12 @@ class ValidationUtil {
   // ... (سایر متدها) ...
 
   String? username(final String? value) {
-    // 1. حذف فاصله‌های اضافی
     final trimmedValue = value?.trim();
 
-    // 2. چک کردن خالی بودن
     if (trimmedValue == null || trimmedValue.isEmpty) {
       return 'نام کاربری نمی‌تواند خالی باشد';
     }
 
-    // 3. چک کردن طول (استاندارد معمولاً حداقل 3 یا 4 کاراکتر است)
     if (trimmedValue.length < 4) {
       return 'نام کاربری باید حداقل ۴ کاراکتر باشد';
     }
@@ -75,13 +72,10 @@ class ValidationUtil {
       return 'نام کاربری نمی‌تواند بیشتر از ۳۰ کاراکتر باشد';
     }
 
-    // 4. چک کردن وجود کاراکتر فارسی
-    // اگر مچ پیدا شود، یعنی کاراکتر فارسی دارد -> پس خطاست
     if (!RegexpUtil.validUsername.hasMatch(trimmedValue)) {
       return 'نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و _ باشد';
     }
 
-    // اگر بخواهید خیلی سخت‌گیر باشید که مثلاً اسپیس وسط کلمات هم نداشته باشد:
     if (trimmedValue.contains(' ')) {
       return 'نام کاربری نمی‌تواند شامل فاصله باشد';
     }

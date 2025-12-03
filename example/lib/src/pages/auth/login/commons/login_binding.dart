@@ -1,9 +1,9 @@
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/services/network_service.dart';
-import 'package:example/src/pages/auth/login/repository/login_repository.dart';
 import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
+import '../repository/login_repository.dart';
 
 class LoginBinding extends Bindings {
   @override

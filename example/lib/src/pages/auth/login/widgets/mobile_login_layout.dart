@@ -7,10 +7,10 @@ import 'package:example/src/pages/shared/widgets/auth/auth_mobile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/login_controllr.dart';
+import '../controllers/login_controller.dart';
 import 'login_form_content.dart';
 
-class MobileLoginLayout extends GetView<LoginControllr> {
+class MobileLoginLayout extends GetView<LoginController> {
   const MobileLoginLayout({super.key});
 
   @override

@@ -3,10 +3,10 @@ import 'package:example/src/pages/auth/login/widgets/desktop_login_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/login_controllr.dart';
+import '../controllers/login_controller.dart';
 import '../widgets/mobile_login_layout.dart';
 
-class LoginScreen extends GetView<LoginControllr> {
+class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
 
   @override

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
-  final RegisterRepository registerRepository;
+  final IRegisterRepository registerRepository;
 
   RegisterController({required this.registerRepository});
 

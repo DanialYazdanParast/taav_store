@@ -7,12 +7,12 @@ class RegisterBinding extends Bindings {
   @override
   void dependencies() {
 
-    Get.lazyPut<RegisterRepository>(
+    Get.lazyPut<IRegisterRepository>(
           () => RegisterRepository(network: Get.find<NetworkService>()),
     );
 
     Get.lazyPut<RegisterController>(
-          () => RegisterController(registerRepository: Get.find<RegisterRepository>()),
+          () => RegisterController(registerRepository: Get.find<IRegisterRepository>()),
     );
   }
 }

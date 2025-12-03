@@ -4,9 +4,9 @@ import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/login_controllr.dart';
+import '../controllers/login_controller.dart';
 
-class RememberMeRow extends GetView<LoginControllr> {
+class RememberMeRow extends GetView<LoginController> {
   const RememberMeRow({super.key});
 
   @override

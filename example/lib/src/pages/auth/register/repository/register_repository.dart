@@ -6,9 +6,9 @@ import 'package:example/src/pages/auth/register/models/dto.dart';
 import 'package:example/src/pages/auth/register/models/user_model.dart';
 
 abstract class IRegisterRepository {
+  Future<Either<Failure, bool>> checkUserExists(String username);
   Future<Either<Failure, UserModel>> createUser(CreateUserDto user);
 
-  Future<Either<Failure, bool>> checkUserExists(String username);
 }
 
 class RegisterRepository extends BaseRepository implements IRegisterRepository {

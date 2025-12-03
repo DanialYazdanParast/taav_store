@@ -174,6 +174,9 @@ class NetworkService extends GetxService {
 
       case DioExceptionType.unknown:
       default:
+        if (error.message != null && error.message!.contains('Exception')) {
+          return 'خطای ناشناخته در ارتباط با سرور';
+        }
         return error.message ?? 'خطای ناشناخته رخ داد';
     }
   }

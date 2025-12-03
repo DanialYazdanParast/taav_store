@@ -48,5 +48,16 @@ class Failure {
   );
 
   @override
-  String toString() => 'Failure($type): $message';
+  String toString() => message;
+}
+
+
+class AppException implements Exception {
+  final String message;
+  AppException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
 }

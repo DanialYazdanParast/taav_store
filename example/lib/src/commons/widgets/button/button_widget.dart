@@ -122,7 +122,7 @@ class ButtonWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (state == CurrentState.loading)
-            AppLoading.circular(size: 20)
+            AppLoading.circular(size: 20 ,color:Get.theme.scaffoldBackgroundColor )
           else ...[
             if (title != null)
               Text(
@@ -376,10 +376,10 @@ class ButtonWidget {
       if (isMaterial || isLoadingWhite) {
         return ConstrainedBox(
           constraints: const BoxConstraints(),
-          child: AppLoading.circular(size: 20),
+          child: AppLoading.circular(size: 20 ,color: Get.theme.scaffoldBackgroundColor),
         );
       }
-      return AppLoading.circular(size: 20);
+      return AppLoading.circular(size: 20 ,color: Get.theme.scaffoldBackgroundColor);
     }
 
     return Row(

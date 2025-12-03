@@ -2,7 +2,7 @@ import 'package:either_dart/either.dart';
 import 'package:example/src/commons/models/failure.dart';
 import 'package:example/src/commons/services/base_repository.dart';
 import 'package:example/src/commons/services/network_service.dart';
-import 'package:example/src/pages/auth/register/models/user_model.dart';
+import 'package:example/src/pages/shared/models/user_model.dart';
 
 abstract class ILoginRepository {
   Future<Either<Failure, UserModel>> login(String username, String password);

@@ -3,7 +3,7 @@ import 'package:example/src/commons/models/failure.dart';
 import 'package:example/src/commons/services/base_repository.dart';
 import 'package:example/src/commons/services/network_service.dart';
 import 'package:example/src/pages/auth/register/models/dto.dart';
-import 'package:example/src/pages/auth/register/models/user_model.dart';
+import 'package:example/src/pages/shared/models/user_model.dart';
 
 abstract class IRegisterRepository {
   Future<Either<Failure, bool>> checkUserExists(String username);

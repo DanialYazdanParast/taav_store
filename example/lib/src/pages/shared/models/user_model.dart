@@ -21,13 +21,4 @@ class UserModel {
     );
   }
 
- 
-
-  bool get isBuyer => userType == 'buyer';
-
-  bool get isSeller => userType == 'seller';
-
-  @override
-  String toString() =>
-      'UserModel(id: $id, username: $username, userType: $userType)';
 }

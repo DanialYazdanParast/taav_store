@@ -1,14 +1,13 @@
-import 'package:example/src/commons/enums/enums.dart'; // فرض بر این است که CurrentState اینجا تعریف شده
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
-import 'package:example/src/infoStructure/routes/app_pages.dart'; // مسیر احتمالی ریپازیتوری
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../repository/login_repository.dart';
 
 class LoginController extends GetxController {
-  // اینجکشن ریپازیتوری (ترجیحاً از اینترفیس استفاده کنید)
   final ILoginRepository loginRepository;
   final AuthService authService;
 
@@ -75,7 +74,7 @@ class LoginController extends GetxController {
         );
 
         if (user.userType.toLowerCase() == "seller") {
-          Get.offAllNamed(AppRoutes.sellerProducts);
+          Get.offAllNamed(AppRoutes.mainSeller);
         } else if (user.userType.toLowerCase() == "buyer") {
           //   Get.offAllNamed(AppRoutes.buyerHome);
         } else {

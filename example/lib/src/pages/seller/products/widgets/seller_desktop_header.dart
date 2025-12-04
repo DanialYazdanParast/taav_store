@@ -3,12 +3,14 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'filter/seller_filter_view.dart';
 import 'seller_icon_button.dart';
+
 
 class SellerDesktopHeader extends GetView<SellerProductsController> {
   const SellerDesktopHeader({super.key});
@@ -52,7 +54,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   Widget _buildSearchField() {
     return Expanded(
       child: AppSearchField(
-        hintText: 'جستجو ...',
+        hintText: TKeys.searchHint.tr,
         controller: controller.searchController,
         borderRadius: AppSize.r12,
       ),
@@ -75,8 +77,8 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
     return SizedBox(
       height: 48,
       child: ButtonWidget(
-        'افزودن محصول',
-        () {},
+        TKeys.addProduct.tr,
+            () {},
         icon: Icons.add_rounded,
         radius: AppSize.r12,
         textColor: Colors.white,

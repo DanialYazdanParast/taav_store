@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 class SellerFilterHeader extends StatelessWidget {
   final SellerProductsController controller;
+
   const SellerFilterHeader(this.controller, {super.key});
 
   @override
@@ -32,9 +33,7 @@ class SellerFilterHeader extends StatelessWidget {
               10.width,
               Text(
                 TKeys.filters.tr,
-                style: text.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: text.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),

@@ -1,18 +1,17 @@
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
 import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/shared/models/nav_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/main_seller_controller.dart' ;
+import '../controllers/main_seller_controller.dart';
 
 class MainSellerDesktop extends GetView<MainSellerController> {
   const MainSellerDesktop({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MainSellerController>();
-
     final pages = [
       const SellerProductsScreen(),
       const AddProductPage(),
@@ -22,19 +21,17 @@ class MainSellerDesktop extends GetView<MainSellerController> {
     return Scaffold(
       body: Row(
         children: [
-          // سایدبار
           Obx(
-                () => SellerSidebar(
+            () => SellerSidebar(
               currentIndex: controller.currentIndex.value,
               items: controller.navItems,
               onTap: controller.changeTab,
             ),
           ),
 
-          // محتوای اصلی
           Expanded(
             child: Obx(
-                  () => AnimatedSwitcher(
+              () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: Container(
                   key: ValueKey(controller.currentIndex.value),
@@ -63,28 +60,22 @@ class SellerSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       width: 260,
-      decoration: BoxDecoration(
-        color: context.theme.scaffoldBackgroundColor,
-      ),
+      decoration: BoxDecoration(color: context.theme.scaffoldBackgroundColor),
       child: Column(
         children: [
-          // هدر سایدبار
           _buildHeader(context),
 
           const SizedBox(height: 24),
 
-          // آیتم‌های منو
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: items.length,
               itemBuilder:
                   (context, index) =>
-                  _buildNavItem(context, index, items[index]),
+                      _buildNavItem(context, index, items[index]),
             ),
           ),
 
@@ -103,7 +94,6 @@ class SellerSidebar extends StatelessWidget {
 
       child: Row(
         children: [
-          // لوگو
           Container(
             width: 48,
             height: 48,
@@ -131,7 +121,7 @@ class SellerSidebar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'پنل فروشنده',
+                  TKeys.sellerPanel.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -139,7 +129,7 @@ class SellerSidebar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'مدیریت محصولات',
+                  TKeys.productManagement.tr,
                   style: TextStyle(
                     fontSize: 12,
                     color: colorScheme.onSurface.withAlpha(150),
@@ -148,8 +138,6 @@ class SellerSidebar extends StatelessWidget {
               ],
             ),
           ),
-
-
         ],
       ),
     );
@@ -159,7 +147,6 @@ class SellerSidebar extends StatelessWidget {
     final colorScheme = context.theme.colorScheme;
     final isSelected = currentIndex == index;
 
-    // دکمه افزودن محصول (ویژه)
     if (item.isSpecial) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -208,7 +195,6 @@ class SellerSidebar extends StatelessWidget {
       );
     }
 
-    // آیتم‌های معمولی
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Material(
@@ -223,18 +209,17 @@ class SellerSidebar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color:
-              isSelected
-                  ? colorScheme.primary.withAlpha(30)
-                  : Colors.transparent,
+                  isSelected
+                      ? colorScheme.primary.withAlpha(30)
+                      : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
               border:
-              isSelected
-                  ? Border.all(color: colorScheme.primary.withAlpha(50))
-                  : null,
+                  isSelected
+                      ? Border.all(color: colorScheme.primary.withAlpha(50))
+                      : null,
             ),
             child: Row(
               children: [
-                // اندیکاتور انتخاب
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: 4,
@@ -246,16 +231,15 @@ class SellerSidebar extends StatelessWidget {
                   ),
                 ),
 
-                // آیکون
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child: Icon(
                     isSelected ? item.activeIcon : item.icon,
                     key: ValueKey(isSelected),
                     color:
-                    isSelected
-                        ? colorScheme.primary
-                        : colorScheme.onSurface.withAlpha(150),
+                        isSelected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withAlpha(150),
                     size: 24,
                   ),
                 ),
@@ -267,17 +251,16 @@ class SellerSidebar extends StatelessWidget {
                     item.label,
                     style: TextStyle(
                       color:
-                      isSelected
-                          ? colorScheme.primary
-                          : colorScheme.onSurface.withAlpha(180),
+                          isSelected
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withAlpha(180),
                       fontWeight:
-                      isSelected ? FontWeight.w600 : FontWeight.w500,
+                          isSelected ? FontWeight.w600 : FontWeight.w500,
                       fontSize: 15,
                     ),
                   ),
                 ),
 
-                // نشانگر انتخاب
                 if (isSelected)
                   Container(
                     width: 8,

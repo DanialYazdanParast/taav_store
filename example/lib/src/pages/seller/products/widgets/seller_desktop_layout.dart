@@ -4,6 +4,7 @@ import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +149,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
         Icon(Icons.inventory_2_outlined, color: primaryColor, size: 28),
         AppSize.p10.width,
         Text(
-          'لیست محصولات فروشگاه',
+          TKeys.shopProductList.tr,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),

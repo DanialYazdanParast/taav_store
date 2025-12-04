@@ -1,4 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,46 +44,45 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SellerStatItem(
-          value: ' ۴۵,۸۵۰,۰۰۰ تومان',
-          label: ' درآمد کل',
+          value: '۴۵,۸۵۰,۰۰۰',
+          // فقط عدد
+          unit: TKeys.currency.tr,
+          label: TKeys.totalRevenue.tr,
           icon: Icons.monetization_on_outlined,
           textColor: theme.colorScheme.primary,
           subColor: theme.colorScheme.primary.withAlpha(200),
         ),
-        _buildDivider(theme),
-      Obx(() =>   SellerStatItem(
-        value: controller.products.length.toString(),
-        state: controller.productsState.value,
-        label: 'محصولات فعال',
-        icon: Icons.inventory_2_outlined,
-        textColor: textColor,
-        subColor: subColor,
-      ),),
-        _buildDivider(theme),
+        AppDivider.vertical(height: 50),
+
+        Obx(
+          () => SellerStatItem(
+            value: controller.products.length.toString(),
+            state: controller.productsState.value,
+            label: TKeys.activeProducts.tr,
+            icon: Icons.inventory_2_outlined,
+            textColor: textColor,
+            subColor: subColor,
+          ),
+        ),
+        AppDivider.vertical(height: 50),
+
         SellerStatItem(
           value: '۱۵۶',
-          label: 'فروش موفق',
+          label: TKeys.successfulSales.tr,
           icon: Icons.shopping_cart_outlined,
           textColor: textColor,
           subColor: subColor,
         ),
-        _buildDivider(theme),
+        AppDivider.vertical(height: 50),
+
         SellerStatItem(
           value: '۸',
-          label: 'سفارش جدید',
+          label: TKeys.newOrders.tr,
           icon: Icons.local_shipping_outlined,
           textColor: textColor,
           subColor: subColor,
         ),
       ],
-    );
-  }
-
-  Widget _buildDivider(ThemeData theme) {
-    return Container(
-      height: 50,
-      width: 1,
-      color: theme.dividerColor,
     );
   }
 }

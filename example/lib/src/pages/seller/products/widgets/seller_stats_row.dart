@@ -1,5 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
-import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,24 +21,24 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
             () => SellerStatItem(
               value: controller.products.length.toString(),
               state: controller.productsState.value,
-              label: 'محصولات',
+              label: TKeys.products.tr,
               icon: Icons.inventory_2_outlined,
               textColor: Colors.white,
               subColor: Colors.white70,
             ),
           ),
-          _buildDivider(),
-          const SellerStatItem(
+          AppDivider.vertical(height: 40),
+          SellerStatItem(
             value: '۱۵۶',
-            label: 'فروش',
+            label: TKeys.sales.tr,
             icon: Icons.shopping_cart_outlined,
             textColor: Colors.white,
             subColor: Colors.white70,
           ),
-          _buildDivider(),
-          const SellerStatItem(
+          AppDivider.vertical(height: 40),
+          SellerStatItem(
             value: '۸',
-            label: 'سفارش جدید',
+            label: TKeys.newOrders.tr,
             icon: Icons.local_shipping_outlined,
             textColor: Colors.white,
             subColor: Colors.white70,
@@ -45,9 +46,5 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
         ],
       ),
     );
-  }
-
-  Widget _buildDivider() {
-    return Container(height: 40, width: 1, color: Colors.white24);
   }
 }

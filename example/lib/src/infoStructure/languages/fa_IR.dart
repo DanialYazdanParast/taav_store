@@ -61,4 +61,28 @@ const Map<String, String> faIR = {
   TKeys.onlyAvailable: 'فقط کالاهای موجود',
   TKeys.viewResults: 'مشاهده نتایج',
 
+  // ═══ Navigation ═══
+  TKeys.navHome: 'خانه',
+  TKeys.navAddProduct: 'افزودن محصول',
+  TKeys.navProfile: 'پروفایل',
+  TKeys.sellerPanel: 'پنل فروشنده',
+  TKeys.productManagement: 'مدیریت محصولات',
+
+  TKeys.searchHint: 'جستجو ...',
+  TKeys.addProduct: 'افزودن محصول',
+
+  TKeys.totalRevenue: 'درآمد کل',
+  TKeys.activeProducts: 'محصولات فعال',
+  TKeys.successfulSales: 'فروش موفق',
+  TKeys.newOrders: 'سفارش جدید',
+
+  TKeys.stock: 'موجودی',
+
+  TKeys.shopProductList: 'لیست محصولات فروشگاه',
+
+  TKeys.products: 'محصولات',
+  TKeys.sales: 'فروش',
+
+
+
 };

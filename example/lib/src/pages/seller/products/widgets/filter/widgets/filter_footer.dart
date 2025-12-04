@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class SellerFilterFooter extends StatelessWidget {
   final SellerProductsController controller;
+
   const SellerFilterFooter(this.controller, {super.key});
 
   @override
@@ -15,7 +16,10 @@ class SellerFilterFooter extends StatelessWidget {
     final text = context.theme.textTheme;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSize.p16 ,horizontal: AppSize.p16),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSize.p16,
+        horizontal: AppSize.p16,
+      ),
       child: SafeArea(
         top: false,
         child: SizedBox(
@@ -24,11 +28,12 @@ class SellerFilterFooter extends StatelessWidget {
             children: [
               _badge(colors, text),
               Expanded(
-                child: ButtonWidget(
-                  TKeys.viewResults.tr,
-                  controller.applyFilters,
-                  radius: 16,
-                ).material(),
+                child:
+                    ButtonWidget(
+                      TKeys.viewResults.tr,
+                      controller.applyFilters,
+                      radius: 16,
+                    ).material(),
               ),
             ],
           ),
@@ -51,17 +56,18 @@ class SellerFilterFooter extends StatelessWidget {
           color: colors.primaryContainer,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: show
-            ? Center(
-          child: Text(
-            "$count",
-            style: text.titleMedium?.copyWith(
-              color: colors.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
-            : null,
+        child:
+            show
+                ? Center(
+                  child: Text(
+                    "$count",
+                    style: text.titleMedium?.copyWith(
+                      color: colors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+                : null,
       );
     });
   }

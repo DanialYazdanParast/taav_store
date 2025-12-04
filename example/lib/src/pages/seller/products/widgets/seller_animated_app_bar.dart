@@ -1,12 +1,14 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/bottom_sheet.dart';
-import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/seller_products_controller.dart';
 import 'filter/seller_filter_view.dart';
 import 'seller_icon_button.dart';
+
 
 class SellerAnimatedAppBar extends GetView<SellerProductsController> {
   final double screenWidth;
@@ -31,7 +33,7 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
 
   Widget _buildTitleRow() {
     return Obx(
-      () => AnimatedOpacity(
+          () => AnimatedOpacity(
         opacity: controller.isSearching.value ? 0.0 : 1.0,
         duration: const Duration(milliseconds: 200),
         child: Padding(
@@ -49,7 +51,7 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
                 },
               ),
               Text(
-                'پنل فروشنده',
+                TKeys.sellerPanel.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: AppSize.f18,
@@ -69,29 +71,29 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
       left: isRtl ? AppSize.p16 : null,
       right: isRtl ? null : AppSize.p16,
       child: Obx(
-        () => AnimatedContainer(
+            () => AnimatedContainer(
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeOutQuart,
           width: controller.isSearching.value ? screenWidth - 40 : 45,
           height: 45,
           decoration: BoxDecoration(
             color:
-                controller.isSearching.value
-                    ? Colors.white
-                    : Colors.white.withOpacity(0.15),
+            controller.isSearching.value
+                ? Colors.white
+                : Colors.white.withOpacity(0.15),
             borderRadius: BorderRadius.circular(
               controller.isSearching.value ? AppSize.r12 : AppSize.r10,
             ),
             boxShadow:
-                controller.isSearching.value
-                    ? [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: AppSize.p10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ]
-                    : [],
+            controller.isSearching.value
+                ? [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: AppSize.p10,
+                offset: const Offset(0, 4),
+              ),
+            ]
+                : [],
           ),
           child: Stack(
             alignment: isRtl ? Alignment.centerLeft : Alignment.centerRight,
@@ -117,7 +119,7 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
         textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
         style: const TextStyle(color: Colors.black87),
         decoration: InputDecoration(
-          hintText: 'جستجو...',
+          hintText: TKeys.searchHint.tr,
           hintStyle: TextStyle(color: Colors.grey[400], fontSize: AppSize.f13),
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero,
@@ -132,7 +134,7 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
       left: isRtl ? 0 : null,
       right: isRtl ? null : 0,
       child: Obx(
-        () => GestureDetector(
+            () => GestureDetector(
           onTap: controller.toggleSearch,
           child: Container(
             width: 45,

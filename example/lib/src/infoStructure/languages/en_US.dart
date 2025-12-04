@@ -59,4 +59,25 @@ const Map<String, String> enUS = {
   TKeys.tags: 'Categories (Tags)',
   TKeys.onlyAvailable: 'Only Available Items',
   TKeys.viewResults: 'View Results',
+
+// ═══ Navigation ═══
+  TKeys.navHome: 'Home',
+  TKeys.navAddProduct: 'Add Product',
+  TKeys.navProfile: 'Profile',
+  TKeys.sellerPanel: 'Seller Panel',
+  TKeys.productManagement: 'Product Management',
+
+  TKeys.searchHint: 'Search ...',
+  TKeys.addProduct: 'Add Product',
+
+  TKeys.totalRevenue: 'Total Revenue',
+  TKeys.activeProducts: 'Active Products',
+  TKeys.successfulSales: 'Successful Sales',
+  TKeys.newOrders: 'New Orders',
+
+  TKeys.stock: 'Stock',
+  TKeys.shopProductList: 'Shop Product List',
+
+  TKeys.products: 'Products',
+  TKeys.sales: 'Sales',
 };

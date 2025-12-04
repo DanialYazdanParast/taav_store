@@ -29,7 +29,6 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
     return Scaffold(
       body: Stack(
         children: [
-          // پس‌زمینه رنگی بالا
           _buildTopBackground(
             theme,
             primaryColor,
@@ -123,7 +122,9 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                       return SingleChildScrollView(
                         controller: scrollController,
                         physics: const AlwaysScrollableScrollPhysics(),
-                        child: ErrorView(onRetry:() =>  controller.fetchProducts(),),
+                        child: ErrorView(
+                          onRetry: () => controller.fetchProducts(),
+                        ),
                       );
                     }
 

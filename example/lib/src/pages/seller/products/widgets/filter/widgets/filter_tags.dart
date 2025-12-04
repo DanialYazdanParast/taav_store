@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class SellerFilterTags extends StatelessWidget {
   final SellerProductsController controller;
+
   const SellerFilterTags(this.controller, {super.key});
 
   @override
@@ -15,40 +16,48 @@ class SellerFilterTags extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(TKeys.tags.tr,
-            style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          TKeys.tags.tr,
+          style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 12),
         Obx(
-              () => Wrap(
+          () => Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: controller.availableTags.map((tag) {
-              final selected = controller.tempTagNames.contains(tag.name);
+            children:
+                controller.availableTags.map((tag) {
+                  final selected = controller.tempTagNames.contains(tag.name);
 
-              return GestureDetector(
-                onTap: () => controller.toggleTempTag(tag.name),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: selected
-                        ? colors.primary
-                        : colors.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    tag.name,
-                    style: text.bodyMedium?.copyWith(
-                      color: selected
-                          ? colors.onPrimary
-                          : colors.onSurfaceVariant,
-                      fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                  return GestureDetector(
+                    onTap: () => controller.toggleTempTag(tag.name),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color:
+                            selected
+                                ? colors.primary
+                                : colors.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        tag.name,
+                        style: text.bodyMedium?.copyWith(
+                          color:
+                              selected
+                                  ? colors.onPrimary
+                                  : colors.onSurfaceVariant,
+                          fontWeight:
+                              selected ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }).toList(),
+                  );
+                }).toList(),
           ),
         ),
       ],

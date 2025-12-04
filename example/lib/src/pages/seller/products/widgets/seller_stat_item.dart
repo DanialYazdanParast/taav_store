@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class SellerStatItem extends StatelessWidget {
   final String value;
   final String label;
+  final String? unit;
   final IconData icon;
   final Color textColor;
   final Color subColor;
@@ -21,7 +22,8 @@ class SellerStatItem extends StatelessWidget {
     required this.icon,
     required this.textColor,
     required this.subColor,
-    this.state = CurrentState.idle ,
+    this.unit,
+    this.state = CurrentState.idle,
     this.valueSize,
     this.iconSize,
   });
@@ -31,30 +33,48 @@ class SellerStatItem extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          color: subColor,
-          size: iconSize ?? 28,
-        ),
+        Icon(icon, color: subColor, size: iconSize ?? 28),
         AppSize.p10.height,
 
         state == CurrentState.loading || state == CurrentState.error
             ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
               child: AppShimmer.rect(
-                        width: 50,
-                        height: valueSize ?? AppSize.f24,
-                        borderRadius: 6,
-                      ),
+                width: 50,
+                height: valueSize ?? AppSize.f24,
+                borderRadius: 6,
+              ),
             )
-            : Text(
-          value,
-          style: TextStyle(
-            color: textColor,
-            fontSize: valueSize ?? AppSize.f24,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
+            : Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: value,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: valueSize ?? AppSize.f24,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+
+                    if (unit != null) ...[
+                      const TextSpan(text: ' '),
+                      TextSpan(
+                        text: unit,
+                        style: TextStyle(
+                          color: textColor.withOpacity(0.8),
+                          fontSize: (valueSize ?? AppSize.f24) * 0.55,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
 
         AppSize.p5.height,
 

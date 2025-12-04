@@ -3,6 +3,7 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -90,9 +91,8 @@ class _ProductImage extends StatelessWidget {
   }
 }
 
-// -----------------------------------
 // برچسب تخفیف
-// -----------------------------------
+
 class _DiscountBadge extends StatelessWidget {
   final String discountPercent;
 
@@ -127,9 +127,7 @@ class _DiscountBadge extends StatelessWidget {
   }
 }
 
-// -----------------------------------
 // اطلاعات محصول
-// -----------------------------------
 class _ProductInfo extends StatelessWidget {
   final String productName;
   final String originalPrice;
@@ -178,9 +176,7 @@ class _ProductInfo extends StatelessWidget {
   }
 }
 
-// -----------------------------------
 // ردیف قیمت
-// -----------------------------------
 class _PriceRow extends StatelessWidget {
   final String originalPrice;
   final String discountedPrice;
@@ -209,23 +205,30 @@ class _PriceRow extends StatelessWidget {
               color: Colors.green[600],
               fontWeight: FontWeight.bold,
               fontSize: AppSize.f14,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-          Text(
-            ' تومان ',
-            style: TextStyle(color: Colors.green[600], fontSize: AppSize.f11),
+          Flexible(
+            child: Text(
+              ' ${TKeys.currency.tr} ',
+              style: TextStyle(color: Colors.green[600], fontSize: AppSize.f11),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
 
-          // ✅ اگر تخفیف داشت، قیمت خط خورده را نشان بده
           if (hasDiscount) ...[
             AppSize.p8.width,
-            Text(
-              originalPrice,
-              style: TextStyle(
-                color: theme.hintColor,
-                fontSize: AppSize.f12,
-                decoration: TextDecoration.lineThrough,
-                decorationColor: theme.hintColor,
+            Flexible(
+              child: Text(
+                originalPrice,
+                style: TextStyle(
+                  color: theme.hintColor,
+                  fontSize: AppSize.f12,
+                  decoration: TextDecoration.lineThrough,
+                  decorationColor: theme.hintColor,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],
@@ -235,9 +238,7 @@ class _PriceRow extends StatelessWidget {
   }
 }
 
-// -----------------------------------
-// چیپ موجودی (بدون تغییر)
-// -----------------------------------
+// چیپ موجودی
 class _StockChip extends StatelessWidget {
   final int quantity;
   final Color primaryColor;
@@ -256,7 +257,7 @@ class _StockChip extends StatelessWidget {
         border: Border.all(color: chipColor.withOpacity(0.2), width: 0.5),
       ),
       child: Text(
-        'موجودی: $quantity',
+        '${TKeys.stock.tr}: $quantity',
         style: TextStyle(
           color: chipColor,
           fontSize: AppSize.f10,
@@ -267,9 +268,7 @@ class _StockChip extends StatelessWidget {
   }
 }
 
-// -----------------------------------
-// دکمه‌های عملیات (بدون تغییر)
-// -----------------------------------
+// دکمه‌های عملیات
 class _ActionButtons extends StatelessWidget {
   final Color primaryColor;
   final Color errorColor;
@@ -331,7 +330,6 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
-
 //-------------------------Shimmer----------------------------//
 
 class SellerProductCardShimmer extends StatelessWidget {

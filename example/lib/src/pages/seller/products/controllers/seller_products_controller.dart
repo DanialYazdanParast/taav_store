@@ -26,7 +26,6 @@ class SellerProductsController extends GetxController {
   final RxDouble minPriceLimit = 0.0.obs;
   final RxDouble maxPriceLimit = 10000000.0.obs;
 
-
   final Rx<RangeValues> appliedPriceRange = const RangeValues(0, 10000000).obs;
   final RxList<String> appliedColorNames = <String>[].obs;
   final RxList<String> appliedTagNames = <String>[].obs;
@@ -67,7 +66,6 @@ class SellerProductsController extends GetxController {
     super.onClose();
   }
 
-
   Future<void> fetchProducts() async {
     productsState.value = CurrentState.loading;
 
@@ -76,23 +74,24 @@ class SellerProductsController extends GetxController {
     );
 
     result.fold(
-          (failure) {
+      (failure) {
         productsState.value = CurrentState.error;
         ToastUtil.show(
           failure.message ?? 'خطا در دریافت محصولات',
           type: ToastType.error,
         );
       },
-          (fetchedProducts) {
+      (fetchedProducts) {
         products.assignAll(fetchedProducts);
         productsState.value = CurrentState.success;
 
         if (fetchedProducts.isNotEmpty) {
-          final List<double> effectivePrices = fetchedProducts.map((p) {
-            return (p.discountPrice > 0 && p.discountPrice < p.price)
-                ? p.discountPrice.toDouble()
-                : p.price.toDouble();
-          }).toList();
+          final List<double> effectivePrices =
+              fetchedProducts.map((p) {
+                return (p.discountPrice > 0 && p.discountPrice < p.price)
+                    ? p.discountPrice.toDouble()
+                    : p.price.toDouble();
+              }).toList();
 
           double minP = effectivePrices.reduce(min);
           double maxP = effectivePrices.reduce(max);
@@ -120,7 +119,6 @@ class SellerProductsController extends GetxController {
     tagsResult.fold((l) {}, (r) => availableTags.assignAll(r));
   }
 
-
   void initTempFilters() {
     tempPriceRange.value = appliedPriceRange.value;
     tempColorNames.assignAll(appliedColorNames);
@@ -138,23 +136,26 @@ class SellerProductsController extends GetxController {
   }
 
   void clearTempFilters() {
-    tempPriceRange.value = RangeValues(minPriceLimit.value, maxPriceLimit.value);
+    tempPriceRange.value = RangeValues(
+      minPriceLimit.value,
+      maxPriceLimit.value,
+    );
     tempColorNames.clear();
     tempTagNames.clear();
     tempOnlyAvailable.value = false;
-
-
   }
 
   void clearAllFilters() {
     clearTempFilters();
 
-    appliedPriceRange.value = RangeValues(minPriceLimit.value, maxPriceLimit.value);
+    appliedPriceRange.value = RangeValues(
+      minPriceLimit.value,
+      maxPriceLimit.value,
+    );
     appliedColorNames.clear();
     appliedTagNames.clear();
     appliedOnlyAvailable.value = false;
   }
-
 
   void updateTempPriceRange(RangeValues values) {
     tempPriceRange.value = values;
@@ -181,47 +182,56 @@ class SellerProductsController extends GetxController {
 
     if (query.value.isNotEmpty) {
       final lowerQuery = query.value.toLowerCase();
-      result = result.where((p) {
-        final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
-        final matchesTags = p.tags.any((tag) => tag.toLowerCase().contains(lowerQuery));
-        return matchesTitle || matchesTags;
-      }).toList();
+      result =
+          result.where((p) {
+            final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
+            final matchesTags = p.tags.any(
+              (tag) => tag.toLowerCase().contains(lowerQuery),
+            );
+            return matchesTitle || matchesTags;
+          }).toList();
     }
 
-
-    result = result.where((p) {
-      final effectivePrice = (p.discountPrice > 0 && p.discountPrice < p.price)
-          ? p.discountPrice
-          : p.price;
-      return effectivePrice >= appliedPriceRange.value.start &&
-          effectivePrice <= appliedPriceRange.value.end;
-    }).toList();
+    result =
+        result.where((p) {
+          final effectivePrice =
+              (p.discountPrice > 0 && p.discountPrice < p.price)
+                  ? p.discountPrice
+                  : p.price;
+          return effectivePrice >= appliedPriceRange.value.start &&
+              effectivePrice <= appliedPriceRange.value.end;
+        }).toList();
 
     if (appliedOnlyAvailable.value) {
       result = result.where((p) => p.quantity > 0).toList();
     }
 
     if (appliedColorNames.isNotEmpty) {
-      result = result.where((p) {
-        return appliedColorNames.every((selectedColor) => p.colors.contains(selectedColor));
-      }).toList();
+      result =
+          result.where((p) {
+            return appliedColorNames.every(
+              (selectedColor) => p.colors.contains(selectedColor),
+            );
+          }).toList();
     }
 
     if (appliedTagNames.isNotEmpty) {
-      result = result.where((p) {
-        return appliedTagNames.every((selectedTag) => p.tags.contains(selectedTag));
-      }).toList();
+      result =
+          result.where((p) {
+            return appliedTagNames.every(
+              (selectedTag) => p.tags.contains(selectedTag),
+            );
+          }).toList();
     }
 
     return result;
   }
 
-
   int get totalTempFilters {
     int count = 0;
     bool isPriceChanged =
         (tempPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-            (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
+        (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
     count += tempColorNames.length;
@@ -236,7 +246,7 @@ class SellerProductsController extends GetxController {
 
     bool isPriceChanged =
         (appliedPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-            (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
+        (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
     count += appliedColorNames.length;
@@ -245,7 +255,6 @@ class SellerProductsController extends GetxController {
 
     return count;
   }
-
 
   void toggleSearch() {
     isSearching.value = !isSearching.value;
@@ -260,6 +269,4 @@ class SellerProductsController extends GetxController {
   }
 
   void toggleVisibility() => isHidden.value = !isHidden.value;
-
-
 }

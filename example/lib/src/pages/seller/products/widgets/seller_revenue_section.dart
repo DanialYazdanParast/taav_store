@@ -1,5 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +23,7 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
         textDirection: TextDirection.rtl,
         children: [
           SizedBox(
-            height: 60, // ارتفاع ثابت متناسب با Text
+            height: 60,
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder:
@@ -42,7 +43,7 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
           ),
           AppSize.p8.width,
           Text(
-            'تومان',
+            TKeys.currency.tr,
             style: TextStyle(color: Colors.white70, fontSize: AppSize.f14),
           ),
         ],
@@ -69,7 +70,7 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
         ),
         AppSize.p4.width,
         Text(
-          ' درآمد کل',
+          TKeys.totalRevenue.tr,
           style: TextStyle(color: Colors.white70, fontSize: AppSize.f14),
         ),
       ],

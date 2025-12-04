@@ -22,8 +22,6 @@ class MainSellerScreen extends GetView<MainSellerController> {
 }
 
 
-
-// صفحات موبایل
 class ProfileSellerPage extends StatelessWidget {
   const ProfileSellerPage({super.key});
 
@@ -54,5 +52,4 @@ class AddProductPage extends StatelessWidget {
     );
   }
 }
-
 

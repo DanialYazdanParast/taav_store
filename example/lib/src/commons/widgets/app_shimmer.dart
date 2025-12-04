@@ -14,7 +14,6 @@ class AppShimmer extends StatefulWidget {
     this.highlightColor,
   });
 
-  /// Factory method for rectangular skeletons (Best Practice for DX)
   static Widget rect({
     double? width,
     double? height,
@@ -36,7 +35,6 @@ class AppShimmer extends StatefulWidget {
     );
   }
 
-  /// Factory method for circular skeletons
   static Widget circle({
     required double size,
     Color? baseColor,
@@ -71,7 +69,6 @@ class _AppShimmerState extends State<AppShimmer>
     _controller = AnimationController(vsync: this, duration: widget.duration)
       ..repeat();
 
-    // Using a simple linear tween for sliding effect
     _animation = Tween<double>(
       begin: -1.0,
       end: 2.0,
@@ -86,10 +83,8 @@ class _AppShimmerState extends State<AppShimmer>
 
   @override
   Widget build(BuildContext context) {
-    // Senior approach: Rely on Context/Theme, not external packages like GetX
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Define default colors based on active theme standard
     final base =
         widget.baseColor ??
         (isDark ? const Color(0xFF424242) : const Color(0xFFE0E0E0));
@@ -110,7 +105,7 @@ class _AppShimmerState extends State<AppShimmer>
                 0.1,
                 0.3,
                 0.5,
-              ], // Tighter stops for better shimmer effect
+              ],
               begin: const Alignment(-1.0, -0.3),
               end: const Alignment(1.0, 0.3),
               transform: _SlidingGradientTransform(_animation.value),
@@ -123,7 +118,6 @@ class _AppShimmerState extends State<AppShimmer>
   }
 }
 
-/// Using Transform is more efficient than calculating pixels manually in build
 class _SlidingGradientTransform extends GradientTransform {
   final double slidePercent;
   const _SlidingGradientTransform(this.slidePercent);

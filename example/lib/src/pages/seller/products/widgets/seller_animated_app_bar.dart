@@ -6,14 +6,12 @@ import 'package:get/get.dart';
 
 import 'seller_icon_button.dart';
 
-class SellerAnimatedAppBar extends StatelessWidget {
-  final SellerProductsController controller;
+class SellerAnimatedAppBar extends GetView<SellerProductsController> {
   final double screenWidth;
   final bool isRtl;
 
   const SellerAnimatedAppBar({
     super.key,
-    required this.controller,
     required this.screenWidth,
     required this.isRtl,
   });
@@ -24,76 +22,76 @@ class SellerAnimatedAppBar extends StatelessWidget {
       height: 80,
       child: Stack(
         alignment: Alignment.centerLeft,
-        children: [
-          _buildTitleRow(),
-          _buildAnimatedSearchBar(),
-        ],
+        children: [_buildTitleRow(), _buildAnimatedSearchBar()],
       ),
     );
   }
 
   Widget _buildTitleRow() {
-    return Obx(() => AnimatedOpacity(
-      opacity: controller.isSearching.value ? 0.0 : 1.0,
-      duration: const Duration(milliseconds: 200),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SellerIconButton(
-              icon: Icons.filter_list,
-              onTap: () {},
-            ),
-            Text(
-              'پنل فروشنده',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: AppSize.f18,
-                fontWeight: FontWeight.bold,
+    return Obx(
+      () => AnimatedOpacity(
+        opacity: controller.isSearching.value ? 0.0 : 1.0,
+        duration: const Duration(milliseconds: 200),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSize.p16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SellerIconButton(icon: Icons.filter_list, onTap: () {}),
+              Text(
+                'پنل فروشنده',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: AppSize.f18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            48.width,
-          ],
+              48.width,
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _buildAnimatedSearchBar() {
     return Positioned(
-      left: isRtl ? AppSize.p20 : null,
-      right: isRtl ? null : AppSize.p20,
-      child: Obx(() => AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeOutQuart,
-        width: controller.isSearching.value ? screenWidth - 40 : 45,
-        height: 45,
-        decoration: BoxDecoration(
-          color: controller.isSearching.value
-              ? Colors.white
-              : Colors.white.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(
-            controller.isSearching.value ? AppSize.r12 : AppSize.r10,
+      left: isRtl ? AppSize.p16 : null,
+      right: isRtl ? null : AppSize.p16,
+      child: Obx(
+        () => AnimatedContainer(
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOutQuart,
+          width: controller.isSearching.value ? screenWidth - 40 : 45,
+          height: 45,
+          decoration: BoxDecoration(
+            color:
+                controller.isSearching.value
+                    ? Colors.white
+                    : Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(
+              controller.isSearching.value ? AppSize.r12 : AppSize.r10,
+            ),
+            boxShadow:
+                controller.isSearching.value
+                    ? [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: AppSize.p10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
+                    : [],
           ),
-          boxShadow: controller.isSearching.value
-              ? [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: AppSize.p10,
-              offset: const Offset(0, 4),
-            )
-          ]
-              : [],
+          child: Stack(
+            alignment: isRtl ? Alignment.centerLeft : Alignment.centerRight,
+            children: [
+              if (controller.isSearching.value) _buildSearchTextField(),
+              _buildSearchIconButton(),
+            ],
+          ),
         ),
-        child: Stack(
-          alignment: isRtl ? Alignment.centerLeft : Alignment.centerRight,
-          children: [
-            if (controller.isSearching.value) _buildSearchTextField(),
-            _buildSearchIconButton(),
-          ],
-        ),
-      )),
+      ),
     );
   }
 
@@ -110,10 +108,7 @@ class SellerAnimatedAppBar extends StatelessWidget {
         style: const TextStyle(color: Colors.black87),
         decoration: InputDecoration(
           hintText: 'جستجو...',
-          hintStyle: TextStyle(
-            color: Colors.grey[400],
-            fontSize: AppSize.f13,
-          ),
+          hintStyle: TextStyle(color: Colors.grey[400], fontSize: AppSize.f13),
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero,
           isDense: true,
@@ -126,19 +121,21 @@ class SellerAnimatedAppBar extends StatelessWidget {
     return Positioned(
       left: isRtl ? 0 : null,
       right: isRtl ? null : 0,
-      child: Obx(() => GestureDetector(
-        onTap: controller.toggleSearch,
-        child: Container(
-          width: 45,
-          height: 45,
-          color: Colors.transparent,
-          child: Icon(
-            controller.isSearching.value ? Icons.close : Icons.search,
-            color: controller.isSearching.value ? Colors.grey : Colors.white,
-            size: 22,
+      child: Obx(
+        () => GestureDetector(
+          onTap: controller.toggleSearch,
+          child: Container(
+            width: 45,
+            height: 45,
+            color: Colors.transparent,
+            child: Icon(
+              controller.isSearching.value ? Icons.close : Icons.search,
+              color: controller.isSearching.value ? Colors.grey : Colors.white,
+              size: 22,
+            ),
           ),
         ),
-      )),
+      ),
     );
   }
 }

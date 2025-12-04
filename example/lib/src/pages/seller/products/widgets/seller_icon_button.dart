@@ -22,7 +22,7 @@ class SellerIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Get.theme;
+    final theme = context.theme;
 
     return GestureDetector(
       onTap: onTap,

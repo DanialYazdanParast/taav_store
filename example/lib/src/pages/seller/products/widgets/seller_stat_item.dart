@@ -1,5 +1,7 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
 
 class SellerStatItem extends StatelessWidget {
@@ -8,6 +10,7 @@ class SellerStatItem extends StatelessWidget {
   final IconData icon;
   final Color textColor;
   final Color subColor;
+  final CurrentState state;
   final double? valueSize;
   final double? iconSize;
 
@@ -18,6 +21,7 @@ class SellerStatItem extends StatelessWidget {
     required this.icon,
     required this.textColor,
     required this.subColor,
+    this.state = CurrentState.idle ,
     this.valueSize,
     this.iconSize,
   });
@@ -33,7 +37,17 @@ class SellerStatItem extends StatelessWidget {
           size: iconSize ?? 28,
         ),
         AppSize.p10.height,
-        Text(
+
+        state == CurrentState.loading || state == CurrentState.error
+            ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: AppShimmer.rect(
+                        width: 50,
+                        height: valueSize ?? AppSize.f24,
+                        borderRadius: 6,
+                      ),
+            )
+            : Text(
           value,
           style: TextStyle(
             color: textColor,
@@ -41,7 +55,9 @@ class SellerStatItem extends StatelessWidget {
             fontWeight: FontWeight.w900,
           ),
         ),
+
         AppSize.p5.height,
+
         Text(
           label,
           style: TextStyle(

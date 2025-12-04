@@ -8,17 +8,14 @@ import 'package:get/get.dart';
 
 import 'seller_icon_button.dart';
 
-class SellerDesktopHeader extends StatelessWidget {
-  final SellerProductsController controller;
-
+class SellerDesktopHeader extends GetView<SellerProductsController> {
   const SellerDesktopHeader({
     super.key,
-    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Get.theme;
+    final theme = context.theme;
     final primaryColor = theme.colorScheme.primary;
 
     return Container(

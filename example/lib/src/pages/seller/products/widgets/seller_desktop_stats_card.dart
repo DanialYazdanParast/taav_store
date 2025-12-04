@@ -2,14 +2,15 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/seller_products_controller.dart';
 import 'seller_stat_item.dart';
 
-class SellerDesktopStatsCard extends StatelessWidget {
+class SellerDesktopStatsCard extends GetView<SellerProductsController> {
   const SellerDesktopStatsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Get.theme;
+    final theme = context.theme;
 
     return Container(
       width: Get.width * 0.85,
@@ -41,20 +42,21 @@ class SellerDesktopStatsCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SellerStatItem(
-          value: '۴۵,۸۵۰,۰۰۰',
-          label: 'تومان درآمد',
+          value: ' ۴۵,۸۵۰,۰۰۰ تومان',
+          label: ' درآمد کل',
           icon: Icons.monetization_on_outlined,
-          textColor: Colors.green[700]!,
-          subColor: Colors.green[300]!,
+          textColor: theme.colorScheme.primary,
+          subColor: theme.colorScheme.primary.withAlpha(200),
         ),
         _buildDivider(theme),
-        SellerStatItem(
-          value: '۲۴',
-          label: 'محصولات فعال',
-          icon: Icons.inventory_2_outlined,
-          textColor: textColor,
-          subColor: subColor,
-        ),
+      Obx(() =>   SellerStatItem(
+        value: controller.products.length.toString(),
+        state: controller.productsState.value,
+        label: 'محصولات فعال',
+        icon: Icons.inventory_2_outlined,
+        textColor: textColor,
+        subColor: subColor,
+      ),),
         _buildDivider(theme),
         SellerStatItem(
           value: '۱۵۶',

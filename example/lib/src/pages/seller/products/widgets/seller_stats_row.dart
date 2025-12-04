@@ -1,9 +1,12 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controllers/seller_products_controller.dart';
 import 'seller_stat_item.dart';
 
-class SellerStatsRowMobile extends StatelessWidget {
+class SellerStatsRowMobile extends GetView<SellerProductsController> {
   const SellerStatsRowMobile({super.key});
 
   @override
@@ -13,12 +16,15 @@ class SellerStatsRowMobile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SellerStatItem(
-            value: '۲۴',
-            label: 'محصولات',
-            icon: Icons.inventory_2_outlined,
-            textColor: Colors.white,
-            subColor: Colors.white70,
+          Obx(
+            () => SellerStatItem(
+              value: controller.products.length.toString(),
+              state: controller.productsState.value,
+              label: 'محصولات',
+              icon: Icons.inventory_2_outlined,
+              textColor: Colors.white,
+              subColor: Colors.white70,
+            ),
           ),
           _buildDivider(),
           const SellerStatItem(
@@ -42,10 +48,6 @@ class SellerStatsRowMobile extends StatelessWidget {
   }
 
   Widget _buildDivider() {
-    return Container(
-      height: 40,
-      width: 1,
-      color: Colors.white24,
-    );
+    return Container(height: 40, width: 1, color: Colors.white24);
   }
 }

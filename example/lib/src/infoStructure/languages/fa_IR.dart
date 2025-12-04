@@ -49,4 +49,16 @@ const Map<String, String> faIR = {
   TKeys.highSpeed: 'سرعت بالا',
   TKeys.fullSecurity: 'امنیت کامل',
   TKeys.support247: 'پشتیبانی ۲۴/۷',
+
+
+  // ═══ Filter Section ═══
+  TKeys.filters: 'فیلترها',
+  TKeys.removeAll: 'حذف همه',
+  TKeys.priceRange: 'محدوده قیمت',
+  TKeys.currency: 'تومان',
+  TKeys.colors: 'رنگ‌ها',
+  TKeys.tags: 'دسته‌بندی (تگ)',
+  TKeys.onlyAvailable: 'فقط کالاهای موجود',
+  TKeys.viewResults: 'مشاهده نتایج',
+
 };

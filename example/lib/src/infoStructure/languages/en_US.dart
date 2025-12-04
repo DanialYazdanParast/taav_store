@@ -49,4 +49,14 @@ const Map<String, String> enUS = {
   TKeys.highSpeed: 'High Speed',
   TKeys.fullSecurity: 'Full Security',
   TKeys.support247: '24/7 Support',
+
+  // ═══ Filter Section ═══
+  TKeys.filters: 'Filters',
+  TKeys.removeAll: 'Remove All',
+  TKeys.priceRange: 'Price Range',
+  TKeys.currency: 'Toman',
+  TKeys.colors: 'Colors',
+  TKeys.tags: 'Categories (Tags)',
+  TKeys.onlyAvailable: 'Only Available Items',
+  TKeys.viewResults: 'View Results',
 };

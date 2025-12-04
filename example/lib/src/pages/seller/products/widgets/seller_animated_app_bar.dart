@@ -1,9 +1,11 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'filter/seller_filter_view.dart';
 import 'seller_icon_button.dart';
 
 class SellerAnimatedAppBar extends GetView<SellerProductsController> {
@@ -37,7 +39,15 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SellerIconButton(icon: Icons.filter_list, onTap: () {}),
+              SellerIconButton(
+                icon: Icons.filter_list,
+                onTap: () {
+                  controller.initTempFilters();
+                  BottomSheetWidget(
+                    isScrollControlled: true,
+                  ).show(const SellerFilterView());
+                },
+              ),
               Text(
                 'پنل فروشنده',
                 style: TextStyle(

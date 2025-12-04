@@ -1,17 +1,17 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
+import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'filter/seller_filter_view.dart';
 import 'seller_icon_button.dart';
 
 class SellerDesktopHeader extends GetView<SellerProductsController> {
-  const SellerDesktopHeader({
-    super.key,
-  });
+  const SellerDesktopHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,9 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   Widget _buildFilterButton(ThemeData theme) {
     return SellerIconButton(
       icon: Icons.filter_list_rounded,
-      onTap: () {},
+      onTap: () {
+        DialogWidget().show(const SellerFilterView());
+      },
       color: theme.iconTheme.color,
       bgColor: theme.cardColor,
       hasBorder: true,
@@ -74,7 +76,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
       height: 48,
       child: ButtonWidget(
         'افزودن محصول',
-            () {},
+        () {},
         icon: Icons.add_rounded,
         radius: AppSize.r12,
         textColor: Colors.white,
@@ -84,11 +86,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   }
 
   Widget _buildDivider(ThemeData theme) {
-    return Container(
-      height: 30,
-      width: 1,
-      color: theme.dividerColor,
-    );
+    return Container(height: 30, width: 1, color: theme.dividerColor);
   }
 
   Widget _buildNotificationIcon(ThemeData theme) {

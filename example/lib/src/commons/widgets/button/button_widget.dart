@@ -43,16 +43,13 @@ class ButtonWidget {
     this.padding,
   });
 
-  // ---------------------------------------------------------------------------
-  // 1. Material Button (Original Logic Updated)
-  // ---------------------------------------------------------------------------
+
   Widget material({
     final double minWidth = double.infinity,
-    final Color? textColor, // این پارامتر همنام با متغیر کلاس است
+    final Color? textColor,
     final Color? disabledColor,
   }) {
 
-    // ✅ اصلاح مهم: اولویت با رنگ متد است، اگر نبود رنگ کلاس، اگر نبود سفید
     final effectiveTextColor = textColor ?? this.textColor ?? Get.theme.scaffoldBackgroundColor;
 
     return MaterialButton(
@@ -64,7 +61,6 @@ class ButtonWidget {
       color: bgColor ?? Get.theme.colorScheme.primary,
       padding: padding ?? EdgeInsets.symmetric(horizontal: AppSize.p16),
 
-      // استفاده از رنگ محاسبه شده
       textColor: effectiveTextColor,
 
       shape: RoundedRectangleBorder(
@@ -73,7 +69,6 @@ class ButtonWidget {
       ),
       minWidth: minWidth,
 
-      // پاس دادن رنگ محاسبه شده به محتوا
       child: _buildContent(
         color: effectiveTextColor,
         isMaterial: true,
@@ -81,9 +76,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 2. Border Button (Original Logic Updated)
-  // ---------------------------------------------------------------------------
   Widget border() {
     return TextButton(
       onPressed: _shouldDisable ? null : action,
@@ -120,9 +112,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 3. Text Only Button (Includes opensPage logic)
-  // ---------------------------------------------------------------------------
   Widget textOnly() {
     return TextButton(
       onPressed: _shouldDisable ? null : action,
@@ -159,9 +148,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 4. Text Icon Old (Using TextButton.icon)
-  // ---------------------------------------------------------------------------
   Widget textIconOld({
     final double? iconSize,
     final IconAlignment? iconAlignment,
@@ -191,9 +177,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 5. Text Icon (Using Row)
-  // ---------------------------------------------------------------------------
   Widget textIcon({final double? iconSize, final double iconSpacing = 4.0}) {
     return TextButton(
       style: TextButton.styleFrom(
@@ -221,9 +204,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 6. Outline (New Style)
-  // ---------------------------------------------------------------------------
   Widget outline({final Color? outlineColor}) {
     final effectiveColor = outlineColor ?? Get.theme.colorScheme.primary;
     return OutlinedButton(
@@ -238,9 +218,7 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 7. Outline Old
-  // ---------------------------------------------------------------------------
+
   Widget outlineOld() {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
@@ -273,9 +251,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 8. Elevated Button
-  // ---------------------------------------------------------------------------
   Widget elevated() {
     return ElevatedButton(
       onPressed: _shouldDisable ? null : action,
@@ -294,9 +269,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 9. Icon Only
-  // ---------------------------------------------------------------------------
   Widget iconOnly({final double? btnSize, final double? iconSize}) {
     return Container(
       constraints: BoxConstraints(
@@ -321,9 +293,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 10. Square Button
-  // ---------------------------------------------------------------------------
   Widget square() {
     return InkWell(
       onTap: action,
@@ -342,9 +311,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // 11. AppBar Action
-  // ---------------------------------------------------------------------------
   Widget appbarAction() {
     return InkWell(
       onTap: action,
@@ -367,9 +333,6 @@ class ButtonWidget {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // Helper Methods (To clean up duplicates)
-  // ---------------------------------------------------------------------------
 
   bool get _shouldDisable =>
       !isEnabled || isLoading || state == CurrentState.loading;
@@ -400,7 +363,7 @@ class ButtonWidget {
           iconWidget!,
           const SizedBox(width: 8),
         ] else if (icon != null) ...[
-          Icon(icon, color: iconColor ?? color), // Color handled
+          Icon(icon, color: iconColor ?? color),
           const SizedBox(width: 8),
         ],
         if (title != null && title!.isNotEmpty)
@@ -408,7 +371,7 @@ class ButtonWidget {
             title!,
             style: TextStyle(
               color: color,
-              fontSize: fontSize ?? AppSize.f14, // Large
+              fontSize: fontSize ?? AppSize.f14,
               fontWeight: FontWeight.w600,
             ),
           ),

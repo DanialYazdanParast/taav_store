@@ -50,4 +50,14 @@ abstract class TKeys {
   static const String highSpeed = 'high_speed';
   static const String fullSecurity = 'full_security';
   static const String support247 = 'support_247';
+
+  // ═══ Filter Section (جدید) ═══
+  static const String filters = 'filters';
+  static const String removeAll = 'remove_all';
+  static const String priceRange = 'price_range';
+  static const String currency = 'currency'; // تومان
+  static const String colors = 'colors';
+  static const String tags = 'tags';
+  static const String onlyAvailable = 'only_available';
+  static const String viewResults = 'view_results';
 }

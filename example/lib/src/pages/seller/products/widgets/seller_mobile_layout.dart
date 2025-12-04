@@ -127,7 +127,7 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                       );
                     }
 
-                    if (controller.products.isEmpty) {
+                    if (controller.filteredProducts.isEmpty) {
                       return SingleChildScrollView(
                         controller: scrollController,
                         physics: const AlwaysScrollableScrollPhysics(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AuthDecorativeCircle extends StatelessWidget {
+class DecorativeCircle extends StatelessWidget {
   final double? top;
   final double? bottom;
   final double? left;
@@ -8,7 +8,7 @@ class AuthDecorativeCircle extends StatelessWidget {
   final double size;
   final Color color;
 
-  const AuthDecorativeCircle({
+  const DecorativeCircle({
     super.key,
     this.top,
     this.bottom,

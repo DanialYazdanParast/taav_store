@@ -34,13 +34,13 @@ class AuthBrandingPanel extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          AuthDecorativeCircle(
+          DecorativeCircle(
             top: -100,
             right: -100,
             size: 300,
             color: colorScheme.onPrimary.withValues(alpha: 0.05),
           ),
-          AuthDecorativeCircle(
+          DecorativeCircle(
             bottom: -50,
             left: -50,
             size: 200,

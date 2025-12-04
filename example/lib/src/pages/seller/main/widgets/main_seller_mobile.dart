@@ -1,7 +1,43 @@
-
+import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/shared/models/nav_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../controllers/main_seller_controller.dart';
+import '../view/main_seller_screen.dart';
+
+class MainSellerMobile extends GetView<MainSellerController> {
+  const MainSellerMobile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final pages = [
+      const SellerProductsScreen(),
+      const SizedBox(),
+      const ProfileSellerPage(),
+    ];
+
+    return Scaffold(
+      body: Obx(
+        () => AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child:
+              pages[controller.currentIndex.value == 1
+                  ? 0
+                  : controller.currentIndex.value],
+        ),
+      ),
+      extendBody: true,
+      bottomNavigationBar: Obx(
+        () => CustomBottomNav(
+          currentIndex: controller.currentIndex.value,
+          items: controller.navItems,
+          onTap: controller.changeTab,
+        ),
+      ),
+    );
+  }
+}
 
 class CustomBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -35,7 +71,7 @@ class CustomBottomNav extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(
           items.length,
-              (index) => _buildNavItem(context, index),
+          (index) => _buildNavItem(context, index),
         ),
       ),
     );
@@ -86,9 +122,9 @@ class CustomBottomNav extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color:
-          isSelected
-              ? colorScheme.primary.withAlpha(26)
-              : Colors.transparent,
+              isSelected
+                  ? colorScheme.primary.withAlpha(26)
+                  : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(

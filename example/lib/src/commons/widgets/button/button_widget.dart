@@ -48,9 +48,13 @@ class ButtonWidget {
   // ---------------------------------------------------------------------------
   Widget material({
     final double minWidth = double.infinity,
-    final Color? textColor,
+    final Color? textColor, // این پارامتر همنام با متغیر کلاس است
     final Color? disabledColor,
   }) {
+
+    // ✅ اصلاح مهم: اولویت با رنگ متد است، اگر نبود رنگ کلاس، اگر نبود سفید
+    final effectiveTextColor = textColor ?? this.textColor ?? Get.theme.scaffoldBackgroundColor;
+
     return MaterialButton(
       height: AppSize.buttonHeight,
       elevation: 1,
@@ -59,14 +63,19 @@ class ButtonWidget {
       disabledColor: disabledColor ?? Get.theme.colorScheme.outlineVariant,
       color: bgColor ?? Get.theme.colorScheme.primary,
       padding: padding ?? EdgeInsets.symmetric(horizontal: AppSize.p16),
-      textColor: textColor ?? Colors.white,
+
+      // استفاده از رنگ محاسبه شده
+      textColor: effectiveTextColor,
+
       shape: RoundedRectangleBorder(
         borderRadius:
-            radius == null ? AppSize.brMedium : AppSize.brCircular(radius!),
+        radius == null ? AppSize.brMedium : AppSize.brCircular(radius!),
       ),
       minWidth: minWidth,
+
+      // پاس دادن رنگ محاسبه شده به محتوا
       child: _buildContent(
-        color: textColor ?? Get.theme.scaffoldBackgroundColor,
+        color: effectiveTextColor,
         isMaterial: true,
       ),
     );
@@ -399,7 +408,7 @@ class ButtonWidget {
             title!,
             style: TextStyle(
               color: color,
-              fontSize: fontSize ?? AppSize.f16, // Large
+              fontSize: fontSize ?? AppSize.f14, // Large
               fontWeight: FontWeight.w600,
             ),
           ),

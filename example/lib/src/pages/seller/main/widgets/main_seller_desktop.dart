@@ -1,0 +1,297 @@
+import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
+import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
+import 'package:example/src/pages/shared/models/nav_item_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controllers/main_seller_controller.dart' ;
+
+class MainSellerDesktop extends GetView<MainSellerController> {
+  const MainSellerDesktop({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<MainSellerController>();
+
+    final pages = [
+      const SellerProductsScreen(),
+      const AddProductPage(),
+      const ProfileSellerPage(),
+    ];
+
+    return Scaffold(
+      body: Row(
+        children: [
+          // سایدبار
+          Obx(
+                () => SellerSidebar(
+              currentIndex: controller.currentIndex.value,
+              items: controller.navItems,
+              onTap: controller.changeTab,
+            ),
+          ),
+
+          // محتوای اصلی
+          Expanded(
+            child: Obx(
+                  () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Container(
+                  key: ValueKey(controller.currentIndex.value),
+                  child: pages[controller.currentIndex.value],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SellerSidebar extends StatelessWidget {
+  final int currentIndex;
+  final List<NavItemModel> items;
+  final Function(int) onTap;
+
+  const SellerSidebar({
+    super.key,
+    required this.currentIndex,
+    required this.items,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Container(
+      width: 260,
+      decoration: BoxDecoration(
+        color: context.theme.scaffoldBackgroundColor,
+      ),
+      child: Column(
+        children: [
+          // هدر سایدبار
+          _buildHeader(context),
+
+          const SizedBox(height: 24),
+
+          // آیتم‌های منو
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              itemCount: items.length,
+              itemBuilder:
+                  (context, index) =>
+                  _buildNavItem(context, index, items[index]),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    final colorScheme = context.theme.colorScheme;
+
+    return Container(
+      height: 80,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+
+      child: Row(
+        children: [
+          // لوگو
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  colorScheme.primary,
+                  colorScheme.primary.withAlpha(180),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(
+              Icons.store_rounded,
+              color: Colors.white,
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'پنل فروشنده',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                Text(
+                  'مدیریت محصولات',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: colorScheme.onSurface.withAlpha(150),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(BuildContext context, int index, NavItemModel item) {
+    final colorScheme = context.theme.colorScheme;
+    final isSelected = currentIndex == index;
+
+    // دکمه افزودن محصول (ویژه)
+    if (item.isSpecial) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => onTap(index),
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    colorScheme.primary,
+                    colorScheme.primary.withAlpha(200),
+                  ],
+                  begin: Alignment.centerRight,
+                  end: Alignment.centerLeft,
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.primary.withAlpha(80),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(item.icon, color: Colors.white, size: 24),
+                  const SizedBox(width: 12),
+                  Text(
+                    item.label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // آیتم‌های معمولی
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => onTap(index),
+          borderRadius: BorderRadius.circular(12),
+          hoverColor: colorScheme.primary.withAlpha(20),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color:
+              isSelected
+                  ? colorScheme.primary.withAlpha(30)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              border:
+              isSelected
+                  ? Border.all(color: colorScheme.primary.withAlpha(50))
+                  : null,
+            ),
+            child: Row(
+              children: [
+                // اندیکاتور انتخاب
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: 4,
+                  height: isSelected ? 24 : 0,
+                  margin: const EdgeInsets.only(left: 8),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+
+                // آیکون
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    isSelected ? item.activeIcon : item.icon,
+                    key: ValueKey(isSelected),
+                    color:
+                    isSelected
+                        ? colorScheme.primary
+                        : colorScheme.onSurface.withAlpha(150),
+                    size: 24,
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                Expanded(
+                  child: Text(
+                    item.label,
+                    style: TextStyle(
+                      color:
+                      isSelected
+                          ? colorScheme.primary
+                          : colorScheme.onSurface.withAlpha(180),
+                      fontWeight:
+                      isSelected ? FontWeight.w600 : FontWeight.w500,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+
+                // نشانگر انتخاب
+                if (isSelected)
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

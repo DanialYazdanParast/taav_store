@@ -19,10 +19,8 @@ class AuthFormCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(_isMobile ? 24 : 32),
       decoration: BoxDecoration(
-        color:
-            _isMobile
-                ? theme.colorScheme.surface
-                : theme.colorScheme.surfaceContainerLowest,
+        color: theme.colorScheme.surface,
+
         borderRadius: BorderRadius.circular(_isMobile ? 28 : 24),
         border:
             _isMobile

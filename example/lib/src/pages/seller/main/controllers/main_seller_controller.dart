@@ -1,11 +1,12 @@
-import 'package:example/src/pages/shared/models/nav_item_model.dart';
+// lib/src/pages/seller/main/controllers/main_seller_controller.dart
+
+import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../../shared/models/nav_item_model.dart';
 import '../view/main_seller_screen.dart';
 
-class MainSellerController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class MainSellerController extends GetxController {
   final RxInt currentIndex = 0.obs;
 
   final List<NavItemModel> navItems = [
@@ -17,7 +18,7 @@ class MainSellerController extends GetxController
     NavItemModel(
       icon: Icons.add,
       activeIcon: Icons.add,
-      label: 'افزودن',
+      label: 'افزودن محصول',
       isSpecial: true,
     ),
     NavItemModel(
@@ -28,8 +29,14 @@ class MainSellerController extends GetxController
   ];
 
   void changeTab(int index) {
-    if (index == 1) {
-      goToAddProduct();
+    if (navItems[index].isSpecial) {
+      // دسکتاپ: نمایش در محتوای اصلی
+      if (Responsive.isDesktop) {
+        currentIndex.value = index;
+      } else {
+        // موبایل: باز کردن صفحه جدید از پایین
+        goToAddProduct();
+      }
     } else {
       currentIndex.value = index;
     }
@@ -37,7 +44,7 @@ class MainSellerController extends GetxController
 
   void goToAddProduct() {
     Get.to(
-      () => const AddProductPage(),
+          () => const AddProductPage(),
       transition: Transition.downToUp,
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeOutQuart,

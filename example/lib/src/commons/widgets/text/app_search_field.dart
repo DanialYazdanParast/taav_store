@@ -57,7 +57,6 @@ class _AppSearchFieldState extends State<AppSearchField> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
 
-    // لیسنر برای نمایش دکمه پاک کردن
     _controller.addListener(_onTextChanged);
     _showClearButton = _controller.text.isNotEmpty;
   }
@@ -88,12 +87,9 @@ class _AppSearchFieldState extends State<AppSearchField> {
 
   @override
   Widget build(BuildContext context) {
-    // --- ساخت استایل‌های اختصاصی با استفاده از AppInputStyles ---
 
-    // ۱. ساخت BorderRadius
     final radius = BorderRadius.circular(widget.borderRadius);
 
-    // ۲. اصلاح بوردرها بر اساس نیاز (مخفی کردن یا گرد کردن)
     final baseBorder =
         widget.hideBorder
             ? OutlineInputBorder(
@@ -126,11 +122,9 @@ class _AppSearchFieldState extends State<AppSearchField> {
         enabled: widget.isEnabled,
         readOnly: widget.isReadOnly,
 
-        // تنظیمات کیبورد مخصوص جستجو
         textInputAction: TextInputAction.search,
         keyboardType: TextInputType.text,
 
-        // استایل متن از کلاس شما
         style: AppInputStyles.textStyle,
 
         onChanged: widget.onChanged,
@@ -145,7 +139,6 @@ class _AppSearchFieldState extends State<AppSearchField> {
 
         decoration: InputDecoration(
           hintText: widget.hintText,
-          // استایل هینت از کلاس شما
           hintStyle: AppInputStyles.hintStyle,
 
           filled: true,
@@ -155,7 +148,6 @@ class _AppSearchFieldState extends State<AppSearchField> {
               widget.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
 
-          // --- Borders (اعمال شده از بالا) ---
           border: baseBorder,
           enabledBorder: baseBorder,
           focusedBorder: focusedBorder,
@@ -164,12 +156,10 @@ class _AppSearchFieldState extends State<AppSearchField> {
             borderRadius: radius,
           ),
 
-          // --- Prefix (آیکون جستجو) ---
           prefixIcon:
               widget.prefixWidget ??
               Icon(Icons.search, color: Get.theme.colorScheme.onSurfaceVariant),
 
-          // --- Suffix (دکمه پاک کردن) ---
           suffixIcon:
               widget.suffixWidget ??
               (_showClearButton && !widget.isReadOnly && widget.isEnabled

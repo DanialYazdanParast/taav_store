@@ -7,12 +7,14 @@ class DialogWidget {
   final Color? backgroundColor;
   final Color? barrierColor;
   final bool canPop;
+  final double maxWidth;
 
   DialogWidget({
     this.isDismissible = true,
     this.canPop = true,
     this.backgroundColor,
     this.barrierColor,
+    this.maxWidth = 800,
   });
 
   Future<void> show(final Widget content) async {
@@ -32,7 +34,7 @@ class DialogWidget {
   Widget _buildStructure({required Widget content}) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 800),
+        constraints: BoxConstraints(maxWidth: maxWidth),
         child: Material(
           color: Colors.transparent,
           child: Container(

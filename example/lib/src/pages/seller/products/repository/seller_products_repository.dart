@@ -11,6 +11,7 @@ abstract class ISellerProductsRepository {
   Future<Either<Failure, List<ProductModel>>> getSellerProducts(String sellerId);
   Future<Either<Failure, List<ColorModel>>> getColors();
   Future<Either<Failure, List<TagModel>>> getTags();
+  Future<Either<Failure, void>> deleteProduct(String productId);
 }
 
 class SellerProductsRepository extends BaseRepository implements ISellerProductsRepository {
@@ -47,6 +48,16 @@ class SellerProductsRepository extends BaseRepository implements ISellerProducts
       fromJson: (json) {
         if (json is List) return json.map((e) => TagModel.fromJson(e)).toList();
         return [];
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteProduct(String productId) {
+    return safeCall<void>(
+      request: () => _network.delete('/products/$productId'),
+      fromJson: (_) {
+        return;
       },
     );
   }

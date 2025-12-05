@@ -22,7 +22,7 @@ class MainSellerDesktop extends GetView<MainSellerController> {
       body: Row(
         children: [
           Obx(
-            () => SellerSidebar(
+                () => SellerSidebar(
               currentIndex: controller.currentIndex.value,
               items: controller.navItems,
               onTap: controller.changeTab,
@@ -31,7 +31,7 @@ class MainSellerDesktop extends GetView<MainSellerController> {
 
           Expanded(
             child: Obx(
-              () => AnimatedSwitcher(
+                  () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: Container(
                   key: ValueKey(controller.currentIndex.value),
@@ -75,7 +75,7 @@ class SellerSidebar extends StatelessWidget {
               itemCount: items.length,
               itemBuilder:
                   (context, index) =>
-                      _buildNavItem(context, index, items[index]),
+                  _buildNavItem(context, index, items[index]),
             ),
           ),
 
@@ -209,14 +209,14 @@ class SellerSidebar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color:
-                  isSelected
-                      ? colorScheme.primary.withAlpha(30)
-                      : Colors.transparent,
+              isSelected
+                  ? colorScheme.primary.withAlpha(30)
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
               border:
-                  isSelected
-                      ? Border.all(color: colorScheme.primary.withAlpha(50))
-                      : null,
+              isSelected
+                  ? Border.all(color: colorScheme.primary.withAlpha(50))
+                  : null,
             ),
             child: Row(
               children: [
@@ -237,9 +237,9 @@ class SellerSidebar extends StatelessWidget {
                     isSelected ? item.activeIcon : item.icon,
                     key: ValueKey(isSelected),
                     color:
-                        isSelected
-                            ? colorScheme.primary
-                            : colorScheme.onSurface.withAlpha(150),
+                    isSelected
+                        ? colorScheme.primary
+                        : colorScheme.onSurface.withAlpha(150),
                     size: 24,
                   ),
                 ),
@@ -251,11 +251,11 @@ class SellerSidebar extends StatelessWidget {
                     item.label,
                     style: TextStyle(
                       color:
-                          isSelected
-                              ? colorScheme.primary
-                              : colorScheme.onSurface.withAlpha(180),
+                      isSelected
+                          ? colorScheme.primary
+                          : colorScheme.onSurface.withAlpha(180),
                       fontWeight:
-                          isSelected ? FontWeight.w600 : FontWeight.w500,
+                      isSelected ? FontWeight.w600 : FontWeight.w500,
                       fontSize: 15,
                     ),
                   ),

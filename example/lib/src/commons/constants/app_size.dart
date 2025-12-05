@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppSize {
   AppSize._();
 
-  static const double buttonHeight = 56.0;
+  static double get buttonHeight  {
+    if (Get.width >= 900) {
+      return 56;
+    } else {
+      return 50;
+    }
+  }
 
   // Padding & Margins (Sorted Small to Large)
   static const double p2 = 2.0;

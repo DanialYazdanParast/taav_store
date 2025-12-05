@@ -10,6 +10,7 @@ import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'delete_product_dialog.dart';
 import 'seller_desktop_header.dart';
 import 'seller_desktop_stats_card.dart';
 import 'seller_product_card.dart';
@@ -25,16 +26,90 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
     return Scaffold(
       body: Column(
         children: [
-          SellerDesktopHeader(),
+          const SellerDesktopHeader(),
+
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildHeroSection(theme),
-                  AppSize.p20.height,
-                  _buildProductsGrid(theme, primaryColor),
-                ],
-              ),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [_buildHeroSection(theme), AppSize.p20.height],
+                  ),
+                ),
+
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSize.p32,
+                    ),
+                    child: _buildSectionTitle(theme, primaryColor),
+                  ),
+                ),
+
+                Obx(() {
+                  if (controller.productsState.value == CurrentState.loading) {
+                    return _buildLoadingGrid();
+                  }
+
+                  if (controller.productsState.value == CurrentState.error) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: ErrorView(
+                          onRetry: () => controller.fetchProducts(),
+                        ),
+                      ),
+                    );
+                  }
+
+                  if (controller.filteredProducts.isEmpty) {
+                    return const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 50),
+                        child: EmptyWidget(),
+                      ),
+                    );
+                  }
+
+                  return SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSize.p32,
+                      vertical: AppSize.p20,
+                    ),
+                    sliver: SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 450,
+                            mainAxisExtent: 140, // ارتفاع ثابت کارت‌ها
+                            crossAxisSpacing: AppSize.p20,
+                            mainAxisSpacing: AppSize.p20,
+                          ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final product = controller.filteredProducts[index];
+                        return SellerProductCard(
+                          productName: product.title,
+                          originalPrice: product.price.toString(),
+                          discountedPrice: product.discountPrice.toString(),
+                          discountPercent: product.discountPercentString,
+                          imagePath: product.image,
+                          quantity: product.quantity,
+                          onEdit: () {},
+                          onDelete: () {
+                            DeleteProductDialog.show(
+                              productName: product.title,
+                              onConfirm: () {
+                                controller.deleteProduct(product.id);
+                              },
+                            );
+                          },
+                        );
+                      }, childCount: controller.filteredProducts.length),
+                    ),
+                  );
+                }),
+
+                SliverPadding(padding: EdgeInsets.only(bottom: AppSize.p32)),
+              ],
             ),
           ),
         ],
@@ -50,9 +125,10 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
         Container(
           height: 180,
           width: double.infinity,
-          margin: const EdgeInsets.only(bottom: 50),
+          margin: const EdgeInsets.only(bottom: 60),
           decoration: BoxDecoration(color: theme.colorScheme.primary),
         ),
+
         DecorativeCircle(
           top: -150,
           right: -200,
@@ -70,75 +146,34 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
           size: 300,
           color: theme.colorScheme.onPrimary.withOpacity(0.05),
         ),
-        const Positioned(bottom: 0, child: SellerDesktopStatsCard()),
+
+        const Positioned(
+          bottom: 0,
+          left: 32,
+          right: 32,
+          child: SellerDesktopStatsCard(),
+        ),
       ],
     );
   }
 
-  Widget _buildProductsGrid(ThemeData theme, Color primaryColor) {
-    return Container(
-      width: double.infinity,
-      constraints: const BoxConstraints(maxWidth: 1200),
-      padding: const EdgeInsets.all(AppSize.p32),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionTitle(theme, primaryColor),
-          AppSize.p20.height,
-          Obx(() {
-            if (controller.productsState.value == CurrentState.loading) {
-              return GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 450,
-                  mainAxisExtent: 140,
-                  crossAxisSpacing: AppSize.p20,
-                  mainAxisSpacing: AppSize.p20,
-                ),
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return SellerProductCardShimmer();
-                },
-              );
-            }
-            if (controller.productsState.value == CurrentState.error) {
-              return ErrorView(onRetry: () => controller.fetchProducts());
-            }
-
-            if (controller.products.isEmpty) {
-              return EmptyWidget();
-            }
-
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 450,
-                mainAxisExtent: 140,
-                crossAxisSpacing: AppSize.p20,
-                mainAxisSpacing: AppSize.p20,
-              ),
-              itemCount: controller.filteredProducts.length,
-              itemBuilder: (context, index) {
-                return SellerProductCard(
-                  productName: controller.filteredProducts[index].title,
-                  originalPrice:
-                      controller.filteredProducts[index].price.toString(),
-                  discountedPrice:
-                      controller.filteredProducts[index].discountPrice
-                          .toString(),
-                  discountPercent:
-                      controller.filteredProducts[index].discountPercentString,
-                  imagePath: controller.filteredProducts[index].image,
-                  quantity: controller.filteredProducts[index].quantity,
-                  onEdit: () {},
-                  onDelete: () {},
-                );
-              },
-            );
-          }),
-        ],
+  Widget _buildLoadingGrid() {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSize.p32,
+        vertical: AppSize.p20,
+      ),
+      sliver: SliverGrid(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 450,
+          mainAxisExtent: 140,
+          crossAxisSpacing: AppSize.p20,
+          mainAxisSpacing: AppSize.p20,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) => const SellerProductCardShimmer(),
+          childCount: 6,
+        ),
       ),
     );
   }

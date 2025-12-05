@@ -3,12 +3,15 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/button/button_widget.dart';
+import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'delete_product_dialog.dart';
 import 'seller_animated_app_bar.dart';
 import 'seller_product_card.dart';
 import 'seller_revenue_section.dart';
@@ -146,27 +149,23 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                           ),
                           itemCount: controller.filteredProducts.length,
                           itemBuilder: (context, index) {
+                            final product = controller.filteredProducts[index];
                             return SellerProductCard(
-                              productName:
-                                  controller.filteredProducts[index].title,
-                              originalPrice:
-                                  controller.filteredProducts[index].price
-                                      .toString(),
-                              discountedPrice:
-                                  controller
-                                      .filteredProducts[index]
-                                      .discountPrice
-                                      .toString(),
-                              discountPercent:
-                                  controller
-                                      .filteredProducts[index]
-                                      .discountPercentString,
-                              quantity:
-                                  controller.filteredProducts[index].quantity,
-                              imagePath:
-                                  controller.filteredProducts[index].image,
+                              productName: product.title,
+                              originalPrice: product.price.toString(),
+                              discountedPrice: product.discountPrice.toString(),
+                              discountPercent: product.discountPercentString,
+                              quantity: product.quantity,
+                              imagePath: product.image,
                               onEdit: () {},
-                              onDelete: () {},
+                              onDelete: () {
+                                DeleteProductDialog.show(
+                                  productName: product.title,
+                                  onConfirm: () {
+                                    controller.deleteProduct(product.id);
+                                  },
+                                );
+                              },
                             );
                           },
                         ),

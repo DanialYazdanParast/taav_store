@@ -23,7 +23,7 @@ class SellerFilterFooter extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: SizedBox(
-          height: 48,
+         height: AppSize.buttonHeight,
           child: Row(
             children: [
               _badge(colors, text),
@@ -49,12 +49,13 @@ class SellerFilterFooter extends StatelessWidget {
 
       return AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: show ? 48 : 0,
-        margin: EdgeInsetsDirectional.only(end: show ? 16 : 0),
+        width: show ? AppSize.buttonHeight : 0,
+        margin: EdgeInsetsDirectional.only(end: show ? AppSize.p16 : 0),
         padding: const EdgeInsets.symmetric(vertical: 0),
         decoration: BoxDecoration(
           color: colors.primaryContainer,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppSize.p16),
+          border: show ? Border.all(color: colors.primary) : null,
         ),
         child:
             show

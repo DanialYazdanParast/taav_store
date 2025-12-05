@@ -38,43 +38,43 @@ class SellerStatItem extends StatelessWidget {
 
         state == CurrentState.loading || state == CurrentState.error
             ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: AppShimmer.rect(
-                width: 50,
-                height: valueSize ?? AppSize.f24,
-                borderRadius: 6,
-              ),
-            )
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: AppShimmer.rect(
+            width: 50,
+            height: valueSize ?? AppSize.f24,
+            borderRadius: 6,
+          ),
+        )
             : Directionality(
-              textDirection: TextDirection.rtl,
-              child: Text.rich(
+          textDirection: TextDirection.rtl,
+          child: Text.rich(
+            TextSpan(
+              children: [
                 TextSpan(
-                  children: [
-                    TextSpan(
-                      text: value,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: valueSize ?? AppSize.f24,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-
-                    if (unit != null) ...[
-                      const TextSpan(text: ' '),
-                      TextSpan(
-                        text: unit,
-                        style: TextStyle(
-                          color: textColor.withOpacity(0.8),
-                          fontSize: (valueSize ?? AppSize.f24) * 0.55,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ],
+                  text: value,
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: valueSize ?? AppSize.f24,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
+
+                if (unit != null) ...[
+                  const TextSpan(text: ' '),
+                  TextSpan(
+                    text: unit,
+                    style: TextStyle(
+                      color: textColor.withOpacity(0.8),
+                      fontSize: (valueSize ?? AppSize.f24) * 0.55,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ],
             ),
+            textAlign: TextAlign.center,
+          ),
+        ),
 
         AppSize.p5.height,
 

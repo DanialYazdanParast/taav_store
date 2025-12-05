@@ -12,8 +12,6 @@ class MainSellerScreen extends GetView<MainSellerController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MainSellerController());
-
     return const Responsive(
       mobile: MainSellerMobile(),
       desktop: MainSellerDesktop(),

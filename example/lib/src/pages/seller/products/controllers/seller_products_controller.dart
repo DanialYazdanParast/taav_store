@@ -84,31 +84,64 @@ class SellerProductsController extends GetxController {
       (fetchedProducts) {
         products.assignAll(fetchedProducts);
         productsState.value = CurrentState.success;
+        _calculatePriceLimits(fetchedProducts);
+      },
+    );
+  }
 
-        if (fetchedProducts.isNotEmpty) {
-          final List<double> effectivePrices =
-              fetchedProducts.map((p) {
-                return (p.discountPrice > 0 && p.discountPrice < p.price)
-                    ? p.discountPrice.toDouble()
-                    : p.price.toDouble();
-              }).toList();
+  Future<void> deleteProduct(String productId) async {
+    final result = await repository.deleteProduct(productId);
 
-          double minP = effectivePrices.reduce(min);
-          double maxP = effectivePrices.reduce(max);
+    result.fold(
+      (failure) {
+        ToastUtil.show(
+          failure.message ?? 'خطا در حذف محصول',
+          type: ToastType.error,
+        );
+      },
+      (success) {
+        products.removeWhere((element) => element.id == productId);
 
-          if (minP == maxP) {
-            minP = (minP - 10000 < 0) ? 0 : minP - 10000;
-            maxP = maxP + 10000;
-          }
+        if (products.isEmpty) {
+        } else {
+          _calculatePriceLimits(products);
+        }
 
-          minPriceLimit.value = minP;
-          maxPriceLimit.value = maxP;
+        ToastUtil.show('محصول با موفقیت حذف شد', type: ToastType.success);
 
-          appliedPriceRange.value = RangeValues(minP, maxP);
-          tempPriceRange.value = RangeValues(minP, maxP);
+        if (Get.isDialogOpen == true) {
+          Get.back();
         }
       },
     );
+  }
+
+  void _calculatePriceLimits(List<ProductModel> items) {
+    if (items.isNotEmpty) {
+      final List<double> effectivePrices =
+          items.map((p) {
+            return (p.discountPrice > 0 && p.discountPrice < p.price)
+                ? p.discountPrice.toDouble()
+                : p.price.toDouble();
+          }).toList();
+
+      double minP = effectivePrices.reduce(min);
+      double maxP = effectivePrices.reduce(max);
+
+      if (minP == maxP) {
+        minP = (minP - 10000 < 0) ? 0 : minP - 10000;
+        maxP = maxP + 10000;
+      }
+
+      minPriceLimit.value = minP;
+      maxPriceLimit.value = maxP;
+
+      if (appliedPriceRange.value.start < minP ||
+          appliedPriceRange.value.end > maxP) {
+        appliedPriceRange.value = RangeValues(minP, maxP);
+        tempPriceRange.value = RangeValues(minP, maxP);
+      }
+    }
   }
 
   Future<void> fetchFilterOptions() async {

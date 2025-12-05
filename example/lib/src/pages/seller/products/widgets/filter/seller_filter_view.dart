@@ -1,9 +1,9 @@
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
-import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/seller_products_controller.dart';
 import 'widgets/filter_availability.dart';
 import 'widgets/filter_colors.dart';
 import 'widgets/filter_footer.dart';
@@ -19,6 +19,7 @@ class SellerFilterView extends GetView<SellerProductsController> {
     return SizedBox(
       height: Get.height * 0.8,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SellerFilterHeader(controller),
           AppDivider.horizontal(),

@@ -1,3 +1,4 @@
+import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
@@ -17,7 +18,7 @@ class SellerFilterHeader extends StatelessWidget {
     final text = context.theme.textTheme;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16,),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

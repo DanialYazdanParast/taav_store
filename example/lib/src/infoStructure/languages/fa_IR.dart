@@ -83,6 +83,26 @@ const Map<String, String> faIR = {
   TKeys.products: 'محصولات',
   TKeys.sales: 'فروش',
 
+  // ═══ Profile / Settings ═══
+  TKeys.appLanguage: 'زبان برنامه',
+  TKeys.appTheme: 'ظاهر برنامه',
+  TKeys.lightMode: 'روشن',
+  TKeys.darkMode: 'تاریک',
+  TKeys.systemMode: 'سیستمی',
+  TKeys.themeLightTitle: 'روشن (Light)',
+  TKeys.themeDarkTitle: 'تاریک (Dark)',
+  TKeys.logout: 'خروج از حساب',
+  TKeys.logoutDescMobile: 'خروج کامل از اپلیکیشن',
+  TKeys.logoutDescWeb: 'خروج کامل از وب‌اپلیکیشن',
+  TKeys.settings: 'تنظیمات',
+  TKeys.guestUser: 'کاربر مهمان',
+  TKeys.selectLanguage: 'انتخاب زبان',
+  TKeys.confirmLogoutMsg: 'آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟',
+  TKeys.yesLogout: 'خروج',
+  TKeys.cancel: 'انصراف',
+  TKeys.farsi: 'فارسی',
+  TKeys.english: 'English',
+
 
 
 };

@@ -80,4 +80,24 @@ const Map<String, String> enUS = {
 
   TKeys.products: 'Products',
   TKeys.sales: 'Sales',
+
+  // ═══ Profile / Settings ═══
+  TKeys.appLanguage: 'App Language',
+  TKeys.appTheme: 'App Theme',
+  TKeys.lightMode: 'Light',
+  TKeys.darkMode: 'Dark',
+  TKeys.systemMode: 'System',
+  TKeys.themeLightTitle: 'Light',
+  TKeys.themeDarkTitle: 'Dark',
+  TKeys.logout: 'Log Out',
+  TKeys.logoutDescMobile: 'Sign out of the application',
+  TKeys.logoutDescWeb: 'Sign out of the web application',
+  TKeys.settings: 'Settings',
+  TKeys.guestUser: 'Guest User',
+  TKeys.selectLanguage: 'Select Language',
+  TKeys.confirmLogoutMsg: 'Are you sure you want to log out of your account?',
+  TKeys.yesLogout: 'Log Out',
+  TKeys.cancel: 'Cancel',
+  TKeys.farsi: 'Persian',
+  TKeys.english: 'English',
 };

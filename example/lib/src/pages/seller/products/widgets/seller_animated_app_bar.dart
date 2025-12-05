@@ -74,7 +74,7 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
             () => AnimatedContainer(
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeOutQuart,
-          width: controller.isSearching.value ? screenWidth - 40 : 45,
+          width: controller.isSearching.value ? screenWidth - 32 : 45,
           height: 45,
           decoration: BoxDecoration(
             color:

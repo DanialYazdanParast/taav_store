@@ -22,11 +22,11 @@ class AppPages {
       transition: Transition.noTransition,
     ),
 
-    GetPage(
-      name: _Paths.sellerProducts,
-      page: SellerProductsScreen.new,
-      transition: Transition.noTransition,
-    ),
+    // GetPage(
+    //   name: _Paths.sellerProducts,
+    //   page: SellerProductsScreen.new,
+    //   transition: Transition.noTransition,
+    // ),
 
     GetPage(
       name: _Paths.login,

@@ -4,6 +4,7 @@ import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,13 +26,13 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p32),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: AppSize.p10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black.withOpacity(0.04),
+        //     blurRadius: AppSize.p10,
+        //     offset: const Offset(0, 4),
+        //   ),
+        // ],
       ),
       child: Row(
         children: [
@@ -100,10 +101,16 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   }
 
   Widget _buildProfileAvatar(Color primaryColor) {
-    return CircleAvatar(
-      radius: AppSize.p20,
-      backgroundColor: primaryColor.withOpacity(0.2),
-      child: Icon(Icons.person, color: primaryColor),
+    return InkWell(
+      onTap: () {
+        final mainSellerController = Get.find<MainSellerController>();
+        mainSellerController.changeTab(2);
+      },
+      child: CircleAvatar(
+        radius: AppSize.p20,
+        backgroundColor: primaryColor.withOpacity(0.2),
+        child: Icon(Icons.person, color: primaryColor),
+      ),
     );
   }
 }

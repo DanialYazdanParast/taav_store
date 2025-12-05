@@ -24,95 +24,98 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
     final primaryColor = theme.colorScheme.primary;
 
     return Scaffold(
-      body: Column(
-        children: [
-          const SellerDesktopHeader(),
+      body: Padding(
+        padding: EdgeInsetsDirectional.only(end:AppSize.p16),
+        child: Column(
+          children: [
+            const SellerDesktopHeader(),
 
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [_buildHeroSection(theme), AppSize.p20.height],
-                  ),
-                ),
-
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSize.p32,
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [_buildHeroSection(theme), AppSize.p20.height],
                     ),
-                    child: _buildSectionTitle(theme, primaryColor),
                   ),
-                ),
 
-                Obx(() {
-                  if (controller.productsState.value == CurrentState.loading) {
-                    return _buildLoadingGrid();
-                  }
-
-                  if (controller.productsState.value == CurrentState.error) {
-                    return SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(32.0),
-                        child: ErrorView(
-                          onRetry: () => controller.fetchProducts(),
-                        ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSize.p32,
                       ),
-                    );
-                  }
-
-                  if (controller.filteredProducts.isEmpty) {
-                    return const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 50),
-                        child: EmptyWidget(),
-                      ),
-                    );
-                  }
-
-                  return SliverPadding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSize.p32,
-                      vertical: AppSize.p20,
+                      child: _buildSectionTitle(theme, primaryColor),
                     ),
-                    sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 450,
-                            mainAxisExtent: 140, // ارتفاع ثابت کارت‌ها
-                            crossAxisSpacing: AppSize.p20,
-                            mainAxisSpacing: AppSize.p20,
+                  ),
+
+                  Obx(() {
+                    if (controller.productsState.value == CurrentState.loading) {
+                      return _buildLoadingGrid();
+                    }
+
+                    if (controller.productsState.value == CurrentState.error) {
+                      return SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: ErrorView(
+                            onRetry: () => controller.fetchProducts(),
                           ),
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        final product = controller.filteredProducts[index];
-                        return SellerProductCard(
-                          productName: product.title,
-                          originalPrice: product.price.toString(),
-                          discountedPrice: product.discountPrice.toString(),
-                          discountPercent: product.discountPercentString,
-                          imagePath: product.image,
-                          quantity: product.quantity,
-                          onEdit: () {},
-                          onDelete: () {
-                            DeleteProductDialog.show(
-                              productName: product.title,
-                              onConfirm: () {
-                                controller.deleteProduct(product.id);
-                              },
-                            );
-                          },
-                        );
-                      }, childCount: controller.filteredProducts.length),
-                    ),
-                  );
-                }),
+                        ),
+                      );
+                    }
 
-                SliverPadding(padding: EdgeInsets.only(bottom: AppSize.p32)),
-              ],
+                    if (controller.filteredProducts.isEmpty) {
+                      return const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 50),
+                          child: EmptyWidget(),
+                        ),
+                      );
+                    }
+
+                    return SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSize.p32,
+                        vertical: AppSize.p20,
+                      ),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 450,
+                              mainAxisExtent: 140, // ارتفاع ثابت کارت‌ها
+                              crossAxisSpacing: AppSize.p20,
+                              mainAxisSpacing: AppSize.p20,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final product = controller.filteredProducts[index];
+                          return SellerProductCard(
+                            productName: product.title,
+                            originalPrice: product.price.toString(),
+                            discountedPrice: product.discountPrice.toString(),
+                            discountPercent: product.discountPercentString,
+                            imagePath: product.image,
+                            quantity: product.quantity,
+                            onEdit: () {},
+                            onDelete: () {
+                              DeleteProductDialog.show(
+                                productName: product.title,
+                                onConfirm: () {
+                                  controller.deleteProduct(product.id);
+                                },
+                              );
+                            },
+                          );
+                        }, childCount: controller.filteredProducts.length),
+                      ),
+                    );
+                  }),
+
+                  SliverPadding(padding: EdgeInsets.only(bottom: AppSize.p32)),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

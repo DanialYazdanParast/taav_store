@@ -1,3 +1,4 @@
+import 'package:example/src/pages/seller/account/view/seller_account_screen.dart';
 import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/shared/models/nav_item_model.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class MainSellerMobile extends GetView<MainSellerController> {
     final pages = [
       const SellerProductsScreen(),
       const SizedBox(),
-      const ProfileSellerPage(),
+      const SellerAccountScreen(),
     ];
 
     return Scaffold(

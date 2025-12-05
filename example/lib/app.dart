@@ -6,6 +6,7 @@ import 'src/infoStructure/languages/localization_controller.dart';
 import 'src/infoStructure/routes/app_pages.dart';
 import 'src/infoStructure/theme/app_theme.dart';
 import 'src/infoStructure/languages/app_translations.dart';
+import 'src/infoStructure/theme/theme_controller.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,14 +14,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final langController = Get.find<LocalizationController>();
-
+    final themeController = Get.find<ThemeController>();
     return GetMaterialApp(
       title: 'Taav Store',
       debugShowCheckedModeBanner: false,
 
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode: themeController.themeMode,
 
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,

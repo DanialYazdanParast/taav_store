@@ -84,4 +84,24 @@ abstract class TKeys {
   static const String products = 'products';
   static const String sales = 'sales';
 
+  // ═══ Profile / Settings ═══
+  static const String appLanguage = 'app_language';
+  static const String appTheme = 'app_theme';
+  static const String lightMode = 'light_mode';
+  static const String darkMode = 'dark_mode';
+  static const String systemMode = 'system_mode';
+  static const String themeLightTitle = 'theme_light_title';
+  static const String themeDarkTitle = 'theme_dark_title';
+  static const String logout = 'logout';
+  static const String logoutDescMobile = 'logout_desc_mobile';
+  static const String logoutDescWeb = 'logout_desc_web';
+  static const String settings = 'settings';
+  static const String guestUser = 'guest_user';
+  static const String selectLanguage = 'select_language';
+  static const String confirmLogoutMsg = 'confirm_logout_msg';
+  static const String yesLogout = 'yes_logout';
+  static const String cancel = 'cancel';
+  static const String farsi = 'farsi';
+  static const String english = 'english';
+
 }

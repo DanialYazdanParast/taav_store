@@ -1,4 +1,5 @@
 import 'package:example/src/commons/constants/storage_keys.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'storage_service.dart';
 
@@ -48,5 +49,7 @@ class AuthService extends GetxService {
     username.value = '';
     userType.value = '';
     userId.value = '';
+
+    Get.offAllNamed(AppRoutes.login);
   }
 }

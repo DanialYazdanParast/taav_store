@@ -7,12 +7,14 @@ class DialogWidget {
   final Color? backgroundColor;
   final Color? barrierColor;
   final bool canPop;
+  final double maxWidth;
 
   DialogWidget({
     this.isDismissible = true,
     this.canPop = true,
     this.backgroundColor,
     this.barrierColor,
+    this.maxWidth = 800,
   });
 
   Future<void> show(final Widget content) async {
@@ -32,14 +34,14 @@ class DialogWidget {
   Widget _buildStructure({required Widget content}) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 340),
+        constraints: BoxConstraints(maxWidth: maxWidth),
         child: Material(
           color: Colors.transparent,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: AppSize.p24),
             padding: const EdgeInsets.all(AppSize.p24),
             decoration: ShapeDecoration(
-              color: backgroundColor ?? Get.theme.colorScheme.surface,
+              color: backgroundColor ?? Get.theme.scaffoldBackgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSize.r16),
               ),

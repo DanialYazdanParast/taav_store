@@ -31,6 +31,7 @@ class AppColorScheme {
       outlineVariant: disabledColor,
 
       error: errorColor,
+      onSurface: textPrimary,
 
       //------------------------
       seedColor: primary,
@@ -39,7 +40,7 @@ class AppColorScheme {
 
       onSecondary: onSecondary,
       surface: surface, // رنگ کارت‌ها و دیالوگ‌ها
-      onSurface: textPrimary, // رنگ متن و آیکون روی کارت‌ها
+
 
       outline: outline,
     );

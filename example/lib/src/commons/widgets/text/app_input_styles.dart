@@ -49,7 +49,7 @@ class AppInputStyles {
   );
 
   static TextStyle get hintStyle =>
-      TextStyle(fontSize: AppSize.f14, color: Get.theme.colorScheme.outline);
+      TextStyle(fontSize: AppSize.f14, color: Get.theme.hintColor);
 
   static TextStyle get errorStyle => TextStyle(
     fontSize: AppSize.f12, // Small

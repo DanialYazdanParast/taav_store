@@ -37,7 +37,7 @@ class BottomSheetWidget {
   Widget _buildStructure({required Widget content}) {
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: backgroundColor ?? Get.theme.colorScheme.surface,
+        color: backgroundColor ?? Get.theme.scaffoldBackgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(AppSize.r16),
@@ -58,24 +58,25 @@ class BottomSheetWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (showDragHandle) ...[
-            AppSize.p16.height,
-            Container(
-              width: 44,
-              height: 4,
-              decoration: ShapeDecoration(
-                color: Get.theme.colorScheme.outline.withOpacity(0.4),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Column(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(AppSize.r2),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
-
-          AppSize.p16.height,
-
           content,
 
-          AppSize.p16.height,
+
         ],
       ),
     );

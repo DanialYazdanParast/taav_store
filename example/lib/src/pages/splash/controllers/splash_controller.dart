@@ -34,9 +34,12 @@ class SplashController extends GetxController {
       } else if (type == 'buyer') {
       //  Get.offAllNamed(AppRoutes.buyerHome);
       } else {
+      //  Get.offAllNamed(AppRoutes.mainSeller);
         Get.offAllNamed(AppRoutes.login);
       }
+
     } else {
+     // Get.offAllNamed(AppRoutes.mainSeller);
       Get.offAllNamed(AppRoutes.login);
     }
   }

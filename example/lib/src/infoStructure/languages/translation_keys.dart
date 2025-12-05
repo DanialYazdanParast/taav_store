@@ -50,4 +50,38 @@ abstract class TKeys {
   static const String highSpeed = 'high_speed';
   static const String fullSecurity = 'full_security';
   static const String support247 = 'support_247';
+
+  // ═══ Filter Section  ═══
+  static const String filters = 'filters';
+  static const String removeAll = 'remove_all';
+  static const String priceRange = 'price_range';
+  static const String currency = 'currency'; // تومان
+  static const String colors = 'colors';
+  static const String tags = 'tags';
+  static const String onlyAvailable = 'only_available';
+  static const String viewResults = 'view_results';
+
+  // ═══ Navigation ═══
+  static const String navHome = 'nav_home';
+  static const String navAddProduct = 'nav_add_product';
+  static const String navProfile = 'nav_profile';
+  static const String sellerPanel = 'seller_panel';
+  static const String productManagement = 'product_management';
+
+  // ═══ General Buttons & Fields ═══
+  static const String searchHint = 'search_hint';
+  static const String addProduct = 'add_product';
+
+  // ═══ Seller Stats ═══
+  static const String totalRevenue = 'total_revenue';
+  static const String activeProducts = 'active_products';
+  static const String successfulSales = 'successful_sales';
+  static const String newOrders = 'new_orders';
+  static const String stock = 'stock';
+
+  static const String shopProductList = 'shop_product_list';
+
+  static const String products = 'products';
+  static const String sales = 'sales';
+
 }

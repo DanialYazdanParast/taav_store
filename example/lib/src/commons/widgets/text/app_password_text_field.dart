@@ -223,11 +223,11 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
       margin: EdgeInsets.only(top: AppSize.p8),
       padding: EdgeInsets.all(AppSize.p12),
       decoration: ShapeDecoration(
-        color: Get.theme.colorScheme.surfaceContainer,
+        color: context.theme.colorScheme.surfaceContainer,
         shape: RoundedRectangleBorder(
           borderRadius: AppSize.brMedium,
           side: BorderSide(
-            color: Get.theme.colorScheme.outlineVariant,
+            color: context.theme.colorScheme.outlineVariant,
             width: 0.5,
           ),
         ),
@@ -255,7 +255,7 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
           Icon(
             isMet ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
             color:
-                isMet ? Colors.green : Get.theme.colorScheme.onSurfaceVariant,
+                isMet ? Colors.green : context.theme.colorScheme.onSurfaceVariant,
             size: 16,
           ),
           AppSize.p8.width,
@@ -266,8 +266,8 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
                 fontSize: AppSize.f12,
                 color:
                     isMet
-                        ? Get.theme.colorScheme.onSurface
-                        : Get.theme.colorScheme.onSurfaceVariant,
+                        ? context.theme.colorScheme.onSurface
+                        : context.theme.colorScheme.onSurfaceVariant,
                 decoration: isMet ? TextDecoration.none : null,
               ),
             ),
@@ -283,12 +283,12 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
       if (strength == PasswordStrength.weak) {
         return index == 0
             ? Colors.red
-            : Get.theme.colorScheme.surfaceContainerHighest;
+            : context.theme.colorScheme.surfaceContainerHighest;
       }
       if (strength == PasswordStrength.moderate) {
         return index <= 1
             ? Colors.orange
-            : Get.theme.colorScheme.surfaceContainerHighest;
+            : context.theme.colorScheme.surfaceContainerHighest;
       }
       return Colors.green;
     }

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'filter/seller_filter_view.dart';
-import '../../../shared/widgets/seller_icon_button.dart';
+import '../../../shared/widgets/icon_button_widget.dart';
 
 
 class SellerDesktopHeader extends GetView<SellerProductsController> {
@@ -63,7 +63,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   }
 
   Widget _buildFilterButton(ThemeData theme) {
-    return SellerIconButton(
+    return IconButtonWidget(
       icon: Icons.filter_list_rounded,
       onTap: () {
         DialogWidget().show(const SellerFilterView());

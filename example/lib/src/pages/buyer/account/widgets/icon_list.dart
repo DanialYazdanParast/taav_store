@@ -8,14 +8,14 @@ import 'package:example/src/infoStructure/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'seller_settings_dialogs.dart';
-import 'seller_ui_components.dart';
+import 'settings_dialogs.dart';
+import '../../../shared/widgets/ui_components.dart';
 
-class SellerSettingsList extends StatelessWidget {
+class IconList extends StatelessWidget {
   final VoidCallback onLogout;
   final bool showChevron;
 
-  const SellerSettingsList({
+  const IconList({
     super.key,
     required this.onLogout,
     this.showChevron = true,
@@ -29,32 +29,32 @@ class SellerSettingsList extends StatelessWidget {
 
     return Column(
       children: [
-        SettingsMenuItem(
+        MenuItem(
           icon: Icons.language,
           color: theme.colorScheme.primary,
           title: TKeys.appLanguage.tr,
           subtitle: locController.currentLocale.languageCode == 'fa' ? TKeys.farsi.tr : TKeys.english.tr,
           showChevron: showChevron,
-          onTap: () => SellerSettingsDialogs.showLanguage(locController),
+          onTap: () => SettingsDialogs.showLanguage(locController),
         ),
         AppSize.p10.height,
-        SettingsMenuItem(
+        MenuItem(
           icon: Icons.dark_mode_outlined,
           color: theme.colorScheme.primary,
           title: TKeys.appTheme.tr,
           subtitle: Get.isDarkMode ? TKeys.darkMode.tr : TKeys.lightMode.tr,
           showChevron: showChevron,
-          onTap: () => SellerSettingsDialogs.showTheme(themeController),
+          onTap: () => SettingsDialogs.showTheme(themeController),
         ),
         AppSize.p10.height,
-        SettingsMenuItem(
+        MenuItem(
           icon: Icons.logout_rounded,
           color: Colors.redAccent,
           title: TKeys.logout.tr,
           subtitle: Responsive.isMobile ? TKeys.logoutDescMobile.tr : TKeys.logoutDescWeb.tr,
           isDestructive: true,
           showChevron: showChevron,
-          onTap: () => SellerSettingsDialogs.showLogout(onLogout),
+          onTap: () => SettingsDialogs.showLogout(onLogout),
         ),
       ],
     );

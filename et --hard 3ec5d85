@@ -1,0 +1,46 @@
+[33me61f4b4[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m Merge remote-tracking branch 'origin/main' into develop
+[33mdf5d6f4[m add
+[33mf10faaa[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #13 from DanialYazdanParast/feature/main-buyer
+[33m1909be2[m[33m ([m[1;31morigin/feature/main-buyer[m[33m, [m[1;32mfeature/main-buyer[m[33m)[m Update main_buyer_controller.dart
+[33me509896[m[33m ([m[1;32mfeature/buyer-account[m[33m)[m Merge pull request #12 from DanialYazdanParast/revert-11-feature/main-buyer
+[33m060e1a3[m[33m ([m[1;31morigin/revert-11-feature/main-buyer[m[33m)[m Revert "feat: Implement initial Buyer flow and pages"
+[33m2f76989[m Merge pull request #11 from DanialYazdanParast/feature/main-buyer
+[33m09a5e0f[m feat: Add MainBuyer module and routing configuration
+[33m3ec5d85[m Merge pull request #10 from DanialYazdanParast/feature/seller-edit
+[33m491e6eb[m[33m ([m[1;31morigin/feature/seller-edit[m[33m, [m[1;32mfeature/seller-edit[m[33m)[m feat: implement seller product edit
+[33m233072c[m Merge pull request #9 from DanialYazdanParast/feature/seller-add
+[33m540da8d[m[33m ([m[1;31morigin/feature/seller-add[m[33m, [m[1;32mfeature/seller-add[m[33m)[m Merge branch 'feature/seller-add' of https://github.com/DanialYazdanParast/taav_store into feature/seller-add
+[33mca82201[m feat(seller): implement add new product functionality
+[33ma037472[m feat(seller): implement product edit feature for web and mobile
+[33m3051f76[m Merge pull request #7 from DanialYazdanParast/feature/seller-account
+[33mf894885[m[33m ([m[1;31morigin/feature/seller-account[m[33m, [m[1;32mfeature/seller-account[m[33m)[m feat: Implement Seller Account screen with localization and responsive UI
+[33m7d1eb9d[m Merge pull request #6 from DanialYazdanParast/feature/seller-products
+[33m9fe15b9[m[33m ([m[1;31morigin/feature/seller-products[m[33m, [m[1;32mfeature/seller-products[m[33m)[m feat(seller-products): implement product deletion flow with API call and confirmation dialog
+[33mb43f7d5[m feat(seller-products): add language support (FA/EN) to seller product page
+[33mf6ab4a4[m feat: add responsive filter UI with bottom sheet (mobile) and dialog (web)
+[33m1b0e137[m feat(seller-products): connect API with loading, empty, error states and search by name & tag
+[33m7ff9fbc[m feat: add responsive seller product screen and desktop bottom navigation
+[33md8d6bf0[m Merge pull request #5 from DanialYazdanParast/feature/seller-navigation
+[33m627662b[m[33m ([m[1;31morigin/feature/seller-navigation[m[33m, [m[1;32mfeature/seller-navigation[m[33m)[m Update main_seller_binding.dart
+[33m84eaf5a[m Merge pull request #4 from DanialYazdanParast/feature/seller-navigation
+[33m0bb181b[m feat(seller): implement main screen with custom bottom navigation
+[33m0e14893[m Merge pull request #3 from DanialYazdanParast/feature/authentication
+[33ma5a39b7[m[33m ([m[1;31morigin/feature/authentication[m[33m, [m[1;32mfeature/authentication[m[33m)[m feat: implement AuthService with rememberMe and userType + SplashController navigation
+[33m490ae25[m feat(auth): implement login API with error handling & state management
+[33md0e7174[m feat(auth): connect Register API and implement full registration flow with validations
+[33m5af80cd[m feat: add base infrastructure for API requests
+[33m65a1684[m feat(auth): add login & register UI screens
+[33m11f7f2b[m Merge pull request #2 from DanialYazdanParast/feature/splash
+[33m4ff37bd[m[33m ([m[1;31morigin/feature/splash[m[33m, [m[1;32mfeature/splash[m[33m)[m feat: Implement SplashScreen, StorageService, DI, and Multi-language support
+[33m25b95e4[m feat(splash): implement responsive splash screen UI with animation
+[33m2b6de4a[m Merge pull request #1 from DanialYazdanParast/feature/project-setup
+[33md9a02f9[m[33m ([m[1;32mfeature/project-setup[m[33m)[m Merge branch 'develop' into feature/project-setup
+[33mfd8c0fb[m feat: add core UI components and utilities (Shimmer, Loading, BottomSheet, Dialog, Buttons, Toast, Utils, Sizes)
+[33mf64701c[m feat(assets): add application logo
+[33m89f332c[m feat: add responsive widget using GetX width breakpoints
+[33m34d2f11[m feat: setup localization (fa/en) and app theme infrastructure
+[33mf02f551[m feat: implement app routing and base bindings
+[33m8291534[m chore: add base dependencies (get, dio, either_dart)
+[33m68b6ede[m chore: initialize base architecture (commons, infoStructure, pages)
+[33m5e18074[m chore: initialize flutter project for mobile and web support
+[33m29f7acb[m Initial commit

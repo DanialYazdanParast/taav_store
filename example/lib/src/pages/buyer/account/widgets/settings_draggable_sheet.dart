@@ -4,12 +4,12 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 
-import 'seller_settings_list.dart';
+import 'icon_list.dart';
 
-class SellerDraggableSheet extends StatelessWidget {
+class SettingsDraggableSheet extends StatelessWidget {
   final VoidCallback onLogout;
 
-  const SellerDraggableSheet({super.key, required this.onLogout});
+  const SettingsDraggableSheet({super.key, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class SellerDraggableSheet extends StatelessWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
                     children: [
-                      SellerSettingsList(onLogout: onLogout),
+                      IconList(onLogout: onLogout),
                       50.height,
                     ],
                   ),

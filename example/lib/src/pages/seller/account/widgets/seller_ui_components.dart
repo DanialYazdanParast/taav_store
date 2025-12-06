@@ -38,26 +38,32 @@ class BackgroundParticle extends StatelessWidget {
     );
   }
 }
-
-// آیتم‌های منوی تنظیمات
 class SettingsMenuItem extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String title;
-  final String subtitle;
+  final String? subtitle; // تغییر به Nullable (اختیاری)
   final VoidCallback onTap;
   final bool isDestructive;
   final bool showChevron;
+
+  // پارامترهای جدید برای شخصی‌سازی
+  final EdgeInsetsGeometry padding;
+  final double iconContainerSize;
+  final double iconSize;
 
   const SettingsMenuItem({
     super.key,
     required this.icon,
     required this.color,
     required this.title,
-    required this.subtitle,
     required this.onTap,
+    this.subtitle, // دیگر required نیست
     this.isDestructive = false,
     this.showChevron = true,
+    this.padding = const EdgeInsets.all(AppSize.p12), // مقدار پیش‌فرض
+    this.iconContainerSize = 48.0, // مقدار پیش‌فرض سایز کانتینر
+    this.iconSize = 24.0,
   });
 
   @override
@@ -67,19 +73,20 @@ class SettingsMenuItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppSize.r16),
       hoverColor: color.withOpacity(0.05),
       child: Padding(
-        padding: const EdgeInsets.all(AppSize.p12),
+        padding: padding, // استفاده از پدینگ کاستوم
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: iconContainerSize,
+              height: iconContainerSize,
               decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-              child: Icon(icon, color: Colors.white, size: 24),
+              child: Icon(icon, color: Colors.white, size: iconSize),
             ),
             AppSize.p16.width,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center, // اگر سابتایتل نباشد، تایتل وسط قرار می‌گیرد
                 children: [
                   Text(
                     title,
@@ -91,11 +98,14 @@ class SettingsMenuItem extends StatelessWidget {
                           : Get.theme.textTheme.bodyLarge?.color,
                     ),
                   ),
-                  AppSize.p4.height,
-                  Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: AppSize.f12, color: Colors.grey),
-                  ),
+                  // شرط برای نمایش سابتایتل فقط در صورت وجود
+                  if (subtitle != null && subtitle!.isNotEmpty) ...[
+                    AppSize.p4.height,
+                    Text(
+                      subtitle!,
+                      style: const TextStyle(fontSize: AppSize.f12, color: Colors.grey),
+                    ),
+                  ],
                 ],
               ),
             ),

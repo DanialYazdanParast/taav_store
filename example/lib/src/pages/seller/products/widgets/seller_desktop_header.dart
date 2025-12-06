@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'filter/seller_filter_view.dart';
-import 'seller_icon_button.dart';
+import '../../../shared/widgets/seller_icon_button.dart';
 
 
 class SellerDesktopHeader extends GetView<SellerProductsController> {

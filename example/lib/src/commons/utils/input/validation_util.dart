@@ -1,29 +1,7 @@
 import 'regex_util.dart';
 
 class ValidationUtil {
-  String? email(final String? value) {
-    if (value == null || value.isEmpty) {
-      return 'ایمیل نمی‌تواند خالی باشد';
-    }
-    if (value.length > 60) {
-      return 'حداکثر ۶۰ کاراکتر وارد کنید';
-    }
-    if (RegexpUtil.email.hasMatch(value)) {
-      return null;
-    } else {
-      return 'ایمیل صحیح وارد کنید';
-    }
-  }
 
-  String? mobileIran(final String? value) {
-    if (value == null || value.isEmpty) {
-      return 'شماره تماس نمی‌تواند خالی باشد';
-    } else if (RegexpUtil.mobileIran.hasMatch(value)) {
-      return null;
-    } else {
-      return 'شماره تماس صحیح وارد کنید';
-    }
-  }
 
   String? password(final String? value) {
     if (value == null || value.isEmpty) {
@@ -94,6 +72,61 @@ class ValidationUtil {
 
     if (!RegexpUtil.allowedPasswordChars.hasMatch(value)) {
       return 'رمز عبور باید با حروف انگلیسی وارد شود';
+    }
+
+    return null;
+  }
+
+
+  String? requiredField(final String? value, String fieldName) {
+    if (value == null || value.trim().isEmpty) {
+      return '$fieldName نمی‌تواند خالی باشد';
+    }
+    if (value.length < 3) {
+      return '$fieldName باید حداقل ۳ کاراکتر باشد';
+    }
+    return null;
+  }
+
+  String? number(final String? value, String fieldName) {
+    if (value == null || value.isEmpty) {
+      return '$fieldName را وارد کنید';
+    }
+
+    // حذف ویرگول‌ها برای تبدیل صحیح به عدد
+    final cleanValue = value.replaceAll(',', '');
+
+    final number = int.tryParse(cleanValue);
+    if (number == null) {
+      return 'لطفاً عدد معتبر وارد کنید';
+    }
+    if (number < 0) {
+      return '$fieldName نمی‌تواند منفی باشد';
+    }
+    return null;
+  }
+
+  // ✅ اصلاح شده: حذف ویرگول برای مقایسه قیمت‌ها
+  String? discountPrice(final String? discountVal, final String? originalPriceVal) {
+
+    if (discountVal == null || discountVal.isEmpty) return null;
+
+    final cleanDiscount = discountVal.replaceAll(',', '');
+    final cleanOriginal = (originalPriceVal ?? '0').replaceAll(',', '');
+
+    final discount = int.tryParse(cleanDiscount);
+    final original = int.tryParse(cleanOriginal);
+
+    if (discount == null) {
+      return 'قیمت تخفیف باید عدد باشد';
+    }
+
+    if (original == null) {
+      return null;
+    }
+
+    if (discount >= original) {
+      return 'قیمت با تخفیف باید کمتر از قیمت اصلی باشد';
     }
 
     return null;

@@ -20,12 +20,17 @@ class MainBuyerController extends GetxController {
         isSpecial: true,
         badgeCount: addProductBadge.value
     ),
+
+
+    
     NavItemModel(
       icon: Icons.person_outline_rounded,
       activeIcon: Icons.person_rounded,
       label: TKeys.navProfile.tr,
     ),
   ];
+
+
 
 
   void incrementBadge() {

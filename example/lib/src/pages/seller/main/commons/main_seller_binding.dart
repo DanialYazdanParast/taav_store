@@ -1,3 +1,4 @@
+import 'package:example/src/commons/services/metadata_service.dart';
 import 'package:example/src/commons/services/network_service.dart';
 import 'package:example/src/pages/seller/account/controllers/seller_account_controller.dart';
 import 'package:example/src/pages/seller/add_product/controllers/seller_add_controller.dart';
@@ -32,20 +33,21 @@ class MainSellerBinding extends Bindings {
     //--------------
 
     Get.lazyPut<MainSellerController>(() => MainSellerController());
+    Get.put(
+      MetadataService(repository: Get.find<IMetadataRepository>()),
+      permanent: true,
+    );
 
     Get.lazyPut<SellerProductsController>(
       () => SellerProductsController(
         productRepo: Get.find<ISellerProductsRepository>(),
-        metadataRepo: Get.find<IMetadataRepository>(),
       ),
       fenix: true,
     );
 
     Get.lazyPut<SellerAddProductController>(
-      () => SellerAddProductController(
-        addRepo: Get.find<ISellerAddRepository>(),
-        metadataRepo: Get.find<IMetadataRepository>(),
-      ),
+      () =>
+          SellerAddProductController(addRepo: Get.find<ISellerAddRepository>()),
       fenix: true,
     );
 

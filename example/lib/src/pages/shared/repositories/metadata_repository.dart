@@ -6,9 +6,9 @@ import '../models/color_model.dart';
 import '../models/tag_model.dart';
 
 abstract class IMetadataRepository {
-  Future<Either<Failure, List<ColorModel>>> getColors({bool forceRefresh = false});
-  Future<Either<Failure, List<TagModel>>> getTags({bool forceRefresh = false});
 
+  Future<Either<Failure, List<ColorModel>>> getColors();
+  Future<Either<Failure, List<TagModel>>> getTags();
 
   Future<Either<Failure, TagModel>> createNewTag(String tagName);
   Future<Either<Failure, ColorModel>> createNewColor(String name, String hexCode);
@@ -17,38 +17,27 @@ abstract class IMetadataRepository {
 class MetadataRepository extends BaseRepository implements IMetadataRepository {
   final NetworkService _network;
 
-  List<ColorModel>? _cachedColors;
-  List<TagModel>? _cachedTags;
-
   MetadataRepository({required NetworkService network}) : _network = network;
 
   @override
-  Future<Either<Failure, List<ColorModel>>> getColors({bool forceRefresh = false}) {
-    if (!forceRefresh && _cachedColors != null) {
-      return Future.value(Right(_cachedColors!));
-    }
+  Future<Either<Failure, List<ColorModel>>> getColors() {
 
     return safeCall<List<ColorModel>>(
       request: () => _network.get('/colors'),
       fromJson: (json) {
         final list = (json as List).map((e) => ColorModel.fromJson(e)).toList();
-        _cachedColors = list;
         return list;
       },
     );
   }
 
   @override
-  Future<Either<Failure, List<TagModel>>> getTags({bool forceRefresh = false}) {
-    if (!forceRefresh && _cachedTags != null) {
-      return Future.value(Right(_cachedTags!));
-    }
+  Future<Either<Failure, List<TagModel>>> getTags() {
 
     return safeCall<List<TagModel>>(
       request: () => _network.get('/tags'),
       fromJson: (json) {
         final list = (json as List).map((e) => TagModel.fromJson(e)).toList();
-        _cachedTags = list;
         return list;
       },
     );
@@ -60,7 +49,6 @@ class MetadataRepository extends BaseRepository implements IMetadataRepository {
       request: () => _network.post('/tags', data: {'name': tagName}),
       fromJson: (json) {
         final newTag = TagModel.fromJson(json);
-        _cachedTags?.add(newTag);
         return newTag;
       },
     );
@@ -75,9 +63,6 @@ class MetadataRepository extends BaseRepository implements IMetadataRepository {
       }),
       fromJson: (json) {
         final newColor = ColorModel.fromJson(json);
-
-        _cachedColors?.add(newColor);
-
         return newColor;
       },
     );

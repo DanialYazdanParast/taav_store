@@ -336,7 +336,7 @@ class SellerAddAndEditDialogs {
                   },
                 ),
               ),
-              AppSize.p32.width,
+              AppSize.p16.width,
               Expanded(
                 child: _buildSourceOption(
                   icon: Icons.photo_library_rounded,

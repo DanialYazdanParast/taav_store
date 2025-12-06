@@ -8,6 +8,7 @@ abstract class AppRoutes {
   static const String login = _Paths.login;
   static const String register = _Paths.register;
   static const String mainSeller = _Paths.mainSeller;
+  static const String sellerEditProduct = _Paths.sellerEditProduct;
 }
 
 abstract class _Paths {
@@ -18,4 +19,5 @@ abstract class _Paths {
   static const String login = '/login';
   static const String register = '/register';
   static const String mainSeller = '/main_seller';
+  static const String sellerEditProduct = '/seller_edit_product';
 }

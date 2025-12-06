@@ -2,11 +2,14 @@ import 'package:example/src/pages/auth/login/commons/login_binding.dart';
 import 'package:example/src/pages/auth/login/view/login_screen.dart';
 import 'package:example/src/pages/auth/register/commons/register_binding.dart';
 import 'package:example/src/pages/auth/register/view/register_screen.dart';
+import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
+import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
 import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
 import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/splash/commons/splash_binding.dart';
 import 'package:example/src/pages/splash/view/splash_screen.dart';
+import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -45,6 +48,14 @@ class AppPages {
       binding: MainSellerBinding(),
       page: MainSellerScreen.new,
       transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.sellerEditProduct,
+      binding: SellerEditBinding(),
+      page: SellerEditScreen.new,
+      transition: Transition.downToUp,
+      transitionDuration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutQuart,
     ),
   ];
 }

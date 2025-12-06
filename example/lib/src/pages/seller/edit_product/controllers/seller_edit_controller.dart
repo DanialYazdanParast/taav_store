@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/services/metadata_service.dart';
-import 'package:example/src/commons/widgets/responsive/responsive.dart';
-import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/models/product_model.dart';
 import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -10,26 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
-
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/models/color_model.dart';
 import 'package:example/src/pages/shared/models/tag_model.dart';
 
+import '../repository/seller_edit_repository.dart';
 
-import '../repository/seller_add_repository.dart';
-
-class SellerAddProductController extends GetxController with MixinDialogController {
+class SellerEditController extends GetxController with MixinDialogController {
 
   // ─── Dependencies ────────────────────────────────────────────────────────────
-  final ISellerAddRepository addRepo;
+  final ISellerEditRepository editRepo;
   final AuthService _authService = Get.find<AuthService>();
+
 
   final MetadataService metadataService = Get.find<MetadataService>();
 
-  SellerAddProductController({
-    required this.addRepo,
+  ProductModel? product;
+  String? productId;
+
+  SellerEditController({
+    required this.editRepo,
 
   });
 
@@ -50,18 +50,17 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   late FocusNode tagSearchFocusNode;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late Rx<AutovalidateMode> avmAdd;
+  late Rx<AutovalidateMode> avmEdit;
 
-  // ─── State Management ────────────────────────────────────────────────────────
+  // ─── State ───────────────────────────────────────────────────────────────────
   final Rx<CurrentState> pageState = CurrentState.idle.obs;
   final Rx<CurrentState> submitState = CurrentState.idle.obs;
 
-  // ─── Image Handling ──────────────────────────────────────────────────────────
+  // ─── Image & Metadata ────────────────────────────────────────────────────────
   @override
   final Rx<XFile?> selectedImage = Rx<XFile?>(null);
   final ImagePicker _picker = ImagePicker();
 
-  // ─── Color Logic ─────────────────────────────────────────────────────────────
   @override
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   @override
@@ -69,7 +68,6 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   @override
   final RxBool isAddingColor = false.obs;
 
-  // ─── Tag Logic ───────────────────────────────────────────────────────────────
   @override
   final RxList<TagModel> availableTags = <TagModel>[].obs;
   @override
@@ -82,23 +80,33 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   @override
   final RxBool isAddingTag = false.obs;
 
+  final RxBool isImageDeleted = false.obs;
+
   @override
   bool get showAddButton {
     if (tagQuery.value.isEmpty) return false;
-    return !availableTags.any(
-          (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
-    );
+    return !availableTags.any((tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase());
   }
 
-  // ─── Lifecycle Methods ───────────────────────────────────────────────────────
+  // ─── Lifecycle ───────────────────────────────────────────────────────────────
   @override
   void onInit() {
-    avmAdd = AutovalidateMode.disabled.obs;
+    avmEdit = AutovalidateMode.disabled.obs;
     _initControllers();
+
+    final args = Get.arguments;
+    if (args is String) {
+      productId = args;
+    } else {
+      ToastUtil.show("شناسه محصول نامعتبر است", type: ToastType.error);
+      Get.back();
+      return;
+    }
+
     super.onInit();
 
-
     _syncWithMetadataService();
+    fetchInitialData();
   }
 
   @override
@@ -107,6 +115,17 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     super.onClose();
   }
 
+  void _syncWithMetadataService() {
+
+    availableColors.assignAll(metadataService.colors);
+    availableTags.assignAll(metadataService.tags);
+
+    ever(metadataService.colors, (data) => availableColors.assignAll(data));
+    ever(metadataService.tags, (data) => availableTags.assignAll(data));
+
+  }
+
+  // ─── Initialization Logic ────────────────────────────────────────────────────
   void _initControllers() {
     titleController = TextEditingController();
     descController = TextEditingController();
@@ -139,22 +158,62 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     tagSearchFocusNode.dispose();
   }
 
-
-  void _syncWithMetadataService() {
+  Future<void> fetchInitialData() async {
     pageState.value = CurrentState.loading;
+    try {
+
+      if (productId != null) {
+        final result = await editRepo.getProduct(productId!);
+
+        if (result.isLeft) {
+          throw Exception(result.left.message ?? "خطا در دریافت محصول");
+        }
+        product = result.right;
+      }
+
+      if (product == null) {
+        throw Exception("اطلاعات محصول یافت نشد");
+      }
 
 
-    availableColors.assignAll(metadataService.colors);
-    availableTags.assignAll(metadataService.tags);
+      _populateFormFields();
 
-
-    ever(metadataService.colors, (data) => availableColors.assignAll(data));
-    ever(metadataService.tags, (data) => availableTags.assignAll(data));
-
-    pageState.value = CurrentState.success;
+      pageState.value = CurrentState.success;
+    } catch (e) {
+      debugPrint("Error fetching data: $e");
+      pageState.value = CurrentState.error;
+      ToastUtil.show("خطا در دریافت اطلاعات محصول", type: ToastType.error);
+    }
   }
 
-  // ─── Image Logic ─────────────────────────────────────────────────────────────
+  void _populateFormFields() {
+    if (product == null) return;
+
+    titleController.text = product!.title ?? '';
+    descController.text = product!.description ?? '';
+    countController.text = product!.quantity?.toString() ?? '0';
+
+    final price = product!.price ?? 0;
+    final discount = product!.discountPrice ?? 0;
+
+    priceController.text = price.toString();
+
+    if (price == discount || discount == 0) {
+      discountPriceController.text = '';
+    } else {
+      discountPriceController.text = discount.toString();
+    }
+
+    if (product!.colors != null) {
+      selectedColorNames.assignAll(product!.colors!);
+    }
+    if (product!.tags != null) {
+      selectedTagNames.assignAll(product!.tags!);
+    }
+  }
+
+  // ─── Action Methods (Image, Color, Tag) ──────────────────────────────────────
+
   @override
   void pickImageFromCamera() => _pickImage(ImageSource.camera);
   @override
@@ -162,33 +221,26 @@ class SellerAddProductController extends GetxController with MixinDialogControll
 
   Future<void> _pickImage(ImageSource source) async {
     try {
-      final XFile? image = await _picker.pickImage(
-        source: source,
-        maxWidth: 1000,
-        maxHeight: 1000,
-        imageQuality: 75,
-      );
-      if (image != null) selectedImage.value = image;
-    } catch (e) {
-      if (e.toString().contains('permission')) {
-        ToastUtil.show("دسترسی لازم داده نشد", type: ToastType.warning);
-      } else {
-        ToastUtil.show("خطا در انتخاب تصویر", type: ToastType.error);
+      final XFile? image = await _picker.pickImage(source: source, maxWidth: 1000, maxHeight: 1000, imageQuality: 75);
+      if (image != null) {
+        selectedImage.value = image;
+        isImageDeleted.value = false;
       }
+    } catch (e) {
+      // Handle error
     }
   }
 
   @override
-  void removeImage() => selectedImage.value = null;
+  void removeImage() {
+    selectedImage.value = null;
+    isImageDeleted.value = true;
+  }
 
-  // ─── Color Logic ─────────────────────────────────────────────────────────────
   @override
   void toggleColor(String colorName) {
-    if (selectedColorNames.contains(colorName)) {
-      selectedColorNames.remove(colorName);
-    } else {
-      selectedColorNames.add(colorName);
-    }
+    if (selectedColorNames.contains(colorName)) selectedColorNames.remove(colorName);
+    else selectedColorNames.add(colorName);
   }
 
   @override
@@ -199,7 +251,6 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     final success = await metadataService.addNewColor(name, cleanHex);
 
     if (success) {
-
       if (metadataService.colors.isNotEmpty) {
         toggleColor(metadataService.colors.last.name);
       }
@@ -208,26 +259,19 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     isAddingColor.value = false;
   }
 
-  // ─── Tag Logic ───────────────────────────────────────────────────────────────
   @override
   void onTagSearchChanged(String val) {
     tagQuery.value = val.trim();
     if (tagQuery.value.isEmpty) {
       filteredTags.clear();
     } else {
-      filteredTags.assignAll(
-        availableTags
-            .where((tag) => tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()))
-            .toList(),
-      );
+      filteredTags.assignAll(availableTags.where((tag) => tag.name.toLowerCase().contains(tagQuery.value.toLowerCase())).toList());
     }
   }
 
   @override
   void selectTag(String tagName) {
-    if (!selectedTagNames.contains(tagName)) {
-      selectedTagNames.add(tagName);
-    }
+    if (!selectedTagNames.contains(tagName)) selectedTagNames.add(tagName);
   }
 
   @override
@@ -236,20 +280,18 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   @override
   Future<void> addNewTag() async {
     final newTagName = tagQuery.value.trim();
-    if (newTagName.isEmpty) return;
+    if(newTagName.isEmpty) return;
 
     isAddingTag.value = true;
 
     final success = await metadataService.addNewTag(newTagName);
 
     if (success) {
-
       if (metadataService.tags.isNotEmpty) {
         final newTag = metadataService.tags.last;
         selectTag(newTag.name);
 
-        ToastUtil.show("تگ جدید اضافه شد", type: ToastType.success);
-
+        ToastUtil.show("تگ اضافه شد", type: ToastType.success);
         tagSearchController.clear();
         tagQuery.value = '';
         filteredTags.clear();
@@ -258,18 +300,21 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     isAddingTag.value = false;
   }
 
-  // ─── Submit Logic ────────────────────────────────────────────────────────────
-  Future<void> submitProduct() async {
+  // ─── Update Logic ────────────────────────────────────────────────────────────
+  Future<void> updateProduct() async {
     if (submitState.value == CurrentState.loading) return;
 
     if (!formKey.currentState!.validate()) {
-      avmAdd.value = AutovalidateMode.always;
+      avmEdit.value = AutovalidateMode.always;
       ToastUtil.show("لطفا خطاهای فرم را برطرف کنید", type: ToastType.warning);
       return;
     }
 
-    if (selectedImage.value == null) {
-      ToastUtil.show("لطفا یک تصویر برای محصول انتخاب کنید", type: ToastType.warning);
+    if (selectedImage.value == null && (isImageDeleted.value == true || product?.image == null)) {
+      ToastUtil.show(
+        "تصویر محصول نمی‌تواند خالی باشد. لطفا یک تصویر انتخاب کنید.",
+        type: ToastType.warning,
+      );
       return;
     }
 
@@ -285,7 +330,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
         cleanDiscount = discountPriceController.text.replaceAll(',', '');
       }
 
-      final formData = dio.FormData.fromMap({
+      final Map<String, dynamic> mapData = {
         'title': titleController.text,
         'description': descController.text,
         'price': int.tryParse(cleanPrice) ?? 0,
@@ -294,7 +339,10 @@ class SellerAddProductController extends GetxController with MixinDialogControll
         'sellerId': _authService.userId.value,
         'colors': jsonEncode(selectedColorNames),
         'tags': jsonEncode(selectedTagNames),
-        'image': kIsWeb
+      };
+
+      if (selectedImage.value != null) {
+        mapData['image'] = kIsWeb
             ? dio.MultipartFile.fromBytes(
           await selectedImage.value!.readAsBytes(),
           filename: selectedImage.value!.name,
@@ -302,30 +350,24 @@ class SellerAddProductController extends GetxController with MixinDialogControll
             : await dio.MultipartFile.fromFile(
           selectedImage.value!.path,
           filename: selectedImage.value!.name,
-        ),
-      });
+        );
+      }
 
-      final result = await addRepo.addProduct(formData);
+      final formData = dio.FormData.fromMap(mapData);
+
+      final result = await editRepo.updateProduct(product!.id, formData);
 
       result.fold(
             (failure) {
           submitState.value = CurrentState.error;
-          ToastUtil.show(failure.message ?? "خطا در ثبت محصول", type: ToastType.error);
+          ToastUtil.show(failure.message ?? "خطا در ویرایش محصول", type: ToastType.error);
         },
-            (newProduct) {
+            (updatedProduct) {
           submitState.value = CurrentState.success;
-          ToastUtil.show("محصول با موفقیت ثبت شد", type: ToastType.success);
+          ToastUtil.show("محصول با موفقیت ویرایش شد", type: ToastType.success);
 
-          _updateMainListLocally(newProduct);
-
-          if (Responsive.isDesktop) {
-            _resetForm();
-            if (Get.isRegistered<MainSellerController>()) {
-              Get.find<MainSellerController>().changeTab(0);
-            }
-          } else {
-            Get.back();
-          }
+          _updateMainListLocally(updatedProduct);
+          Get.back();
         },
       );
     } catch (e) {
@@ -338,29 +380,14 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     }
   }
 
-  void _resetForm() {
-    titleController.clear();
-    descController.clear();
-    countController.clear();
-    priceController.clear();
-    discountPriceController.clear();
-    tagSearchController.clear();
-    selectedImage.value = null;
-    selectedColorNames.clear();
-    selectedTagNames.clear();
-    filteredTags.clear();
-    tagQuery.value = '';
-    formKey.currentState?.reset();
-    avmAdd.value = AutovalidateMode.disabled;
-    submitState.value = CurrentState.idle;
-  }
-
-
-  void _updateMainListLocally(ProductModel newProduct) {
+  void _updateMainListLocally(ProductModel updatedProduct) {
     if (Get.isRegistered<SellerProductsController>()) {
-      final productsCtrl = Get.find<SellerProductsController>();
-      productsCtrl.products.insert(0, newProduct);
-      productsCtrl.calculatePriceLimits(productsCtrl.products);
+      final productsController = Get.find<SellerProductsController>();
+      final index = productsController.products.indexWhere((p) => p.id == updatedProduct.id);
+      if (index != -1) {
+        productsController.products[index] = updatedProduct;
+        productsController.products.refresh();
+      }
 
     }
   }

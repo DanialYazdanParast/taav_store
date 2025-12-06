@@ -30,10 +30,7 @@ class ValidationUtil {
     return null;
   }
 
-  ///--------------------------------------
-  ///class ValidationUtil {
 
-  // ... (سایر متدها) ...
 
   String? username(final String? value) {
     final trimmedValue = value?.trim();
@@ -93,7 +90,7 @@ class ValidationUtil {
       return '$fieldName را وارد کنید';
     }
 
-    // حذف ویرگول‌ها برای تبدیل صحیح به عدد
+
     final cleanValue = value.replaceAll(',', '');
 
     final number = int.tryParse(cleanValue);
@@ -106,7 +103,6 @@ class ValidationUtil {
     return null;
   }
 
-  // ✅ اصلاح شده: حذف ویرگول برای مقایسه قیمت‌ها
   String? discountPrice(final String? discountVal, final String? originalPriceVal) {
 
     if (discountVal == null || discountVal.isEmpty) return null;
@@ -125,8 +121,8 @@ class ValidationUtil {
       return null;
     }
 
-    if (discount >= original) {
-      return 'قیمت با تخفیف باید کمتر از قیمت اصلی باشد';
+    if (discount > original) {
+      return 'قیمت با تخفیف نمی‌تواند بیشتر از قیمت اصلی باشد';
     }
 
     return null;

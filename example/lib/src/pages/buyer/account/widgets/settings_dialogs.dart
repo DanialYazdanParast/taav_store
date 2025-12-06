@@ -9,10 +9,10 @@ import 'package:example/src/infoStructure/languages/localization_controller.dart
 import 'package:example/src/infoStructure/theme/theme_controller.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 
-import 'seller_ui_components.dart';
+import '../../../shared/widgets/ui_components.dart';
 
-class SellerSettingsDialogs {
-  SellerSettingsDialogs._();
+class SettingsDialogs {
+  SettingsDialogs._();
 
   static void _show(Widget content) {
     if (Responsive.isMobile) {

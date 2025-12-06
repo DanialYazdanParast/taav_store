@@ -38,7 +38,7 @@ class BackgroundParticle extends StatelessWidget {
     );
   }
 }
-class SettingsMenuItem extends StatelessWidget {
+class MenuItem extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String title;
@@ -52,7 +52,7 @@ class SettingsMenuItem extends StatelessWidget {
   final double iconContainerSize;
   final double iconSize;
 
-  const SettingsMenuItem({
+  const MenuItem({
     super.key,
     required this.icon,
     required this.color,
@@ -223,7 +223,7 @@ class ActionButtonsWidget extends StatelessWidget {
   }
 }
 
-// عنوان پاپ‌آپ‌ها
+
 class PopupTitleWidget extends StatelessWidget {
   final String text;
   const PopupTitleWidget(this.text, {super.key});

@@ -3,7 +3,7 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
-import 'package:example/src/pages/shared/widgets/seller_icon_button.dart';
+import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +24,7 @@ class SellerFilterHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              SellerIconButton(
+              IconButtonWidget(
                 icon: Icons.filter_list,
                 onTap: () {},
                 color: context.theme.iconTheme.color,

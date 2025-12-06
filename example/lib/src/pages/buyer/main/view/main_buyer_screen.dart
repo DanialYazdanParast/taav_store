@@ -6,8 +6,6 @@ import '../controllers/main_buyer_controller.dart';
 import '../widgets/main_buyer_desktop.dart';
 import '../widgets/main_buyer_mobile.dart';
 
-
-
 class MainBuyerScreen extends GetView<MainBuyerController> {
   const MainBuyerScreen({super.key});
 

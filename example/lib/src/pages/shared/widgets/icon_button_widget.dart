@@ -1,7 +1,7 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:flutter/material.dart';
 
-class SellerIconButton extends StatelessWidget {
+class IconButtonWidget extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
   final Color? color;
@@ -9,7 +9,7 @@ class SellerIconButton extends StatelessWidget {
   final bool hasBorder;
   final double? size;
 
-  const SellerIconButton({
+  const IconButtonWidget({
     super.key,
     required this.icon,
     required this.onTap,

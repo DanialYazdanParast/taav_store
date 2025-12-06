@@ -8,7 +8,7 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
-import 'package:example/src/pages/shared/widgets/seller_icon_button.dart';
+import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 
 // ایمپورت کنترلر جدید و ویجت‌های مشترک
@@ -294,7 +294,7 @@ class _CustomAppBar extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
-          child: SellerIconButton(
+          child: IconButtonWidget(
             icon: Icons.arrow_back_ios_new_rounded,
             onTap: () => Get.back(),
             bgColor: isDesktop ? Colors.grey.withOpacity(0.1) : Colors.white.withOpacity(0.2),

@@ -1,4 +1,5 @@
 
+import 'package:example/src/pages/buyer/account/view/buyer_account_screen.dart';
 import 'package:example/src/pages/shared/widgets/custom_bottom_nav.dart';
 
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class MainBuyerMobile extends GetView<MainBuyerController> {
     final pages = [
       const SizedBox(),
       const SizedBox(),
-      const SizedBox(),
+      const SellerAccountScreen(),
     ];
 
     return Scaffold(

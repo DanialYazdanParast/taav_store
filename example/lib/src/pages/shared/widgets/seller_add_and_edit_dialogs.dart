@@ -5,7 +5,7 @@ import 'package:example/src/commons/widgets/dialog_widget.dart';
 
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/commons/widgets/text/app_text_field.dart';
-import 'package:example/src/pages/seller/account/widgets/seller_ui_components.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 
 import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +17,7 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
-import 'package:example/src/pages/shared/widgets/seller_icon_button.dart';
+import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 
 class SellerAddAndEditDialogs {
   SellerAddAndEditDialogs._();
@@ -62,7 +62,7 @@ class SellerAddAndEditDialogs {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const PopupTitleWidget("مدیریت تگ‌ها"),
-                  SellerIconButton(
+                  IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
                     bgColor: Colors.grey.withOpacity(0.1),
@@ -227,7 +227,7 @@ class SellerAddAndEditDialogs {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const PopupTitleWidget("افزودن رنگ جدید"),
-                  SellerIconButton(
+                  IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
                     bgColor: Colors.grey.withOpacity(0.1),
@@ -311,7 +311,7 @@ class SellerAddAndEditDialogs {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const PopupTitleWidget("انتخاب تصویر محصول"),
-              SellerIconButton(
+              IconButtonWidget(
                 icon: Icons.close,
                 onTap: () => Get.back(),
                 bgColor: Colors.grey.withOpacity(0.1),

@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 
-import '../controllers/seller_account_controller.dart';
+import '../controllers/buyer_account_controller.dart';
 import '../widgets/settings_draggable_sheet.dart';
 import '../../../shared/widgets/profile_header.dart';
 import '../widgets/icon_list.dart';
 
-class SellerAccountScreen extends GetView<SellerAccountController> {
+class SellerAccountScreen extends GetView<BuyerAccountController> {
   const SellerAccountScreen({super.key});
 
   @override
@@ -24,7 +24,7 @@ class SellerAccountScreen extends GetView<SellerAccountController> {
 }
 
 class SellerMobileLayout extends StatelessWidget {
-  final SellerAccountController controller;
+  final BuyerAccountController controller;
 
   const SellerMobileLayout({super.key, required this.controller});
 
@@ -44,7 +44,7 @@ class SellerMobileLayout extends StatelessWidget {
 }
 
 class SellerDesktopLayout extends StatelessWidget {
-  final SellerAccountController controller;
+  final BuyerAccountController controller;
 
   const SellerDesktopLayout({super.key, required this.controller});
 

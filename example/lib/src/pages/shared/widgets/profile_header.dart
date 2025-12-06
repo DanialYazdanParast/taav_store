@@ -1,16 +1,16 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
-import 'package:example/src/pages/seller/account/widgets/seller_ui_components.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SellerProfileHeader extends StatelessWidget {
+class ProfileHeader extends StatelessWidget {
   final RxString username;
   final RxString userType;
   final double height;
 
-  const SellerProfileHeader({
+  const ProfileHeader({
     super.key,
     required this.username,
     required this.userType,

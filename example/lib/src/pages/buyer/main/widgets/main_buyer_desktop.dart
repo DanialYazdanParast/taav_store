@@ -1,30 +1,29 @@
 
-import 'package:example/src/pages/seller/account/view/seller_account_screen.dart';
-import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
-import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/shared/widgets/custom_sidebar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/main_seller_controller.dart';
+import '../controllers/main_buyer_controller.dart';
 
-class MainSellerDesktop extends GetView<MainSellerController> {
-  const MainSellerDesktop({super.key});
+
+
+class MainBuyerDesktop extends GetView<MainBuyerController> {
+  const MainBuyerDesktop({super.key});
 
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const SellerProductsScreen(),
-      const SellerAddScreen(),
-      const SellerAccountScreen(),
+      const SizedBox(),
+      const SizedBox(),
+      const SizedBox(),
     ];
 
     return Scaffold(
       body: Row(
         children: [
           Obx(
-            () => CustomSidebar(
+                () => CustomSidebar(
               currentIndex: controller.currentIndex.value,
               items: controller.navItems,
               onTap: controller.changeTab,
@@ -33,7 +32,7 @@ class MainSellerDesktop extends GetView<MainSellerController> {
 
           Expanded(
             child: Obx(
-              () => AnimatedSwitcher(
+                  () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: Container(
                   key: ValueKey(controller.currentIndex.value),

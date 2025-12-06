@@ -2,6 +2,8 @@ import 'package:example/src/pages/auth/login/commons/login_binding.dart';
 import 'package:example/src/pages/auth/login/view/login_screen.dart';
 import 'package:example/src/pages/auth/register/commons/register_binding.dart';
 import 'package:example/src/pages/auth/register/view/register_screen.dart';
+import 'package:example/src/pages/buyer/main/commons/main_buyer_binding.dart';
+import 'package:example/src/pages/buyer/main/view/main_buyer_screen.dart';
 import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
@@ -47,6 +49,12 @@ class AppPages {
       name: _Paths.mainSeller,
       binding: MainSellerBinding(),
       page: MainSellerScreen.new,
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.mainBuyer,
+      binding: MainBuyerBinding(),
+      page: MainBuyerScreen.new,
       transition: Transition.noTransition,
     ),
     GetPage(

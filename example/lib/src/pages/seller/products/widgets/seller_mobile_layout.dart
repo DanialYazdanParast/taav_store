@@ -7,6 +7,7 @@ import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
+
       body: Stack(
         children: [
           _buildTopBackground(

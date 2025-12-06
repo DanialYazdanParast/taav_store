@@ -2,6 +2,7 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,11 +45,13 @@ class SellerAnimatedAppBar extends GetView<SellerProductsController> {
               SellerIconButton(
                 icon: Icons.filter_list,
                 onTap: () {
-                  controller.initTempFilters();
-                  BottomSheetWidget(
-                    isScrollControlled: true,
-                  ).show(const SellerFilterView());
-                },
+                  Get.find<MainSellerController>().incrementBadge();
+                }
+                //   controller.initTempFilters();
+                //   BottomSheetWidget(
+                //     isScrollControlled: true,
+                //   ).show(const SellerFilterView());
+                // },
               ),
               Text(
                 TKeys.sellerPanel.tr,

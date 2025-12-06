@@ -30,7 +30,7 @@ class SplashController extends GetxController {
       final type = authService.userType.value.toLowerCase();
 
       if (type == 'seller') {
-        Get.offAllNamed(AppRoutes.mainSeller);
+        Get.offAllNamed(AppRoutes.mainBuyer);
       } else if (type == 'buyer') {
       //  Get.offAllNamed(AppRoutes.buyerHome);
       } else {

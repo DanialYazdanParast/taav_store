@@ -43,6 +43,8 @@ dependencies:
   dio: ^5.9.0
   either_dart: ^1.0.0
   get_storage: ^2.1.1
+  flutter_colorpicker: ^1.1.0
+  image_picker: ^1.2.1
 
 dev_dependencies:
   flutter_test:

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../controllers/seller_products_controller.dart';
 import 'filter/seller_filter_view.dart';
-import 'seller_icon_button.dart';
+import '../../../shared/widgets/seller_icon_button.dart';
 
 
 class SellerAnimatedAppBar extends GetView<SellerProductsController> {

@@ -14,8 +14,8 @@ class AppSearchField extends StatefulWidget {
   final double? width;
   final bool isReadOnly;
   final bool isEnabled;
-  final bool hideBorder; // برای حالت مدرن بدون کادر
-  final double borderRadius; // برای گرد کردن بیشتر مخصوص سرچ
+  final bool hideBorder;
+  final double borderRadius;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? prefixWidget;
   final Widget? suffixWidget;
@@ -33,8 +33,7 @@ class AppSearchField extends StatefulWidget {
     this.isReadOnly = false,
     this.isEnabled = true,
     this.hideBorder = false,
-    // پیش‌فرض را زیاد می‌گذاریم تا کپسولی شود، یا می‌توانید AppSize.brMedium بگذارید
-    this.borderRadius = 36,
+    this.borderRadius = 12,
     this.contentPadding,
     this.prefixWidget,
     this.suffixWidget,
@@ -142,7 +141,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
           hintStyle: AppInputStyles.hintStyle,
 
           filled: true,
-          fillColor: widget.bgColor ?? Get.theme.colorScheme.surface,
+          fillColor: widget.bgColor ?? Get.theme.scaffoldBackgroundColor,
 
           contentPadding:
               widget.contentPadding ??

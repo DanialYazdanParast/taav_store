@@ -1,14 +1,13 @@
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
 import '../view/main_seller_screen.dart';
 
-
 class MainSellerController extends GetxController {
   final RxInt currentIndex = 0.obs;
-
 
   List<NavItemModel> get navItems => [
     NavItemModel(
@@ -30,7 +29,6 @@ class MainSellerController extends GetxController {
   ];
 
   void changeTab(int index) {
-
     final item = navItems[index];
 
     if (item.isSpecial) {
@@ -46,7 +44,7 @@ class MainSellerController extends GetxController {
 
   void goToAddProduct() {
     Get.to(
-          () => AddProductPage(),
+      () => SellerAddScreen(),
       transition: Transition.downToUp,
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeOutQuart,

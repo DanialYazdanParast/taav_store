@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:example/src/pages/shared/repositories/metadata_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
@@ -6,14 +7,18 @@ import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 
 import '../models/product_model.dart';
-import '../models/color_model.dart';
-import '../models/tag_model.dart';
+import '../../../shared/models/color_model.dart';
+import '../../../shared/models/tag_model.dart';
 import '../repository/seller_products_repository.dart';
 
 class SellerProductsController extends GetxController {
-  final ISellerProductsRepository repository;
+  final ISellerProductsRepository productRepo;
+  final IMetadataRepository metadataRepo;
 
-  SellerProductsController({required this.repository});
+  SellerProductsController({
+    required this.productRepo,
+    required this.metadataRepo,
+  });
 
   final AuthService _authService = Get.find<AuthService>();
 
@@ -69,28 +74,31 @@ class SellerProductsController extends GetxController {
   Future<void> fetchProducts() async {
     productsState.value = CurrentState.loading;
 
-    final result = await repository.getSellerProducts(
-      _authService.userId.value,
-    );
+    // همزمان هم محصولات را بگیر، هم لیست فیلترها (تگ و رنگ) را آپدیت کن
+    await Future.wait([
+      _getProductsFromRepo(),
+      fetchFilterOptions(), // ✅ این خط را اضافه کنید تا تگ‌ها هم رفرش شوند
+    ]);
+  }
+// لاجیک گرفتن محصولات را برای تمیزی جدا کردم (اختیاری)
+  Future<void> _getProductsFromRepo() async {
+    final result = await productRepo.getSellerProducts(_authService.userId.value);
 
     result.fold(
-      (failure) {
+          (failure) {
         productsState.value = CurrentState.error;
-        ToastUtil.show(
-          failure.message ?? 'خطا در دریافت محصولات',
-          type: ToastType.error,
-        );
+        ToastUtil.show(failure.message ?? 'خطا', type: ToastType.error);
       },
-      (fetchedProducts) {
-        products.assignAll(fetchedProducts);
+          (fetchedProducts) {
+        // ریورس کردن لیست (طبق درخواست قبلی)
+        products.assignAll(fetchedProducts.reversed.toList());
         productsState.value = CurrentState.success;
-        _calculatePriceLimits(fetchedProducts);
+        calculatePriceLimits(products);
       },
     );
   }
-
   Future<void> deleteProduct(String productId) async {
-    final result = await repository.deleteProduct(productId);
+    final result = await productRepo.deleteProduct(productId);
 
     result.fold(
       (failure) {
@@ -104,7 +112,7 @@ class SellerProductsController extends GetxController {
 
         if (products.isEmpty) {
         } else {
-          _calculatePriceLimits(products);
+          calculatePriceLimits(products);
         }
 
         ToastUtil.show('محصول با موفقیت حذف شد', type: ToastType.success);
@@ -116,7 +124,7 @@ class SellerProductsController extends GetxController {
     );
   }
 
-  void _calculatePriceLimits(List<ProductModel> items) {
+  void calculatePriceLimits(List<ProductModel> items) {
     if (items.isNotEmpty) {
       final List<double> effectivePrices =
           items.map((p) {
@@ -145,10 +153,10 @@ class SellerProductsController extends GetxController {
   }
 
   Future<void> fetchFilterOptions() async {
-    final colorsResult = await repository.getColors();
+    final colorsResult = await metadataRepo.getColors();
     colorsResult.fold((l) {}, (r) => availableColors.assignAll(r));
 
-    final tagsResult = await repository.getTags();
+    final tagsResult = await metadataRepo.getTags();
     tagsResult.fold((l) {}, (r) => availableTags.assignAll(r));
   }
 

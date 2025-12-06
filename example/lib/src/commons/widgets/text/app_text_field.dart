@@ -37,6 +37,7 @@ class AppTextField extends StatefulWidget {
 
   final String? helperText;
   final String? hintText;
+  final String? counterText;
 
   final String? prefixText;
   final Widget? prefixWidget;
@@ -66,9 +67,10 @@ class AppTextField extends StatefulWidget {
     this.validator,
     this.autoValidateMode,
     this.onTap,
+    this.counterText ,
     this.onSaved,
     this.onEditingComplete,
-    this.focusNode, // دریافت از بیرون
+    this.focusNode,
     this.isEnabled = true,
     this.isObscureText = false,
     this.isReadOnly = false,
@@ -199,7 +201,7 @@ class _AppTextFieldState extends State<AppTextField> {
           hintStyle: AppInputStyles.hintStyle,
           helperText: widget.helperText,
           helperStyle: AppInputStyles.helperStyle,
-          counterText: '',
+          counterText: widget.counterText ??  null,
           filled: widget.bgColor != null,
           fillColor: widget.bgColor,
           border: AppInputStyles.normalBorder,

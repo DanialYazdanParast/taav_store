@@ -1,13 +1,15 @@
 import 'package:example/src/commons/utils/formatters/number_formatter.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
-import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SellerFilterPriceRange extends StatelessWidget {
-  final SellerProductsController controller;
+import '../../controllers/buyer_products_controller.dart';
 
-  const SellerFilterPriceRange(this.controller, {super.key});
+class FilterPriceRange extends StatelessWidget {
+  final BuyerProductsController controller;
+
+  const FilterPriceRange(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +25,18 @@ class SellerFilterPriceRange extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Obx(() {
-          final min = controller.minPriceLimit.value;
-          final max =
-              controller.maxPriceLimit.value <= min
-                  ? min + 1000
-                  : controller.maxPriceLimit.value;
+          final double min = controller.minPriceLimit.value;
+          final double max = controller.maxPriceLimit.value;
+
+          final double safeMax = (max - min).abs() < 1000 ? min + 100000 : max;
 
           return Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _label(
-                    colors,
-                    text,
-                    FormatUtil.currency(controller.tempPriceRange.value.start),
-                  ),
-                  _label(
-                    colors,
-                    text,
-                    FormatUtil.currency(controller.tempPriceRange.value.end),
-                  ),
+                  _label(colors, text, FormatUtil.currency(min)),
+                  _label(colors, text, FormatUtil.currency(safeMax)),
                 ],
               ),
               SliderTheme(
@@ -51,11 +44,15 @@ class SellerFilterPriceRange extends StatelessWidget {
                   activeTrackColor: colors.primary,
                   inactiveTrackColor: colors.surfaceContainerHighest,
                   thumbColor: colors.primary,
+                  overlayColor: colors.primary.withOpacity(0.2),
                 ),
                 child: RangeSlider(
                   values: controller.tempPriceRange.value,
                   min: min,
-                  max: max,
+                  max: safeMax,
+                  // اینجا از safeMax استفاده کن
+                  divisions: ((safeMax - min) / 10000).floor().clamp(1, 1000),
+                  // اختیاری: برای تقسیمات نرم
                   onChanged: controller.updateTempPriceRange,
                 ),
               ),

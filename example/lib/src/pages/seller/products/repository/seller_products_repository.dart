@@ -1,10 +1,9 @@
-// src/pages/seller/products/repository/seller_products_repository.dart
 
 import 'package:either_dart/either.dart';
 import 'package:example/src/commons/models/failure.dart';
 import 'package:example/src/commons/services/base_repository.dart';
 import 'package:example/src/commons/services/network_service.dart';
-import 'package:example/src/pages/seller/products/models/product_model.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
 
 abstract class ISellerProductsRepository {
   Future<Either<Failure, List<ProductModel>>> getSellerProducts(String sellerId);

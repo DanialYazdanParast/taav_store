@@ -4,16 +4,16 @@ import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
-import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
-import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
-import 'package:example/src/pages/seller/products/widgets/seller_filter_view.dart';
+import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../shared/widgets/icon_button_widget.dart';
+import '../controllers/buyer_products_controller.dart';
+import 'buyer_filter_view.dart';
 
-class SellerDesktopHeader extends GetView<SellerProductsController> {
-  const SellerDesktopHeader({super.key});
+class BuyerDesktopHeader extends GetView<BuyerProductsController> {
+  const BuyerDesktopHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +23,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
     return Container(
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p32),
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-      ),
+      decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
       child: Row(
         children: [
           _buildSearchField(),
@@ -58,7 +56,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
     return IconButtonWidget(
       icon: Icons.filter_list_rounded,
       onTap: () {
-        DialogWidget().show(const SellerFilterView());
+        DialogWidget().show(const BuyerFilterView());
       },
       color: theme.iconTheme.color,
       bgColor: theme.cardColor,
@@ -95,7 +93,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   Widget _buildProfileAvatar(Color primaryColor) {
     return InkWell(
       onTap: () {
-        final mainSellerController = Get.find<MainSellerController>();
+        final mainSellerController = Get.find<MainBuyerController>();
         mainSellerController.changeTab(2);
       },
       child: CircleAvatar(

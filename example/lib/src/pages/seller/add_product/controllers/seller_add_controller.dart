@@ -3,7 +3,7 @@ import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/services/metadata_service.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
-import 'package:example/src/pages/seller/products/models/product_model.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
 import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

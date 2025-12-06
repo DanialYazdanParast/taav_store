@@ -6,6 +6,7 @@ import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +158,12 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                               discountPercent: product.discountPercentString,
                               quantity: product.quantity,
                               imagePath: product.image,
-                              onEdit: () {},
+                              onEdit: () {
+                                Get.toNamed(
+                                  AppRoutes.sellerEditProduct,
+                                  arguments: product.id,
+                                );
+                              },
                               onDelete: () {
                                 DeleteProductDialog.show(
                                   productName: product.title,

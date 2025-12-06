@@ -1,3 +1,4 @@
+import 'package:example/src/pages/shared/widgets/header_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -30,14 +31,7 @@ class SettingsDraggableSheet extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Center(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: AppSize.p12, bottom: AppSize.p20),
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2)),
-                  ),
-                ),
+                HeaderSheet(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(children: [

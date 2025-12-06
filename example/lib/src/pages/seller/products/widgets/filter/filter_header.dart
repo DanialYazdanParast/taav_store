@@ -18,7 +18,7 @@ class SellerFilterHeader extends StatelessWidget {
     final text = context.theme.textTheme;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16,),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

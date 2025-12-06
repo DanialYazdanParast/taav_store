@@ -23,7 +23,7 @@ class SellerFilterFooter extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: SizedBox(
-         height: AppSize.buttonHeight,
+          height: AppSize.buttonHeight,
           child: Row(
             children: [
               _badge(colors, text),

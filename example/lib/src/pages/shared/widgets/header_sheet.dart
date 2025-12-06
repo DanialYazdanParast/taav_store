@@ -1,8 +1,8 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:flutter/material.dart';
 
-class SellerSheetHeader extends StatelessWidget {
-  const SellerSheetHeader({super.key});
+class HeaderSheet extends StatelessWidget {
+  const HeaderSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

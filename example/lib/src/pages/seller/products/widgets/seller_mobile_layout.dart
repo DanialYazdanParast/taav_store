@@ -3,21 +3,21 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
-import 'package:example/src/commons/widgets/button/button_widget.dart';
-import 'package:example/src/commons/widgets/dialog_widget.dart';
+import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
-import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
+import 'package:example/src/pages/seller/products/widgets/seller_filter_view.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'delete_product_dialog.dart';
-import 'seller_animated_app_bar.dart';
+import '../../../shared/widgets/animated_app_bar.dart';
 import 'seller_product_card.dart';
 import 'seller_revenue_section.dart';
-import 'seller_sheet_header.dart';
+import '../../../shared/widgets/header_sheet.dart';
 import 'seller_stats_row.dart';
 
 class SellerMobileLayout extends GetView<SellerProductsController> {
@@ -32,7 +32,6 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-
       body: Stack(
         children: [
           _buildTopBackground(
@@ -76,7 +75,23 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
           SafeArea(
             child: Column(
               children: [
-                SellerAnimatedAppBar(screenWidth: screenWidth, isRtl: isRtl),
+                AnimatedAppBar<SellerProductsController>(
+                  screenWidth: Get.width,
+                  isRtl: true,
+                  isSearching: controller.isSearching,
+                  searchController: controller.searchController,
+                  searchFocusNode: controller.searchFocusNode,
+                  title: TKeys.sellerPanel.tr,
+                  onFilterTap: () {
+                    // Initialize temp filters
+                    controller.initTempFilters();
+
+                    // Show filter bottom sheet
+                    BottomSheetWidget(
+                      isScrollControlled: true,
+                    ).show(const SellerFilterView());
+                  },
+                ),
                 AppSize.p10.height,
                 const SellerRevenueSection(),
                 AppSize.p20.height,
@@ -107,7 +122,7 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
               ),
               child: Column(
                 children: [
-                  const SellerSheetHeader(),
+                  const HeaderSheet(),
                   Obx(() {
                     if (controller.productsState.value ==
                         CurrentState.loading) {

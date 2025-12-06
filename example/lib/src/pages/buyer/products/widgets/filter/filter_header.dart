@@ -1,0 +1,53 @@
+import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/commons/widgets/button/button_widget.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/buyer_products_controller.dart';
+
+class FilterHeader extends StatelessWidget {
+  final BuyerProductsController controller;
+
+  const FilterHeader(this.controller, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.theme.colorScheme;
+    final text = context.theme.textTheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              IconButtonWidget(
+                icon: Icons.filter_list,
+                onTap: () {},
+                color: context.theme.iconTheme.color,
+                bgColor: Colors.transparent,
+                hasBorder: true,
+              ),
+              10.width,
+              Text(
+                TKeys.filters.tr,
+                style: text.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          ButtonWidget(
+            TKeys.removeAll.tr,
+            controller.clearTempFilters,
+            icon: Icons.delete_outline_rounded,
+            textColor: colors.error,
+            iconColor: colors.error,
+          ).textIcon(),
+        ],
+      ),
+    );
+  }
+}

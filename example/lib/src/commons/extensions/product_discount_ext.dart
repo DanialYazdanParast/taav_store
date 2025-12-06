@@ -1,4 +1,4 @@
-import 'package:example/src/pages/seller/products/models/product_model.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
 
 
 extension ProductDiscountExt on ProductModel {

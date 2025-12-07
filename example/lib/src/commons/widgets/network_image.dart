@@ -49,7 +49,6 @@ class TaavNetworkImage extends StatelessWidget {
             return Center(
               child: AppLoading.circular(
                 size: (width != null && width! < 40) ? 15 : 24,
-                // تنظیم سایز لودر بر اساس سایز عکس
                 color: theme.primaryColor,
               ),
             );

@@ -3,6 +3,7 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/infoStructure/languages/localization_controller.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/infoStructure/theme/theme_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -15,11 +16,7 @@ class IconList extends StatelessWidget {
   final VoidCallback onLogout;
   final bool showChevron;
 
-  const IconList({
-    super.key,
-    required this.onLogout,
-    this.showChevron = true,
-  });
+  const IconList({super.key, required this.onLogout, this.showChevron = true});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +30,10 @@ class IconList extends StatelessWidget {
           icon: Icons.language,
           color: theme.colorScheme.primary,
           title: TKeys.appLanguage.tr,
-          subtitle: locController.currentLocale.languageCode == 'fa' ? TKeys.farsi.tr : TKeys.english.tr,
+          subtitle:
+              locController.currentLocale.languageCode == 'fa'
+                  ? TKeys.farsi.tr
+                  : TKeys.english.tr,
           showChevron: showChevron,
           onTap: () => SettingsDialogs.showLanguage(locController),
         ),
@@ -51,7 +51,10 @@ class IconList extends StatelessWidget {
           icon: Icons.logout_rounded,
           color: Colors.redAccent,
           title: TKeys.logout.tr,
-          subtitle: Responsive.isMobile ? TKeys.logoutDescMobile.tr : TKeys.logoutDescWeb.tr,
+          subtitle:
+              Responsive.isMobile
+                  ? TKeys.logoutDescMobile.tr
+                  : TKeys.logoutDescWeb.tr,
           isDestructive: true,
           showChevron: showChevron,
           onTap: () => SettingsDialogs.showLogout(onLogout),

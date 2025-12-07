@@ -100,7 +100,7 @@ class AppPages {
       name: _Paths.buyerProductDetails,
       page: () => const BuyerProductDetailsScreen(),
       binding: BuyerProductDetailsBinding(),
-      transition: Transition.rightToLeft,
+      transition: Transition.downToUp,
     ),
   ];
 

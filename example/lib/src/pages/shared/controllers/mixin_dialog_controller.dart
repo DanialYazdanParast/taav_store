@@ -32,7 +32,7 @@ mixin MixinDialogController {
   // Colors
   RxList<ColorModel> get availableColors;
 
-  RxList<String> get selectedColorNames;
+  RxList<String> get selectedColor;
 
   RxBool get isAddingColor;
 

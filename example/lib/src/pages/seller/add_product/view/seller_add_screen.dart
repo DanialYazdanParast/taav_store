@@ -153,7 +153,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
 
             ProductAttributesSection(
               availableColors: controller.availableColors,
-              selectedColorNames: controller.selectedColorNames,
+              selectedColorNames: controller.selectedColor,
               selectedTagNames: controller.selectedTagNames,
               onToggleColor: controller.toggleColor,
               onRemoveTag: controller.removeTag,
@@ -269,7 +269,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
                     AppSize.p24.height,
                     ProductAttributesSection(
                       availableColors: controller.availableColors,
-                      selectedColorNames: controller.selectedColorNames,
+                      selectedColorNames: controller.selectedColor,
                       selectedTagNames: controller.selectedTagNames,
                       onToggleColor: controller.toggleColor,
                       onRemoveTag: controller.removeTag,

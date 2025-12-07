@@ -11,17 +11,16 @@ class ToastUtil {
   static Timer? _debounceTimer;
 
   static void show(
-      String message, {
-        ToastType type = ToastType.error,
-        Duration duration = const Duration(seconds: 3),
-        SnackPosition position = SnackPosition.TOP,
-      }) {
+    String message, {
+    ToastType type = ToastType.error,
+    Duration duration = const Duration(seconds: 3),
+    SnackPosition position = SnackPosition.TOP,
+  }) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 250), () {
       final style = _getToastStyle(type);
 
       if (Get.context == null) return;
-
 
       Get.snackbar(
         '',

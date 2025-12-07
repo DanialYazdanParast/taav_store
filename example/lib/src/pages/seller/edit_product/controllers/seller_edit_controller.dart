@@ -18,8 +18,7 @@ import 'package:example/src/pages/shared/models/tag_model.dart';
 import '../repository/seller_edit_repository.dart';
 
 class SellerEditController extends GetxController with MixinDialogController {
-
-  // ─── Dependencies ────────────────────────────────────────────────────────────
+  // ─── Dependencies ───────────────────────
   final ISellerEditRepository editRepo;
   final AuthService _authService = Get.find<AuthService>();
   final MetadataService metadataService = Get.find<MetadataService>();
@@ -27,11 +26,9 @@ class SellerEditController extends GetxController with MixinDialogController {
   ProductModel? product;
   String? productId;
 
-  SellerEditController({
-    required this.editRepo,
-  });
+  SellerEditController({required this.editRepo});
 
-  // ─── Text Controllers ────────────────────────────────────────────────────────
+  // ─── Text Controllers ──────────────────
   late TextEditingController titleController;
   late TextEditingController descController;
   late TextEditingController countController;
@@ -50,11 +47,11 @@ class SellerEditController extends GetxController with MixinDialogController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late Rx<AutovalidateMode> avmEdit;
 
-  // ─── State ───────────────────────────────────────────────────────────────────
+  // ─── State ────────────────────────
   final Rx<CurrentState> pageState = CurrentState.idle.obs;
   final Rx<CurrentState> submitState = CurrentState.idle.obs;
 
-  // ─── Image & Metadata ────────────────────────────────────────────────────────
+  // ─── Image & Metadata ───────
   @override
   final Rx<XFile?> selectedImage = Rx<XFile?>(null);
   final ImagePicker _picker = ImagePicker();
@@ -63,8 +60,7 @@ class SellerEditController extends GetxController with MixinDialogController {
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
 
   @override
-  // نکته: این لیست حاوی کدهای Hex خواهد بود (مثلا FFFFFF)
-  final RxList<String> selectedColorNames = <String>[].obs;
+  final RxList<String> selectedColor = <String>[].obs;
 
   @override
   final RxBool isAddingColor = false.obs;
@@ -86,10 +82,12 @@ class SellerEditController extends GetxController with MixinDialogController {
   @override
   bool get showAddButton {
     if (tagQuery.value.isEmpty) return false;
-    return !availableTags.any((tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase());
+    return !availableTags.any(
+      (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
+    );
   }
 
-  // ─── Lifecycle ───────────────────────────────────────────────────────────────
+  // ─── Lifecycle ─────────────────────────
   @override
   void onInit() {
     avmEdit = AutovalidateMode.disabled.obs;
@@ -117,19 +115,17 @@ class SellerEditController extends GetxController with MixinDialogController {
   }
 
   void _syncWithMetadataService() {
-    // استفاده از try-catch برای اطمینان
     try {
       availableColors.assignAll(metadataService.colors);
       availableTags.assignAll(metadataService.tags);
-
       ever(metadataService.colors, (data) => availableColors.assignAll(data));
       ever(metadataService.tags, (data) => availableTags.assignAll(data));
-    } catch(e) {
+    } catch (e) {
       debugPrint("Error syncing metadata: $e");
     }
   }
 
-  // ─── Initialization Logic ────────────────────────────────────────────────────
+  // ─── Initialization Logic ──────────────
   void _initControllers() {
     titleController = TextEditingController();
     descController = TextEditingController();
@@ -206,25 +202,26 @@ class SellerEditController extends GetxController with MixinDialogController {
       discountPriceController.text = discount.toString();
     }
 
-    // اینجا فرض می‌کنیم دیتای دریافتی از سرور برای محصول قدیمی، شامل کدهای رنگ است
-    if (product!.colors != null) {
-      selectedColorNames.assignAll(product!.colors!);
-    }
-    if (product!.tags != null) {
-      selectedTagNames.assignAll(product!.tags!);
-    }
+    selectedColor.assignAll(product!.colors);
+    selectedTagNames.assignAll(product!.tags);
   }
 
-  // ─── Action Methods (Image, Color, Tag) ──────────────────────────────────────
+  // ─── Action Methods (Image, Color, Tag) ─────────────────
 
   @override
   void pickImageFromCamera() => _pickImage(ImageSource.camera);
+
   @override
   void pickImageFromGallery() => _pickImage(ImageSource.gallery);
 
   Future<void> _pickImage(ImageSource source) async {
     try {
-      final XFile? image = await _picker.pickImage(source: source, maxWidth: 1000, maxHeight: 1000, imageQuality: 75);
+      final XFile? image = await _picker.pickImage(
+        source: source,
+        maxWidth: 1000,
+        maxHeight: 1000,
+        imageQuality: 75,
+      );
       if (image != null) {
         selectedImage.value = image;
         isImageDeleted.value = false;
@@ -240,13 +237,13 @@ class SellerEditController extends GetxController with MixinDialogController {
     isImageDeleted.value = true;
   }
 
-  // ─── اصلاح شده: لاجیک رنگ با Hex ───────────────────────────────────────────
-
   @override
-  // ورودی باید کد Hex باشد
   void toggleColor(String hexCode) {
-    if (selectedColorNames.contains(hexCode)) selectedColorNames.remove(hexCode);
-    else selectedColorNames.add(hexCode);
+    if (selectedColor.contains(hexCode)) {
+      selectedColor.remove(hexCode);
+    } else {
+      selectedColor.add(hexCode);
+    }
   }
 
   @override
@@ -258,7 +255,6 @@ class SellerEditController extends GetxController with MixinDialogController {
       final success = await metadataService.addNewColor(name, cleanHex);
 
       if (success) {
-        // تغییر مهم: اضافه کردن کد Hex به جای اسم
         toggleColor(cleanHex);
         Get.back();
       }
@@ -269,7 +265,7 @@ class SellerEditController extends GetxController with MixinDialogController {
     }
   }
 
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ────────────────────────────────
 
   @override
   void onTagSearchChanged(String val) {
@@ -277,7 +273,14 @@ class SellerEditController extends GetxController with MixinDialogController {
     if (tagQuery.value.isEmpty) {
       filteredTags.clear();
     } else {
-      filteredTags.assignAll(availableTags.where((tag) => tag.name.toLowerCase().contains(tagQuery.value.toLowerCase())).toList());
+      filteredTags.assignAll(
+        availableTags
+            .where(
+              (tag) =>
+                  tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()),
+            )
+            .toList(),
+      );
     }
   }
 
@@ -292,7 +295,7 @@ class SellerEditController extends GetxController with MixinDialogController {
   @override
   Future<void> addNewTag() async {
     final newTagName = tagQuery.value.trim();
-    if(newTagName.isEmpty) return;
+    if (newTagName.isEmpty) return;
 
     isAddingTag.value = true;
 
@@ -327,7 +330,8 @@ class SellerEditController extends GetxController with MixinDialogController {
       return;
     }
 
-    if (selectedImage.value == null && (isImageDeleted.value == true || product?.image == null)) {
+    if (selectedImage.value == null &&
+        (isImageDeleted.value == true || product?.image == null)) {
       ToastUtil.show(
         "تصویر محصول نمی‌تواند خالی باشد. لطفا یک تصویر انتخاب کنید.",
         type: ToastType.warning,
@@ -354,21 +358,21 @@ class SellerEditController extends GetxController with MixinDialogController {
         'quantity': int.tryParse(cleanCount) ?? 0,
         'discountPrice': int.tryParse(cleanDiscount) ?? 0,
         'sellerId': _authService.userId.value,
-        // این لیست حاوی کدهای Hex است و به درستی ارسال می‌شود
-        'colors': jsonEncode(selectedColorNames),
+        'colors': jsonEncode(selectedColor),
         'tags': jsonEncode(selectedTagNames),
       };
 
       if (selectedImage.value != null) {
-        mapData['image'] = kIsWeb
-            ? dio.MultipartFile.fromBytes(
-          await selectedImage.value!.readAsBytes(),
-          filename: selectedImage.value!.name,
-        )
-            : await dio.MultipartFile.fromFile(
-          selectedImage.value!.path,
-          filename: selectedImage.value!.name,
-        );
+        mapData['image'] =
+            kIsWeb
+                ? dio.MultipartFile.fromBytes(
+                  await selectedImage.value!.readAsBytes(),
+                  filename: selectedImage.value!.name,
+                )
+                : await dio.MultipartFile.fromFile(
+                  selectedImage.value!.path,
+                  filename: selectedImage.value!.name,
+                );
       }
 
       final formData = dio.FormData.fromMap(mapData);
@@ -376,11 +380,14 @@ class SellerEditController extends GetxController with MixinDialogController {
       final result = await editRepo.updateProduct(product!.id, formData);
 
       result.fold(
-            (failure) {
+        (failure) {
           submitState.value = CurrentState.error;
-          ToastUtil.show(failure.message ?? "خطا در ویرایش محصول", type: ToastType.error);
+          ToastUtil.show(
+            failure.message ?? "خطا در ویرایش محصول",
+            type: ToastType.error,
+          );
         },
-            (updatedProduct) {
+        (updatedProduct) {
           submitState.value = CurrentState.success;
           ToastUtil.show("محصول با موفقیت ویرایش شد", type: ToastType.success);
 
@@ -401,12 +408,13 @@ class SellerEditController extends GetxController with MixinDialogController {
   void _updateMainListLocally(ProductModel updatedProduct) {
     if (Get.isRegistered<SellerProductsController>()) {
       final productsController = Get.find<SellerProductsController>();
-      final index = productsController.products.indexWhere((p) => p.id == updatedProduct.id);
+      final index = productsController.products.indexWhere(
+        (p) => p.id == updatedProduct.id,
+      );
       if (index != -1) {
         productsController.products[index] = updatedProduct;
         productsController.products.refresh();
       }
-
     }
   }
 }

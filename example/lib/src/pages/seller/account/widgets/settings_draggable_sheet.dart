@@ -1,4 +1,7 @@
+import 'package:example/app.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -35,6 +38,26 @@ class SettingsDraggableSheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(children: [
+                    // تیتر بخش
+                    Text(
+                        'گزارش‌های فروش',
+                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)
+                    )
+                  ]),
+                ),
+                AppSize.p16.height,
+                MenuItem(
+                  icon: Icons.bar_chart_rounded,
+                  color: theme.colorScheme.primary,
+                  title: 'آمار فروش محصولات',
+                  subtitle: 'مشاهده کالاهای پرفروش',
+                  showChevron: true,
+                  onTap: () => Get.toNamed(AppRoutes.sellerStats),
+                ),
+                AppSize.p24.height,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
+                  child: Row(children: [
                     Text(TKeys.settings.tr, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold))
                   ]),
                 ),
@@ -42,7 +65,6 @@ class SettingsDraggableSheet extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     controller: scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
                     children: [
                       IconList(onLogout: onLogout),
                       50.height,

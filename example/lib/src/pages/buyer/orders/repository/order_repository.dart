@@ -4,7 +4,7 @@ import 'package:either_dart/either.dart';
 import 'package:example/src/commons/models/failure.dart';
 import 'package:example/src/commons/services/base_repository.dart';
 import 'package:example/src/commons/services/network_service.dart';
-import '../models/order_model.dart';
+import '../../../shared/models/order_model.dart';
 
 abstract class IOrderRepository {
   Future<Either<Failure, List<OrderModel>>> getOrders(String userId);

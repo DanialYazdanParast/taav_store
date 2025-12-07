@@ -32,18 +32,26 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          _buildTopBackground(
-            theme,
-            primaryColor,
-            screenHeight,
-            screenWidth,
-            isRtl,
-          ),
+      body:GestureDetector(
 
-          _buildBottomSheet(theme),
-        ],
+        onTap: () {
+          controller.closeSearch();
+        },
+
+        behavior: HitTestBehavior.translucent,
+        child: Stack(
+          children: [
+            _buildTopBackground(
+              theme,
+              primaryColor,
+              screenHeight,
+              screenWidth,
+              isRtl,
+            ),
+
+            _buildBottomSheet(theme),
+          ],
+        ),
       ),
     );
   }
@@ -77,7 +85,6 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
               children: [
                 AnimatedAppBar<SellerProductsController>(
                   screenWidth: Get.width,
-                  isRtl: true,
                   isSearching: controller.isSearching,
                   searchController: controller.searchController,
                   searchFocusNode: controller.searchFocusNode,

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../controllers/order_history_controller.dart';
-import '../models/order_model.dart';
+import '../../../shared/models/order_model.dart';
 
 class OrderHistoryPage extends GetView<OrderHistoryController> {
   const OrderHistoryPage({super.key});

@@ -15,14 +15,12 @@ abstract class AppRoutes {
   static const String sellerAddProduct = _Paths.sellerAddProduct;
   static const String sellerSettings = _Paths.sellerSettings;
   static const String sellerEditProduct = _Paths.sellerEditProduct;
-
+  static const String sellerStats = _Paths.sellerStats;
   // ─── Buyer ──────────────────────────────────────────────────────────────
   static const String buyerProducts = _Paths.buyerProducts;
   static const String buyerProductDetails = _Paths.buyerProductDetails;
   static const String buyerCart = _Paths.buyerCart;
   static const String buyerAccount = _Paths.buyerAccount;
-
-  // ✅ اضافه شده: مسیر تاریخچه سفارشات
   static const String buyerOrders = _Paths.buyerOrders;
 }
 
@@ -39,6 +37,7 @@ abstract class _Paths {
   static const String sellerAddProduct = '/seller/add-product';
   static const String sellerSettings = '/seller/settings';
   static const String sellerEditProduct = '/seller/edit-product';
+  static const String sellerStats = '/seller/stats';
 
   // ─── Buyer ──────────────────────────────────────────────────────────────
   static const String buyerProducts = '/buyer/products';

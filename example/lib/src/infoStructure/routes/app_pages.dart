@@ -19,6 +19,8 @@ import 'package:example/src/pages/seller/edit_product/commons/seller_edit_bindin
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
 import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
+import 'package:example/src/pages/seller/stats/commons/seller_stats_binding.dart';
+import 'package:example/src/pages/seller/stats/views/seller_stats_screen.dart';
 import 'package:example/src/pages/splash/commons/splash_binding.dart';
 import 'package:example/src/pages/splash/view/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +81,12 @@ class AppPages {
       binding: SellerEditBinding(),
       transition: Transition.downToUp,
     ),
-
+    GetPage(
+      name: _Paths.sellerStats,
+      page: () => const SellerStatsScreen(),
+      binding: SellerStatsBinding(),
+      transition: Transition.rightToLeft,
+    ),
     // ─── Buyer ──────────────────────────────────────────────────────────
     GetPage(
       name: _Paths.buyerProducts,
@@ -110,7 +117,6 @@ class AppPages {
       name: _Paths.buyerOrders,
       page: () => const OrderHistoryPage(),
       binding: OrderHistoryBinding(),
-      // چون یک صفحه فرعی است، انیمیشن ورود از راست به چپ حس بهتری می‌دهد
       transition: Transition.rightToLeft,
     ),
   ];

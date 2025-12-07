@@ -84,7 +84,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 450,
-                              mainAxisExtent: 140, // ارتفاع ثابت کارت‌ها
+                              mainAxisExtent: 140,
                               crossAxisSpacing: AppSize.p20,
                               mainAxisSpacing: AppSize.p20,
                             ),

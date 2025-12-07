@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
-import '../models/order_model.dart';
+import '../../../shared/models/order_model.dart';
 import '../repository/order_repository.dart';
 
 class OrderHistoryController extends GetxController {

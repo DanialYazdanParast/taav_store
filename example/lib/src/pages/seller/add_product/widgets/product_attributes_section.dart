@@ -1,4 +1,4 @@
-import 'package:example/src/pages/seller/account/widgets/seller_ui_components.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -35,7 +35,7 @@ class ProductAttributesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SettingsMenuItem(
+        MenuItem(
           onTap: () {},
           title: "ویژگی‌ها",
           color: theme.colorScheme.primary,
@@ -60,9 +60,9 @@ class ProductAttributesSection extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               ...availableColors.map((color) {
-                final isSelected = selectedColorNames.contains(color.name);
+                final isSelected = selectedColorNames.contains(color.hex);
                 return GestureDetector(
-                  onTap: () => onToggleColor(color.name),
+                  onTap: () => onToggleColor(color.hex),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     width: 38,

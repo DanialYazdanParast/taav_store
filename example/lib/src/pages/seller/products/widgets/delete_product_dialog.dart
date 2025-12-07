@@ -11,7 +11,6 @@ class DeleteProductDialog {
     final dialog = DialogWidget(maxWidth: 500);
 
     await dialog.show(
-
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -33,21 +32,21 @@ class DeleteProductDialog {
             children: [
               Expanded(
                 child:
-                ButtonWidget(
-                  "لغو",
+                    ButtonWidget(
+                      "لغو",
                       () => Get.back(),
-                  textColor: Get.theme.colorScheme.onSurface,
-                ).outline(),
+                      textColor: Get.theme.colorScheme.onSurface,
+                    ).outline(),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child:
-                ButtonWidget(
-                  "حذف",
-                  onConfirm,
-                  bgColor: Colors.red,
-                  textColor: Colors.white,
-                ).material(),
+                    ButtonWidget(
+                      "حذف",
+                      onConfirm,
+                      bgColor: Colors.red,
+                      textColor: Colors.white,
+                    ).material(),
               ),
             ],
           ),

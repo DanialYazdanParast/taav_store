@@ -1,11 +1,11 @@
 import 'dart:io';
-import 'package:example/src/pages/seller/account/widgets/seller_ui_components.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/pages/shared/widgets/seller_icon_button.dart';
+import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 
 class ProductImageSection extends StatelessWidget {
 
@@ -32,7 +32,7 @@ class ProductImageSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SettingsMenuItem(
+        MenuItem(
           onTap: () {}, title: "تصویر محصول", color: theme.colorScheme.primary,
           icon: Icons.image, padding: EdgeInsets.zero, iconSize: 20, iconContainerSize: 40, showChevron: false,
         ),
@@ -102,7 +102,7 @@ class ProductImageSection extends StatelessWidget {
 
           Positioned(
             top: 10, right: 10,
-            child: SellerIconButton(
+            child: IconButtonWidget(
               icon: Icons.delete_outline_rounded,
               onTap: onTapRemove,
               bgColor: Colors.red.withOpacity(0.9), color: Colors.white, size: 20,
@@ -111,7 +111,7 @@ class ProductImageSection extends StatelessWidget {
 
           Positioned(
             top: 10, left: 10,
-            child: SellerIconButton(
+            child: IconButtonWidget(
               icon: Icons.edit_rounded,
               onTap: onTapPick,
               bgColor: Colors.black.withOpacity(0.6), color: Colors.white, size: 20,

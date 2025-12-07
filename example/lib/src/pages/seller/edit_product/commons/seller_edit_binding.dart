@@ -11,7 +11,6 @@ class SellerEditBinding extends Bindings {
       () => SellerEditRepository(network: Get.find<NetworkService>()),
     );
 
-
     Get.lazyPut<SellerEditController>(
       () => SellerEditController(
         editRepo: Get.find<ISellerEditRepository>(),

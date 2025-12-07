@@ -4,9 +4,9 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 
 import '../controllers/seller_account_controller.dart';
-import '../widgets/seller_draggable_sheet.dart';
-import '../widgets/seller_profile_header.dart';
-import '../widgets/seller_settings_list.dart';
+import '../widgets/settings_draggable_sheet.dart';
+import '../../../shared/widgets/profile_header.dart';
+import '../widgets/icon_list.dart';
 
 class SellerAccountScreen extends GetView<SellerAccountController> {
   const SellerAccountScreen({super.key});
@@ -32,12 +32,12 @@ class SellerMobileLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SellerProfileHeader(
+        ProfileHeader(
           username: controller.authService.username,
           userType: controller.authService.userType,
           height: 300,
         ),
-        SellerDraggableSheet(onLogout: controller.authService.logout),
+        SettingsDraggableSheet(onLogout: controller.authService.logout),
       ],
     );
   }
@@ -73,14 +73,14 @@ class SellerDesktopLayout extends StatelessWidget {
           ),
           child: Column(
             children: [
-              SellerProfileHeader(
+              ProfileHeader(
                 username: controller.authService.username,
                 userType: controller.authService.userType,
                 height: 300,
               ),
               Padding(
                 padding: const EdgeInsets.all(AppSize.p32),
-                child: SellerSettingsList(
+                child: IconList(
                   onLogout: controller.authService.logout,
                   showChevron: false,
                 ),

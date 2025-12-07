@@ -26,7 +26,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsetsDirectional.only(end:AppSize.p16),
+        padding: EdgeInsetsDirectional.only(end: AppSize.p16),
         child: Column(
           children: [
             const SellerDesktopHeader(),
@@ -50,7 +50,8 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
                   ),
 
                   Obx(() {
-                    if (controller.productsState.value == CurrentState.loading) {
+                    if (controller.productsState.value ==
+                        CurrentState.loading) {
                       return _buildLoadingGrid();
                     }
 
@@ -100,7 +101,6 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
                               Get.toNamed(
                                 AppRoutes.sellerEditProduct,
                                 arguments: product.id,
-
                               );
                             },
                             onDelete: () {

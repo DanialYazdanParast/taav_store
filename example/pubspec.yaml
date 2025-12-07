@@ -75,7 +75,7 @@ flutter:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
-  # For details regarding adding assets from package dependencies, see
+  # For product_details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
 
   # To add custom fonts to your application, add a fonts section here,
@@ -95,5 +95,5 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies,
+  # For product_details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

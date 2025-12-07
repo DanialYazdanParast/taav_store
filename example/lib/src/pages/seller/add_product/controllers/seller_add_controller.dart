@@ -1,37 +1,31 @@
 import 'dart:convert';
-import 'package:example/src/commons/services/auth_service.dart';
-import 'package:example/src/commons/services/metadata_service.dart';
-import 'package:example/src/commons/widgets/responsive/responsive.dart';
-import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
-import 'package:example/src/pages/seller/products/models/product_model.dart';
-import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
-
+import 'package:example/src/commons/services/auth_service.dart';
+import 'package:example/src/commons/services/metadata_service.dart';
+import 'package:example/src/commons/widgets/responsive/responsive.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
+import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/models/color_model.dart';
 import 'package:example/src/pages/shared/models/tag_model.dart';
-
-
 import '../repository/seller_add_repository.dart';
 
-class SellerAddProductController extends GetxController with MixinDialogController {
-
-  // ─── Dependencies ────────────────────────────────────────────────────────────
+class SellerAddProductController extends GetxController
+    with MixinDialogController {
   final ISellerAddRepository addRepo;
-  final AuthService _authService = Get.find<AuthService>();
 
-  final MetadataService metadataService = Get.find<MetadataService>();
+  AuthService get _authService => Get.find<AuthService>();
 
-  SellerAddProductController({
-    required this.addRepo,
+  MetadataService get metadataService => Get.find<MetadataService>();
 
-  });
+  SellerAddProductController({required this.addRepo});
 
   // ─── Text Controllers ────────────────────────────────────────────────────────
   late TextEditingController titleController;
@@ -52,24 +46,24 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late Rx<AutovalidateMode> avmAdd;
 
-  // ─── State Management ────────────────────────────────────────────────────────
+  // ─── State Management ──────────────────
   final Rx<CurrentState> pageState = CurrentState.idle.obs;
   final Rx<CurrentState> submitState = CurrentState.idle.obs;
 
-  // ─── Image Handling ──────────────────────────────────────────────────────────
+  // ─── Image Handling ───────────────────────
   @override
   final Rx<XFile?> selectedImage = Rx<XFile?>(null);
   final ImagePicker _picker = ImagePicker();
 
-  // ─── Color Logic ─────────────────────────────────────────────────────────────
+  // ─── Color Logic ────────────────────────────
   @override
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   @override
-  final RxList<String> selectedColorNames = <String>[].obs;
+  final RxList<String> selectedColor = <String>[].obs;
   @override
   final RxBool isAddingColor = false.obs;
 
-  // ─── Tag Logic ───────────────────────────────────────────────────────────────
+  // ─── Tag Logic ────────────────────────
   @override
   final RxList<TagModel> availableTags = <TagModel>[].obs;
   @override
@@ -86,18 +80,16 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   bool get showAddButton {
     if (tagQuery.value.isEmpty) return false;
     return !availableTags.any(
-          (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
+      (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
     );
   }
 
-  // ─── Lifecycle Methods ───────────────────────────────────────────────────────
+  // ─── Lifecycle Methods ─────────────────────
   @override
   void onInit() {
     avmAdd = AutovalidateMode.disabled.obs;
     _initControllers();
     super.onInit();
-
-
     _syncWithMetadataService();
   }
 
@@ -139,24 +131,33 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     tagSearchFocusNode.dispose();
   }
 
-
   void _syncWithMetadataService() {
-    pageState.value = CurrentState.loading;
+    try {
+      pageState.value = CurrentState.loading;
 
+      if (!Get.isRegistered<MetadataService>()) {
+        debugPrint("⚠️ هشدار: MetadataService یافت نشد.");
+        pageState.value = CurrentState.success;
+        return;
+      }
 
-    availableColors.assignAll(metadataService.colors);
-    availableTags.assignAll(metadataService.tags);
+      availableColors.assignAll(metadataService.colors);
+      availableTags.assignAll(metadataService.tags);
 
+      ever(metadataService.colors, (data) => availableColors.assignAll(data));
+      ever(metadataService.tags, (data) => availableTags.assignAll(data));
 
-    ever(metadataService.colors, (data) => availableColors.assignAll(data));
-    ever(metadataService.tags, (data) => availableTags.assignAll(data));
-
-    pageState.value = CurrentState.success;
+      pageState.value = CurrentState.success;
+    } catch (e) {
+      debugPrint("❌ خطا در سینک اطلاعات: $e");
+      pageState.value = CurrentState.error;
+    }
   }
 
-  // ─── Image Logic ─────────────────────────────────────────────────────────────
+  // ─── Image Logic ───────────────────────────
   @override
   void pickImageFromCamera() => _pickImage(ImageSource.camera);
+
   @override
   void pickImageFromGallery() => _pickImage(ImageSource.gallery);
 
@@ -181,13 +182,14 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   @override
   void removeImage() => selectedImage.value = null;
 
-  // ─── Color Logic ─────────────────────────────────────────────────────────────
+  // ─── Color Logic  ────────────────
+
   @override
-  void toggleColor(String colorName) {
-    if (selectedColorNames.contains(colorName)) {
-      selectedColorNames.remove(colorName);
+  void toggleColor(String hexCode) {
+    if (selectedColor.contains(hexCode)) {
+      selectedColor.remove(hexCode);
     } else {
-      selectedColorNames.add(colorName);
+      selectedColor.add(hexCode);
     }
   }
 
@@ -196,16 +198,18 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     isAddingColor.value = true;
     final cleanHex = hexCode.replaceAll('#', '');
 
-    final success = await metadataService.addNewColor(name, cleanHex);
+    try {
+      final success = await metadataService.addNewColor(name, cleanHex);
 
-    if (success) {
-
-      if (metadataService.colors.isNotEmpty) {
-        toggleColor(metadataService.colors.last.name);
+      if (success) {
+        toggleColor(cleanHex);
+        Get.back();
       }
-      Get.back();
+    } catch (e) {
+      ToastUtil.show("خطا در افزودن رنگ", type: ToastType.error);
+    } finally {
+      isAddingColor.value = false;
     }
-    isAddingColor.value = false;
   }
 
   // ─── Tag Logic ───────────────────────────────────────────────────────────────
@@ -217,7 +221,10 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     } else {
       filteredTags.assignAll(
         availableTags
-            .where((tag) => tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()))
+            .where(
+              (tag) =>
+                  tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()),
+            )
             .toList(),
       );
     }
@@ -240,25 +247,28 @@ class SellerAddProductController extends GetxController with MixinDialogControll
 
     isAddingTag.value = true;
 
-    final success = await metadataService.addNewTag(newTagName);
+    try {
+      final success = await metadataService.addNewTag(newTagName);
+      if (success) {
+        if (metadataService.tags.isNotEmpty) {
+          final newTag = metadataService.tags.last;
+          selectTag(newTag.name);
 
-    if (success) {
+          ToastUtil.show("تگ جدید اضافه شد", type: ToastType.success);
 
-      if (metadataService.tags.isNotEmpty) {
-        final newTag = metadataService.tags.last;
-        selectTag(newTag.name);
-
-        ToastUtil.show("تگ جدید اضافه شد", type: ToastType.success);
-
-        tagSearchController.clear();
-        tagQuery.value = '';
-        filteredTags.clear();
+          tagSearchController.clear();
+          tagQuery.value = '';
+          filteredTags.clear();
+        }
       }
+    } catch (e) {
+      ToastUtil.show("خطا در افزودن تگ", type: ToastType.error);
+    } finally {
+      isAddingTag.value = false;
     }
-    isAddingTag.value = false;
   }
 
-  // ─── Submit Logic ────────────────────────────────────────────────────────────
+  // ─── Submit Logic ────────────────────────
   Future<void> submitProduct() async {
     if (submitState.value == CurrentState.loading) return;
 
@@ -269,7 +279,10 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     }
 
     if (selectedImage.value == null) {
-      ToastUtil.show("لطفا یک تصویر برای محصول انتخاب کنید", type: ToastType.warning);
+      ToastUtil.show(
+        "لطفا یک تصویر برای محصول انتخاب کنید",
+        type: ToastType.warning,
+      );
       return;
     }
 
@@ -292,27 +305,31 @@ class SellerAddProductController extends GetxController with MixinDialogControll
         'quantity': int.tryParse(cleanCount) ?? 0,
         'discountPrice': int.tryParse(cleanDiscount) ?? 0,
         'sellerId': _authService.userId.value,
-        'colors': jsonEncode(selectedColorNames),
+        'colors': jsonEncode(selectedColor),
         'tags': jsonEncode(selectedTagNames),
-        'image': kIsWeb
-            ? dio.MultipartFile.fromBytes(
-          await selectedImage.value!.readAsBytes(),
-          filename: selectedImage.value!.name,
-        )
-            : await dio.MultipartFile.fromFile(
-          selectedImage.value!.path,
-          filename: selectedImage.value!.name,
-        ),
+        'image':
+            kIsWeb
+                ? dio.MultipartFile.fromBytes(
+                  await selectedImage.value!.readAsBytes(),
+                  filename: selectedImage.value!.name,
+                )
+                : await dio.MultipartFile.fromFile(
+                  selectedImage.value!.path,
+                  filename: selectedImage.value!.name,
+                ),
       });
 
       final result = await addRepo.addProduct(formData);
 
       result.fold(
-            (failure) {
+        (failure) {
           submitState.value = CurrentState.error;
-          ToastUtil.show(failure.message ?? "خطا در ثبت محصول", type: ToastType.error);
+          ToastUtil.show(
+            failure.message ?? "خطا در ثبت محصول",
+            type: ToastType.error,
+          );
         },
-            (newProduct) {
+        (newProduct) {
           submitState.value = CurrentState.success;
           ToastUtil.show("محصول با موفقیت ثبت شد", type: ToastType.success);
 
@@ -330,6 +347,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
       );
     } catch (e) {
       submitState.value = CurrentState.error;
+      debugPrint("Submit Error: $e");
       ToastUtil.show("خطای غیرمنتظره رخ داد", type: ToastType.error);
     } finally {
       if (submitState.value != CurrentState.success) {
@@ -346,7 +364,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     discountPriceController.clear();
     tagSearchController.clear();
     selectedImage.value = null;
-    selectedColorNames.clear();
+    selectedColor.clear();
     selectedTagNames.clear();
     filteredTags.clear();
     tagQuery.value = '';
@@ -355,13 +373,11 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     submitState.value = CurrentState.idle;
   }
 
-
   void _updateMainListLocally(ProductModel newProduct) {
     if (Get.isRegistered<SellerProductsController>()) {
       final productsCtrl = Get.find<SellerProductsController>();
       productsCtrl.products.insert(0, newProduct);
       productsCtrl.calculatePriceLimits(productsCtrl.products);
-
     }
   }
 }

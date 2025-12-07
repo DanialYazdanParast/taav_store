@@ -9,7 +9,6 @@ class SellerProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Responsive(
       mobile: SellerMobileLayout(),
       desktop: SellerDesktopLayout(),

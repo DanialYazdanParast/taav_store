@@ -1,3 +1,5 @@
+import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
@@ -5,8 +7,10 @@ import '../../../../commons/widgets/responsive/responsive.dart';
 import '../../../../infoStructure/languages/translation_keys.dart';
 
 class MainBuyerController extends GetxController {
+  final CartController _cartController = Get.find<CartController>();
   final RxInt currentIndex = 0.obs;
-  final RxInt addProductBadge = 5.obs;
+  final RxInt cartBadge = 0.obs;
+
   List<NavItemModel> get navItems => [
     NavItemModel(
       icon: Icons.home_outlined,
@@ -14,15 +18,13 @@ class MainBuyerController extends GetxController {
       label: TKeys.navHome.tr,
     ),
     NavItemModel(
-        icon: Icons.shopping_cart,
-        activeIcon: Icons.shopping_cart,
-        label: TKeys.navAddProduct.tr,
-        isSpecial: true,
-        badgeCount: addProductBadge.value
+      icon: Icons.shopping_cart_outlined,
+      activeIcon: Icons.shopping_cart,
+      label: "TKeys.navCart.tr",
+      isSpecial: true,
+      badgeCount: cartBadge.value,
+      showBadge: cartBadge.value > 0,
     ),
-
-
-    
     NavItemModel(
       icon: Icons.person_outline_rounded,
       activeIcon: Icons.person_rounded,
@@ -30,50 +32,59 @@ class MainBuyerController extends GetxController {
     ),
   ];
 
+  @override
+  void onInit() {
+    super.onInit();
+    _syncIndexWithRoute();
 
+    cartBadge.value = _cartController.totalCount;
 
-
-  void incrementBadge() {
-    addProductBadge.value++;
+    ever(_cartController.cartItems, (_) {
+      cartBadge.value = _cartController.totalCount;
+    });
   }
 
-
-  void decrementBadge() {
-    if (addProductBadge.value > 0) {
-      addProductBadge.value--;
+  void _syncIndexWithRoute() {
+    final currentRoute = Get.currentRoute;
+    if (currentRoute.contains('/buyer/products') || currentRoute == '/buyer') {
+      currentIndex.value = 0;
+    } else if (currentRoute.contains('/buyer/cart')) {
+      currentIndex.value = 1;
+    } else if (currentRoute.contains('/buyer/account')) {
+      currentIndex.value = 2;
     }
   }
 
-
-  void setBadge(int count) {
-    addProductBadge.value = count;
-  }
-
-
-  void clearBadge() {
-    addProductBadge.value = 0;
-  }
-
   void changeTab(int index) {
-    final item = navItems[index];
+    if (currentIndex.value == index) return;
 
-    if (item.isSpecial) {
-      if (Responsive.isDesktop) {
-        currentIndex.value = index;
-      } else {
-        goToAddProduct();
-      }
-    } else {
+    final routes = [
+      AppRoutes.buyerProducts,
+      AppRoutes.buyerCart,
+      AppRoutes.buyerAccount,
+    ];
+
+    if (index >= 0 && index < routes.length) {
+      Get.offNamed(routes[index]);
+    }
+  }
+
+  void setTab(int index) {
+    if (index >= 0 && index < navItems.length) {
       currentIndex.value = index;
     }
   }
 
-  void goToAddProduct() {
-    // Get.to(
-    //       () => SellerAddScreen(),
-    //   transition: Transition.downToUp,
-    //   duration: const Duration(milliseconds: 400),
-    //   curve: Curves.easeOutQuart,
-    // );
+  void goToProductDetails(String productId) {
+    Get.toNamed(
+      AppRoutes.buyerProductDetails.replaceAll(':id', productId),
+      arguments: productId,
+    );
   }
+
+  void goToCart() => changeTab(1);
+
+  void goToProducts() => changeTab(0);
+
+  void goToAccount() => changeTab(2);
 }

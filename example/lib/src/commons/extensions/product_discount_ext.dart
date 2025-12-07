@@ -1,4 +1,4 @@
-import 'package:example/src/pages/seller/products/models/product_model.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
 
 
 extension ProductDiscountExt on ProductModel {
@@ -7,7 +7,6 @@ extension ProductDiscountExt on ProductModel {
     if (price == 0) return 0;
     return ((price - discountPrice) * 100 / price).round();
   }
-
 
   String get discountPercentString => '$discountPercent';
 }

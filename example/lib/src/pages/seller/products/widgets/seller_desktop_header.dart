@@ -6,12 +6,11 @@ import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
+import 'package:example/src/pages/seller/products/widgets/seller_filter_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'filter/seller_filter_view.dart';
-import '../../../shared/widgets/seller_icon_button.dart';
-
+import '../../../shared/widgets/icon_button_widget.dart';
 
 class SellerDesktopHeader extends GetView<SellerProductsController> {
   const SellerDesktopHeader({super.key});
@@ -26,13 +25,6 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p32),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black.withOpacity(0.04),
-        //     blurRadius: AppSize.p10,
-        //     offset: const Offset(0, 4),
-        //   ),
-        // ],
       ),
       child: Row(
         children: [
@@ -63,7 +55,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   }
 
   Widget _buildFilterButton(ThemeData theme) {
-    return SellerIconButton(
+    return IconButtonWidget(
       icon: Icons.filter_list_rounded,
       onTap: () {
         DialogWidget().show(const SellerFilterView());
@@ -79,7 +71,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
       height: 48,
       child: ButtonWidget(
         TKeys.addProduct.tr,
-            () {},
+        () {},
         icon: Icons.add_rounded,
         radius: AppSize.r12,
         textColor: Colors.white,

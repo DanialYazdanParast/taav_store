@@ -6,7 +6,7 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 
-import '../models/product_model.dart';
+import '../../../shared/models/product_model.dart';
 import '../../../shared/models/color_model.dart';
 import '../../../shared/models/tag_model.dart';
 import '../repository/seller_products_repository.dart';

@@ -51,14 +51,14 @@ class LoginController extends GetxController {
     final result = await loginRepository.login(username, password);
 
     result.fold(
-      (failure) {
+          (failure) {
         loginState.value = CurrentState.error;
         ToastUtil.show(
           failure.message ?? 'نام کاربری یا رمز عبور اشتباه است',
           type: ToastType.error,
         );
       },
-      (user) {
+          (user) {
         loginState.value = CurrentState.success;
 
         ToastUtil.show(
@@ -73,13 +73,20 @@ class LoginController extends GetxController {
           type: user.userType ?? '',
         );
 
-        if (user.userType.toLowerCase() == "seller") {
-          Get.offAllNamed(AppRoutes.mainSeller);
-        } else if (user.userType.toLowerCase() == "buyer") {
-          //   Get.offAllNamed(AppRoutes.buyerHome);
+        final userType = user.userType?.toLowerCase() ?? '';
+
+        if (userType == "seller") {
+          Get.offAllNamed(AppRoutes.sellerProducts);
+        } else if (userType == "buyer") {
+          Get.offAllNamed(AppRoutes.buyerProducts);
         } else {
-          // حالت ناشناخته → صفحه خطا یا دیفالت
-          //  Get.offAllNamed(AppRoutes.defaultHome);
+
+          ToastUtil.show(
+            'نوع کاربری نامعتبر است',
+            type: ToastType.error,
+          );
+          authService.logout(); // خروج کاربر
+          Get.offAllNamed(AppRoutes.login);
         }
       },
     );

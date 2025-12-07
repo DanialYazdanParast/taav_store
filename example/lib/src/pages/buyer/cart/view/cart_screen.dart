@@ -1,5 +1,5 @@
+import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
-import 'package:example/src/pages/buyer/product_details/widgets/advanced_count_control.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +28,6 @@ class CartScreen extends GetView<CartController> {
         iconTheme: theme.iconTheme,
       ),
       body: Obx(() {
-
         if (controller.cartItems.isEmpty) {
           return Center(
             child: Column(
@@ -81,7 +80,6 @@ class CartScreen extends GetView<CartController> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Container(
           width: 90,
           height: 90,
@@ -196,7 +194,10 @@ class CartScreen extends GetView<CartController> {
 
   Widget _buildFixedBottomBar(ThemeData theme) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16, vertical: AppSize.p12),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSize.p16,
+        vertical: AppSize.p12,
+      ),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
 
@@ -217,7 +218,9 @@ class CartScreen extends GetView<CartController> {
                     onPressed: () => controller.checkout(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: theme.colorScheme.primary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSize.r10)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppSize.r10),
+                      ),
                       elevation: 0,
                     ),
                     child: Text(
@@ -280,7 +283,6 @@ class CartScreen extends GetView<CartController> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-
                         Text(
                           _formatPrice(controller.totalPayablePrice),
                           style: theme.textTheme.titleLarge?.copyWith(

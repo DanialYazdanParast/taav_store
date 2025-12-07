@@ -46,6 +46,7 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
               icon: Icons.shopping_bag_outlined,
               textColor: Colors.white,
               subColor: Colors.white70,
+              state: controller.statsState.value,
             ),
           ),
         ],

@@ -11,29 +11,41 @@ import '../../../shared/models/color_model.dart';
 import '../../../shared/models/tag_model.dart';
 import '../repository/seller_products_repository.dart';
 
-
+// ✅ ایمپورت ریپازیتوری آمار
+import 'package:example/src/pages/seller/stats/repository/seller_stats_repository.dart';
 
 class SellerProductsController extends GetxController {
 
   // ─── Dependencies ────────────────────────────────────────────────────────────
   final ISellerProductsRepository productRepo;
+  final ISellerStatsRepository statsRepo; // ✅ وابستگی جدید
 
   final MetadataService metadataService = Get.find<MetadataService>();
   final AuthService _authService = Get.find<AuthService>();
 
   SellerProductsController({
     required this.productRepo,
-
+    required this.statsRepo, // ✅ دریافت در سازنده
   });
 
-  // ─── State Variables ─────────────────────────────────────────────────────────
+  // ─── State Variables (Products List) ─────────────────────────────────────────
   final RxList<ProductModel> products = <ProductModel>[].obs;
   final Rx<CurrentState> productsState = CurrentState.idle.obs;
 
+  // ─── State Variables (Statistics) ────────────────────────────────────────────
+  // ۱. آمار فروش و درآمد
+  final RxInt totalSalesCount = 0.obs;
+  final RxInt totalRevenueAmount = 0.obs;
+  final Rx<CurrentState> statsState = CurrentState.idle.obs; // ✅ استیت مخصوص آمار فروش
+
+  // ۲. آمار سبد خرید (محصولات در انتظار خرید)
+  final RxInt totalItemsInCart = 0.obs;
+  final Rx<CurrentState> cartStatsState = CurrentState.idle.obs; // ✅ استیت مخصوص آمار سبد خرید
+
+  // ─── Filter & Search Variables ───────────────────────────────────────────────
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   final RxList<TagModel> availableTags = <TagModel>[].obs;
 
-  // ─── Filter Logic Variables ──────────────────────────────────────────────────
   final RxDouble minPriceLimit = 0.0.obs;
   final RxDouble maxPriceLimit = 10000000.0.obs;
 
@@ -47,7 +59,6 @@ class SellerProductsController extends GetxController {
   final RxList<String> tempTagNames = <String>[].obs;
   final RxBool tempOnlyAvailable = false.obs;
 
-  // ─── Search Variables ────────────────────────────────────────────────────────
   final RxBool isSearching = false.obs;
   final RxString query = ''.obs;
   final RxBool isHidden = false.obs;
@@ -68,10 +79,12 @@ class SellerProductsController extends GetxController {
 
     debounce(query, (_) {}, time: const Duration(milliseconds: 250));
 
-
     _syncFiltersWithService();
 
+    // فراخوانی متدها
     fetchProducts();
+    fetchTotalStats();  // ✅ دریافت آمار فروش
+    fetchInCartStats(); // ✅ دریافت آمار سبد خرید
   }
 
   @override
@@ -81,26 +94,16 @@ class SellerProductsController extends GetxController {
     super.onClose();
   }
 
-
   void _syncFiltersWithService() {
-
     availableColors.assignAll(metadataService.colors);
     availableTags.assignAll(metadataService.tags);
-
-
     ever(metadataService.colors, (data) => availableColors.assignAll(data));
     ever(metadataService.tags, (data) => availableTags.assignAll(data));
-
   }
 
-  // ─── Data Fetching ───────────────────────────────────────────────────────────
+  // ─── 1. Fetch Products Logic ────────────────────────────────────────────────
   Future<void> fetchProducts() async {
     productsState.value = CurrentState.loading;
-
-    await _getProductsFromRepo();
-  }
-
-  Future<void> _getProductsFromRepo() async {
     final result = await productRepo.getSellerProducts(_authService.userId.value);
 
     result.fold(
@@ -116,8 +119,57 @@ class SellerProductsController extends GetxController {
     );
   }
 
+  // ─── 2. Fetch Total Sales & Revenue Logic ───────────────────────────────────
+  Future<void> fetchTotalStats() async {
+    statsState.value = CurrentState.loading; // شروع لودینگ
 
+    final result = await statsRepo.getBestSellers(_authService.userId.value);
 
+    result.fold(
+          (failure) {
+        statsState.value = CurrentState.error; // خطای لودینگ
+        print("Error fetching sales stats: ${failure.message}");
+      },
+          (statsList) {
+        int totalQty = 0;
+        int totalRev = 0;
+
+        // جمع زدن مقادیر تمام محصولات فروخته شده
+        for (var item in statsList) {
+          totalQty += item.totalQuantitySold;
+          totalRev += item.totalRevenue;
+        }
+
+        totalSalesCount.value = totalQty;
+        totalRevenueAmount.value = totalRev;
+
+        statsState.value = CurrentState.success; // پایان موفقیت‌آمیز
+      },
+    );
+  }
+
+  // ─── 3. Fetch Items in Customers' Carts Logic ───────────────────────────────
+  Future<void> fetchInCartStats() async {
+    cartStatsState.value = CurrentState.loading; // شروع لودینگ
+
+    final result = await productRepo.getCartItemsBySeller(_authService.userId.value);
+
+    result.fold(
+          (failure) {
+        cartStatsState.value = CurrentState.error; // خطای لودینگ
+        print("Error fetching cart stats: ${failure.message}");
+      },
+          (cartItems) {
+        // جمع زدن فیلد quantity تمام آیتم‌های موجود در سبد خریدها
+        int count = cartItems.fold(0, (sum, item) => sum + item.quantity);
+
+        totalItemsInCart.value = count;
+        cartStatsState.value = CurrentState.success; // پایان موفقیت‌آمیز
+      },
+    );
+  }
+
+  // ─── Actions (Delete) ───────────────────────────────────────────────────────
   Future<void> deleteProduct(String productId) async {
     final result = await productRepo.deleteProduct(productId);
 
@@ -137,7 +189,7 @@ class SellerProductsController extends GetxController {
     );
   }
 
-  // ─── Filter Logic  ──────────────────────────────────────────────
+  // ─── Filter Logic (بدون تغییر) ──────────────────────────────────────────────
   void calculatePriceLimits(List<ProductModel> items) {
     if (items.isNotEmpty) {
       final List<double> effectivePrices = items.map((p) {
@@ -164,6 +216,7 @@ class SellerProductsController extends GetxController {
     }
   }
 
+  // ... (سایر متدهای فیلتر و سرچ کپی شود) ...
   void initTempFilters() {
     tempPriceRange.value = appliedPriceRange.value;
     tempColorNames.assignAll(appliedColorNames);
@@ -284,4 +337,13 @@ class SellerProductsController extends GetxController {
   }
 
   void toggleVisibility() => isHidden.value = !isHidden.value;
+
+  void closeSearch() {
+    if (isSearching.value) {
+      isSearching.value = false;
+      searchController.clear();
+      query.value = '';
+      searchFocusNode.unfocus();
+    }
+  }
 }

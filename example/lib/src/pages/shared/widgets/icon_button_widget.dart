@@ -26,8 +26,9 @@ class IconButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppSize.r10),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
+      child: Container(
+       width: 40,
+        height: 40,
         padding: const EdgeInsets.all(AppSize.p8),
         decoration: BoxDecoration(
           color: bgColor ?? Colors.white.withOpacity(0.15),

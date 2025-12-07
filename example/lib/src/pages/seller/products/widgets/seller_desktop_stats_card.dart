@@ -57,13 +57,15 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
   }
 
   Widget _buildItem1(ThemeData theme) {
-    return SellerStatItem(
-      value: '۴۵,۸۵۰,۰۰۰',
-      unit: TKeys.currency.tr,
-      label: TKeys.totalRevenue.tr,
-      icon: Icons.monetization_on_outlined,
-      textColor: theme.colorScheme.primary,
-      subColor: theme.colorScheme.primary.withAlpha(200),
+    return Obx(
+      () => SellerStatItem(
+        value: controller.totalRevenueAmount.value.toString(),
+        unit: TKeys.currency.tr,
+        label: TKeys.totalRevenue.tr,
+        icon: Icons.monetization_on_outlined,
+        textColor: theme.colorScheme.primary,
+        subColor: theme.colorScheme.primary.withAlpha(200),
+      ),
     );
   }
 
@@ -81,22 +83,29 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
   }
 
   Widget _buildItem3(Color textColor, Color subColor) {
-    return SellerStatItem(
-      value: '۱۵۶',
-      label: TKeys.successfulSales.tr,
-      icon: Icons.shopping_cart_outlined,
-      textColor: textColor,
-      subColor: subColor,
+    return Obx(
+      () => SellerStatItem(
+        value: controller.totalSalesCount.value.toString(),
+        label: TKeys.successfulSales.tr,
+        icon: Icons.shopping_cart_outlined,
+        textColor: textColor,
+        subColor: subColor,
+        state: controller.statsState.value,
+      ),
     );
   }
 
   Widget _buildItem4(Color textColor, Color subColor) {
-    return SellerStatItem(
-      value: '۸',
-      label: TKeys.newOrders.tr,
-      icon: Icons.local_shipping_outlined,
-      textColor: textColor,
-      subColor: subColor,
+    return Obx(
+      () => SellerStatItem(
+        value: controller.totalItemsInCart.toString(),
+        textColor: textColor,
+        subColor: subColor,
+        state: controller.cartStatsState.value,
+
+        label: 'در سبد خرید',
+        icon: Icons.shopping_bag_outlined,
+      ),
     );
   }
 }

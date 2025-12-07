@@ -270,4 +270,13 @@ class BuyerProductsController extends GetxController {
       searchFocusNode.unfocus();
     }
   }
+
+  void closeSearch() {
+    if (isSearching.value) {
+      isSearching.value = false;
+      searchController.clear();
+      query.value = '';
+      searchFocusNode.unfocus();
+    }
+  }
 }

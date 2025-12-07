@@ -29,17 +29,24 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          _buildTopBackground(
-            theme,
-            primaryColor,
-            screenHeight,
-            screenWidth,
-            isRtl,
-          ),
-          _buildBottomSheet(theme),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          controller.closeSearch();
+        },
+
+        behavior: HitTestBehavior.translucent,
+        child: Stack(
+          children: [
+            _buildTopBackground(
+              theme,
+              primaryColor,
+              screenHeight,
+              screenWidth,
+              isRtl,
+            ),
+            _buildBottomSheet(theme),
+          ],
+        ),
       ),
     );
   }
@@ -73,12 +80,10 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
               children: [
                 AnimatedAppBar<BuyerProductsController>(
                   screenWidth: Get.width,
-                  isRtl: isRtl,
                   isSearching: controller.isSearching,
                   searchController: controller.searchController,
                   searchFocusNode: controller.searchFocusNode,
                   title: 'پنل خریدار ',
-
                   onFilterTap: () {
                     controller.initTempFilters();
 
@@ -185,8 +190,11 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                             discountPercent: product.discountPercentString,
                             quantity: product.quantity,
                             imagePath: product.image,
-                            size: Get.height *0.15,
-                            onTap: ()=> mainController.goToProductDetails(product.id),
+                            size: Get.height * 0.15,
+                            onTap:
+                                () => mainController.goToProductDetails(
+                                  product.id,
+                                ),
                           );
                         },
                       ),

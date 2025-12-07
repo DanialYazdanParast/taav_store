@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class AppSearchField extends StatefulWidget {
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final String? hintText;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onFieldSubmitted;
@@ -24,6 +25,7 @@ class AppSearchField extends StatefulWidget {
   const AppSearchField({
     super.key,
     this.controller,
+    this.focusNode,
     this.hintText = "جستجو...",
     this.onChanged,
     this.onFieldSubmitted,
@@ -46,15 +48,15 @@ class AppSearchField extends StatefulWidget {
 
 class _AppSearchFieldState extends State<AppSearchField> {
   late TextEditingController _controller;
-  final FocusNode _focusNode = FocusNode();
+  late FocusNode _focusNode;
 
-  // برای نمایش/مخفی کردن دکمه ضربدر
   bool _showClearButton = false;
 
   @override
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
+    _focusNode = widget.focusNode ?? FocusNode();
 
     _controller.addListener(_onTextChanged);
     _showClearButton = _controller.text.isNotEmpty;
@@ -74,7 +76,10 @@ class _AppSearchFieldState extends State<AppSearchField> {
     } else {
       _controller.removeListener(_onTextChanged);
     }
-    _focusNode.dispose();
+
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    }
     super.dispose();
   }
 
@@ -86,32 +91,15 @@ class _AppSearchFieldState extends State<AppSearchField> {
 
   @override
   Widget build(BuildContext context) {
-
     final radius = BorderRadius.circular(widget.borderRadius);
 
-    final baseBorder =
-        widget.hideBorder
-            ? OutlineInputBorder(
-              borderRadius: radius,
-              borderSide: BorderSide.none,
-            )
-            : AppInputStyles.normalBorder.copyWith(borderRadius: radius);
+    final baseBorder = widget.hideBorder
+        ? OutlineInputBorder(borderRadius: radius, borderSide: BorderSide.none)
+        : AppInputStyles.normalBorder.copyWith(borderRadius: radius);
 
-    final focusedBorder =
-        widget.hideBorder
-            ? OutlineInputBorder(
-              borderRadius: radius,
-              borderSide: BorderSide.none,
-            )
-            : AppInputStyles.focusedBorder.copyWith(borderRadius: radius);
-
-    final errorBorder =
-        widget.hideBorder
-            ? OutlineInputBorder(
-              borderRadius: radius,
-              borderSide: BorderSide.none,
-            )
-            : AppInputStyles.errorBorder.copyWith(borderRadius: radius);
+    final focusedBorder = widget.hideBorder
+        ? OutlineInputBorder(borderRadius: radius, borderSide: BorderSide.none)
+        : AppInputStyles.focusedBorder.copyWith(borderRadius: radius);
 
     return SizedBox(
       width: widget.width,
@@ -120,56 +108,42 @@ class _AppSearchFieldState extends State<AppSearchField> {
         focusNode: _focusNode,
         enabled: widget.isEnabled,
         readOnly: widget.isReadOnly,
-
         textInputAction: TextInputAction.search,
-        keyboardType: TextInputType.text,
-
         style: AppInputStyles.textStyle,
-
         onChanged: widget.onChanged,
         onFieldSubmitted: widget.onFieldSubmitted,
         onTap: widget.onTap,
-
         onTapOutside: (event) {
           if (widget.isTapOutsideActive) {
             FocusScope.of(context).unfocus();
           }
         },
-
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: AppInputStyles.hintStyle,
-
           filled: true,
           fillColor: widget.bgColor ?? Get.theme.scaffoldBackgroundColor,
-
-          contentPadding:
-              widget.contentPadding ??
+          contentPadding: widget.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-
           border: baseBorder,
           enabledBorder: baseBorder,
           focusedBorder: focusedBorder,
-          errorBorder: errorBorder,
-          disabledBorder: AppInputStyles.disabledBorder.copyWith(
-            borderRadius: radius,
-          ),
+          errorBorder: baseBorder,
+          disabledBorder: baseBorder,
 
-          prefixIcon:
-              widget.prefixWidget ??
+          prefixIcon: widget.prefixWidget ??
               Icon(Icons.search, color: Get.theme.colorScheme.onSurfaceVariant),
 
-          suffixIcon:
-              widget.suffixWidget ??
+          suffixIcon: widget.suffixWidget ??
               (_showClearButton && !widget.isReadOnly && widget.isEnabled
                   ? IconButton(
-                    icon: Icon(
-                      Icons.close_rounded,
-                      size: 20,
-                      color: Get.theme.colorScheme.onSurfaceVariant,
-                    ),
-                    onPressed: _onClearTapped,
-                  )
+                icon: Icon(
+                  Icons.close_rounded,
+                  size: 20,
+                  color: Get.theme.colorScheme.onSurfaceVariant,
+                ),
+                onPressed: _onClearTapped,
+              )
                   : null),
         ),
       ),

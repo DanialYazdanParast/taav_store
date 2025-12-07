@@ -7,8 +7,13 @@ import 'package:example/src/pages/auth/register/commons/register_binding.dart';
 import 'package:example/src/pages/auth/register/view/register_screen.dart';
 import 'package:example/src/pages/buyer/main/commons/main_buyer_binding.dart';
 import 'package:example/src/pages/buyer/main/view/main_buyer_screen.dart';
+import 'package:example/src/pages/buyer/orders/commons/order_history_binding.dart';
 import 'package:example/src/pages/buyer/product_details/commons/buyer_product_details_binding.dart';
 import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
+// ✅ ایمپورت‌های جدید برای صفحه سفارشات (مسیر را بر اساس پروژه خود چک کنید)
+
+import 'package:example/src/pages/buyer/orders/views/order_history_page.dart';
+
 import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
@@ -20,8 +25,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
-
-
 
 class AppPages {
   AppPages._();
@@ -102,7 +105,13 @@ class AppPages {
       binding: BuyerProductDetailsBinding(),
       transition: Transition.downToUp,
     ),
+
+    GetPage(
+      name: _Paths.buyerOrders,
+      page: () => const OrderHistoryPage(),
+      binding: OrderHistoryBinding(),
+      // چون یک صفحه فرعی است، انیمیشن ورود از راست به چپ حس بهتری می‌دهد
+      transition: Transition.rightToLeft,
+    ),
   ];
-
-
 }

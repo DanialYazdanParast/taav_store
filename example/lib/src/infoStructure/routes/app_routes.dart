@@ -21,6 +21,9 @@ abstract class AppRoutes {
   static const String buyerProductDetails = _Paths.buyerProductDetails;
   static const String buyerCart = _Paths.buyerCart;
   static const String buyerAccount = _Paths.buyerAccount;
+
+  // ✅ اضافه شده: مسیر تاریخچه سفارشات
+  static const String buyerOrders = _Paths.buyerOrders;
 }
 
 abstract class _Paths {
@@ -42,4 +45,5 @@ abstract class _Paths {
   static const String buyerProductDetails = '/buyer/products/:id';
   static const String buyerCart = '/buyer/cart';
   static const String buyerAccount = '/buyer/account';
+  static const String buyerOrders = '/buyer/orders';
 }

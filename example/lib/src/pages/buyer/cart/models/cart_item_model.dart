@@ -7,8 +7,8 @@ class CartItemModel {
   final String userId;
   final String colorHex;
   int quantity;
-  final int price;       // قیمت نهایی (با تخفیف)
-  final int originalPrice; // ✅ اضافه شده: قیمت اصلی (بدون تخفیف)
+  final int price;
+  final int originalPrice;
   final int maxStock;
 
   CartItemModel({
@@ -21,14 +21,13 @@ class CartItemModel {
     required this.colorHex,
     required this.quantity,
     required this.price,
-    required this.originalPrice, // ✅
+    required this.originalPrice,
     required this.maxStock,
   });
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
-    // خواندن قیمت نهایی
-    int finalPrice = json['price'] is int ? json['price'] : int.tryParse(json['price'].toString()) ?? 0;
 
+    int finalPrice = json['price'] is int ? json['price'] : int.tryParse(json['price'].toString()) ?? 0;
     return CartItemModel(
       id: json['id']?.toString(),
       productId: json['productId']?.toString() ?? '',
@@ -39,8 +38,6 @@ class CartItemModel {
       colorHex: json['color'] ?? '',
       quantity: json['quantity'] is int ? json['quantity'] : int.tryParse(json['quantity'].toString()) ?? 1,
       price: finalPrice,
-
-      // ✅ خواندن قیمت اصلی (اگر در دیتابیس قدیمی نبود، همان قیمت نهایی را می‌گذاریم تا ارور ندهد)
       originalPrice: json['originalPrice'] is int
           ? json['originalPrice']
           : int.tryParse(json['originalPrice']?.toString() ?? finalPrice.toString()) ?? finalPrice,
@@ -60,7 +57,7 @@ class CartItemModel {
       "quantity": quantity,
       "color": colorHex,
       "price": price,
-      "originalPrice": originalPrice, // ✅ ارسال به سرور
+      "originalPrice": originalPrice,
       "maxStock": maxStock,
     };
   }

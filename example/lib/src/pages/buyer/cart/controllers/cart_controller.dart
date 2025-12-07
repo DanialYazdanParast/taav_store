@@ -142,7 +142,6 @@ class CartController extends GetxController {
       "buyerId": currentUserId,
       "totalPrice": totalPayablePrice,
       "date": DateTime.now().toIso8601String(),
-      "status": "pending",
       "items": cartItems.map((e) => e.toJson()).toList(),
     };
 

@@ -1,4 +1,6 @@
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -32,6 +34,23 @@ class SettingsDraggableSheet extends StatelessWidget {
             child: Column(
               children: [
                 HeaderSheet(),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
+                  child: Row(children: [
+                    Text('سفارش‌های من', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold))
+                  ]),
+                ),
+                MenuItem(
+                  icon: Icons.history_rounded,
+                  color: theme.colorScheme.primary,
+                  title: 'سوابق خرید',
+                  subtitle: 'مشاهده وضعیت و جزئیات سفارش‌ها',
+                  showChevron: true,
+                  onTap: () => Get.toNamed(AppRoutes.buyerOrders),
+                ),
+
+                AppSize.p16.height,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(children: [
@@ -42,7 +61,6 @@ class SettingsDraggableSheet extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     controller: scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
                     children: [
                       IconList(onLogout: onLogout),
                       50.height,

@@ -70,14 +70,15 @@ class SettingsDialogs {
           PopupTitleWidget(TKeys.appTheme.tr),
           AppSize.p24.height,
           ..._themeOptions.map(
-                (option) => Padding(
+            (option) => Padding(
               padding: const EdgeInsets.only(bottom: AppSize.p12),
               child: SelectableOptionWidget(
                 title: (option['title'] as String).tr,
                 icon: option['icon'] as IconData,
-                isSelected: option['mode'] == ThemeMode.system
-                    ? false
-                    : (option['mode'] == ThemeMode.dark) == Get.isDarkMode,
+                isSelected:
+                    option['mode'] == ThemeMode.system
+                        ? false
+                        : (option['mode'] == ThemeMode.dark) == Get.isDarkMode,
                 onTap: () {
                   controller.changeTheme(option['mode'] as ThemeMode);
                   Get.back();
@@ -102,7 +103,11 @@ class SettingsDialogs {
               color: Colors.red.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.logout_rounded, size: 32, color: Colors.red),
+            child: const Icon(
+              Icons.logout_rounded,
+              size: 32,
+              color: Colors.red,
+            ),
           ),
           AppSize.p16.height,
           PopupTitleWidget(TKeys.logout.tr),
@@ -126,8 +131,20 @@ class SettingsDialogs {
   }
 
   static const List<Map<String, dynamic>> _themeOptions = [
-    {'title': TKeys.themeLightTitle, 'icon': Icons.wb_sunny_rounded, 'mode': ThemeMode.light},
-    {'title': TKeys.themeDarkTitle, 'icon': Icons.nightlight_round, 'mode': ThemeMode.dark},
-    {'title': TKeys.systemMode, 'icon': Icons.settings_brightness_rounded, 'mode': ThemeMode.system},
+    {
+      'title': TKeys.themeLightTitle,
+      'icon': Icons.wb_sunny_rounded,
+      'mode': ThemeMode.light,
+    },
+    {
+      'title': TKeys.themeDarkTitle,
+      'icon': Icons.nightlight_round,
+      'mode': ThemeMode.dark,
+    },
+    {
+      'title': TKeys.systemMode,
+      'icon': Icons.settings_brightness_rounded,
+      'mode': ThemeMode.system,
+    },
   ];
 }

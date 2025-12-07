@@ -5,6 +5,7 @@ import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ class BuyerProductCard extends StatelessWidget {
   final String imagePath;
   final int quantity;
   final double size;
+  final Function onTap;
 
 
   const BuyerProductCard({
@@ -25,7 +27,7 @@ class BuyerProductCard extends StatelessWidget {
     required this.discountedPrice,
     required this.discountPercent,
     required this.quantity,
-    required this.imagePath, required this.size,
+    required this.imagePath, required this.size, required this.onTap,
   });
 
   @override
@@ -33,31 +35,34 @@ class BuyerProductCard extends StatelessWidget {
     final theme = context.theme;
     final primaryColor = theme.colorScheme.primary;
 
-    return Container(
-      margin:
-          Responsive.isMobile
-              ? const EdgeInsets.only(bottom: AppSize.p12)
-              : EdgeInsets.zero,
-      padding: const EdgeInsets.all(AppSize.p8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSize.r15),
-        border: Border.all(
-          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-        ),
-      ),
-      child: Column(
-        children: [
-          _ProductImage(discountPercent: discountPercent, imagePath: imagePath, size: size,),
-          AppSize.p12.width,
-          _ProductInfo(
-            productName: productName,
-            originalPrice: originalPrice,
-            discountedPrice: discountedPrice,
-            discountPercent: discountPercent,
-            quantity: quantity,
-            primaryColor: primaryColor,
+    return InkWell(
+      onTap:() =>  onTap(),
+      child: Container(
+        margin:
+            Responsive.isMobile
+                ? const EdgeInsets.only(bottom: AppSize.p12)
+                : EdgeInsets.zero,
+        padding: const EdgeInsets.all(AppSize.p8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSize.r15),
+          border: Border.all(
+            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
           ),
-        ],
+        ),
+        child: Column(
+          children: [
+            _ProductImage(discountPercent: discountPercent, imagePath: imagePath, size: size,),
+            AppSize.p12.width,
+            _ProductInfo(
+              productName: productName,
+              originalPrice: originalPrice,
+              discountedPrice: discountedPrice,
+              discountPercent: discountPercent,
+              quantity: quantity,
+              primaryColor: primaryColor,
+            ),
+          ],
+        ),
       ),
     );
   }

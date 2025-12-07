@@ -11,29 +11,18 @@ import '../controllers/main_buyer_controller.dart';
 class MainBuyerBinding extends Bindings {
   @override
   void dependencies() {
-    // 💡 وابستگی مشترک NetworkService را پیدا می‌کنیم
     final network = Get.find<NetworkService>();
 
-    // ─── ۱. ثبت مخازن (Repositories) ──────────────────────────────────────────
-
-    // مخزن Metadata (اگر قبلاً در Global Binding ثبت نشده باشد، اینجا می‌آید)
     Get.lazyPut<IMetadataRepository>(
-          () => MetadataRepository(network: network),
+      () => MetadataRepository(network: network),
       fenix: true,
     );
 
-    // 🔑 مخزن محصولات خریدار
     Get.lazyPut<IBuyerProductsRepository>(
-          () => BuyerProductsRepository(network: network),
+      () => BuyerProductsRepository(network: network),
       fenix: true,
     );
 
-    // 💡 (اگر BuyerAddRepository وجود داشته باشد، در اینجا اضافه می‌شود)
-
-    // ─── ۲. ثبت سرویس‌های عمومی (Shared/Permanent Services) ────────────────────
-
-    // سرویس Metadata: باید Permanent باشد تا داده‌های مشترک را نگه دارد.
-    // اگر قبلاً در Global Binding ثبت شده است، این بخش اختیاری است و می‌توانید آن را حذف کنید.
     if (!Get.isRegistered<MetadataService>()) {
       Get.put(
         MetadataService(repository: Get.find<IMetadataRepository>()),
@@ -41,22 +30,19 @@ class MainBuyerBinding extends Bindings {
       );
     }
 
-    // ─── ۳. ثبت کنترلرها (Controllers) ────────────────────────────────────────
+    // ───────────────────────────────────
 
-    // کنترلر اصلی (MainBuyerController)
     Get.lazyPut<MainBuyerController>(() => MainBuyerController());
 
-    // 🔑 کنترلر محصولات خریدار
     Get.lazyPut<BuyerProductsController>(
-          () => BuyerProductsController(
-        productRepo: Get.find<IBuyerProductsRepository>(), // تزریق مخزن خریدار
+      () => BuyerProductsController(
+        productRepo: Get.find<IBuyerProductsRepository>(),
       ),
       fenix: true,
     );
 
-    // کنترلر حساب کاربری خریدار
     Get.lazyPut<BuyerAccountController>(
-          () => BuyerAccountController(),
+      () => BuyerAccountController(),
       fenix: true,
     );
   }

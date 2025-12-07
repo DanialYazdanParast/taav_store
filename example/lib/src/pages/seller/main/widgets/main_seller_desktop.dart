@@ -1,9 +1,9 @@
+// lib/src/pages/seller/main/widgets/main_seller_desktop.dart
 
 import 'package:example/src/pages/seller/account/view/seller_account_screen.dart';
 import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
 import 'package:example/src/pages/shared/widgets/custom_sidebar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,25 +15,24 @@ class MainSellerDesktop extends GetView<MainSellerController> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const SellerProductsScreen(),
-      const SellerAddScreen(),
-      const SellerAccountScreen(),
+      const SellerProductsScreen(), // تب 0: محصولات
+      const SellerAddScreen(), // تب 1: افزودن محصول
+      const SellerAccountScreen(), // تب 2: تنظیمات
     ];
 
     return Scaffold(
       body: Row(
         children: [
           Obx(
-            () => CustomSidebar(
+                () => CustomSidebar(
               currentIndex: controller.currentIndex.value,
               items: controller.navItems,
-              onTap: controller.changeTab,
+              onTap: controller.changeTab, // 🔥 مدیریت navigation
             ),
           ),
-
           Expanded(
             child: Obx(
-              () => AnimatedSwitcher(
+                  () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: Container(
                   key: ValueKey(controller.currentIndex.value),
@@ -47,5 +46,3 @@ class MainSellerDesktop extends GetView<MainSellerController> {
     );
   }
 }
-
-

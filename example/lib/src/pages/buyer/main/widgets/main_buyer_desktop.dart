@@ -18,7 +18,7 @@ class MainBuyerDesktop extends GetView<MainBuyerController> {
     final pages = [
       const BuyerProductsScreen(),
       const SizedBox(),
-      const SellerAccountScreen(),
+      const BuyerAccountScreen(),
     ];
 
     return Scaffold(

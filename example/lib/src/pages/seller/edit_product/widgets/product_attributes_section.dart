@@ -60,9 +60,9 @@ class ProductAttributesSection extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               ...availableColors.map((color) {
-                final isSelected = selectedColorNames.contains(color.name);
+                final isSelected = selectedColorNames.contains(color.hex);
                 return GestureDetector(
-                  onTap: () => onToggleColor(color.name),
+                  onTap: () => onToggleColor(color.hex),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     width: 38,

@@ -5,6 +5,7 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
   Widget build(BuildContext context) {
     final theme = context.theme;
     final primaryColor = theme.colorScheme.primary;
-
+    final mainController = Get.find<MainBuyerController>();
     return Scaffold(
       body: Column(
         children: [
@@ -93,6 +94,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                           imagePath: product.image,
                           quantity: product.quantity,
                           size: 250,
+                          onTap: ()=> mainController.goToProductDetails(product.id),
                         );
                       }, childCount: controller.filteredProducts.length),
                     ),

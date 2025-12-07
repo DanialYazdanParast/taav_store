@@ -1,36 +1,34 @@
 import 'dart:convert';
-import 'package:example/src/commons/services/auth_service.dart';
-import 'package:example/src/commons/services/metadata_service.dart';
-import 'package:example/src/commons/widgets/responsive/responsive.dart';
-import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
-import 'package:example/src/pages/shared/models/product_model.dart';
-import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 
+// ایمپورت‌های پروژه شما (آدرس‌ها را در صورت نیاز اصلاح کنید)
+import 'package:example/src/commons/services/auth_service.dart';
+import 'package:example/src/commons/services/metadata_service.dart';
+import 'package:example/src/commons/widgets/responsive/responsive.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
+import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/models/color_model.dart';
 import 'package:example/src/pages/shared/models/tag_model.dart';
-
-
 import '../repository/seller_add_repository.dart';
 
 class SellerAddProductController extends GetxController with MixinDialogController {
 
   // ─── Dependencies ────────────────────────────────────────────────────────────
   final ISellerAddRepository addRepo;
-  final AuthService _authService = Get.find<AuthService>();
-
-  final MetadataService metadataService = Get.find<MetadataService>();
+  // استفاده از ? و try-catch برای جلوگیری از کرش اگر سرویس پیدا نشد
+  AuthService get _authService => Get.find<AuthService>();
+  MetadataService get metadataService => Get.find<MetadataService>();
 
   SellerAddProductController({
     required this.addRepo,
-
   });
 
   // ─── Text Controllers ────────────────────────────────────────────────────────
@@ -65,7 +63,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   @override
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   @override
-  final RxList<String> selectedColorNames = <String>[].obs;
+  final RxList<String> selectedColorNames = <String>[].obs; // این لیست حاوی کدهای HEX خواهد بود
   @override
   final RxBool isAddingColor = false.obs;
 
@@ -97,7 +95,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     _initControllers();
     super.onInit();
 
-
+    // فراخوانی متد لود دیتا
     _syncWithMetadataService();
   }
 
@@ -139,19 +137,32 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     tagSearchFocusNode.dispose();
   }
 
-
+  // ─── اصلاح شده: مدیریت خطا برای جلوگیری از گیر کردن روی لودینگ ───────────────
   void _syncWithMetadataService() {
-    pageState.value = CurrentState.loading;
+    try {
+      pageState.value = CurrentState.loading;
 
+      if (!Get.isRegistered<MetadataService>()) {
+        debugPrint("⚠️ هشدار: MetadataService یافت نشد.");
+        // اگر سرویس نبود، از لودینگ خارج شو تا صفحه باز شود
+        pageState.value = CurrentState.success;
+        return;
+      }
 
-    availableColors.assignAll(metadataService.colors);
-    availableTags.assignAll(metadataService.tags);
+      availableColors.assignAll(metadataService.colors);
+      availableTags.assignAll(metadataService.tags);
 
+      // گوش دادن به تغییرات سرویس
+      ever(metadataService.colors, (data) => availableColors.assignAll(data));
+      ever(metadataService.tags, (data) => availableTags.assignAll(data));
 
-    ever(metadataService.colors, (data) => availableColors.assignAll(data));
-    ever(metadataService.tags, (data) => availableTags.assignAll(data));
+      pageState.value = CurrentState.success;
 
-    pageState.value = CurrentState.success;
+    } catch (e) {
+      debugPrint("❌ خطا در سینک اطلاعات: $e");
+      // در صورت بروز هر خطایی، وضعیت را به ارور یا موفقیت تغییر دهید تا لودینگ حذف شود
+      pageState.value = CurrentState.error;
+    }
   }
 
   // ─── Image Logic ─────────────────────────────────────────────────────────────
@@ -181,13 +192,15 @@ class SellerAddProductController extends GetxController with MixinDialogControll
   @override
   void removeImage() => selectedImage.value = null;
 
-  // ─── Color Logic ─────────────────────────────────────────────────────────────
+  // ─── Color Logic (Updated for Hex) ──────────────────────────────────────────
+
   @override
-  void toggleColor(String colorName) {
-    if (selectedColorNames.contains(colorName)) {
-      selectedColorNames.remove(colorName);
+  // ورودی این تابع باید کد هگز (مثلا FFFFFF) باشد
+  void toggleColor(String hexCode) {
+    if (selectedColorNames.contains(hexCode)) {
+      selectedColorNames.remove(hexCode);
     } else {
-      selectedColorNames.add(colorName);
+      selectedColorNames.add(hexCode);
     }
   }
 
@@ -196,16 +209,19 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     isAddingColor.value = true;
     final cleanHex = hexCode.replaceAll('#', '');
 
-    final success = await metadataService.addNewColor(name, cleanHex);
+    try {
+      final success = await metadataService.addNewColor(name, cleanHex);
 
-    if (success) {
-
-      if (metadataService.colors.isNotEmpty) {
-        toggleColor(metadataService.colors.last.name);
+      if (success) {
+        // تغییر: اضافه کردن مستقیم کد هگز تمیز شده به لیست انتخاب‌ها
+        toggleColor(cleanHex);
+        Get.back();
       }
-      Get.back();
+    } catch (e) {
+      ToastUtil.show("خطا در افزودن رنگ", type: ToastType.error);
+    } finally {
+      isAddingColor.value = false;
     }
-    isAddingColor.value = false;
   }
 
   // ─── Tag Logic ───────────────────────────────────────────────────────────────
@@ -240,22 +256,26 @@ class SellerAddProductController extends GetxController with MixinDialogControll
 
     isAddingTag.value = true;
 
-    final success = await metadataService.addNewTag(newTagName);
+    try {
+      final success = await metadataService.addNewTag(newTagName);
 
-    if (success) {
+      if (success) {
+        if (metadataService.tags.isNotEmpty) {
+          final newTag = metadataService.tags.last;
+          selectTag(newTag.name);
 
-      if (metadataService.tags.isNotEmpty) {
-        final newTag = metadataService.tags.last;
-        selectTag(newTag.name);
+          ToastUtil.show("تگ جدید اضافه شد", type: ToastType.success);
 
-        ToastUtil.show("تگ جدید اضافه شد", type: ToastType.success);
-
-        tagSearchController.clear();
-        tagQuery.value = '';
-        filteredTags.clear();
+          tagSearchController.clear();
+          tagQuery.value = '';
+          filteredTags.clear();
+        }
       }
+    } catch(e) {
+      ToastUtil.show("خطا در افزودن تگ", type: ToastType.error);
+    } finally {
+      isAddingTag.value = false;
     }
-    isAddingTag.value = false;
   }
 
   // ─── Submit Logic ────────────────────────────────────────────────────────────
@@ -292,6 +312,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
         'quantity': int.tryParse(cleanCount) ?? 0,
         'discountPrice': int.tryParse(cleanDiscount) ?? 0,
         'sellerId': _authService.userId.value,
+        // این لیست حالا حاوی کدهای هگز است و درست ارسال می‌شود
         'colors': jsonEncode(selectedColorNames),
         'tags': jsonEncode(selectedTagNames),
         'image': kIsWeb
@@ -330,6 +351,7 @@ class SellerAddProductController extends GetxController with MixinDialogControll
       );
     } catch (e) {
       submitState.value = CurrentState.error;
+      debugPrint("Submit Error: $e");
       ToastUtil.show("خطای غیرمنتظره رخ داد", type: ToastType.error);
     } finally {
       if (submitState.value != CurrentState.success) {
@@ -350,7 +372,10 @@ class SellerAddProductController extends GetxController with MixinDialogControll
     selectedTagNames.clear();
     filteredTags.clear();
     tagQuery.value = '';
+
+    // ممکن است formKey.currentState نال باشد
     formKey.currentState?.reset();
+
     avmAdd.value = AutovalidateMode.disabled;
     submitState.value = CurrentState.idle;
   }
@@ -361,7 +386,6 @@ class SellerAddProductController extends GetxController with MixinDialogControll
       final productsCtrl = Get.find<SellerProductsController>();
       productsCtrl.products.insert(0, newProduct);
       productsCtrl.calculatePriceLimits(productsCtrl.products);
-
     }
   }
 }

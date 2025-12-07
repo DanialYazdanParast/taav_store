@@ -1,3 +1,4 @@
+import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:example/src/pages/shared/widgets/custom_badge.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
 import '../controllers/buyer_product_details_controller.dart';
-import '../widgets/advanced_count_control.dart';
+
 
 class BuyerProductDetailsScreen extends GetView<BuyerProductDetailsController> {
   const BuyerProductDetailsScreen({super.key});

@@ -8,6 +8,5 @@ extension ProductDiscountExt on ProductModel {
     return ((price - discountPrice) * 100 / price).round();
   }
 
-
   String get discountPercentString => '$discountPercent';
 }

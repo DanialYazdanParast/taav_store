@@ -17,14 +17,14 @@ class BuyerProductsController extends GetxController {
 
   BuyerProductsController({required this.productRepo});
 
-  // ─── State Variables ─────────────────────────────────────────────────────────
+  // ─── State Variables ───────────────
   final RxList<ProductModel> products = <ProductModel>[].obs;
   final Rx<CurrentState> productsState = CurrentState.idle.obs;
 
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   final RxList<TagModel> availableTags = <TagModel>[].obs;
 
-  // ─── Filter Logic Variables ──────────────────────────────────────────────────
+  // ─── Filter Logic Variables ──────────────
   final RxDouble minPriceLimit = 0.0.obs;
   final RxDouble maxPriceLimit = 10000000.0.obs;
 
@@ -38,14 +38,14 @@ class BuyerProductsController extends GetxController {
   final RxList<String> tempTagNames = <String>[].obs;
   final RxBool tempOnlyAvailable = false.obs;
 
-  // ─── Search Variables ────────────────────────────────────────────────────────
+  // ─── Search Variables ─────────────────
   final RxBool isSearching = false.obs;
   final RxString query = ''.obs;
 
   late TextEditingController searchController;
   late FocusNode searchFocusNode;
 
-  // ─── Lifecycle ───────────────────────────────────────────────────────────────
+  // ─── Lifecycle ────────────────────
   @override
   void onInit() {
     super.onInit();
@@ -96,7 +96,7 @@ class BuyerProductsController extends GetxController {
     );
   }
 
-  // ─── Filter Logic  ──────────────────────────────────────────────
+  // ─── Filter Logic  ─────────
   void calculatePriceLimits(List<ProductModel> items) {
     if (items.isNotEmpty) {
       final List<double> effectivePrices =
@@ -164,17 +164,19 @@ class BuyerProductsController extends GetxController {
       tempPriceRange.value = values;
 
   void toggleTempColor(String colorName) {
-    if (tempColorNames.contains(colorName))
+    if (tempColorNames.contains(colorName)) {
       tempColorNames.remove(colorName);
-    else
+    } else {
       tempColorNames.add(colorName);
+    }
   }
 
   void toggleTempTag(String tagName) {
-    if (tempTagNames.contains(tagName))
+    if (tempTagNames.contains(tagName)) {
       tempTagNames.remove(tagName);
-    else
+    } else {
       tempTagNames.add(tagName);
+    }
   }
 
   List<ProductModel> get filteredProducts {
@@ -227,7 +229,7 @@ class BuyerProductsController extends GetxController {
     return result;
   }
 
-  // ─── Filter Count Logic ──────────────────────────────────────────────
+  // ─── Filter Count Logic ─────────────
 
   int get totalTempFilters {
     int count = 0;
@@ -255,7 +257,7 @@ class BuyerProductsController extends GetxController {
     return count;
   }
 
-  // ─── UI Actions ────────────────────────────────────────────────────────
+  // ─── UI Actions ──────────────────────────────
 
   void toggleSearch() {
     isSearching.value = !isSearching.value;

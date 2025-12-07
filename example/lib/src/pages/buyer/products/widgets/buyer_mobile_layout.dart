@@ -5,6 +5,7 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:example/src/pages/shared/widgets/animated_app_bar.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
@@ -98,6 +99,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
   }
 
   Widget _buildBottomSheet(ThemeData theme) {
+    final mainController = Get.find<MainBuyerController>();
     return SafeArea(
       child: DraggableScrollableSheet(
         initialChildSize: 0.60,
@@ -166,7 +168,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                               crossAxisCount: 2,
                               mainAxisSpacing: 12,
                               crossAxisSpacing: 12,
-                              childAspectRatio: 0.7,
+                              childAspectRatio: 0.65,
                             ),
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(
@@ -183,7 +185,8 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                             discountPercent: product.discountPercentString,
                             quantity: product.quantity,
                             imagePath: product.image,
-                            size: 180,
+                            size: Get.height *0.15,
+                            onTap: ()=> mainController.goToProductDetails(product.id),
                           );
                         },
                       ),

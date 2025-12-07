@@ -1,25 +1,45 @@
+// lib/src/routes/app_routes.dart
+
 part of 'app_pages.dart';
 
 abstract class AppRoutes {
   AppRoutes._();
 
+  // ─── Auth ───────────────────────────────────────────────────────────────
   static const String splash = _Paths.splash;
-  static const String sellerProducts = _Paths.sellerProducts;
   static const String login = _Paths.login;
   static const String register = _Paths.register;
-  static const String mainSeller = _Paths.mainSeller;
-  static const String mainBuyer = _Paths.mainBuyer;
+
+  // ─── Seller ─────────────────────────────────────────────────────────────
+  static const String sellerProducts = _Paths.sellerProducts;
+  static const String sellerAddProduct = _Paths.sellerAddProduct;
+  static const String sellerSettings = _Paths.sellerSettings;
   static const String sellerEditProduct = _Paths.sellerEditProduct;
+
+  // ─── Buyer ──────────────────────────────────────────────────────────────
+  static const String buyerProducts = _Paths.buyerProducts;
+  static const String buyerProductDetails = _Paths.buyerProductDetails;
+  static const String buyerCart = _Paths.buyerCart;
+  static const String buyerAccount = _Paths.buyerAccount;
 }
 
 abstract class _Paths {
   _Paths._();
 
+  // ─── Auth ───────────────────────────────────────────────────────────────
   static const String splash = '/';
-  static const String sellerProducts = '/seller_products';
   static const String login = '/login';
   static const String register = '/register';
-  static const String mainSeller = '/main_seller';
-  static const String mainBuyer = '/main_buyer';
-  static const String sellerEditProduct = '/seller_edit_product';
+
+  // ─── Seller ─────────────────────────────────────────────────────────────
+  static const String sellerProducts = '/seller/products';
+  static const String sellerAddProduct = '/seller/add-product';
+  static const String sellerSettings = '/seller/settings';
+  static const String sellerEditProduct = '/seller/edit-product';
+
+  // ─── Buyer ──────────────────────────────────────────────────────────────
+  static const String buyerProducts = '/buyer/products';
+  static const String buyerProductDetails = '/buyer/products/:id';
+  static const String buyerCart = '/buyer/cart';
+  static const String buyerAccount = '/buyer/account';
 }

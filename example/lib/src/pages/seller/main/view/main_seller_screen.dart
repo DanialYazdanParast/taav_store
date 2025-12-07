@@ -1,3 +1,5 @@
+// lib/src/pages/seller/main/view/main_seller_screen.dart
+
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,13 +9,25 @@ import '../widgets/main_seller_desktop.dart';
 import '../widgets/main_seller_mobile.dart';
 
 class MainSellerScreen extends GetView<MainSellerController> {
-  const MainSellerScreen({super.key});
+  final int initialTab;
+
+  const MainSellerScreen({
+    super.key,
+    this.initialTab = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  Responsive(
-      mobile: MainSellerMobile(),
-      desktop: MainSellerDesktop(),
+    // تنظیم تب اولیه بعد از build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (controller.currentIndex.value != initialTab) {
+        controller.setTab(initialTab);
+      }
+    });
+
+    return Responsive(
+      mobile: const MainSellerMobile(),
+      desktop: const MainSellerDesktop(),
     );
   }
 }

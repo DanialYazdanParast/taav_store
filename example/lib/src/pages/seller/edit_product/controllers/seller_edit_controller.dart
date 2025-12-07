@@ -1,13 +1,14 @@
 import 'dart:convert';
-import 'package:example/src/commons/services/auth_service.dart';
-import 'package:example/src/commons/services/metadata_service.dart';
-import 'package:example/src/pages/shared/models/product_model.dart';
-import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
+
+import 'package:example/src/commons/services/auth_service.dart';
+import 'package:example/src/commons/services/metadata_service.dart';
+import 'package:example/src/pages/shared/models/product_model.dart';
+import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
@@ -21,8 +22,6 @@ class SellerEditController extends GetxController with MixinDialogController {
   // ─── Dependencies ────────────────────────────────────────────────────────────
   final ISellerEditRepository editRepo;
   final AuthService _authService = Get.find<AuthService>();
-
-
   final MetadataService metadataService = Get.find<MetadataService>();
 
   ProductModel? product;
@@ -30,7 +29,6 @@ class SellerEditController extends GetxController with MixinDialogController {
 
   SellerEditController({
     required this.editRepo,
-
   });
 
   // ─── Text Controllers ────────────────────────────────────────────────────────
@@ -63,8 +61,11 @@ class SellerEditController extends GetxController with MixinDialogController {
 
   @override
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
+
   @override
+  // نکته: این لیست حاوی کدهای Hex خواهد بود (مثلا FFFFFF)
   final RxList<String> selectedColorNames = <String>[].obs;
+
   @override
   final RxBool isAddingColor = false.obs;
 
@@ -116,13 +117,16 @@ class SellerEditController extends GetxController with MixinDialogController {
   }
 
   void _syncWithMetadataService() {
+    // استفاده از try-catch برای اطمینان
+    try {
+      availableColors.assignAll(metadataService.colors);
+      availableTags.assignAll(metadataService.tags);
 
-    availableColors.assignAll(metadataService.colors);
-    availableTags.assignAll(metadataService.tags);
-
-    ever(metadataService.colors, (data) => availableColors.assignAll(data));
-    ever(metadataService.tags, (data) => availableTags.assignAll(data));
-
+      ever(metadataService.colors, (data) => availableColors.assignAll(data));
+      ever(metadataService.tags, (data) => availableTags.assignAll(data));
+    } catch(e) {
+      debugPrint("Error syncing metadata: $e");
+    }
   }
 
   // ─── Initialization Logic ────────────────────────────────────────────────────
@@ -161,7 +165,6 @@ class SellerEditController extends GetxController with MixinDialogController {
   Future<void> fetchInitialData() async {
     pageState.value = CurrentState.loading;
     try {
-
       if (productId != null) {
         final result = await editRepo.getProduct(productId!);
 
@@ -174,7 +177,6 @@ class SellerEditController extends GetxController with MixinDialogController {
       if (product == null) {
         throw Exception("اطلاعات محصول یافت نشد");
       }
-
 
       _populateFormFields();
 
@@ -204,6 +206,7 @@ class SellerEditController extends GetxController with MixinDialogController {
       discountPriceController.text = discount.toString();
     }
 
+    // اینجا فرض می‌کنیم دیتای دریافتی از سرور برای محصول قدیمی، شامل کدهای رنگ است
     if (product!.colors != null) {
       selectedColorNames.assignAll(product!.colors!);
     }
@@ -227,7 +230,7 @@ class SellerEditController extends GetxController with MixinDialogController {
         isImageDeleted.value = false;
       }
     } catch (e) {
-      // Handle error
+      ToastUtil.show("خطا در انتخاب تصویر", type: ToastType.error);
     }
   }
 
@@ -237,10 +240,13 @@ class SellerEditController extends GetxController with MixinDialogController {
     isImageDeleted.value = true;
   }
 
+  // ─── اصلاح شده: لاجیک رنگ با Hex ───────────────────────────────────────────
+
   @override
-  void toggleColor(String colorName) {
-    if (selectedColorNames.contains(colorName)) selectedColorNames.remove(colorName);
-    else selectedColorNames.add(colorName);
+  // ورودی باید کد Hex باشد
+  void toggleColor(String hexCode) {
+    if (selectedColorNames.contains(hexCode)) selectedColorNames.remove(hexCode);
+    else selectedColorNames.add(hexCode);
   }
 
   @override
@@ -248,16 +254,22 @@ class SellerEditController extends GetxController with MixinDialogController {
     isAddingColor.value = true;
     final cleanHex = hexCode.replaceAll('#', '');
 
-    final success = await metadataService.addNewColor(name, cleanHex);
+    try {
+      final success = await metadataService.addNewColor(name, cleanHex);
 
-    if (success) {
-      if (metadataService.colors.isNotEmpty) {
-        toggleColor(metadataService.colors.last.name);
+      if (success) {
+        // تغییر مهم: اضافه کردن کد Hex به جای اسم
+        toggleColor(cleanHex);
+        Get.back();
       }
-      Get.back();
+    } catch (e) {
+      ToastUtil.show("خطا در افزودن رنگ", type: ToastType.error);
+    } finally {
+      isAddingColor.value = false;
     }
-    isAddingColor.value = false;
   }
+
+  // ─────────────────────────────────────────────────────────────────────────────
 
   @override
   void onTagSearchChanged(String val) {
@@ -284,20 +296,25 @@ class SellerEditController extends GetxController with MixinDialogController {
 
     isAddingTag.value = true;
 
-    final success = await metadataService.addNewTag(newTagName);
+    try {
+      final success = await metadataService.addNewTag(newTagName);
 
-    if (success) {
-      if (metadataService.tags.isNotEmpty) {
-        final newTag = metadataService.tags.last;
-        selectTag(newTag.name);
+      if (success) {
+        if (metadataService.tags.isNotEmpty) {
+          final newTag = metadataService.tags.last;
+          selectTag(newTag.name);
 
-        ToastUtil.show("تگ اضافه شد", type: ToastType.success);
-        tagSearchController.clear();
-        tagQuery.value = '';
-        filteredTags.clear();
+          ToastUtil.show("تگ اضافه شد", type: ToastType.success);
+          tagSearchController.clear();
+          tagQuery.value = '';
+          filteredTags.clear();
+        }
       }
+    } catch (e) {
+      ToastUtil.show("خطا در افزودن تگ", type: ToastType.error);
+    } finally {
+      isAddingTag.value = false;
     }
-    isAddingTag.value = false;
   }
 
   // ─── Update Logic ────────────────────────────────────────────────────────────
@@ -337,6 +354,7 @@ class SellerEditController extends GetxController with MixinDialogController {
         'quantity': int.tryParse(cleanCount) ?? 0,
         'discountPrice': int.tryParse(cleanDiscount) ?? 0,
         'sellerId': _authService.userId.value,
+        // این لیست حاوی کدهای Hex است و به درستی ارسال می‌شود
         'colors': jsonEncode(selectedColorNames),
         'tags': jsonEncode(selectedTagNames),
       };

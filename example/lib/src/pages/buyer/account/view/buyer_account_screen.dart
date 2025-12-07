@@ -8,25 +8,25 @@ import '../widgets/settings_draggable_sheet.dart';
 import '../../../shared/widgets/profile_header.dart';
 import '../widgets/icon_list.dart';
 
-class SellerAccountScreen extends GetView<BuyerAccountController> {
-  const SellerAccountScreen({super.key});
+class BuyerAccountScreen extends GetView<BuyerAccountController> {
+  const BuyerAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.scaffoldBackgroundColor,
       body: Responsive(
-        mobile: SellerMobileLayout(controller: controller),
-        desktop: SellerDesktopLayout(controller: controller),
+        mobile: BuyerMobileLayout(controller: controller),
+        desktop: BuyerDesktopLayout(controller: controller),
       ),
     );
   }
 }
 
-class SellerMobileLayout extends StatelessWidget {
+class BuyerMobileLayout extends StatelessWidget {
   final BuyerAccountController controller;
 
-  const SellerMobileLayout({super.key, required this.controller});
+  const BuyerMobileLayout({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +43,10 @@ class SellerMobileLayout extends StatelessWidget {
   }
 }
 
-class SellerDesktopLayout extends StatelessWidget {
+class BuyerDesktopLayout extends StatelessWidget {
   final BuyerAccountController controller;
 
-  const SellerDesktopLayout({super.key, required this.controller});
+  const BuyerDesktopLayout({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

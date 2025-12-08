@@ -1,5 +1,7 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/widgets/app_loading.dart';
+import 'package:example/src/commons/widgets/custom_app_bar.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/seller_stats_controller.dart';
@@ -10,26 +12,14 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "گزارش عملکرد و آمار فروش",
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: false,
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-      ),
+      appBar: CustomAppBar(title: TKeys.salesStatistics.tr),
       body: Obx(() {
         if (controller.pageState.value == CurrentState.loading) {
           return Center(child: AppLoading.circular());
         }
         if (controller.salesStats.isEmpty) {
-          return const Center(child: Text("هنوز فروشی ثبت نشده است"));
+          return Center(child: Text(TKeys.noSalesYet.tr));
         }
 
         return Center(

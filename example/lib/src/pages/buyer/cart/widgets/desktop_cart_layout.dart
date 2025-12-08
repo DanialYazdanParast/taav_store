@@ -1,5 +1,6 @@
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,10 +15,10 @@ class DesktopCartLayout extends GetView<CartController> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("سبد خرید")),
+      appBar: AppBar(title: Text(TKeys.cartTitle.tr)),
       body: Obx(() {
         if (controller.cartItems.isEmpty) {
-          return const Center(child: Text("سبد خرید خالی است"));
+          return Center(child: Text(TKeys.cartEmpty.tr));
         }
 
         return Center(
@@ -64,7 +65,6 @@ class DesktopCartLayout extends GetView<CartController> {
   }
 
   Widget _buildOrderSummary(ThemeData theme) {
-
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class DesktopCartLayout extends GetView<CartController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "خلاصه سفارش",
+            TKeys.orderSummary.tr,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -88,19 +88,19 @@ class DesktopCartLayout extends GetView<CartController> {
           const SizedBox(height: 24),
 
           _buildSummaryRow(
-            "قیمت کالاها (${controller.totalCount.toString().toLocalizedDigit})",
+            "${TKeys.itemsPrice.tr} (${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? TKeys.items.tr : TKeys.item.tr})",
             controller.totalOriginalPrice.toLocalizedPrice,
           ),
           if (controller.hasDiscount)
             _buildSummaryRow(
-              "سود شما از خرید",
+              TKeys.yourSavings.tr,
               controller.totalProfit.toLocalizedPrice,
               isDiscount: true,
             ),
           const Divider(height: 32),
 
           _buildSummaryRow(
-            "جمع سبد خرید",
+            TKeys.cartTotal.tr,
             controller.totalPayablePrice.toLocalizedPrice,
             isTotal: true,
           ),
@@ -117,7 +117,7 @@ class DesktopCartLayout extends GetView<CartController> {
               ),
             ),
             child: Text(
-              "تایید و پرداخت",
+              TKeys.confirmAndPay.tr,
               style: theme.textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class DesktopCartLayout extends GetView<CartController> {
             ),
           ),
           Text(
-            "$value تومان",
+            "$value ${TKeys.toman.tr}",
             style: TextStyle(
               color: isDiscount ? Colors.red : null,
               fontWeight: isTotal ? FontWeight.bold : null,

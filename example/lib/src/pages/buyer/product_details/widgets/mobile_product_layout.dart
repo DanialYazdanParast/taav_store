@@ -1,5 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
@@ -122,7 +123,7 @@ class MobileProductLayout extends GetView<BuyerProductDetailsController> {
                   const ColorSelectorWidget(),
                   const SizedBox(height: AppSize.p24),
 
-                  Text("توضیحات محصول", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                  Text(TKeys.productDescription.tr, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                   const SizedBox(height: AppSize.p8),
                   Text(product.description, style: theme.textTheme.bodyMedium?.copyWith(fontSize: 16, height: 1.6)),
                 ],

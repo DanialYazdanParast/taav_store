@@ -45,7 +45,7 @@ class SettingsDraggableSheet extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        'سفارش‌های من',
+                        TKeys.myOrders.tr,
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -56,8 +56,8 @@ class SettingsDraggableSheet extends StatelessWidget {
                 MenuItem(
                   icon: Icons.history_rounded,
                   color: theme.colorScheme.primary,
-                  title: 'سوابق خرید',
-                  subtitle: 'مشاهده وضعیت و جزئیات سفارش‌ها',
+                  title: TKeys.purchaseHistory.tr,
+                  subtitle: TKeys.orderHistoryDesc.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.buyerOrders),
                 ),

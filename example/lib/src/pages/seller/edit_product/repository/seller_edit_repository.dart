@@ -7,7 +7,7 @@ import 'package:example/src/pages/shared/models/product_model.dart';
 
 abstract class ISellerEditRepository {
   Future<Either<Failure, ProductModel>> updateProduct(String id, FormData data);
-  // متد جدید: دریافت محصول با آی‌دی
+
   Future<Either<Failure, ProductModel>> getProduct(String id);
 }
 
@@ -24,7 +24,6 @@ class SellerEditRepository extends BaseRepository implements ISellerEditReposito
     );
   }
 
-  // پیاده‌سازی متد جدید
   @override
   Future<Either<Failure, ProductModel>> getProduct(String id) {
     return safeCall<ProductModel>(

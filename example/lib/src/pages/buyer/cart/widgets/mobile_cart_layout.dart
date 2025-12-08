@@ -1,6 +1,7 @@
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,12 +16,11 @@ class MobileCartLayout extends GetView<CartController> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: CustomAppBar(title: "تاریخچه سفارشات", showBackButton: false),
+      appBar: CustomAppBar(title: TKeys.orderHistory.tr, showBackButton: false),
       body: Obx(() {
         if (controller.cartItems.isEmpty) {
           return _buildEmptyState(theme);
         }
-
         return Column(
           children: [
             Expanded(
@@ -51,7 +51,7 @@ class MobileCartLayout extends GetView<CartController> {
             color: theme.disabledColor,
           ),
           const SizedBox(height: 16),
-          Text("سبد خرید شما خالی است", style: theme.textTheme.titleMedium),
+          Text(TKeys.cartEmpty.tr, style: theme.textTheme.titleMedium),
         ],
       ),
     );
@@ -88,7 +88,7 @@ class MobileCartLayout extends GetView<CartController> {
                     ),
                   ),
                   child: Text(
-                    "ثبت سفارش",
+                    TKeys.submitOrder.tr,
                     style: TextStyle(
                       color: theme.colorScheme.onPrimary,
                       fontWeight: FontWeight.bold,
@@ -112,7 +112,7 @@ class MobileCartLayout extends GetView<CartController> {
       children: [
         if (controller.hasDiscount)
           Text(
-            "سود شما: ${controller.totalProfit.toLocalizedPrice}",
+            "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
             style: TextStyle(
               color: theme.colorScheme.error,
               fontSize: 12,
@@ -127,9 +127,9 @@ class MobileCartLayout extends GetView<CartController> {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(width: 4),
-            const Text(
-              "تومان",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+            Text(
+              TKeys.toman.tr,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
             ),
           ],
         ),

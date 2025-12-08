@@ -1,4 +1,5 @@
 import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
@@ -94,8 +95,8 @@ class BuyerDesktopLayout extends StatelessWidget {
                 child: MenuItem(
                   icon: Icons.history_rounded,
                   color: theme.colorScheme.primary,
-                  title: 'سوابق خرید',
-                  subtitle: 'مشاهده وضعیت و جزئیات سفارش‌ها',
+                  title: TKeys.purchaseHistory.tr,
+                  subtitle: TKeys.orderHistoryDesc.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.buyerOrders),
                 ),

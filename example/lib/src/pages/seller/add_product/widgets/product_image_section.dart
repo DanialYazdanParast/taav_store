@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
@@ -26,15 +28,20 @@ class ProductImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-
     final hasImage = selectedImage != null || (existingImageUrl != null && existingImageUrl!.isNotEmpty);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MenuItem(
-          onTap: () {}, title: "تصویر محصول", color: theme.colorScheme.primary,
-          icon: Icons.image, padding: EdgeInsets.zero, iconSize: 20, iconContainerSize: 40, showChevron: false,
+          onTap: () {},
+          title: TKeys.productImage.tr,
+          color: theme.colorScheme.primary,
+          icon: Icons.image,
+          padding: EdgeInsets.zero,
+          iconSize: 20,
+          iconContainerSize: 40,
+          showChevron: false,
         ),
         AppSize.p12.height,
 
@@ -68,7 +75,10 @@ class ProductImageSection extends StatelessWidget {
               child: Icon(Icons.add_photo_alternate_rounded, size: 32, color: theme.colorScheme.primary),
             ),
             AppSize.p12.height,
-            Text("بارگذاری تصویر", style: TextStyle(color: theme.colorScheme.onSurfaceVariant, fontWeight: FontWeight.w500)),
+            Text(
+              TKeys.uploadImage.tr,
+              style: TextStyle(color: theme.colorScheme.onSurfaceVariant, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
       ),
@@ -85,7 +95,6 @@ class ProductImageSection extends StatelessWidget {
         imageProvider = FileImage(File(selectedImage!.path));
       }
     } else {
-
       imageProvider = NetworkImage(existingImageUrl!);
     }
 

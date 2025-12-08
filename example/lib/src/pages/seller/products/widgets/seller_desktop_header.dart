@@ -58,6 +58,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
     return IconButtonWidget(
       icon: Icons.filter_list_rounded,
       onTap: () {
+        controller.initTempFilters();
         DialogWidget().show(const SellerFilterView());
       },
       color: theme.iconTheme.color,

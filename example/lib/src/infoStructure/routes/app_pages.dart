@@ -1,5 +1,3 @@
-// lib/src/routes/app_pages.dart
-
 import 'package:example/src/pages/Not_found/not_found_screen.dart';
 import 'package:example/src/pages/auth/login/commons/login_binding.dart';
 import 'package:example/src/pages/auth/login/view/login_screen.dart';
@@ -91,7 +89,7 @@ class AppPages {
       name: _Paths.sellerStats,
       page: () => const SellerStatsScreen(),
       binding: SellerStatsBinding(),
-      transition: Transition.rightToLeft,
+      transition: Transition.downToUp,
     ),
     // ─── Buyer ──────────────────────────────────────────────────────────
     GetPage(

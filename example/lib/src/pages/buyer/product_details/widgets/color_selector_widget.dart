@@ -1,4 +1,5 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/buyer_product_details_controller.dart';
@@ -17,7 +18,7 @@ class ColorSelectorWidget extends GetView<BuyerProductDetailsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "انتخاب رنگ",
+            TKeys.selectColor.tr,
             style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: AppSize.p12),

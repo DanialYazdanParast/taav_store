@@ -1,5 +1,7 @@
 import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/commons/widgets/app_loading.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/add_product/widgets/product_info_section.dart';
 import 'package:example/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
 import 'package:flutter/foundation.dart';
@@ -73,14 +75,9 @@ class _SellerAddMobileLayout extends StatelessWidget {
                       child: Obx(() {
                         switch (controller.pageState.value) {
                           case CurrentState.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return Center(child: AppLoading.circular(size: 50));
                           case CurrentState.error:
-                            return ErrorView(
-                              // Retry loading data
-                            );
-                          case CurrentState.idle: // Fallthrough
+                            return ErrorView();
                           case CurrentState.success:
                             return _buildFormContent(
                               context,
@@ -331,7 +328,7 @@ class _CustomAppBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: IconButtonWidget(
-            icon: Icons.arrow_back_ios_new_rounded,
+            icon: Icons.arrow_back,
             onTap: () => Get.back(),
             bgColor:
                 isDesktop
@@ -343,14 +340,9 @@ class _CustomAppBar extends StatelessWidget {
         if (isDesktop) AppSize.p16.width,
         Expanded(
           child: Text(
-            "افزودن محصول جدید",
+            TKeys.addNewProduct.tr,
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
-            style: TextStyle(
-              color:
-                  isDesktop ? theme?.textTheme.bodyLarge?.color : Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Get.theme.textTheme.bodyLarge
           ),
         ),
         if (!isDesktop) const SizedBox(width: 40),
@@ -369,7 +361,7 @@ class _SubmitButton extends StatelessWidget {
     return Obx(
       () =>
           ButtonWidget(
-            "ثبت نهایی محصول",
+            TKeys.finalSubmitProduct.tr,
             controller.submitProduct,
             isLoading: controller.submitState.value == CurrentState.loading,
             icon: Icons.check_circle_outline_rounded,

@@ -102,8 +102,7 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
         textColor: textColor,
         subColor: subColor,
         state: controller.cartStatsState.value,
-
-        label: 'در سبد خرید',
+        label:  TKeys.inCartItems.tr,
         icon: Icons.shopping_bag_outlined,
       ),
     );

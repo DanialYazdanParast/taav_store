@@ -1,3 +1,4 @@
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
@@ -91,8 +92,8 @@ class SellerDesktopLayout extends StatelessWidget {
                 child: MenuItem(
                   icon: Icons.bar_chart_rounded,
                   color: theme.colorScheme.primary,
-                  title: 'آمار فروش محصولات',
-                  subtitle: 'مشاهده کالاهای پرفروش',
+                  title: TKeys.productSalesStats.tr,
+                  subtitle: TKeys.viewBestSellers.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.sellerStats),
                 ),

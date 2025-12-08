@@ -1,7 +1,10 @@
 import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +59,7 @@ class CartItemWidget extends GetView<CartController> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    "رنگ انتخابی",
+                    TKeys.selectedColor.tr,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.disabledColor,
                     ),
@@ -65,17 +68,20 @@ class CartItemWidget extends GetView<CartController> {
               ),
               const SizedBox(height: 12),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${item.totalPrice.toLocalizedPrice} تومان",
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${item.totalPrice.toLocalizedPrice} ${TKeys.toman.tr}",
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  _buildQuantityControl(item, theme),
-                ],
+                    16.width,
+                    _buildQuantityControl(item, theme),
+                  ],
+                ),
               ),
             ],
           ),
@@ -93,12 +99,6 @@ class CartItemWidget extends GetView<CartController> {
       onIncrease: () {
         if (item.quantity < dynamicMaxQuantity) {
           controller.incrementItem(item);
-        } else {
-          Get.snackbar(
-            "محدودیت",
-            "موجودی انبار تکمیل شده است",
-            snackPosition: SnackPosition.BOTTOM,
-          );
         }
       },
       onDecrease: () => controller.decrementItem(item),
@@ -115,7 +115,6 @@ class CartItemWidget extends GetView<CartController> {
           fontWeight: FontWeight.bold,
         ),
       ),
-
       numberFormatter: (value) => value.toLocalizedDigit,
     );
   }

@@ -1,4 +1,3 @@
-
 enum FailureType {
   network,
   server,
@@ -22,28 +21,28 @@ class Failure {
 
   // Factory constructors
   factory Failure.network([String? msg]) => Failure(
-    message: msg ?? 'خطای شبکه',
+    message: msg ?? 'Network Error',
     type: FailureType.network,
   );
 
   factory Failure.server(int? code, [String? msg]) => Failure(
-    message: msg ?? 'خطای سرور',
+    message: msg ?? 'Server Error',
     statusCode: code,
     type: FailureType.server,
   );
 
   factory Failure.timeout() => const Failure(
-    message: 'زمان اتصال به پایان رسید',
+    message: 'Connection timed out',
     type: FailureType.timeout,
   );
 
   factory Failure.noInternet() => const Failure(
-    message: 'اینترنت متصل نیست',
+    message: 'No internet connection',
     type: FailureType.noInternet,
   );
 
   factory Failure.parsing() => const Failure(
-    message: 'خطا در پردازش داده',
+    message: 'Data processing error',
     type: FailureType.parsing,
   );
 

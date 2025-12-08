@@ -80,7 +80,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 400,
-                            mainAxisExtent: 400, // ارتفاع ثابت کارت‌ها
+                            mainAxisExtent: 400,
                             crossAxisSpacing: AppSize.p20,
                             mainAxisSpacing: AppSize.p20,
                           ),
@@ -94,13 +94,14 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                           imagePath: product.image,
                           quantity: product.quantity,
                           size: 250,
-                          onTap: ()=> mainController.goToProductDetails(product.id ,),
+                          onTap:
+                              () =>
+                                  mainController.goToProductDetails(product.id),
                         );
                       }, childCount: controller.filteredProducts.length),
                     ),
                   );
                 }),
-
 
                 SliverPadding(padding: EdgeInsets.only(bottom: AppSize.p32)),
               ],

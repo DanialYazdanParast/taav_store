@@ -2,6 +2,7 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart'; // Import added
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,15 +52,19 @@ class LoginController extends GetxController {
     final result = await loginRepository.login(username, password);
 
     result.fold(
-      (failure) {
+          (failure) {
         loginState.value = CurrentState.error;
         ToastUtil.show(failure.message, type: ToastType.error);
       },
-      (user) {
+          (user) {
         loginState.value = CurrentState.success;
 
+        // ترکیب پیام موفقیت با نام کاربری
+        final successMessage =
+            '${TKeys.loginSuccess.tr} ${TKeys.welcomeMessage.tr} ${user.username}';
+
         ToastUtil.show(
-          'ورود با موفقیت انجام شد. خوش آمدید ${user.username}',
+          successMessage,
           type: ToastType.success,
         );
 
@@ -77,7 +82,7 @@ class LoginController extends GetxController {
         } else if (userType == "buyer") {
           Get.offAllNamed(AppRoutes.buyerProducts);
         } else {
-          ToastUtil.show('نوع کاربری نامعتبر است', type: ToastType.error);
+          ToastUtil.show(TKeys.invalidUserType.tr, type: ToastType.error);
           authService.logout();
           Get.offAllNamed(AppRoutes.login);
         }

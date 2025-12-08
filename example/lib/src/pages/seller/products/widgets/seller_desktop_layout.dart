@@ -98,7 +98,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
                             imagePath: product.image,
                             quantity: product.quantity,
                             onEdit: () {
-                              mainController.goToEditProduct(product.id ,);
+                              mainController.goToEditProduct(product.id);
                             },
                             onDelete: () {
                               DeleteProductDialog.show(

@@ -1,6 +1,10 @@
+import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../models/seller_sales_stat_model.dart';
 
@@ -21,13 +25,17 @@ class SalesStatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // تعیین جهت فعلی متن (RTL برای فارسی، LTR برای انگلیسی)
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     final borderColor =
-        isTopSeller ? const Color(0xFFFFD700) : theme.dividerColor;
+        isTopSeller
+            ? theme.colorScheme.primary
+            : theme.colorScheme.outlineVariant.withValues(alpha: 0.5);
     final double borderWidth = isTopSeller ? (isDesktop ? 3.0 : 2.0) : 1.0;
     final shadowColor =
         isTopSeller
-            ? const Color(0xFFFFD700).withValues(alpha: 0.3)
+            ? theme.colorScheme.primary.withValues(alpha: 0.3)
             : Colors.black.withValues(alpha: 0.05);
 
     return Stack(
@@ -35,7 +43,7 @@ class SalesStatCardWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(isDesktop ? 20 : 12),
           decoration: BoxDecoration(
-            color: theme.cardColor,
+            color: theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: borderColor, width: borderWidth),
             boxShadow: [
@@ -56,7 +64,6 @@ class SalesStatCardWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               SizedBox(width: isDesktop ? 24 : 16),
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,17 +83,15 @@ class SalesStatCardWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _StatInfoChip(
-                          label: "تعداد فروش:",
-                          // استفاده از اکستنشن برای تعداد فروش
+                          label: TKeys.soldCount.tr,
                           value:
-                              "${stat.totalQuantitySold.toString().toLocalizedDigit} عدد",
+                              "${stat.totalQuantitySold.toString().toLocalizedDigit} ${TKeys.countUnit.tr}",
                           theme: theme,
                         ),
 
                         Flexible(
                           child: Text(
-                            // استفاده از اکستنشن برای مبلغ کل فروش
-                            "${stat.totalRevenue.toLocalizedPrice} تومان",
+                            "${stat.totalRevenue.toLocalizedPrice} ${TKeys.currency.tr}",
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.primary,
                               fontWeight: FontWeight.w900,
@@ -106,25 +111,26 @@ class SalesStatCardWidget extends StatelessWidget {
         if (isTopSeller)
           Positioned(
             top: 0,
-            left: 20,
+            left: isRtl ? 20 : null,
+            right: isRtl ? null : 20,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFD700),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary,
                 borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(12),
+                  bottom: Radius.circular(AppSize.r10),
                 ),
               ),
               child: Row(
                 children: [
                   const Icon(
                     Icons.emoji_events_rounded,
-                    size: 16,
+                    size: AppSize.f16,
                     color: Colors.black87,
                   ),
-                  const SizedBox(width: 4),
+                  4.width,
                   Text(
-                    "پرفروش‌ترین",
+                    TKeys.bestSeller.tr,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: Colors.black87,
                       fontWeight: FontWeight.w900,
@@ -138,7 +144,8 @@ class SalesStatCardWidget extends StatelessWidget {
         if (!isTopSeller)
           Positioned(
             top: 12,
-            left: 12,
+            left: isRtl ? 20 : null,
+            right: isRtl ? null : 20,
             child: Container(
               width: 28,
               height: 28,

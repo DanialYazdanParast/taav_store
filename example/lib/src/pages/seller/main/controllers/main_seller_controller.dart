@@ -12,7 +12,6 @@ class MainSellerController extends GetxController {
   // ─── Navigation State ──────────────────────────────────────────────────
   final RxInt currentIndex = 0.obs;
 
-
   // ─── Nav Items ─────────────────────────────────────────────────────────
   List<NavItemModel> get navItems => [
     NavItemModel(
@@ -21,11 +20,10 @@ class MainSellerController extends GetxController {
       label: TKeys.navHome.tr,
     ),
     NavItemModel(
-        icon: Icons.add,
-        activeIcon: Icons.add,
-        label: TKeys.navAddProduct.tr,
-        isSpecial: true,
-
+      icon: Icons.add,
+      activeIcon: Icons.add,
+      label: TKeys.navAddProduct.tr,
+      isSpecial: true,
     ),
     NavItemModel(
       icon: Icons.person_outline_rounded,
@@ -43,7 +41,6 @@ class MainSellerController extends GetxController {
 
   // ─── Private Methods ───────────────────────────────────────────────────
 
-  /// هماهنگ کردن index با مسیر فعلی URL
   void _syncIndexWithRoute() {
     final currentRoute = Get.currentRoute;
 
@@ -57,29 +54,22 @@ class MainSellerController extends GetxController {
     }
   }
 
-
   // ─── Public Methods ────────────────────────────────────────────────────
 
-  /// تغییر تب
   void changeTab(int index) {
     final item = navItems[index];
 
     if (item.isSpecial) {
-      // تب افزودن محصول (ویژه)
       if (Responsive.isDesktop) {
-        // در دسکتاپ: تغییر تب معمولی
         _navigateToTab(index);
       } else {
-        // در موبایل: باز کردن صفحه جداگانه
         goToAddProduct();
       }
     } else {
-      // تب‌های معمولی
       _navigateToTab(index);
     }
   }
 
-  /// navigation به تب مشخص
   void _navigateToTab(int index) {
     if (currentIndex.value == index) return;
 
@@ -94,19 +84,17 @@ class MainSellerController extends GetxController {
     }
   }
 
-  /// تنظیم تب به صورت دستی (بدون navigation - فقط برای initialTab)
   void setTab(int index) {
     if (index >= 0 && index < navItems.length) {
       currentIndex.value = index;
     }
   }
 
-
-  // ─── Navigation Helpers ────────────────────────────────────────────────
+  // ─── Navigation Helpers ─────────────────────────────
 
   void goToAddProduct() {
     Get.to(
-          () => SellerAddScreen(),
+      () => SellerAddScreen(),
       transition: Transition.downToUp,
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeOutQuart,
@@ -120,8 +108,6 @@ class MainSellerController extends GetxController {
     );
   }
 
-
-
   void goToProducts() {
     _navigateToTab(0);
   }
@@ -129,9 +115,4 @@ class MainSellerController extends GetxController {
   void goToSettings() {
     _navigateToTab(2);
   }
-
-
-
-
-
 }

@@ -2,6 +2,7 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/buyer/orders/controllers/order_history_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
     final Rxn<OrderModel> selectedOrder = Rxn<OrderModel>();
 
     return Scaffold(
-      appBar: CustomAppBar(title: "تاریخچه سفارشات" ),
+      appBar: CustomAppBar(title: TKeys.orderHistory.tr),
       body: Obx(() {
         if (controller.pageState.value != CurrentState.success) {
           return const Center(child: CircularProgressIndicator());
@@ -40,7 +41,7 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
                 itemBuilder: (context, index) {
                   final order = controller.orders[index];
                   return Obx(
-                    () => OrderCardWidget(
+                        () => OrderCardWidget(
                       order: order,
                       isMobile: false,
                       isSelected: selectedOrder.value?.id == order.id,
@@ -68,14 +69,13 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
   }
 
   Widget _buildOrderDetailsView(OrderModel order, ThemeData theme) {
-
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "جزئیات سفارش #${order.id.toString().toLocalizedDigit}",
+            "${TKeys.orderDetails.tr} #${order.id.toString().toLocalizedDigit}",
             style: theme.textTheme.headlineMedium,
           ),
           const SizedBox(height: 24),
@@ -121,7 +121,7 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "${item.quantity.toString().toLocalizedDigit} عدد × ${item.price.toLocalizedPrice}",
+                              "${item.quantity.toString().toLocalizedDigit} ${TKeys.unit.tr} × ${item.price.toLocalizedPrice}",
                             ),
                           ],
                         ),

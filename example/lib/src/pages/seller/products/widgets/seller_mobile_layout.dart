@@ -32,8 +32,7 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      body:GestureDetector(
-
+      body: GestureDetector(
         onTap: () {
           controller.closeSearch();
         },
@@ -90,10 +89,9 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                   searchFocusNode: controller.searchFocusNode,
                   title: TKeys.sellerPanel.tr,
                   onFilterTap: () {
-                    // Initialize temp filters
+
                     controller.initTempFilters();
 
-                    // Show filter bottom sheet
                     BottomSheetWidget(
                       isScrollControlled: true,
                     ).show(const SellerFilterView());
@@ -183,13 +181,17 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                               discountPercent: product.discountPercentString,
                               quantity: product.quantity,
                               imagePath: product.image,
-                              onEdit: ()=> mainController.goToEditProduct(product.id ,),
-                              onDelete: () => DeleteProductDialog.show(
-                                  productName: product.title,
-                                  onConfirm: () {
-                                    controller.deleteProduct(product.id);
-                                  },
-                                ),
+                              onEdit:
+                                  () => mainController.goToEditProduct(
+                                    product.id,
+                                  ),
+                              onDelete:
+                                  () => DeleteProductDialog.show(
+                                    productName: product.title,
+                                    onConfirm: () {
+                                      controller.deleteProduct(product.id);
+                                    },
+                                  ),
                             );
                           },
                         ),

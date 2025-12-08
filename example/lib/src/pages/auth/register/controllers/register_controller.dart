@@ -3,6 +3,7 @@ import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/auth/register/models/dto.dart';
 import 'package:example/src/pages/auth/register/repository/register_repository.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,10 +57,7 @@ class RegisterController extends GetxController {
       return;
     }
     if (!acceptTerms.value) {
-      ToastUtil.show(
-        'برای ادامه، لطفاً قوانین و مقررات را تایید کنید.',
-        type: ToastType.warning,
-      );
+      ToastUtil.show(TKeys.acceptTermsWarning.tr, type: ToastType.warning);
       return;
     }
 
@@ -79,19 +77,13 @@ class RegisterController extends GetxController {
     return result.fold(
       (failure) {
         registerState.value = CurrentState.error;
-        ToastUtil.show(
-          failure.message ,
-          type: ToastType.error,
-        );
+        ToastUtil.show(failure.message, type: ToastType.error);
         return false;
       },
       (exists) {
         if (exists) {
           registerState.value = CurrentState.error;
-          ToastUtil.show(
-            'این نام کاربری قبلاً ثبت شده است',
-            type: ToastType.error,
-          );
+          ToastUtil.show(TKeys.usernameAlreadyExists.tr, type: ToastType.error);
           return false;
         }
         return true;
@@ -111,17 +103,17 @@ class RegisterController extends GetxController {
     result.fold(
       (failure) {
         registerState.value = CurrentState.error;
-        ToastUtil.show(
-          failure.message ,
-          type: ToastType.error,
-        );
+        ToastUtil.show(failure.message, type: ToastType.error);
       },
       (newUser) {
+        final successMsg =
+            '${TKeys.registerSuccessMsg.tr} ${TKeys.loginToContinue.tr}';
+
         registerState.value = CurrentState.success;
         ToastUtil.show(
-          'ثبت‌نام با موفقیت انجام شد. برای ادامه، لطفاً وارد حساب کاربری خود شوید.',
+          successMsg,
           type: ToastType.success,
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         );
 
         _clearForm();

@@ -1,6 +1,7 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,8 +11,6 @@ import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
-
-// ایمپورت کنترلر جدید و ویجت‌های مشترک
 
 import '../controllers/seller_edit_controller.dart';
 import '../widgets/product_attributes_section.dart';
@@ -102,14 +101,13 @@ class _SellerEditMobileLayout extends StatelessWidget {
           children: [
             Obx(
                   () => ProductImageSection(
-                    selectedImage: controller.selectedImage.value,
-                    // تغییر: استفاده از علامت سوال (safe navigation)
-                    existingImageUrl: controller.isImageDeleted.value
-                        ? null
-                        : controller.product?.image,
-                    onTapPick: () => _handleImagePick(context),
-                    onTapRemove: controller.removeImage,
-                  ),
+                selectedImage: controller.selectedImage.value,
+                existingImageUrl: controller.isImageDeleted.value
+                    ? null
+                    : controller.product?.image,
+                onTapPick: () => _handleImagePick(context),
+                onTapRemove: controller.removeImage,
+              ),
             ),
             AppSize.p24.height,
             ProductInfoSection(
@@ -221,12 +219,11 @@ class _SellerEditDesktopLayout extends StatelessWidget {
                   children: [
                     Obx(
                           () => ProductImageSection(
-                            selectedImage: controller.selectedImage.value,
-                            // تغییر: استفاده از علامت سوال (safe navigation)
-                            existingImageUrl: controller.product?.image,
-                            onTapPick: () => _handleImagePick(context),
-                            onTapRemove: controller.removeImage,
-                          ),
+                        selectedImage: controller.selectedImage.value,
+                        existingImageUrl: controller.product?.image,
+                        onTapPick: () => _handleImagePick(context),
+                        onTapRemove: controller.removeImage,
+                      ),
                     ),
                     AppSize.p24.height,
                     ProductAttributesSection(
@@ -303,7 +300,7 @@ class _CustomAppBar extends StatelessWidget {
         if (isDesktop) AppSize.p16.width,
         Expanded(
           child: Text(
-            "ویرایش محصول",
+            TKeys.editProduct.tr,
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
             style: TextStyle(
               color: isDesktop ? theme?.textTheme.bodyLarge?.color : Colors.white,
@@ -327,7 +324,7 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
           () => ButtonWidget(
-        "ویرایش نهایی",
+        TKeys.updateProduct.tr,
         controller.updateProduct,
         isLoading: controller.submitState.value == CurrentState.loading,
         icon: Icons.edit_note_rounded,

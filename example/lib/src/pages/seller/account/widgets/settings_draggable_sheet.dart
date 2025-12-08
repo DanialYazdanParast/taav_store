@@ -37,9 +37,9 @@ class SettingsDraggableSheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(children: [
-                    // تیتر بخش
+
                     Text(
-                        'گزارش‌های فروش',
+                        TKeys.salesReports.tr,
                         style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)
                     )
                   ]),
@@ -48,8 +48,8 @@ class SettingsDraggableSheet extends StatelessWidget {
                 MenuItem(
                   icon: Icons.bar_chart_rounded,
                   color: theme.colorScheme.primary,
-                  title: 'آمار فروش محصولات',
-                  subtitle: 'مشاهده کالاهای پرفروش',
+                  title: TKeys.productSalesStats.tr,
+                  subtitle: TKeys.viewBestSellers.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.sellerStats),
                 ),

@@ -1,7 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/utils/formatters/number_formatter.dart';
 import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
@@ -137,7 +136,6 @@ class _DiscountBadge extends StatelessWidget {
   }
 }
 
-// اطلاعات محصول
 class _ProductInfo extends StatelessWidget {
   final String productName;
   final String originalPrice;

@@ -20,7 +20,7 @@ class MainBuyerController extends GetxController {
     NavItemModel(
       icon: Icons.shopping_cart_outlined,
       activeIcon: Icons.shopping_cart,
-      label: "TKeys.navCart.tr",
+      label: TKeys.navCart.tr,
       isSpecial: true,
       badgeCount: cartBadge.value,
       showBadge: cartBadge.value > 0,

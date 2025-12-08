@@ -15,7 +15,7 @@ class MainBuyerScreen extends GetView<MainBuyerController> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.currentIndex.value != initialTab) {
-       // controller.setTab(initialTab);
+        controller.setTab(initialTab);
       }
     });
 

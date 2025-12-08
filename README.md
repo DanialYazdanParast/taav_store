@@ -8,9 +8,20 @@
 
 ## 📸 اسکرین‌شات‌ها
 
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/81260773-787c-459b-b5de-c37400633b76" width="48%" alt="نمای پنل خریدار" />
+    &nbsp; &nbsp; &nbsp; &nbsp; 
+    <img src="https://github.com/user-attachments/assets/2fe4bf14-40d2-4fea-8217-1dd68e364b58" width="48%" alt="نمای پنل فروشنده" />
+</p>
 
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/1bc47806-98bf-4113-96fa-666f47d291e4" width="48%" alt="نمای پنل خریدار" />
+    &nbsp; &nbsp; &nbsp; &nbsp; 
+    <img src="https://github.com/user-attachments/assets/299017da-deb4-4696-93b1-2a0605e84878" width="48%" alt="نمای پنل فروشنده" />
+</p>
 
 ---
+
 
 ## ✨ ویژگی‌های اصلی
 
@@ -261,7 +272,7 @@ flowchart TD
 
 ## 👨‍💻 توسعه‌دهنده
 
-**[دانیال یردان پرست]**
+**[دانیال یزدان پرست]**
 - GitHub: [@DanialYazdanParast](https://github.com/DanialYazdanParast)
 - Email: danialyazdan77@gmail.com
 

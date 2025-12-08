@@ -26,14 +26,11 @@ class BuyerProductDetailsController extends GetxController {
     productState.value = CurrentState.loading;
     final result = await detailsRepo.getProductById(productId);
     result.fold(
-          (failure) {
+      (failure) {
         productState.value = CurrentState.error;
-        ToastUtil.show(
-          "خطا در دریافت اطلاعات محصول",
-          type: ToastType.error,
-        );
+        ToastUtil.show("خطا در دریافت اطلاعات محصول", type: ToastType.error);
       },
-          (fetchedProduct) {
+      (fetchedProduct) {
         product.value = fetchedProduct;
         productState.value = CurrentState.success;
         if (fetchedProduct.colors.isNotEmpty) {
@@ -45,15 +42,14 @@ class BuyerProductDetailsController extends GetxController {
 
   void selectColor(String colorHex) => selectedColor.value = colorHex;
 
-
-
-
   int get quantityInCartForSelectedColor {
     if (product.value == null) return 0;
 
-    final item = cartController.cartItems.firstWhereOrNull((element) =>
-    element.productId == product.value!.id &&
-        element.colorHex == selectedColor.value);
+    final item = cartController.cartItems.firstWhereOrNull(
+      (element) =>
+          element.productId == product.value!.id &&
+          element.colorHex == selectedColor.value,
+    );
     return item?.quantity ?? 0;
   }
 
@@ -70,22 +66,15 @@ class BuyerProductDetailsController extends GetxController {
     return product.value!.quantity - totalQuantityInCartForThisProduct;
   }
 
-  // ─── عملیات دکمه‌ها ───
-
   void onAddOrIncrease() {
     if (product.value == null) return;
 
     if (totalQuantityInCartForThisProduct < product.value!.quantity) {
-      cartController.addToCart(
-        product.value!,
-        1,
-        selectedColor.value,
-      );
+      cartController.addToCart(product.value!, 1, selectedColor.value);
     } else {
-
       ToastUtil.show(
         "موجودی انبار برای این محصول تمام شده است",
-        type: ToastType.warning, // استفاده از warning مناسب‌تر است
+        type: ToastType.warning,
       );
     }
   }
@@ -93,9 +82,11 @@ class BuyerProductDetailsController extends GetxController {
   void onDecrease() {
     if (product.value == null) return;
 
-    final item = cartController.cartItems.firstWhereOrNull((element) =>
-    element.productId == product.value!.id &&
-        element.colorHex == selectedColor.value);
+    final item = cartController.cartItems.firstWhereOrNull(
+      (element) =>
+          element.productId == product.value!.id &&
+          element.colorHex == selectedColor.value,
+    );
 
     if (item != null) {
       cartController.decrementItem(item);
@@ -106,7 +97,7 @@ class BuyerProductDetailsController extends GetxController {
   double get effectivePrice {
     if (product.value == null) return 0;
     return (product.value!.discountPrice > 0 &&
-        product.value!.discountPrice < product.value!.price)
+            product.value!.discountPrice < product.value!.price)
         ? product.value!.discountPrice.toDouble()
         : product.value!.price.toDouble();
   }
@@ -114,18 +105,18 @@ class BuyerProductDetailsController extends GetxController {
   int get discountPercentage {
     if (!hasDiscount || product.value == null) return 0;
     return ((product.value!.price - product.value!.discountPrice) /
-        product.value!.price *
-        100)
+            product.value!.price *
+            100)
         .round();
   }
 
   bool get hasDiscount =>
       product.value != null &&
-          product.value!.discountPrice > 0 &&
-          product.value!.discountPrice < product.value!.price;
+      product.value!.discountPrice > 0 &&
+      product.value!.discountPrice < product.value!.price;
 
   bool get isAvailable =>
       product.value != null &&
-          product.value!.quantity > 0 &&
-          remainingStock > 0;
+      product.value!.quantity > 0 &&
+      remainingStock > 0;
 }

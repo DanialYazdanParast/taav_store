@@ -33,6 +33,12 @@ class AppPages {
 
   static const initial = AppRoutes.splash;
 
+  static final unknownRoute = GetPage(
+    name: _Paths.notFound,
+    page: () => const NotFoundScreen(),
+    transition: Transition.fadeIn,
+  );
+
   static final pages = [
     GetPage(
       name: _Paths.splash,
@@ -40,6 +46,8 @@ class AppPages {
       binding: SplashBinding(),
       transition: Transition.noTransition,
     ),
+
+
 
     // ─── Auth ───────────────────────────────────────────────────────────
     GetPage(

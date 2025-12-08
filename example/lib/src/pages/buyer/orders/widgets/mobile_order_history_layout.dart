@@ -1,0 +1,41 @@
+import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/commons/widgets/app_loading.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/order_history_controller.dart';
+import '../widgets/order_card_widget.dart';
+
+class MobileOrderHistoryLayout extends GetView<OrderHistoryController> {
+  const MobileOrderHistoryLayout({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("تاریخچه سفارشات"), centerTitle: true),
+      body: Obx(() {
+        if (controller.pageState.value == CurrentState.loading) {
+          return Center(child: AppLoading.circular(size: 50));
+        }
+        if (controller.pageState.value == CurrentState.error) {
+          return const Center(child: Text("خطا در دریافت اطلاعات"));
+        }
+        if (controller.orders.isEmpty) {
+          return const Center(child: Text("هنوز سفارشی ثبت نکرده‌اید"));
+        }
+
+        return ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: controller.orders.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 16),
+          itemBuilder: (context, index) {
+            return OrderCardWidget(
+              order: controller.orders[index],
+              isMobile: true, // حالت بازشو
+            );
+          },
+        );
+      }),
+    );
+  }
+}

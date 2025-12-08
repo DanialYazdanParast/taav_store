@@ -26,7 +26,7 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
           borderRadius: BorderRadius.circular(AppSize.r16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: AppSize.p20,
               offset: const Offset(0, 10),
             ),
@@ -102,8 +102,7 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
         textColor: textColor,
         subColor: subColor,
         state: controller.cartStatsState.value,
-
-        label: 'در سبد خرید',
+        label:  TKeys.inCartItems.tr,
         icon: Icons.shopping_bag_outlined,
       ),
     );

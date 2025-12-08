@@ -1,9 +1,8 @@
-// فایل: src/pages/buyer/orders/controllers/order_history_controller.dart
-
 import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart'; // Import added
 import '../../../shared/models/order_model.dart';
 import '../repository/order_repository.dart';
 
@@ -13,9 +12,8 @@ class OrderHistoryController extends GetxController {
 
   OrderHistoryController({required IOrderRepository repo}) : _repo = repo;
 
-  // متغیرهای Rx
   final RxList<OrderModel> orders = <OrderModel>[].obs;
-  final Rx<CurrentState> pageState = CurrentState.idle.obs;
+  final Rx<CurrentState> orderState = CurrentState.idle.obs;
 
   String get currentUserId => _authService.userId.value;
 
@@ -26,15 +24,15 @@ class OrderHistoryController extends GetxController {
   }
 
   Future<void> loadOrders() async {
-    pageState.value = CurrentState.loading;
+    orderState.value = CurrentState.loading;
 
     final result = await _repo.getOrders(currentUserId);
 
     result.fold(
           (failure) {
-        pageState.value = CurrentState.error;
+        orderState.value = CurrentState.error;
         ToastUtil.show(
-            "خطا در دریافت لیست سفارشات",
+            TKeys.fetchOrdersError.tr,
             type: ToastType.error
         );
       },
@@ -42,7 +40,7 @@ class OrderHistoryController extends GetxController {
         fetchedOrders.sort((a, b) => b.date.compareTo(a.date));
         orders.assignAll(fetchedOrders);
 
-          pageState.value = CurrentState.success;
+        orderState.value = CurrentState.success;
 
       },
     );

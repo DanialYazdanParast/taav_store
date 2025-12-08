@@ -1,8 +1,10 @@
 import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import '../controllers/buyer_product_details_controller.dart';
 
 class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
@@ -44,14 +46,14 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
     int currentQtyForColor = controller.quantityInCartForSelectedColor;
     int dynamicMaxQuantity = currentQtyForColor + controller.remainingStock;
 
-    String buttonLabel = "افزودن به سبد خرید";
+    String buttonLabel = TKeys.addToCart.tr;
     bool isDisabled = false;
 
     if (product.quantity == 0) {
-      buttonLabel = "ناموجود";
+      buttonLabel = TKeys.outOfStock.tr;
       isDisabled = true;
     } else if (controller.remainingStock <= 0 && currentQtyForColor == 0) {
-      buttonLabel = "تمام شد";
+      buttonLabel = TKeys.soldOut.tr;
       isDisabled = true;
     }
 
@@ -79,7 +81,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
           color: theme.colorScheme.onPrimary,
         ),
       ),
-      numberFormatter: _toPersianNum,
+      numberFormatter: (value) => value.toLocalizedDigit,
     );
   }
 
@@ -108,7 +110,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              "${_toPersianNum(controller.discountPercentage.toString())}٪",
+              "${controller.discountPercentage.toString()}٪",
               style: theme.textTheme.labelSmall?.copyWith(
                 color: theme.colorScheme.onError,
                 fontWeight: FontWeight.bold,
@@ -117,7 +119,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
           ),
           const SizedBox(width: 6),
           Text(
-            _formatPrice(controller.product.value!.price),
+            controller.product.value!.price.toLocalizedPrice,
             style: theme.textTheme.bodySmall?.copyWith(
               decoration: TextDecoration.lineThrough,
               color: theme.disabledColor,
@@ -134,33 +136,19 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          _formatPrice(controller.effectivePrice.toInt()),
+          controller.effectivePrice.toInt().toLocalizedPrice,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(width: 4),
         Text(
-          "تومان",
+          TKeys.toman.tr,
           style: theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
       ],
     );
-  }
-
-  String _formatPrice(num price) {
-    final formatter = NumberFormat("#,###");
-    return _toPersianNum(formatter.format(price));
-  }
-
-  String _toPersianNum(String input) {
-    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    const persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-    for (int i = 0; i < english.length; i++) {
-      input = input.replaceAll(english[i], persian[i]);
-    }
-    return input;
   }
 }

@@ -7,8 +7,8 @@ import 'package:example/src/pages/shared/models/user_model.dart';
 
 abstract class IRegisterRepository {
   Future<Either<Failure, bool>> checkUserExists(String username);
-  Future<Either<Failure, UserModel>> createUser(CreateUserDto user);
 
+  Future<Either<Failure, UserModel>> createUser(CreateUserDto user);
 }
 
 class RegisterRepository extends BaseRepository implements IRegisterRepository {

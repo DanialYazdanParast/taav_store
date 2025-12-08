@@ -16,20 +16,17 @@ class LoginRepository extends BaseRepository implements ILoginRepository {
   @override
   Future<Either<Failure, UserModel>> login(String username, String password) {
     return safeCall<UserModel>(
-      request: () => _network.get(
-        '/users',
-        queryParameters: {
-          'username': username,
-          'password': password,
-        },
-      ),
+      request:
+          () => _network.get(
+            '/users',
+            queryParameters: {'username': username, 'password': password},
+          ),
       fromJson: (json) {
         if (json is List && json.isNotEmpty) {
           return UserModel.fromJson(json.first);
         }
-       throw AppException('نام کاربری یا رمز عبور اشتباه است');
+        throw AppException('نام کاربری یا رمز عبور اشتباه است');
       },
     );
   }
-
 }

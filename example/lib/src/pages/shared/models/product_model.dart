@@ -37,22 +37,4 @@ class ProductModel {
       sellerId: json['sellerId'] ?? '',
     );
   }
-
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'quantity': quantity,
-      'price': price,
-      'discountPrice': discountPrice,
-      'image': image,
-      'colors': colors,
-      'tags': tags,
-      'sellerId': sellerId,
-    };
-  }
-
-
 }

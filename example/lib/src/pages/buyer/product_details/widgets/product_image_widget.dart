@@ -25,7 +25,7 @@ class ProductImageWidget extends GetView<BuyerProductDetailsController> {
         final product = controller.product.value;
 
         if (isLoading || product == null) {
-          return Container(color: Colors.grey.withOpacity(0.1));
+          return Container(color: Colors.grey.withValues(alpha: 0.1));
         }
 
         return ClipRRect(

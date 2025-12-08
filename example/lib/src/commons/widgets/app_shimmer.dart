@@ -28,7 +28,7 @@ class AppShimmer extends StatefulWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.black, // The color creates the mask shape
+          color: Colors.black,
           borderRadius: BorderRadius.circular(borderRadius),
         ),
       ),

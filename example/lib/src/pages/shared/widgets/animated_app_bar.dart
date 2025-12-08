@@ -60,11 +60,7 @@ class AnimatedAppBar<T extends GetxController> extends GetView<T> {
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: AppSize.f18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Get.theme.textTheme.bodyLarge
                 ),
               ),
               const SizedBox(width: 48),
@@ -92,12 +88,12 @@ class AnimatedAppBar<T extends GetxController> extends GetView<T> {
           clipBehavior: Clip.hardEdge,
 
           decoration: BoxDecoration(
-            color: isActive ? Colors.white : Colors.white.withOpacity(0.15),
+            color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(isActive ? AppSize.r12 : AppSize.r10),
             boxShadow: isActive
                 ? [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha:  0.1),
                 blurRadius: AppSize.p10,
                 offset: const Offset(0, 4),
               ),

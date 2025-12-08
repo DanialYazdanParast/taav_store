@@ -1,10 +1,10 @@
-import 'dart:io' show Platform;
 
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/commons/app_configs.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -33,13 +33,13 @@ class NetworkService extends GetxService {
     );
   }
 
-  Map<String, dynamic> _getDefaultHeaders() {
-    return {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Accept-Language': 'fa',
-    };
-  }
+  // Map<String, dynamic> _getDefaultHeaders() {
+  //   return {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Accept-Language': 'fa',
+  //   };
+  // }
 
 
   void _configureSslPinning() {
@@ -58,7 +58,7 @@ class NetworkService extends GetxService {
   Interceptor _createDelayInterceptor() {
     return InterceptorsWrapper(
       onRequest: (options, handler) async {
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 0));
         handler.next(options);
       },
     );
@@ -170,26 +170,26 @@ class NetworkService extends GetxService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return 'زمان اتصال به پایان رسید. اینترنت خود را بررسی کنید.';
+        return TKeys.timeoutMessage.tr;
 
       case DioExceptionType.badResponse:
         return _parseResponseError(error.response);
 
       case DioExceptionType.cancel:
-        return 'درخواست لغو شد';
+        return TKeys.requestCancelled.tr;
 
       case DioExceptionType.connectionError:
-        return 'خطا در برقراری ارتباط. اینترنت خود را بررسی کنید.';
+        return TKeys.checkInternetConnection.tr;
 
       case DioExceptionType.badCertificate:
-        return 'خطای امنیتی در اتصال';
+        return TKeys.badCertificate.tr;
 
       case DioExceptionType.unknown:
       default:
         if (error.message != null && error.message!.contains('Exception')) {
-          return 'خطای ناشناخته در ارتباط با سرور';
+          return TKeys.unknownNetworkError.tr;
         }
-        return error.message ?? 'خطای ناشناخته رخ داد';
+        return error.message ?? TKeys.unexpectedError.tr;
     }
   }
 

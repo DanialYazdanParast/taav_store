@@ -1,4 +1,5 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
@@ -91,8 +92,6 @@ class _ProductImage extends StatelessWidget {
   }
 }
 
-// برچسب تخفیف
-
 class _DiscountBadge extends StatelessWidget {
   final String discountPercent;
 
@@ -127,7 +126,6 @@ class _DiscountBadge extends StatelessWidget {
   }
 }
 
-// اطلاعات محصول
 class _ProductInfo extends StatelessWidget {
   final String productName;
   final String originalPrice;
@@ -176,7 +174,6 @@ class _ProductInfo extends StatelessWidget {
   }
 }
 
-// ردیف قیمت
 class _PriceRow extends StatelessWidget {
   final String originalPrice;
   final String discountedPrice;
@@ -199,13 +196,18 @@ class _PriceRow extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            discountedPrice,
-            style: TextStyle(
-              color: Colors.green[600],
-              fontWeight: FontWeight.bold,
-              fontSize: AppSize.f14,
-              overflow: TextOverflow.ellipsis,
+          Flexible(
+            child: FittedBox(
+              child: Text(
+                (double.tryParse(discountedPrice.replaceAll(',', '')) ?? 0)
+                    .toLocalizedPrice,
+                style: TextStyle(
+                  color: Colors.green[600],
+                  fontWeight: FontWeight.bold,
+                  fontSize: AppSize.f14,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ),
           Flexible(
@@ -221,7 +223,8 @@ class _PriceRow extends StatelessWidget {
             AppSize.p8.width,
             Flexible(
               child: Text(
-                originalPrice,
+                (double.tryParse(originalPrice.replaceAll(',', '')) ?? 0)
+                    .toLocalizedPrice,
                 style: TextStyle(
                   color: theme.hintColor,
                   fontSize: AppSize.f12,
@@ -238,7 +241,6 @@ class _PriceRow extends StatelessWidget {
   }
 }
 
-// چیپ موجودی
 class _StockChip extends StatelessWidget {
   final int quantity;
   final Color primaryColor;
@@ -252,9 +254,9 @@ class _StockChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p8, vertical: 3),
       decoration: BoxDecoration(
-        color: chipColor.withOpacity(0.1),
+        color: chipColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSize.r6),
-        border: Border.all(color: chipColor.withOpacity(0.2), width: 0.5),
+        border: Border.all(color: chipColor.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Text(
         '${TKeys.stock.tr}: $quantity',
@@ -268,7 +270,6 @@ class _StockChip extends StatelessWidget {
   }
 }
 
-// دکمه‌های عملیات
 class _ActionButtons extends StatelessWidget {
   final Color primaryColor;
   final Color errorColor;
@@ -322,7 +323,7 @@ class _ActionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSize.p8),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppSize.r8),
         ),
         child: Icon(icon, size: 18, color: color),

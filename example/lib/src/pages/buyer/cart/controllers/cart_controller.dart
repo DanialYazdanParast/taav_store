@@ -1,10 +1,13 @@
 import 'package:example/src/commons/services/auth_service.dart';
+import 'package:example/src/pages/buyer/cart/models/cart_item_dto.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
-import '../models/cart_item_model.dart';
-import '../repository/cart_repository.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+
+import '../../../shared/models/cart_item_model.dart';
+import '../repository/cart_repository.dart';
 
 class CartController extends GetxController {
   final ICartRepository _repo;
@@ -46,6 +49,7 @@ class CartController extends GetxController {
     final existingItem = cartItems.firstWhereOrNull(
       (item) => item.productId == product.id && item.colorHex == colorHex,
     );
+
     if (existingItem != null && existingItem.id != null) {
       final newQty = existingItem.quantity + quantity;
 
@@ -57,7 +61,7 @@ class CartController extends GetxController {
         existingItem.quantity -= quantity;
         cartItems.refresh();
 
-        ToastUtil.show("آپدیت سبد خرید انجام نشد", type: ToastType.error);
+        ToastUtil.show(TKeys.cartUpdateFailed.tr, type: ToastType.error);
       }, (_) => null);
     } else {
       int finalPrice =
@@ -65,7 +69,7 @@ class CartController extends GetxController {
               ? product.discountPrice
               : product.price;
 
-      final newItem = CartItemModel(
+      final newItemDTO = CartItemDTO(
         productId: product.id,
         productTitle: product.title,
         productImage: product.image,
@@ -78,15 +82,15 @@ class CartController extends GetxController {
         maxStock: product.quantity,
       );
 
-      final result = await _repo.addToCart(newItem);
+      final result = await _repo.addToCart(newItemDTO);
 
       result.fold(
         (failure) {
-          ToastUtil.show("افزودن به سبد خرید انجام نشد", type: ToastType.error);
+          ToastUtil.show(TKeys.addToCartFailed.tr, type: ToastType.error);
         },
         (addedItem) {
           cartItems.add(addedItem);
-          ToastUtil.show("به سبد خرید اضافه شد", type: ToastType.success);
+          ToastUtil.show(TKeys.addedToCartSuccess.tr, type: ToastType.success);
         },
       );
     }
@@ -106,7 +110,6 @@ class CartController extends GetxController {
         cartItems.refresh();
       }, (_) => null);
     } else {
-
       final index = cartItems.indexOf(item);
       cartItems.remove(item);
 
@@ -114,9 +117,8 @@ class CartController extends GetxController {
 
       result.fold((failure) {
         cartItems.insert(index, item);
-        ToastUtil.show("حذف آیتم انجام نشد", type: ToastType.error);
+        ToastUtil.show(TKeys.itemDeleteFailed.tr, type: ToastType.error);
       }, (_) => null);
-
     }
   }
 
@@ -142,14 +144,27 @@ class CartController extends GetxController {
       "buyerId": currentUserId,
       "totalPrice": totalPayablePrice,
       "date": DateTime.now().toIso8601String(),
-      "items": cartItems.map((e) => e.toJson()).toList(),
+      "items":
+          cartItems
+              .map(
+                (item) => {
+                  "productId": item.productId,
+                  "productTitle": item.productTitle,
+                  "sellerId": item.sellerId,
+                  "color": item.colorHex,
+                  "quantity": item.quantity,
+                  "price": item.price,
+                  "originalPrice": item.originalPrice,
+                },
+              )
+              .toList(),
     };
 
     final result = await _repo.submitOrder(orderData);
 
     result.fold(
       (failure) {
-        ToastUtil.show("ثبت سفارش انجام نشد", type: ToastType.error);
+        ToastUtil.show(TKeys.orderSubmitFailed.tr, type: ToastType.error);
       },
       (_) async {
         await Future.wait(
@@ -166,10 +181,10 @@ class CartController extends GetxController {
 
         cartItems.clear();
 
-        ToastUtil.show(
-          "سفارش شما ثبت شد و موجودی انبار به‌روزرسانی گردید.",
-          type: ToastType.success,
-        );
+        final successMsg =
+            '${TKeys.orderSubmitSuccess.tr} ${TKeys.stockUpdateSuccess.tr}';
+
+        ToastUtil.show(successMsg, type: ToastType.success);
       },
     );
   }

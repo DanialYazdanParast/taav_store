@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,6 @@ class SellerAddProductController extends GetxController
   final ISellerAddRepository addRepo;
 
   AuthService get _authService => Get.find<AuthService>();
-
   MetadataService get metadataService => Get.find<MetadataService>();
 
   SellerAddProductController({required this.addRepo});
@@ -80,7 +80,7 @@ class SellerAddProductController extends GetxController
   bool get showAddButton {
     if (tagQuery.value.isEmpty) return false;
     return !availableTags.any(
-      (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
+          (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
     );
   }
 
@@ -136,7 +136,7 @@ class SellerAddProductController extends GetxController
       pageState.value = CurrentState.loading;
 
       if (!Get.isRegistered<MetadataService>()) {
-        debugPrint("⚠️ هشدار: MetadataService یافت نشد.");
+        debugPrint("Warning: MetadataService not found.");
         pageState.value = CurrentState.success;
         return;
       }
@@ -149,7 +149,7 @@ class SellerAddProductController extends GetxController
 
       pageState.value = CurrentState.success;
     } catch (e) {
-      debugPrint("❌ خطا در سینک اطلاعات: $e");
+      debugPrint("Error syncing metadata: $e");
       pageState.value = CurrentState.error;
     }
   }
@@ -172,9 +172,9 @@ class SellerAddProductController extends GetxController
       if (image != null) selectedImage.value = image;
     } catch (e) {
       if (e.toString().contains('permission')) {
-        ToastUtil.show("دسترسی لازم داده نشد", type: ToastType.warning);
+        ToastUtil.show(TKeys.permissionDenied.tr, type: ToastType.warning);
       } else {
-        ToastUtil.show("خطا در انتخاب تصویر", type: ToastType.error);
+        ToastUtil.show(TKeys.errorSelectingImage.tr, type: ToastType.error);
       }
     }
   }
@@ -182,8 +182,7 @@ class SellerAddProductController extends GetxController
   @override
   void removeImage() => selectedImage.value = null;
 
-  // ─── Color Logic  ────────────────
-
+  // ─── Color Logic ───────────────────────────
   @override
   void toggleColor(String hexCode) {
     if (selectedColor.contains(hexCode)) {
@@ -200,19 +199,18 @@ class SellerAddProductController extends GetxController
 
     try {
       final success = await metadataService.addNewColor(name, cleanHex);
-
       if (success) {
         toggleColor(cleanHex);
         Get.back();
       }
     } catch (e) {
-      ToastUtil.show("خطا در افزودن رنگ", type: ToastType.error);
+      ToastUtil.show(TKeys.errorAddingColor.tr, type: ToastType.error);
     } finally {
       isAddingColor.value = false;
     }
   }
 
-  // ─── Tag Logic ───────────────────────────────────────────────────────────────
+  // ─── Tag Logic ─────────────────────────────────────────────────────────────
   @override
   void onTagSearchChanged(String val) {
     tagQuery.value = val.trim();
@@ -221,10 +219,8 @@ class SellerAddProductController extends GetxController
     } else {
       filteredTags.assignAll(
         availableTags
-            .where(
-              (tag) =>
-                  tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()),
-            )
+            .where((tag) =>
+            tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()))
             .toList(),
       );
     }
@@ -249,20 +245,18 @@ class SellerAddProductController extends GetxController
 
     try {
       final success = await metadataService.addNewTag(newTagName);
-      if (success) {
-        if (metadataService.tags.isNotEmpty) {
-          final newTag = metadataService.tags.last;
-          selectTag(newTag.name);
+      if (success && metadataService.tags.isNotEmpty) {
+        final newTag = metadataService.tags.last;
+        selectTag(newTag.name);
 
-          ToastUtil.show("تگ جدید اضافه شد", type: ToastType.success);
+        ToastUtil.show(TKeys.newTagAdded.tr, type: ToastType.success);
 
-          tagSearchController.clear();
-          tagQuery.value = '';
-          filteredTags.clear();
-        }
+        tagSearchController.clear();
+        tagQuery.value = '';
+        filteredTags.clear();
       }
     } catch (e) {
-      ToastUtil.show("خطا در افزودن تگ", type: ToastType.error);
+      ToastUtil.show(TKeys.errorAddingTag.tr, type: ToastType.error);
     } finally {
       isAddingTag.value = false;
     }
@@ -274,15 +268,12 @@ class SellerAddProductController extends GetxController
 
     if (!formKey.currentState!.validate()) {
       avmAdd.value = AutovalidateMode.always;
-      ToastUtil.show("لطفا خطاهای فرم را برطرف کنید", type: ToastType.warning);
+      ToastUtil.show(TKeys.pleaseFixFormErrors.tr, type: ToastType.warning);
       return;
     }
 
     if (selectedImage.value == null) {
-      ToastUtil.show(
-        "لطفا یک تصویر برای محصول انتخاب کنید",
-        type: ToastType.warning,
-      );
+      ToastUtil.show(TKeys.pleaseSelectProductImage.tr, type: ToastType.warning);
       return;
     }
 
@@ -291,12 +282,9 @@ class SellerAddProductController extends GetxController
     try {
       final cleanPrice = priceController.text.replaceAll(',', '');
       final cleanCount = countController.text.replaceAll(',', '');
-      String cleanDiscount;
-      if (discountPriceController.text.trim().isEmpty) {
-        cleanDiscount = cleanPrice;
-      } else {
-        cleanDiscount = discountPriceController.text.replaceAll(',', '');
-      }
+      final cleanDiscount = discountPriceController.text.trim().isEmpty
+          ? cleanPrice
+          : discountPriceController.text.replaceAll(',', '');
 
       final formData = dio.FormData.fromMap({
         'title': titleController.text,
@@ -307,31 +295,30 @@ class SellerAddProductController extends GetxController
         'sellerId': _authService.userId.value,
         'colors': jsonEncode(selectedColor),
         'tags': jsonEncode(selectedTagNames),
-        'image':
-            kIsWeb
-                ? dio.MultipartFile.fromBytes(
-                  await selectedImage.value!.readAsBytes(),
-                  filename: selectedImage.value!.name,
-                )
-                : await dio.MultipartFile.fromFile(
-                  selectedImage.value!.path,
-                  filename: selectedImage.value!.name,
-                ),
+        'image': kIsWeb
+            ? dio.MultipartFile.fromBytes(
+          await selectedImage.value!.readAsBytes(),
+          filename: selectedImage.value!.name,
+        )
+            : await dio.MultipartFile.fromFile(
+          selectedImage.value!.path,
+          filename: selectedImage.value!.name,
+        ),
       });
 
       final result = await addRepo.addProduct(formData);
 
       result.fold(
-        (failure) {
+            (failure) {
           submitState.value = CurrentState.error;
           ToastUtil.show(
-            failure.message ?? "خطا در ثبت محصول",
+            failure.message ?? TKeys.errorAddingProduct.tr,
             type: ToastType.error,
           );
         },
-        (newProduct) {
+            (newProduct) {
           submitState.value = CurrentState.success;
-          ToastUtil.show("محصول با موفقیت ثبت شد", type: ToastType.success);
+          ToastUtil.show(TKeys.productAddedSuccessfully.tr, type: ToastType.success);
 
           _updateMainListLocally(newProduct);
 
@@ -348,7 +335,7 @@ class SellerAddProductController extends GetxController
     } catch (e) {
       submitState.value = CurrentState.error;
       debugPrint("Submit Error: $e");
-      ToastUtil.show("خطای غیرمنتظره رخ داد", type: ToastType.error);
+      ToastUtil.show(TKeys.unexpectedError.tr, type: ToastType.error);
     } finally {
       if (submitState.value != CurrentState.success) {
         submitState.value = CurrentState.idle;

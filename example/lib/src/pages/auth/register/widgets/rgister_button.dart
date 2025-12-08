@@ -15,9 +15,9 @@ class RegisterButton extends GetView<RegisterController> {
       () =>
           ButtonWidget(
             TKeys.createAccount.tr,
-             () {
-                 controller.register();
-                },
+            () {
+              controller.register();
+            },
             isLoading: controller.registerState.value == CurrentState.loading,
           ).material(),
     );

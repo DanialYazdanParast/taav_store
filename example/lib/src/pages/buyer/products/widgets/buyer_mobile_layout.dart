@@ -2,9 +2,10 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/empty_widget.dart';
 import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:example/src/pages/shared/widgets/animated_app_bar.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
@@ -33,7 +34,6 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
         onTap: () {
           controller.closeSearch();
         },
-
         behavior: HitTestBehavior.translucent,
         child: Stack(
           children: [
@@ -52,12 +52,12 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
   }
 
   Widget _buildTopBackground(
-    ThemeData theme,
-    Color primaryColor,
-    double screenHeight,
-    double screenWidth,
-    bool isRtl,
-  ) {
+      ThemeData theme,
+      Color primaryColor,
+      double screenHeight,
+      double screenWidth,
+      bool isRtl,
+      ) {
     return Container(
       height: 450,
       color: primaryColor,
@@ -67,13 +67,13 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
             top: -80,
             right: -150,
             size: 300,
-            color: theme.colorScheme.onPrimary.withOpacity(0.05),
+            color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
           ),
           DecorativeCircle(
             bottom: -10,
             left: -100,
             size: 300,
-            color: theme.colorScheme.onPrimary.withOpacity(0.05),
+            color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
           ),
           SafeArea(
             child: Column(
@@ -83,7 +83,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                   isSearching: controller.isSearching,
                   searchController: controller.searchController,
                   searchFocusNode: controller.searchFocusNode,
-                  title: 'پنل خریدار ',
+                  title: TKeys.buyerPanel.tr,
                   onFilterTap: () {
                     controller.initTempFilters();
 
@@ -127,12 +127,12 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                     return Expanded(
                       child: GridView.builder(
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 12,
-                              crossAxisSpacing: 12,
-                              childAspectRatio: 0.60,
-                            ),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.60,
+                        ),
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSize.p16,
@@ -159,7 +159,6 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                     return SingleChildScrollView(
                       controller: scrollController,
                       physics: const AlwaysScrollableScrollPhysics(),
-
                       child: EmptyWidget(),
                     );
                   }
@@ -169,12 +168,12 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                       onRefresh: () => controller.fetchProducts(),
                       child: GridView.builder(
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 12,
-                              crossAxisSpacing: 12,
-                              childAspectRatio: 0.65,
-                            ),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.65,
+                        ),
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSize.p16,
@@ -193,8 +192,8 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                             size: Get.height * 0.15,
                             onTap:
                                 () => mainController.goToProductDetails(
-                                  product.id,
-                                ),
+                              product.id,
+                            ),
                           );
                         },
                       ),

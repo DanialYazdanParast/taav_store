@@ -10,7 +10,7 @@ class BuyerProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Responsive(
       mobile: BuyerMobileLayout(),
-      desktop: const BuyerDesktopLayout(),
+      desktop: BuyerDesktopLayout(),
     );
   }
 }

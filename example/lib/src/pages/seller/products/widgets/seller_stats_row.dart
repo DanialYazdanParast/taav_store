@@ -42,7 +42,7 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
           Obx(
             () => SellerStatItem(
               value: controller.totalItemsInCart.toString(),
-              label:'در سبد خرید',
+              label: TKeys.inCartItems.tr,
               icon: Icons.shopping_bag_outlined,
               textColor: Colors.white,
               subColor: Colors.white70,

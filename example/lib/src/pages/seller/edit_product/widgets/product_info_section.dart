@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/text/app_text_field.dart';
@@ -25,11 +27,11 @@ class ProductInfoSection extends StatelessWidget {
     return Column(
       children: [
         AppTextField(
-          hintText: "عنوان محصول (مثال: کفش نایک)",
+          hintText: TKeys.productTitleHint.tr,
           controller: titleController,
           prefixWidget: const Icon(Icons.shopping_bag_outlined, size: 20),
           maxLength: 60,
-          validator: (value) => ValidationUtil().requiredField(value, "عنوان محصول"),
+          validator: (value) => ValidationUtil().requiredField(value, TKeys.productTitleLabel.tr),
           autoValidateMode: autoValidateMode,
           focusNode: titleFocus,
           textInputAction: TextInputAction.next,
@@ -37,13 +39,13 @@ class ProductInfoSection extends StatelessWidget {
         ),
         AppSize.p16.height,
         AppTextField(
-          hintText: "توضیحات کامل محصول...",
+          hintText: TKeys.productDescHint.tr,
           controller: descController,
           minLines: 4, maxLines: 6,
           keyboardType: TextInputType.multiline,
           contentPadding: const EdgeInsets.all(AppSize.p16),
           maxLength: 500,
-          validator: (value) => ValidationUtil().requiredField(value, "توضیحات"),
+          validator: (value) => ValidationUtil().requiredField(value, TKeys.productDescLabel.tr),
           autoValidateMode: autoValidateMode,
           focusNode: descFocus,
         ),

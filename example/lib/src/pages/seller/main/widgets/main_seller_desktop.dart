@@ -15,9 +15,9 @@ class MainSellerDesktop extends GetView<MainSellerController> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const SellerProductsScreen(), // تب 0: محصولات
-      const SellerAddScreen(), // تب 1: افزودن محصول
-      const SellerAccountScreen(), // تب 2: تنظیمات
+      const SellerProductsScreen(),
+      const SellerAddScreen(),
+      const SellerAccountScreen(),
     ];
 
     return Scaffold(
@@ -27,7 +27,7 @@ class MainSellerDesktop extends GetView<MainSellerController> {
                 () => CustomSidebar(
               currentIndex: controller.currentIndex.value,
               items: controller.navItems,
-              onTap: controller.changeTab, // 🔥 مدیریت navigation
+              onTap: controller.changeTab,
             ),
           ),
           Expanded(

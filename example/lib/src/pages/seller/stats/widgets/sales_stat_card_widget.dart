@@ -1,6 +1,11 @@
+import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+
 import '../models/seller_sales_stat_model.dart';
 
 class SalesStatCardWidget extends StatelessWidget {
@@ -20,18 +25,24 @@ class SalesStatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final formatter = NumberFormat("#,###");
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
 
-    final borderColor = isTopSeller ? const Color(0xFFFFD700) : theme.dividerColor;
+    final borderColor =
+        isTopSeller
+            ? theme.colorScheme.primary
+            : theme.colorScheme.outlineVariant.withValues(alpha: 0.5);
     final double borderWidth = isTopSeller ? (isDesktop ? 3.0 : 2.0) : 1.0;
-    final shadowColor = isTopSeller ? const Color(0xFFFFD700).withOpacity(0.3) : Colors.black.withOpacity(0.05);
+    final shadowColor =
+        isTopSeller
+            ? theme.colorScheme.primary.withValues(alpha: 0.3)
+            : Colors.black.withValues(alpha: 0.05);
 
     return Stack(
       children: [
         Container(
           padding: EdgeInsets.all(isDesktop ? 20 : 12),
           decoration: BoxDecoration(
-            color: theme.cardColor,
+            color: theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: borderColor, width: borderWidth),
             boxShadow: [
@@ -52,7 +63,6 @@ class SalesStatCardWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               SizedBox(width: isDesktop ? 24 : 16),
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,14 +82,15 @@ class SalesStatCardWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _StatInfoChip(
-                          label: "تعداد فروش:",
-                          value: "${stat.totalQuantitySold} عدد",
+                          label: TKeys.soldCount.tr,
+                          value:
+                              "${stat.totalQuantitySold.toString().toLocalizedDigit} ${TKeys.countUnit.tr}",
                           theme: theme,
                         ),
 
                         Flexible(
                           child: Text(
-                            "${formatter.format(stat.totalRevenue)} تومان",
+                            "${stat.totalRevenue.toLocalizedPrice} ${TKeys.currency.tr}",
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.primary,
                               fontWeight: FontWeight.w900,
@@ -99,19 +110,26 @@ class SalesStatCardWidget extends StatelessWidget {
         if (isTopSeller)
           Positioned(
             top: 0,
-            left: 20,
+            left: isRtl ? 20 : null,
+            right: isRtl ? null : 20,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFD700),
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary,
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(AppSize.r10),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.emoji_events_rounded, size: 16, color: Colors.black87),
-                  const SizedBox(width: 4),
+                  const Icon(
+                    Icons.emoji_events_rounded,
+                    size: AppSize.f16,
+                    color: Colors.black87,
+                  ),
+                  4.width,
                   Text(
-                    "پرفروش‌ترین",
+                    TKeys.bestSeller.tr,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: Colors.black87,
                       fontWeight: FontWeight.w900,
@@ -125,7 +143,8 @@ class SalesStatCardWidget extends StatelessWidget {
         if (!isTopSeller)
           Positioned(
             top: 12,
-            left: 12,
+            left: isRtl ? 20 : null,
+            right: isRtl ? null : 20,
             child: Container(
               width: 28,
               height: 28,
@@ -135,8 +154,10 @@ class SalesStatCardWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Text(
-                "$rank",
-                style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
+                rank.toString().toLocalizedDigit,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -150,7 +171,11 @@ class _StatInfoChip extends StatelessWidget {
   final String value;
   final ThemeData theme;
 
-  const _StatInfoChip({required this.label, required this.value, required this.theme});
+  const _StatInfoChip({
+    required this.label,
+    required this.value,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +184,7 @@ class _StatInfoChip extends StatelessWidget {
         Text(
           label,
           style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const SizedBox(width: 4),

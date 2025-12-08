@@ -25,7 +25,7 @@ class DialogWidget {
         child: _buildStructure(content: content),
       ),
       barrierDismissible: isDismissible,
-      barrierColor: barrierColor ?? Colors.black.withOpacity(0.6),
+      barrierColor: barrierColor ?? Colors.black.withValues(alpha: 0.6),
       transitionDuration: const Duration(milliseconds: 300),
       transitionCurve: Curves.easeOutBack,
     );
@@ -47,7 +47,7 @@ class DialogWidget {
               ),
               shadows: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha:  0.2),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                   spreadRadius: 2,

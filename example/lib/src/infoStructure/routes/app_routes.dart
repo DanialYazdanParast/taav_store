@@ -1,5 +1,3 @@
-// lib/src/routes/app_routes.dart
-
 part of 'app_pages.dart';
 
 abstract class AppRoutes {

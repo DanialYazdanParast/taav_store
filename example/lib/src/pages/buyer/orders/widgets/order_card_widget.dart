@@ -1,6 +1,8 @@
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import '../../../shared/models/order_model.dart';
 
 class OrderCardWidget extends StatelessWidget {
@@ -20,21 +22,17 @@ class OrderCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final formatter = NumberFormat("#,###");
 
     final decoration = BoxDecoration(
-      color:
-          isSelected
-              ? theme.colorScheme.primaryContainer.withOpacity(0.3)
-              : theme.cardColor,
+      color: theme.scaffoldBackgroundColor,
       borderRadius: BorderRadius.circular(16),
       border: Border.all(
-        color: isSelected ? theme.colorScheme.primary : theme.dividerColor,
-        width: isSelected ? 2 : 1,
+        color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+        width: 1,
       ),
       boxShadow: [
         BoxShadow(
-          color: theme.shadowColor.withOpacity(0.05),
+          color: theme.shadowColor.withValues(alpha: 0.05),
           blurRadius: 10,
           offset: const Offset(0, 4),
         ),
@@ -59,7 +57,7 @@ class OrderCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "سفارش #${order.id}",
+              "${TKeys.order.tr} #${order.id.toString().toLocalizedDigit}",
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.onSurface,
@@ -68,13 +66,32 @@ class OrderCardWidget extends StatelessWidget {
           ],
         ),
         const Spacer(),
-        Text(
-          "${formatter.format(order.totalPrice)} تومان",
-          style: theme.textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.w900,
-            color: theme.colorScheme.primary,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                order.totalPrice.toLocalizedPrice,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: theme.colorScheme.primary,
+                    fontSize: 18
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                TKeys.toman.tr,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  color: theme.colorScheme.primary,
+                  fontSize: 10,
+                ),
+              ),
+            ],
           ),
-        ),
+        )
       ],
     );
 
@@ -89,15 +106,11 @@ class OrderCardWidget extends StatelessWidget {
               vertical: 10,
             ),
             title: headerContent,
-            children: [
-              const Divider(),
-              _buildItemsList(order, theme, formatter),
-            ],
+            children: [ _buildItemsList(order, theme)],
           ),
         ),
       );
-    }
-    else {
+    } else {
       return InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -110,11 +123,7 @@ class OrderCardWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildItemsList(
-    OrderModel order,
-    ThemeData theme,
-    NumberFormat formatter,
-  ) {
+  Widget _buildItemsList(OrderModel order, ThemeData theme) {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -139,7 +148,7 @@ class OrderCardWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Text(formatter.format(item.price * item.quantity)),
+            Text((item.price * item.quantity).toLocalizedPrice),
           ],
         );
       },

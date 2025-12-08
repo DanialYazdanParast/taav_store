@@ -1,12 +1,13 @@
+import 'package:example/src/commons/constants/storage_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:example/src/commons/services/storage_service.dart';
 
+
 class ThemeController extends GetxController {
   final StorageService _storage = Get.find<StorageService>();
 
-  static const String _storageKey = 'theme_mode';
 
   static const Map<ThemeMode, String> _themeModeToString = {
     ThemeMode.dark: 'dark',
@@ -15,7 +16,7 @@ class ThemeController extends GetxController {
   };
 
   ThemeMode get themeMode {
-    final stored = _storage.read<String>(_storageKey);
+    final stored = _storage.read<String>(StorageKeys.themeMode);
     return _themeModeToString.entries
         .firstWhere(
           (e) => e.value == stored,
@@ -26,7 +27,7 @@ class ThemeController extends GetxController {
 
   void changeTheme(ThemeMode mode) {
     Get.changeThemeMode(mode);
-    _storage.write(_storageKey, _themeModeToString[mode]);
+    _storage.write(StorageKeys.themeMode, _themeModeToString[mode]);
     update();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
-import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

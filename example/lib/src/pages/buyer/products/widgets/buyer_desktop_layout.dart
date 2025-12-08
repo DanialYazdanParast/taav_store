@@ -2,7 +2,7 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/empty_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
@@ -52,21 +52,25 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                   }
 
                   if (controller.productsState.value == CurrentState.error) {
-                    return SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(32.0),
-                        child: ErrorView(
-                          onRetry: () => controller.fetchProducts(),
+                    return Expanded(
+                      child: SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: ErrorView(
+                            onRetry: () => controller.fetchProducts(),
+                          ),
                         ),
                       ),
                     );
                   }
 
                   if (controller.filteredProducts.isEmpty) {
-                    return const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 50),
-                        child: EmptyWidget(),
+                    return Expanded(
+                      child: const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 50),
+                          child: EmptyWidget(),
+                        ),
                       ),
                     );
                   }
@@ -80,7 +84,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 400,
-                            mainAxisExtent: 400, // ارتفاع ثابت کارت‌ها
+                            mainAxisExtent: 400,
                             crossAxisSpacing: AppSize.p20,
                             mainAxisSpacing: AppSize.p20,
                           ),
@@ -94,13 +98,14 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                           imagePath: product.image,
                           quantity: product.quantity,
                           size: 250,
-                          onTap: ()=> mainController.goToProductDetails(product.id ,),
+                          onTap:
+                              () =>
+                                  mainController.goToProductDetails(product.id),
                         );
                       }, childCount: controller.filteredProducts.length),
                     ),
                   );
                 }),
-
 
                 SliverPadding(padding: EdgeInsets.only(bottom: AppSize.p32)),
               ],
@@ -127,18 +132,18 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
           top: -150,
           right: -200,
           size: 300,
-          color: theme.colorScheme.onPrimary.withOpacity(0.05),
+          color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
         ),
         DecorativeCircle(
           top: -350,
           size: 400,
-          color: theme.colorScheme.onPrimary.withOpacity(0.05),
+          color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
         ),
         DecorativeCircle(
           top: -130,
           left: -100,
           size: 300,
-          color: theme.colorScheme.onPrimary.withOpacity(0.05),
+          color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
         ),
 
         const Positioned(bottom: 0, left: 0, right: 0, child: Carousel()),

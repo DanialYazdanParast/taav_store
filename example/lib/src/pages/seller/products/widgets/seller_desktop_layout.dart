@@ -2,10 +2,9 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/empty_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
-import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
@@ -99,7 +98,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
                             imagePath: product.image,
                             quantity: product.quantity,
                             onEdit: () {
-                              mainController.goToEditProduct(product.id ,);
+                              mainController.goToEditProduct(product.id);
                             },
                             onDelete: () {
                               DeleteProductDialog.show(
@@ -141,18 +140,18 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
           top: -150,
           right: -200,
           size: 300,
-          color: theme.colorScheme.onPrimary.withOpacity(0.05),
+          color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
         ),
         DecorativeCircle(
           top: -350,
           size: 400,
-          color: theme.colorScheme.onPrimary.withOpacity(0.05),
+          color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
         ),
         DecorativeCircle(
           top: -130,
           left: -100,
           size: 300,
-          color: theme.colorScheme.onPrimary.withOpacity(0.05),
+          color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
         ),
 
         const Positioned(

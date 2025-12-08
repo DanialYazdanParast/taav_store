@@ -1,8 +1,12 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../controllers/cart_controller.dart';
 import '../widgets/cart_item_widget.dart';
@@ -15,12 +19,22 @@ class DesktopCartLayout extends GetView<CartController> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("سبد خرید")),
+      appBar: AppBar(title: Text(TKeys.cartTitle.tr)),
       body: Obx(() {
-        if (controller.cartItems.isEmpty) {
-          return const Center(child: Text("سبد خرید خالی است"));
+        if (controller.cartState.value == CurrentState.loading) {
+          return ListView.separated(
+            padding: const EdgeInsets.all(24),
+            itemCount: 3,
+            separatorBuilder: (_, __) => AppDivider.horizontal(space: 40),
+            itemBuilder: (context, index) {
+              return CartItemShimmer();
+            },
+          );
+        } else if (controller.cartState.value == CurrentState.error) {
+          return ErrorView();
+        } else if (controller.cartItems.isEmpty) {
+          return EmptyWidget(title: TKeys.cartEmpty.tr,);
         }
-
         return Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1200),
@@ -65,8 +79,6 @@ class DesktopCartLayout extends GetView<CartController> {
   }
 
   Widget _buildOrderSummary(ThemeData theme) {
-    final formatter = NumberFormat("#,###");
-
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -74,15 +86,15 @@ class DesktopCartLayout extends GetView<CartController> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: theme.dividerColor),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min, // فقط به اندازه محتوا جا بگیرد
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "خلاصه سفارش",
+            TKeys.orderSummary.tr,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -90,20 +102,20 @@ class DesktopCartLayout extends GetView<CartController> {
           const SizedBox(height: 24),
 
           _buildSummaryRow(
-            "قیمت کالاها (${controller.totalCount})",
-            formatter.format(controller.totalOriginalPrice),
+            "${TKeys.itemsPrice.tr} (${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? TKeys.items.tr : TKeys.item.tr})",
+            controller.totalOriginalPrice.toLocalizedPrice,
           ),
           if (controller.hasDiscount)
             _buildSummaryRow(
-              "سود شما از خرید",
-              formatter.format(controller.totalProfit),
+              TKeys.yourSavings.tr,
+              controller.totalProfit.toLocalizedPrice,
               isDiscount: true,
             ),
           const Divider(height: 32),
 
           _buildSummaryRow(
-            "جمع سبد خرید",
-            formatter.format(controller.totalPayablePrice),
+            TKeys.cartTotal.tr,
+            controller.totalPayablePrice.toLocalizedPrice,
             isTotal: true,
           ),
 
@@ -119,7 +131,7 @@ class DesktopCartLayout extends GetView<CartController> {
               ),
             ),
             child: Text(
-              "تایید و پرداخت",
+              TKeys.confirmAndPay.tr,
               style: theme.textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -132,11 +144,11 @@ class DesktopCartLayout extends GetView<CartController> {
   }
 
   Widget _buildSummaryRow(
-    String title,
-    String value, {
-    bool isDiscount = false,
-    bool isTotal = false,
-  }) {
+      String title,
+      String value, {
+        bool isDiscount = false,
+        bool isTotal = false,
+      }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -150,7 +162,7 @@ class DesktopCartLayout extends GetView<CartController> {
             ),
           ),
           Text(
-            "$value تومان",
+            "$value ${TKeys.toman.tr}",
             style: TextStyle(
               color: isDiscount ? Colors.red : null,
               fontWeight: isTotal ? FontWeight.bold : null,

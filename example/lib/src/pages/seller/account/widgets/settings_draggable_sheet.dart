@@ -1,4 +1,3 @@
-import 'package:example/app.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
@@ -29,7 +28,7 @@ class SettingsDraggableSheet extends StatelessWidget {
               color: theme.scaffoldBackgroundColor,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, -5)),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 20, offset: const Offset(0, -5)),
               ],
             ),
             child: Column(
@@ -38,9 +37,9 @@ class SettingsDraggableSheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(children: [
-                    // تیتر بخش
+
                     Text(
-                        'گزارش‌های فروش',
+                        TKeys.salesReports.tr,
                         style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)
                     )
                   ]),
@@ -49,8 +48,8 @@ class SettingsDraggableSheet extends StatelessWidget {
                 MenuItem(
                   icon: Icons.bar_chart_rounded,
                   color: theme.colorScheme.primary,
-                  title: 'آمار فروش محصولات',
-                  subtitle: 'مشاهده کالاهای پرفروش',
+                  title: TKeys.productSalesStats.tr,
+                  subtitle: TKeys.viewBestSellers.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.sellerStats),
                 ),

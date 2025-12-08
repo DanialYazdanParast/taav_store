@@ -22,7 +22,6 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
 
     return Container(
       height: 80,
-      padding: const EdgeInsets.symmetric(horizontal: AppSize.p32),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
       ),
@@ -55,14 +54,20 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   }
 
   Widget _buildFilterButton(ThemeData theme) {
-    return IconButtonWidget(
-      icon: Icons.filter_list_rounded,
-      onTap: () {
-        DialogWidget().show(const SellerFilterView());
-      },
-      color: theme.iconTheme.color,
-      bgColor: theme.cardColor,
-      hasBorder: true,
+    return SizedBox(
+      height: 46,
+      width: 46,
+      child: IconButtonWidget(
+        icon: Icons.filter_list_rounded,
+
+        onTap: () {
+          controller.initTempFilters();
+          DialogWidget().show(const SellerFilterView());
+        },
+        color: theme.iconTheme.color,
+        bgColor: theme.cardColor,
+        hasBorder: true,
+      ),
     );
   }
 
@@ -88,7 +93,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
     return Icon(
       Icons.notifications_none_rounded,
       size: 28,
-      color: theme.iconTheme.color?.withOpacity(0.7),
+      color: theme.iconTheme.color?.withValues(alpha: 0.7),
     );
   }
 
@@ -100,7 +105,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
       },
       child: CircleAvatar(
         radius: AppSize.p20,
-        backgroundColor: primaryColor.withOpacity(0.2),
+        backgroundColor: primaryColor.withValues(alpha: 0.2),
         child: Icon(Icons.person, color: primaryColor),
       ),
     );

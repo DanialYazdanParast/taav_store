@@ -1,9 +1,7 @@
 
-import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_png.dart';
-import 'button/button_widget.dart';
 
 class ErrorView extends StatelessWidget {
   final VoidCallback? onRetry;
@@ -15,9 +13,7 @@ class ErrorView extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
           SizedBox(width: double.infinity),
           GestureDetector(

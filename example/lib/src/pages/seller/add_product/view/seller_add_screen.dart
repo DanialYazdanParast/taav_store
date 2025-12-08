@@ -197,7 +197,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: AppSize.p24),
             child: Column(
               children: [
-                _CustomAppBar(isDesktop: true, theme: theme),
+              //  _CustomAppBar(isDesktop: true, theme: theme),
                 AppSize.p20.height,
                 Expanded(
                   child: Card(

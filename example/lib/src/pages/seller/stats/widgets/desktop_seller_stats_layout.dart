@@ -1,6 +1,8 @@
 import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/app_loading.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
+import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,10 +18,13 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
       appBar: CustomAppBar(title: TKeys.salesStatistics.tr),
       body: Obx(() {
         if (controller.pageState.value == CurrentState.loading) {
-          return Center(child: AppLoading.circular());
+          return Center(child: AppLoading.circular(size: 50));
+        }
+        if (controller.pageState.value == CurrentState.error) {
+          return ErrorView();
         }
         if (controller.salesStats.isEmpty) {
-          return Center(child: Text(TKeys.noSalesYet.tr));
+          return EmptyWidget(title: TKeys.noSalesYet.tr);
         }
 
         return Center(

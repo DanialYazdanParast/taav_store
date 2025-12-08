@@ -25,7 +25,6 @@ class SalesStatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // تعیین جهت فعلی متن (RTL برای فارسی، LTR برای انگلیسی)
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     final borderColor =

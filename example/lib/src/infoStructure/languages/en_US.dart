@@ -219,4 +219,17 @@ const Map<String, String> enUS = {
   // TKeys.sendTimeout: 'Send timed out',
   // TKeys.receiveTimeout: 'Receive timed out',
   // TKeys.connectionError: 'Connection error',
+
+  TKeys.tagManagement: 'Tag Management',
+  TKeys.searchTagHint: 'Search Tag...',
+  TKeys.tagNotFound: 'Tag not found',
+  TKeys.searchTagNamePrompt: 'Search for a tag name',
+  TKeys.confirmAndClose: 'Confirm and Close',
+  TKeys.addNewColor: 'Add New Color',
+  TKeys.colorNameHint: 'Color Name (e.g., Ruby Red)',
+  TKeys.confirmAndAdd: 'Confirm and Add',
+  TKeys.pleaseEnterColorNameWarning: 'Please enter the color name',
+  TKeys.cameraSource: 'Camera',
+  TKeys.imageGallerySource: 'Image Gallery',
+  TKeys.productDeletedSuccessfully: 'Product deleted successfully',
 };

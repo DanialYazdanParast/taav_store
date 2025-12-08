@@ -18,6 +18,8 @@ import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+
 class SellerAddAndEditDialogs {
   SellerAddAndEditDialogs._();
 
@@ -47,9 +49,9 @@ class SellerAddAndEditDialogs {
       Padding(
         padding: EdgeInsets.only(
           bottom:
-              Responsive.isMobile
-                  ? MediaQuery.of(Get.context!).viewInsets.bottom
-                  : 0,
+          Responsive.isMobile
+              ? MediaQuery.of(Get.context!).viewInsets.bottom
+              : 0,
         ),
         child: SizedBox(
           height: Get.height * 0.45,
@@ -60,7 +62,7 @@ class SellerAddAndEditDialogs {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const PopupTitleWidget("مدیریت تگ‌ها"),
+                  PopupTitleWidget(TKeys.tagManagement.tr),
                   IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
@@ -73,12 +75,12 @@ class SellerAddAndEditDialogs {
               AppSize.p12.height,
 
               Obx(
-                () => Row(
+                    () => Row(
                   children: [
                     Expanded(
                       child: AppSearchField(
                         controller: controller.tagSearchController,
-                        hintText: "جستجوی تگ...",
+                        hintText: TKeys.searchTagHint.tr,
                         onChanged: controller.onTagSearchChanged,
                         prefixWidget: const Icon(Icons.search),
                       ),
@@ -87,9 +89,9 @@ class SellerAddAndEditDialogs {
                       AppSize.p8.width,
                       InkWell(
                         onTap:
-                            controller.isAddingTag.value
-                                ? null
-                                : controller.addNewTag,
+                        controller.isAddingTag.value
+                            ? null
+                            : controller.addNewTag,
                         borderRadius: BorderRadius.circular(AppSize.r12),
                         child: Container(
                           height: 48,
@@ -99,18 +101,18 @@ class SellerAddAndEditDialogs {
                             borderRadius: BorderRadius.circular(AppSize.r12),
                           ),
                           child:
-                              controller.isAddingTag.value
-                                  ? const Center(
-                                    child: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 2,
-                                      ),
-                                    ),
-                                  )
-                                  : const Icon(Icons.add, color: Colors.white),
+                          controller.isAddingTag.value
+                              ? const Center(
+                            child: SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            ),
+                          )
+                              : const Icon(Icons.add, color: Colors.white),
                         ),
                       ),
                     ],
@@ -126,7 +128,7 @@ class SellerAddAndEditDialogs {
                     if (controller.filteredTags.isEmpty) {
                       return Center(
                         child: Text(
-                          "تگی یافت نشد",
+                          TKeys.tagNotFound.tr,
                           style: TextStyle(color: Get.theme.disabledColor),
                         ),
                       );
@@ -136,13 +138,13 @@ class SellerAddAndEditDialogs {
 
                   if (controller.selectedTagNames.isNotEmpty) {
                     final selectedTags =
-                        controller.availableTags
-                            .where(
-                              (tag) => controller.selectedTagNames.contains(
-                                tag.name,
-                              ),
-                            )
-                            .toList();
+                    controller.availableTags
+                        .where(
+                          (tag) => controller.selectedTagNames.contains(
+                        tag.name,
+                      ),
+                    )
+                        .toList();
                     return _buildTagsList(controller, selectedTags);
                   }
 
@@ -157,7 +159,7 @@ class SellerAddAndEditDialogs {
                         ),
                         AppSize.p8.height,
                         Text(
-                          "نام تگ را جستجو کنید",
+                          TKeys.searchTagNamePrompt.tr,
                           style: TextStyle(color: Get.theme.disabledColor),
                         ),
                       ],
@@ -167,7 +169,7 @@ class SellerAddAndEditDialogs {
               ),
               AppSize.p12.height,
 
-              ButtonWidget("تایید و بستن", () => Get.back()).material(),
+              ButtonWidget(TKeys.confirmAndClose.tr, () => Get.back()).material(),
             ],
           ),
         ),
@@ -177,9 +179,9 @@ class SellerAddAndEditDialogs {
   }
 
   static Widget _buildTagsList(
-    MixinDialogController controller,
-    List<dynamic> tags,
-  ) {
+      MixinDialogController controller,
+      List<dynamic> tags,
+      ) {
     return ListView.separated(
       itemCount: tags.length,
       separatorBuilder: (_, __) => AppSize.p8.height,
@@ -213,9 +215,9 @@ class SellerAddAndEditDialogs {
       Padding(
         padding: EdgeInsets.only(
           bottom:
-              Responsive.isMobile
-                  ? MediaQuery.of(Get.context!).viewInsets.bottom
-                  : 0,
+          Responsive.isMobile
+              ? MediaQuery.of(Get.context!).viewInsets.bottom
+              : 0,
         ),
         child: SizedBox(
           height: Get.height * 0.45,
@@ -225,7 +227,7 @@ class SellerAddAndEditDialogs {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const PopupTitleWidget("افزودن رنگ جدید"),
+                  PopupTitleWidget(TKeys.addNewColor.tr),
                   IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
@@ -245,7 +247,7 @@ class SellerAddAndEditDialogs {
                       AppTextField(
                         controller: nameCtrl,
                         focusNode: nameFocus,
-                        hintText: "نام رنگ (مثلاً: قرمز یاقوتی)",
+                        hintText: TKeys.colorNameHint.tr,
                         prefixWidget: const Icon(Icons.format_color_text),
                       ),
                       const SizedBox(height: 16),
@@ -267,10 +269,10 @@ class SellerAddAndEditDialogs {
 
               // Add Button
               Obx(
-                () =>
+                    () =>
                     ButtonWidget(
-                      "تایید و افزودن",
-                      () {
+                      TKeys.confirmAndAdd.tr,
+                          () {
                         nameFocus.unfocus();
                         if (nameCtrl.text.isNotEmpty) {
                           String hexCode =
@@ -278,7 +280,7 @@ class SellerAddAndEditDialogs {
                           controller.addNewColor(nameCtrl.text, hexCode);
                         } else {
                           ToastUtil.show(
-                            "لطفاً نام رنگ را وارد کنید",
+                            TKeys.pleaseEnterColorNameWarning.tr,
                             type: ToastType.warning,
                           );
                         }
@@ -286,9 +288,9 @@ class SellerAddAndEditDialogs {
                       isLoading: controller.isAddingColor.value,
                       bgColor: pickerColor.value,
                       textColor:
-                          pickerColor.value.computeLuminance() > 0.5
-                              ? Colors.black
-                              : Colors.white,
+                      pickerColor.value.computeLuminance() > 0.5
+                          ? Colors.black
+                          : Colors.white,
                     ).material(),
               ),
             ],
@@ -309,7 +311,7 @@ class SellerAddAndEditDialogs {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const PopupTitleWidget("انتخاب تصویر محصول"),
+              PopupTitleWidget(TKeys.productImage.tr),
               IconButtonWidget(
                 icon: Icons.close,
                 onTap: () => Get.back(),
@@ -327,7 +329,7 @@ class SellerAddAndEditDialogs {
               Expanded(
                 child: _buildSourceOption(
                   icon: Icons.camera_alt_rounded,
-                  label: "دوربین",
+                  label: TKeys.cameraSource.tr,
                   color: Colors.blueAccent,
                   onTap: () {
                     Get.back();
@@ -339,7 +341,7 @@ class SellerAddAndEditDialogs {
               Expanded(
                 child: _buildSourceOption(
                   icon: Icons.photo_library_rounded,
-                  label: "گالری تصاویر",
+                  label: TKeys.imageGallerySource.tr,
                   color: Colors.purpleAccent,
                   onTap: () {
                     Get.back();

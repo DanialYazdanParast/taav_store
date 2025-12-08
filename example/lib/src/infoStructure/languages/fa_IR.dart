@@ -222,4 +222,17 @@ const Map<String, String> faIR = {
   TKeys.receiveTimeout: 'زمان دریافت به پایان رسید',
   TKeys.connectionError: 'خطای ارتباطی',
 
+  TKeys.tagManagement: 'مدیریت تگ‌ها',
+  TKeys.searchTagHint: 'جستجوی تگ...',
+  TKeys.tagNotFound: 'تگی یافت نشد',
+  TKeys.searchTagNamePrompt: 'نام تگ را جستجو کنید',
+  TKeys.confirmAndClose: 'تایید و بستن',
+  TKeys.addNewColor: 'افزودن رنگ جدید',
+  TKeys.colorNameHint: 'نام رنگ (مثلاً: قرمز یاقوتی)',
+  TKeys.confirmAndAdd: 'تایید و افزودن',
+  TKeys.pleaseEnterColorNameWarning: 'لطفاً نام رنگ را وارد کنید',
+  TKeys.cameraSource: 'دوربین',
+  TKeys.imageGallerySource: 'گالری تصاویر',
+  TKeys.productDeletedSuccessfully: 'محصول با موفقیت حذف شد',
+
 };

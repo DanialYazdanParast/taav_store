@@ -13,7 +13,7 @@ class OrderHistoryController extends GetxController {
   OrderHistoryController({required IOrderRepository repo}) : _repo = repo;
 
   final RxList<OrderModel> orders = <OrderModel>[].obs;
-  final Rx<CurrentState> pageState = CurrentState.idle.obs;
+  final Rx<CurrentState> orderState = CurrentState.idle.obs;
 
   String get currentUserId => _authService.userId.value;
 
@@ -24,13 +24,13 @@ class OrderHistoryController extends GetxController {
   }
 
   Future<void> loadOrders() async {
-    pageState.value = CurrentState.loading;
+    orderState.value = CurrentState.loading;
 
     final result = await _repo.getOrders(currentUserId);
 
     result.fold(
           (failure) {
-        pageState.value = CurrentState.error;
+        orderState.value = CurrentState.error;
         ToastUtil.show(
             TKeys.fetchOrdersError.tr,
             type: ToastType.error
@@ -40,7 +40,7 @@ class OrderHistoryController extends GetxController {
         fetchedOrders.sort((a, b) => b.date.compareTo(a.date));
         orders.assignAll(fetchedOrders);
 
-        pageState.value = CurrentState.success;
+        orderState.value = CurrentState.success;
 
       },
     );

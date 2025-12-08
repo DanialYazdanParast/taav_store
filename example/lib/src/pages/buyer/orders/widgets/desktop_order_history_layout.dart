@@ -1,6 +1,9 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/app_loading.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
+import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/buyer/orders/controllers/order_history_controller.dart';
@@ -22,8 +25,16 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
     return Scaffold(
       appBar: CustomAppBar(title: TKeys.orderHistory.tr),
       body: Obx(() {
-        if (controller.pageState.value != CurrentState.success) {
-          return const Center(child: CircularProgressIndicator());
+        if (controller.orderState.value == CurrentState.loading) {
+          return Center(child: AppLoading.circular(size: 50));
+        }
+
+        if (controller.orderState.value == CurrentState.loading) {
+          return EmptyWidget(title: TKeys.errorLoadingData.tr);
+        }
+
+        if (controller.orders.isEmpty) {
+          return Center(child: ErrorView());
         }
 
         if (selectedOrder.value == null && controller.orders.isNotEmpty) {
@@ -41,7 +52,7 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
                 itemBuilder: (context, index) {
                   final order = controller.orders[index];
                   return Obx(
-                        () => OrderCardWidget(
+                    () => OrderCardWidget(
                       order: order,
                       isMobile: false,
                       isSelected: selectedOrder.value?.id == order.id,

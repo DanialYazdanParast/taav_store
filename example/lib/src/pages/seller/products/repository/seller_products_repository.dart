@@ -4,7 +4,7 @@ import 'package:example/src/commons/services/base_repository.dart';
 import 'package:example/src/commons/services/network_service.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
 // ✅ ایمپورت مدل سبد خرید (مسیر را بر اساس پروژه خود چک کنید)
-import 'package:example/src/pages/buyer/cart/models/cart_item_model.dart';
+import 'package:example/src/pages/shared/models/cart_item_model.dart';
 
 abstract class ISellerProductsRepository {
   Future<Either<Failure, List<ProductModel>>> getSellerProducts(String sellerId);

@@ -59,9 +59,9 @@ class AppTheme {
           systemNavigationBarIconBrightness:
               isDark ? Brightness.light : Brightness.dark,
           statusBarIconBrightness:
-              isDark ? Brightness.light : Brightness.dark, // Android
+              isDark ? Brightness.light : Brightness.dark,
           statusBarBrightness:
-              isDark ? Brightness.dark : Brightness.light, // iOS
+              isDark ? Brightness.dark : Brightness.light,
         ),
       ),
     );

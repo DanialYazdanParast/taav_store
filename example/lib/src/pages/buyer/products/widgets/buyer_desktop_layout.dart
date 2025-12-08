@@ -52,21 +52,25 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                   }
 
                   if (controller.productsState.value == CurrentState.error) {
-                    return SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(32.0),
-                        child: ErrorView(
-                          onRetry: () => controller.fetchProducts(),
+                    return Expanded(
+                      child: SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: ErrorView(
+                            onRetry: () => controller.fetchProducts(),
+                          ),
                         ),
                       ),
                     );
                   }
 
                   if (controller.filteredProducts.isEmpty) {
-                    return const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 50),
-                        child: EmptyWidget(),
+                    return Expanded(
+                      child: const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 50),
+                          child: EmptyWidget(),
+                        ),
                       ),
                     );
                   }

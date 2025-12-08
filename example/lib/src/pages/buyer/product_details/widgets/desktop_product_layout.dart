@@ -19,7 +19,6 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      // در وب معمولاً اپ‌بار ساده بالای صفحه است
       appBar: AppBar(
         title: Text(TKeys.productDetails.tr),
         leading: IconButton(
@@ -35,7 +34,6 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
 
         final product = controller.product.value!;
 
-        // استفاده از Center و ConstrainedBox برای جلوگیری از کشیده شدن بیش از حد در مانیتورهای خیلی بزرگ
         return Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1200),
@@ -44,7 +42,6 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ─── ستون سمت چپ: عکس محصول ───
                   Expanded(
                     flex: 5,
                     child: Container(
@@ -157,6 +154,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
               }, // Get.toNamed('/cart');
               hasBorder: true,
               size: 20,
+              color: theme.colorScheme.onSurface,
             ),
             if (count > 0)
               Positioned(

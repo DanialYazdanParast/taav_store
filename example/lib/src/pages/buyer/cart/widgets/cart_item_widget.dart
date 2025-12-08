@@ -2,6 +2,7 @@ import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/cart_controller.dart';
-import '../models/cart_item_model.dart';
+import '../../../shared/models/cart_item_model.dart';
 
 class CartItemWidget extends GetView<CartController> {
   final CartItemModel item;
@@ -116,6 +117,77 @@ class CartItemWidget extends GetView<CartController> {
         ),
       ),
       numberFormatter: (value) => value.toLocalizedDigit,
+    );
+  }
+}
+
+class CartItemShimmer extends StatelessWidget {
+  const CartItemShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const double imageSize = 90;
+    const double borderRadius = 12;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 1. شیمر برای تصویر محصول
+        AppShimmer.rect(
+          width: imageSize,
+          height: imageSize,
+          borderRadius: borderRadius,
+        ),
+        const SizedBox(width: AppSize.p12),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppShimmer.rect(
+                width: Get.width * 0.45,
+                height: 18,
+                borderRadius: 4,
+              ),
+              const SizedBox(height: 8),
+
+              AppShimmer.rect(
+                width: Get.width * 0.3,
+                height: 18,
+                borderRadius: 4,
+              ),
+              const SizedBox(height: 10),
+
+              Row(
+                children: [
+                  AppShimmer.circle(size: 16),
+                  6.width,
+                  AppShimmer.rect(
+                    width: Get.width * 0.2,
+                    height: 14,
+                    borderRadius: 4,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppShimmer.rect(
+                    width: Get.width * 0.3,
+                    height: 20,
+                    borderRadius: 4,
+                  ),
+
+
+
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

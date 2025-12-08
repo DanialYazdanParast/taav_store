@@ -10,7 +10,7 @@ import 'package:example/src/pages/buyer/product_details/commons/buyer_product_de
 import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
 // ✅ ایمپورت‌های جدید برای صفحه سفارشات (مسیر را بر اساس پروژه خود چک کنید)
 
-import 'package:example/src/pages/buyer/orders/views/order_history_page.dart';
+import 'package:example/src/pages/buyer/orders/views/order_history_screen.dart';
 
 import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
@@ -42,8 +42,6 @@ class AppPages {
       binding: SplashBinding(),
       transition: Transition.noTransition,
     ),
-
-
 
     // ─── Auth ───────────────────────────────────────────────────────────
     GetPage(
@@ -119,7 +117,7 @@ class AppPages {
 
     GetPage(
       name: _Paths.buyerOrders,
-      page: () => const OrderHistoryPage(),
+      page: () => const OrderHistoryScreen(),
       binding: OrderHistoryBinding(),
       transition: Transition.downToUp,
     ),

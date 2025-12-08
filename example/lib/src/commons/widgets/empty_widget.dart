@@ -13,12 +13,15 @@ class EmptyWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
           SizedBox(width: double.infinity),
           Image.asset(AppPng.empty, width: 250, height: 250),
+           Text(
+             title??'',
+             textAlign: TextAlign.center,
+           //  style: AppTextStyle.headlineSmall,
+           ),
         ],
       ),
     );

@@ -219,4 +219,18 @@ abstract class TKeys {
   static const String badCertificate = 'bad_certificate';
   static const String unknownNetworkError = 'unknown_network_error';
   static const String serverErrorOccurred = 'server_error_occurred';
+
+  static const String tagManagement = 'tag_management';
+  static const String searchTagHint = 'search_tag_hint';
+  static const String tagNotFound = 'tag_not_found';
+  static const String searchTagNamePrompt = 'search_tag_name_prompt';
+  static const String confirmAndClose = 'confirm_and_close';
+  static const String addNewColor = 'add_new_color';
+  static const String colorNameHint = 'color_name_hint';
+  static const String confirmAndAdd = 'confirm_and_add';
+  static const String pleaseEnterColorNameWarning = 'please_enter_color_name_warning';
+  static const String cameraSource = 'camera_source';
+  static const String imageGallerySource = 'image_gallery_source';
+
+  static const String productDeletedSuccessfully = 'product_deleted_successfully'; // ✅ کلید جدید
 }

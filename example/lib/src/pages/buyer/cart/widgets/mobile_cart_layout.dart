@@ -1,6 +1,11 @@
+import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
+import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,19 +23,33 @@ class MobileCartLayout extends GetView<CartController> {
     return Scaffold(
       appBar: CustomAppBar(title: TKeys.orderHistory.tr, showBackButton: false),
       body: Obx(() {
-        if (controller.cartItems.isEmpty) {
+        if (controller.cartState.value == CurrentState.loading) {
+          return ListView.separated(
+            padding: const EdgeInsets.all(AppSize.p16),
+            itemCount: 3,
+            separatorBuilder: (_, __) => AppDivider.horizontal(space: 30),
+            itemBuilder: (context, index) {
+              return CartItemShimmer();
+            },
+          );
+        } else if (controller.cartState.value == CurrentState.error) {
+          return ErrorView();
+        } else if (controller.cartItems.isEmpty) {
           return _buildEmptyState(theme);
         }
         return Column(
           children: [
             Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemCount: controller.cartItems.length,
-                separatorBuilder: (_, __) => AppDivider.horizontal(space: 30),
-                itemBuilder: (context, index) {
-                  return CartItemWidget(item: controller.cartItems[index]);
-                },
+              child: RefreshIndicator(
+                onRefresh: () => controller.loadCart(),
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: controller.cartItems.length,
+                  separatorBuilder: (_, __) => AppDivider.horizontal(space: 30),
+                  itemBuilder: (context, index) {
+                    return CartItemWidget(item: controller.cartItems[index]);
+                  },
+                ),
               ),
             ),
             _buildBottomBar(theme),
@@ -41,20 +60,7 @@ class MobileCartLayout extends GetView<CartController> {
   }
 
   Widget _buildEmptyState(ThemeData theme) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.shopping_cart_outlined,
-            size: 80,
-            color: theme.disabledColor,
-          ),
-          const SizedBox(height: 16),
-          Text(TKeys.cartEmpty.tr, style: theme.textTheme.titleMedium),
-        ],
-      ),
-    );
+    return Column(children: [EmptyWidget(title: TKeys.cartEmpty.tr), 2.height]);
   }
 
   Widget _buildBottomBar(ThemeData theme) {

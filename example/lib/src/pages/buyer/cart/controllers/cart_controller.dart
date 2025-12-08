@@ -1,11 +1,13 @@
 import 'package:example/src/commons/services/auth_service.dart';
+import 'package:example/src/pages/buyer/cart/models/cart_item_dto.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
-import '../models/cart_item_model.dart';
-import '../repository/cart_repository.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+
+import '../../../shared/models/cart_item_model.dart';
+import '../repository/cart_repository.dart';
 
 class CartController extends GetxController {
   final ICartRepository _repo;
@@ -47,6 +49,7 @@ class CartController extends GetxController {
     final existingItem = cartItems.firstWhereOrNull(
       (item) => item.productId == product.id && item.colorHex == colorHex,
     );
+
     if (existingItem != null && existingItem.id != null) {
       final newQty = existingItem.quantity + quantity;
 
@@ -66,7 +69,7 @@ class CartController extends GetxController {
               ? product.discountPrice
               : product.price;
 
-      final newItem = CartItemModel(
+      final newItemDTO = CartItemDTO(
         productId: product.id,
         productTitle: product.title,
         productImage: product.image,
@@ -79,7 +82,7 @@ class CartController extends GetxController {
         maxStock: product.quantity,
       );
 
-      final result = await _repo.addToCart(newItem);
+      final result = await _repo.addToCart(newItemDTO);
 
       result.fold(
         (failure) {
@@ -141,7 +144,20 @@ class CartController extends GetxController {
       "buyerId": currentUserId,
       "totalPrice": totalPayablePrice,
       "date": DateTime.now().toIso8601String(),
-      "items": cartItems.map((e) => e.toJson()).toList(),
+      "items":
+          cartItems
+              .map(
+                (item) => {
+                  "productId": item.productId,
+                  "productTitle": item.productTitle,
+                  "sellerId": item.sellerId,
+                  "color": item.colorHex,
+                  "quantity": item.quantity,
+                  "price": item.price,
+                  "originalPrice": item.originalPrice,
+                },
+              )
+              .toList(),
     };
 
     final result = await _repo.submitOrder(orderData);

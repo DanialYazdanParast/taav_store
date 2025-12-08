@@ -1,5 +1,9 @@
+import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/widgets/Empty_widget.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
+import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,10 +21,20 @@ class DesktopCartLayout extends GetView<CartController> {
     return Scaffold(
       appBar: AppBar(title: Text(TKeys.cartTitle.tr)),
       body: Obx(() {
-        if (controller.cartItems.isEmpty) {
-          return Center(child: Text(TKeys.cartEmpty.tr));
+        if (controller.cartState.value == CurrentState.loading) {
+          return ListView.separated(
+            padding: const EdgeInsets.all(24),
+            itemCount: 3,
+            separatorBuilder: (_, __) => AppDivider.horizontal(space: 40),
+            itemBuilder: (context, index) {
+              return CartItemShimmer();
+            },
+          );
+        } else if (controller.cartState.value == CurrentState.error) {
+          return ErrorView();
+        } else if (controller.cartItems.isEmpty) {
+          return EmptyWidget(title: TKeys.cartEmpty.tr,);
         }
-
         return Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1200),

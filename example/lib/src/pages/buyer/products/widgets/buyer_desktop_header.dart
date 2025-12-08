@@ -22,7 +22,7 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
 
     return Container(
       height: 80,
-      padding: const EdgeInsets.symmetric(horizontal: AppSize.p32),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16),
       decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
       child: Row(
         children: [
@@ -53,14 +53,18 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
   }
 
   Widget _buildFilterButton(ThemeData theme) {
-    return IconButtonWidget(
-      icon: Icons.filter_list_rounded,
-      onTap: () {
-        DialogWidget().show(const BuyerFilterView());
-      },
-      color: theme.iconTheme.color,
-      bgColor: theme.cardColor,
-      hasBorder: true,
+    return SizedBox(
+      height: 46,
+      width: 46,
+      child: IconButtonWidget(
+        icon: Icons.filter_list_rounded,
+        onTap: () {
+          DialogWidget().show(const BuyerFilterView());
+        },
+        color: theme.iconTheme.color,
+        bgColor: theme.cardColor,
+        hasBorder: true,
+      ),
     );
   }
 

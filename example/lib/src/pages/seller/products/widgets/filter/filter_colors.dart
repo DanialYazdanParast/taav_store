@@ -30,12 +30,12 @@ class SellerFilterColors extends StatelessWidget {
             runSpacing: 12,
             children:
                 controller.availableColors.map((color) {
-                  final isSelected = controller.tempColorNames.contains(
-                    color.name,
+                  final isSelected = controller.tempColorHexes.contains(
+                    color.hex,
                   );
 
                   return GestureDetector(
-                    onTap: () => controller.toggleTempColor(color.name),
+                    onTap: () => controller.toggleTempColor(color.hex),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       width: size,

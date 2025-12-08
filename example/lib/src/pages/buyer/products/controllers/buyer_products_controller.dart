@@ -29,12 +29,12 @@ class BuyerProductsController extends GetxController {
   final RxDouble maxPriceLimit = 10000000.0.obs;
 
   final Rx<RangeValues> appliedPriceRange = const RangeValues(0, 10000000).obs;
-  final RxList<String> appliedColorNames = <String>[].obs;
+  final RxList<String> appliedColorHexes = <String>[].obs;
   final RxList<String> appliedTagNames = <String>[].obs;
   final RxBool appliedOnlyAvailable = false.obs;
 
   final Rx<RangeValues> tempPriceRange = const RangeValues(0, 10000000).obs;
-  final RxList<String> tempColorNames = <String>[].obs;
+  final RxList<String> tempColorHexes = <String>[].obs;
   final RxList<String> tempTagNames = <String>[].obs;
   final RxBool tempOnlyAvailable = false.obs;
 
@@ -81,14 +81,14 @@ class BuyerProductsController extends GetxController {
     productsState.value = CurrentState.loading;
     final result = await productRepo.getAllProducts();
     result.fold(
-      (failure) {
+          (failure) {
         productsState.value = CurrentState.error;
         ToastUtil.show(
           failure.message,
           type: ToastType.error,
         );
       },
-      (fetchedProducts) {
+          (fetchedProducts) {
         products.assignAll(fetchedProducts.reversed.toList());
         productsState.value = CurrentState.success;
         calculatePriceLimits(products);
@@ -96,15 +96,14 @@ class BuyerProductsController extends GetxController {
     );
   }
 
-  // ─── Filter Logic  ─────────
+  // ─── Filter Logic ─────────
   void calculatePriceLimits(List<ProductModel> items) {
     if (items.isNotEmpty) {
-      final List<double> effectivePrices =
-          items.map((p) {
-            return (p.discountPrice > 0 && p.discountPrice < p.price)
-                ? p.discountPrice.toDouble()
-                : p.price.toDouble();
-          }).toList();
+      final List<double> effectivePrices = items.map((p) {
+        return (p.discountPrice > 0 && p.discountPrice < p.price)
+            ? p.discountPrice.toDouble()
+            : p.price.toDouble();
+      }).toList();
 
       double minP = effectivePrices.reduce(min);
       double maxP = effectivePrices.reduce(max);
@@ -126,14 +125,14 @@ class BuyerProductsController extends GetxController {
 
   void initTempFilters() {
     tempPriceRange.value = appliedPriceRange.value;
-    tempColorNames.assignAll(appliedColorNames);
+    tempColorHexes.assignAll(appliedColorHexes);
     tempTagNames.assignAll(appliedTagNames);
     tempOnlyAvailable.value = appliedOnlyAvailable.value;
   }
 
   void applyFilters() {
     appliedPriceRange.value = tempPriceRange.value;
-    appliedColorNames.assignAll(tempColorNames);
+    appliedColorHexes.assignAll(tempColorHexes);
     appliedTagNames.assignAll(tempTagNames);
     appliedOnlyAvailable.value = tempOnlyAvailable.value;
     Get.back();
@@ -144,7 +143,7 @@ class BuyerProductsController extends GetxController {
       minPriceLimit.value,
       maxPriceLimit.value,
     );
-    tempColorNames.clear();
+    tempColorHexes.clear();
     tempTagNames.clear();
     tempOnlyAvailable.value = false;
   }
@@ -155,7 +154,7 @@ class BuyerProductsController extends GetxController {
       minPriceLimit.value,
       maxPriceLimit.value,
     );
-    appliedColorNames.clear();
+    appliedColorHexes.clear();
     appliedTagNames.clear();
     appliedOnlyAvailable.value = false;
   }
@@ -163,11 +162,11 @@ class BuyerProductsController extends GetxController {
   void updateTempPriceRange(RangeValues values) =>
       tempPriceRange.value = values;
 
-  void toggleTempColor(String colorName) {
-    if (tempColorNames.contains(colorName)) {
-      tempColorNames.remove(colorName);
+  void toggleTempColor(String colorHex) {
+    if (tempColorHexes.contains(colorHex)) {
+      tempColorHexes.remove(colorHex);
     } else {
-      tempColorNames.add(colorName);
+      tempColorHexes.add(colorHex);
     }
   }
 
@@ -184,46 +183,43 @@ class BuyerProductsController extends GetxController {
 
     if (query.value.isNotEmpty) {
       final lowerQuery = query.value.toLowerCase();
-      result =
-          result.where((p) {
-            final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
-            final matchesTags = p.tags.any(
+      result = result.where((p) {
+        final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
+        final matchesTags = p.tags.any(
               (tag) => tag.toLowerCase().contains(lowerQuery),
-            );
-            return matchesTitle || matchesTags;
-          }).toList();
+        );
+        return matchesTitle || matchesTags;
+      }).toList();
     }
 
-    result =
-        result.where((p) {
-          final effectivePrice =
-              (p.discountPrice > 0 && p.discountPrice < p.price)
-                  ? p.discountPrice
-                  : p.price;
-          return effectivePrice >= appliedPriceRange.value.start &&
-              effectivePrice <= appliedPriceRange.value.end;
-        }).toList();
+    result = result.where((p) {
+      final effectivePrice =
+      (p.discountPrice > 0 && p.discountPrice < p.price)
+          ? p.discountPrice
+          : p.price;
+      return effectivePrice >= appliedPriceRange.value.start &&
+          effectivePrice <= appliedPriceRange.value.end;
+    }).toList();
 
     if (appliedOnlyAvailable.value) {
       result = result.where((p) => p.quantity > 0).toList();
     }
 
-    if (appliedColorNames.isNotEmpty) {
-      result =
-          result.where((p) {
-            return appliedColorNames.any(
-              (selectedColor) => p.colors.contains(selectedColor),
-            );
-          }).toList();
+    // منطق اصلی فیلتر رنگ: تغییر any به every برای اعمال منطق "و" (AND)
+    if (appliedColorHexes.isNotEmpty) {
+      result = result.where((p) {
+        return appliedColorHexes.every(
+              (selectedHex) => p.colors.contains(selectedHex),
+        );
+      }).toList();
     }
 
     if (appliedTagNames.isNotEmpty) {
-      result =
-          result.where((p) {
-            return appliedTagNames.any(
+      result = result.where((p) {
+        return appliedTagNames.any(
               (selectedTag) => p.tags.contains(selectedTag),
-            );
-          }).toList();
+        );
+      }).toList();
     }
 
     return result;
@@ -235,10 +231,10 @@ class BuyerProductsController extends GetxController {
     int count = 0;
     bool isPriceChanged =
         (tempPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-        (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
+            (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
-    count += tempColorNames.length;
+    count += tempColorHexes.length;
     count += tempTagNames.length;
     if (tempOnlyAvailable.value) count++;
     return count;
@@ -248,10 +244,10 @@ class BuyerProductsController extends GetxController {
     int count = 0;
     bool isPriceChanged =
         (appliedPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-        (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
+            (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
-    count += appliedColorNames.length;
+    count += appliedColorHexes.length;
     count += appliedTagNames.length;
     if (appliedOnlyAvailable.value) count++;
     return count;

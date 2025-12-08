@@ -92,7 +92,6 @@ class _ProductImage extends StatelessWidget {
   }
 }
 
-
 class _DiscountBadge extends StatelessWidget {
   final String discountPercent;
 
@@ -197,15 +196,17 @@ class _PriceRow extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FittedBox(
-            child: Text(
-              (double.tryParse(discountedPrice.replaceAll(',', '')) ?? 0)
-                  .toLocalizedPrice,
-              style: TextStyle(
-                color: Colors.green[600],
-                fontWeight: FontWeight.bold,
-                fontSize: AppSize.f14,
-                overflow: TextOverflow.ellipsis,
+          Flexible(
+            child: FittedBox(
+              child: Text(
+                (double.tryParse(discountedPrice.replaceAll(',', '')) ?? 0)
+                    .toLocalizedPrice,
+                style: TextStyle(
+                  color: Colors.green[600],
+                  fontWeight: FontWeight.bold,
+                  fontSize: AppSize.f14,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),
@@ -222,9 +223,8 @@ class _PriceRow extends StatelessWidget {
             AppSize.p8.width,
             Flexible(
               child: Text(
-
-    (double.tryParse(originalPrice.replaceAll(',', '')) ?? 0)
-        .toLocalizedPrice,
+                (double.tryParse(originalPrice.replaceAll(',', '')) ?? 0)
+                    .toLocalizedPrice,
                 style: TextStyle(
                   color: theme.hintColor,
                   fontSize: AppSize.f12,

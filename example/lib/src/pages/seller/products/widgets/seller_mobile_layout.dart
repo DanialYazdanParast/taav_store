@@ -146,21 +146,25 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                       );
                     }
                     if (controller.productsState.value == CurrentState.error) {
-                      return SingleChildScrollView(
-                        controller: scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: ErrorView(
-                          onRetry: () => controller.fetchProducts(),
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: ErrorView(
+                            onRetry: () => controller.fetchProducts(),
+                          ),
                         ),
                       );
                     }
 
                     if (controller.filteredProducts.isEmpty) {
-                      return SingleChildScrollView(
-                        controller: scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
 
-                        child: EmptyWidget(),
+                          child: EmptyWidget(),
+                        ),
                       );
                     }
                     return Expanded(

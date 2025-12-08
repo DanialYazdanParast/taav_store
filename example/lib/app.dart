@@ -25,7 +25,7 @@ class App extends StatelessWidget {
 
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
-
+      unknownRoute: AppPages.unknownRoute,
       translations: AppTranslations(),
       locale: langController.currentLocale,
       fallbackLocale: langController.fallbackLocale,

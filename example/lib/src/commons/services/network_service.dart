@@ -55,13 +55,25 @@ class NetworkService extends GetxService {
     }
   }
 
+  Interceptor _createDelayInterceptor() {
+    return InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        await Future.delayed(const Duration(seconds: 3));
+        handler.next(options);
+      },
+    );
+  }
+
   void _addInterceptors() {
     if (kDebugMode) {
       dio.interceptors.add(_createLogInterceptor());
+
+      dio.interceptors.add(_createDelayInterceptor());
     }
 
     dio.interceptors.add(_createMainInterceptor());
   }
+
 
   Interceptor _createLogInterceptor() {
     return InterceptorsWrapper(

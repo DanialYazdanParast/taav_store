@@ -78,7 +78,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
                             );
                           case CurrentState.error:
                             return ErrorView(
-                             // Retry loading data
+                              // Retry loading data
                             );
                           case CurrentState.idle: // Fallthrough
                           case CurrentState.success:
@@ -197,22 +197,22 @@ class _SellerAddDesktopLayout extends StatelessWidget {
         child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 1000),
-            padding: const EdgeInsets.only(bottom:  AppSize.p24),
+            padding: const EdgeInsets.only(bottom: AppSize.p24),
             child: Column(
               children: [
                 _CustomAppBar(isDesktop: true, theme: theme),
                 AppSize.p20.height,
                 Expanded(
                   child: Card(
-                    color:  theme.colorScheme.surface,
+                    color: theme.colorScheme.surface,
                     shape: RoundedRectangleBorder(
-
                       borderRadius: BorderRadius.circular(24.0),
-
 
                       side: BorderSide(
                         width: 2.0,
-                        color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                        color: theme.colorScheme.outlineVariant.withValues(
+                          alpha: 0.5,
+                        ),
                       ),
                     ),
 
@@ -223,11 +223,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           );
                         case CurrentState.error:
-                          return Center(
-                            child: ErrorView(
-
-                            ),
-                          );
+                          return Center(child: ErrorView());
                         case CurrentState.idle:
                         case CurrentState.success:
                           return _buildDesktopContent(context, theme);
@@ -375,7 +371,6 @@ class _SubmitButton extends StatelessWidget {
           ButtonWidget(
             "ثبت نهایی محصول",
             controller.submitProduct,
-            // Check submit state for loading indicator
             isLoading: controller.submitState.value == CurrentState.loading,
             icon: Icons.check_circle_outline_rounded,
           ).material(),

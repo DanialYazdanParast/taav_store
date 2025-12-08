@@ -7,6 +7,7 @@ import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:example/src/pages/seller/products/widgets/seller_filter_view.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
@@ -112,6 +113,7 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
   }
 
   Widget _buildBottomSheet(ThemeData theme) {
+    final mainController = Get.find<MainSellerController>();
     return SafeArea(
       child: Obx(
         () => DraggableScrollableSheet(
@@ -182,20 +184,13 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                               discountPercent: product.discountPercentString,
                               quantity: product.quantity,
                               imagePath: product.image,
-                              onEdit: () {
-                                Get.toNamed(
-                                  AppRoutes.sellerEditProduct,
-                                  arguments: product.id,
-                                );
-                              },
-                              onDelete: () {
-                                DeleteProductDialog.show(
+                              onEdit: ()=> mainController.goToEditProduct(product.id ,),
+                              onDelete: () => DeleteProductDialog.show(
                                   productName: product.title,
                                   onConfirm: () {
                                     controller.deleteProduct(product.id);
                                   },
-                                );
-                              },
+                                ),
                             );
                           },
                         ),

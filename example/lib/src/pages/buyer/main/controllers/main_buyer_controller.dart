@@ -3,7 +3,7 @@ import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
-import '../../../../commons/widgets/responsive/responsive.dart';
+
 import '../../../../infoStructure/languages/translation_keys.dart';
 
 class MainBuyerController extends GetxController {

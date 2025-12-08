@@ -62,7 +62,7 @@ class SettingsDraggableSheet extends StatelessWidget {
                   onTap: () => Get.toNamed(AppRoutes.buyerOrders),
                 ),
 
-                AppSize.p16.height,
+                AppSize.p24.height,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(

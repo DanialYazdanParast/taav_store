@@ -115,10 +115,12 @@ class MainSellerController extends GetxController {
 
   void goToEditProduct(String productId) {
     Get.toNamed(
-      AppRoutes.sellerEditProduct,
+      AppRoutes.sellerEditProduct.replaceAll(':id', productId),
       arguments: productId,
     );
   }
+
+
 
   void goToProducts() {
     _navigateToTab(0);

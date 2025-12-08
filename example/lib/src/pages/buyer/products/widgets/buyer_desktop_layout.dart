@@ -94,12 +94,13 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                           imagePath: product.image,
                           quantity: product.quantity,
                           size: 250,
-                          onTap: ()=> mainController.goToProductDetails(product.id),
+                          onTap: ()=> mainController.goToProductDetails(product.id ,),
                         );
                       }, childCount: controller.filteredProducts.length),
                     ),
                   );
                 }),
+
 
                 SliverPadding(padding: EdgeInsets.only(bottom: AppSize.p32)),
               ],

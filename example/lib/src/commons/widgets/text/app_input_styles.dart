@@ -29,7 +29,7 @@ class AppInputStyles {
 
   static OutlineInputBorder get disabledBorder => OutlineInputBorder(
     borderSide: BorderSide(
-      color: Get.theme.colorScheme.outline.withOpacity(0.5),
+      color: Get.theme.colorScheme.outline.withValues(alpha:  0.5),
       width: 1,
     ),
     borderRadius: AppSize.brMedium,
@@ -64,8 +64,8 @@ class AppInputStyles {
 
   static TextStyle get prefixStyle => TextStyle(
     fontSize: AppSize.f14, // سایز متن
-    color: Get.theme.colorScheme.onSurface.withOpacity(
-      0.6,
+    color: Get.theme.colorScheme.onSurface.withValues(
+    alpha:   0.6,
     ), // رنگ خاکستری ملایم
     fontWeight: FontWeight.w500, // کمی ضخیم‌تر
   );

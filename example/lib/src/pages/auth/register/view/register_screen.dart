@@ -1,7 +1,6 @@
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../controllers/register_controller.dart';
 import '../widgets/desktop_register_layout.dart';
@@ -13,9 +12,7 @@ class RegisterScreen extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-
-       Responsive(
+      body: Responsive(
         mobile: const MobileRegisterLayout(),
         desktop: const DesktopRegisterLayout(),
       ),

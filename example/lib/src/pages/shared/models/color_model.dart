@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ColorModel {
@@ -14,16 +13,5 @@ class ColorModel {
       name: json['name'] ?? '',
       hex: json['hex'] ?? '#000000',
     );
-  }
-
-
-  Color get colorObj {
-    String hexString = hex.replaceAll('#', '');
-    if (hexString.length == 6) hexString = 'FF$hexString';
-    try {
-      return Color(int.parse('0x$hexString'));
-    } catch (e) {
-      return Colors.black;
-    }
   }
 }

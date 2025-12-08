@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:example/src/commons/services/network_service.dart';
-import 'package:example/src/pages/shared/repositories/metadata_repository.dart';
 import '../controllers/seller_edit_controller.dart';
 import '../repository/seller_edit_repository.dart';
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
 import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart'; // Import added
 import '../repository/buyer_product_details_repository.dart';
 
 class BuyerProductDetailsController extends GetxController {
@@ -28,10 +29,7 @@ class BuyerProductDetailsController extends GetxController {
     result.fold(
           (failure) {
         productState.value = CurrentState.error;
-        ToastUtil.show(
-          "خطا در دریافت اطلاعات محصول",
-          type: ToastType.error,
-        );
+        ToastUtil.show(TKeys.fetchProductDetailsError.tr, type: ToastType.error);
       },
           (fetchedProduct) {
         product.value = fetchedProduct;
@@ -45,15 +43,14 @@ class BuyerProductDetailsController extends GetxController {
 
   void selectColor(String colorHex) => selectedColor.value = colorHex;
 
-
-
-
   int get quantityInCartForSelectedColor {
     if (product.value == null) return 0;
 
-    final item = cartController.cartItems.firstWhereOrNull((element) =>
-    element.productId == product.value!.id &&
-        element.colorHex == selectedColor.value);
+    final item = cartController.cartItems.firstWhereOrNull(
+          (element) =>
+      element.productId == product.value!.id &&
+          element.colorHex == selectedColor.value,
+    );
     return item?.quantity ?? 0;
   }
 
@@ -70,22 +67,15 @@ class BuyerProductDetailsController extends GetxController {
     return product.value!.quantity - totalQuantityInCartForThisProduct;
   }
 
-  // ─── عملیات دکمه‌ها ───
-
   void onAddOrIncrease() {
     if (product.value == null) return;
 
     if (totalQuantityInCartForThisProduct < product.value!.quantity) {
-      cartController.addToCart(
-        product.value!,
-        1,
-        selectedColor.value,
-      );
+      cartController.addToCart(product.value!, 1, selectedColor.value);
     } else {
-
       ToastUtil.show(
-        "موجودی انبار برای این محصول تمام شده است",
-        type: ToastType.warning, // استفاده از warning مناسب‌تر است
+        TKeys.stockFinishedWarning.tr,
+        type: ToastType.warning,
       );
     }
   }
@@ -93,9 +83,11 @@ class BuyerProductDetailsController extends GetxController {
   void onDecrease() {
     if (product.value == null) return;
 
-    final item = cartController.cartItems.firstWhereOrNull((element) =>
-    element.productId == product.value!.id &&
-        element.colorHex == selectedColor.value);
+    final item = cartController.cartItems.firstWhereOrNull(
+          (element) =>
+      element.productId == product.value!.id &&
+          element.colorHex == selectedColor.value,
+    );
 
     if (item != null) {
       cartController.decrementItem(item);

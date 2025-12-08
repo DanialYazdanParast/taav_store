@@ -21,8 +21,9 @@ class BuyerProductsRepository extends BaseRepository
     return safeCall<List<ProductModel>>(
       request: () => _network.get('/products'),
       fromJson: (json) {
-        if (json is List)
+        if (json is List) {
           return json.map((e) => ProductModel.fromJson(e)).toList();
+        }
         return [];
       },
     );

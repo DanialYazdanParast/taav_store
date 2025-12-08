@@ -36,7 +36,7 @@ class TaavNetworkImage extends StatelessWidget {
         height: height,
         color:
             backgroundColor ??
-            theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+            theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         child: Image.network(
           imageUrl,
           width: width,
@@ -65,7 +65,7 @@ class TaavNetworkImage extends StatelessWidget {
   Widget _buildErrorWidget(ThemeData theme) {
     return Container(
       alignment: Alignment.center,
-      color: theme.colorScheme.errorContainer.withOpacity(0.3),
+      color: theme.colorScheme.errorContainer.withValues(alpha: 0.3),
       child: Icon(
         Icons.broken_image_outlined,
         color: theme.colorScheme.error,
@@ -80,7 +80,7 @@ class TaavNetworkImage extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         alignment: Alignment.center,
         child: Icon(
           Icons.image_outlined,

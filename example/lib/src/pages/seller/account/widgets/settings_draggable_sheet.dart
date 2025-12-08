@@ -1,4 +1,6 @@
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/header_sheet.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -26,12 +28,32 @@ class SettingsDraggableSheet extends StatelessWidget {
               color: theme.scaffoldBackgroundColor,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, -5)),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 20, offset: const Offset(0, -5)),
               ],
             ),
             child: Column(
               children: [
                 HeaderSheet(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
+                  child: Row(children: [
+
+                    Text(
+                        TKeys.salesReports.tr,
+                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)
+                    )
+                  ]),
+                ),
+                AppSize.p16.height,
+                MenuItem(
+                  icon: Icons.bar_chart_rounded,
+                  color: theme.colorScheme.primary,
+                  title: TKeys.productSalesStats.tr,
+                  subtitle: TKeys.viewBestSellers.tr,
+                  showChevron: true,
+                  onTap: () => Get.toNamed(AppRoutes.sellerStats),
+                ),
+                AppSize.p24.height,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
                   child: Row(children: [
@@ -42,7 +64,6 @@ class SettingsDraggableSheet extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     controller: scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
                     children: [
                       IconList(onLogout: onLogout),
                       50.height,

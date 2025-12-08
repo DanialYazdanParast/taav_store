@@ -1,5 +1,3 @@
-// lib/src/routes/app_pages.dart
-
 import 'package:example/src/pages/Not_found/not_found_screen.dart';
 import 'package:example/src/pages/auth/login/commons/login_binding.dart';
 import 'package:example/src/pages/auth/login/view/login_screen.dart';
@@ -12,16 +10,16 @@ import 'package:example/src/pages/buyer/product_details/commons/buyer_product_de
 import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
 // ✅ ایمپورت‌های جدید برای صفحه سفارشات (مسیر را بر اساس پروژه خود چک کنید)
 
-import 'package:example/src/pages/buyer/orders/views/order_history_page.dart';
+import 'package:example/src/pages/buyer/orders/views/order_history_screen.dart';
 
-import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
 import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
+import 'package:example/src/pages/seller/stats/commons/seller_stats_binding.dart';
+import 'package:example/src/pages/seller/stats/views/seller_stats_screen.dart';
 import 'package:example/src/pages/splash/commons/splash_binding.dart';
 import 'package:example/src/pages/splash/view/splash_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -30,6 +28,12 @@ class AppPages {
   AppPages._();
 
   static const initial = AppRoutes.splash;
+
+  static final unknownRoute = GetPage(
+    name: _Paths.notFound,
+    page: () => const NotFoundScreen(),
+    transition: Transition.noTransition,
+  );
 
   static final pages = [
     GetPage(
@@ -44,13 +48,13 @@ class AppPages {
       name: _Paths.login,
       page: () => const LoginScreen(),
       binding: LoginBinding(),
-      transition: Transition.fadeIn,
+      transition:  Transition.noTransition,
     ),
     GetPage(
       name: _Paths.register,
       page: () => const RegisterScreen(),
       binding: RegisterBinding(),
-      transition: Transition.rightToLeft,
+      transition:  Transition.noTransition,
     ),
 
     // ─── Seller ─────────────────────────────────────────────────────────
@@ -79,7 +83,12 @@ class AppPages {
       binding: SellerEditBinding(),
       transition: Transition.downToUp,
     ),
-
+    GetPage(
+      name: _Paths.sellerStats,
+      page: () => const SellerStatsScreen(),
+      binding: SellerStatsBinding(),
+      transition: Transition.downToUp,
+    ),
     // ─── Buyer ──────────────────────────────────────────────────────────
     GetPage(
       name: _Paths.buyerProducts,
@@ -108,10 +117,9 @@ class AppPages {
 
     GetPage(
       name: _Paths.buyerOrders,
-      page: () => const OrderHistoryPage(),
+      page: () => const OrderHistoryScreen(),
       binding: OrderHistoryBinding(),
-      // چون یک صفحه فرعی است، انیمیشن ورود از راست به چپ حس بهتری می‌دهد
-      transition: Transition.rightToLeft,
+      transition: Transition.downToUp,
     ),
   ];
 }

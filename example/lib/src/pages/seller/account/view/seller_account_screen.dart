@@ -1,3 +1,6 @@
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -14,7 +17,7 @@ class SellerAccountScreen extends GetView<SellerAccountController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.theme.scaffoldBackgroundColor,
+      appBar: AppBar(toolbarHeight: 0, backgroundColor: Colors.transparent),
       body: Responsive(
         mobile: SellerMobileLayout(controller: controller),
         desktop: SellerDesktopLayout(controller: controller),
@@ -62,7 +65,7 @@ class SellerDesktopLayout extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppSize.r16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 30,
                 offset: const Offset(0, 10),
               ),
@@ -78,8 +81,31 @@ class SellerDesktopLayout extends StatelessWidget {
                 userType: controller.authService.userType,
                 height: 300,
               ),
+
               Padding(
-                padding: const EdgeInsets.all(AppSize.p32),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSize.p32,
+                  AppSize.p32,
+                  AppSize.p32,
+                  8,
+                ),
+                child: MenuItem(
+                  icon: Icons.bar_chart_rounded,
+                  color: theme.colorScheme.primary,
+                  title: TKeys.productSalesStats.tr,
+                  subtitle: TKeys.viewBestSellers.tr,
+                  showChevron: true,
+                  onTap: () => Get.toNamed(AppRoutes.sellerStats),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSize.p32,
+                  0,
+                  AppSize.p32,
+                  AppSize.p32,
+                ),
                 child: IconList(
                   onLogout: controller.authService.logout,
                   showChevron: false,

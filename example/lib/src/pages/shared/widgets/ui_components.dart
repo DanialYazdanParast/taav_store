@@ -31,7 +31,7 @@ class BackgroundParticle extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: color.withOpacity(0.6),
+          color: color.withValues(alpha: 0.6),
           shape: BoxShape.circle,
         ),
       ),
@@ -71,7 +71,7 @@ class MenuItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppSize.r16),
-      hoverColor: color.withOpacity(0.05),
+      hoverColor: color.withValues(alpha: 0.05),
       child: Padding(
         padding: padding, // استفاده از پدینگ کاستوم
         child: Row(
@@ -147,7 +147,7 @@ class SelectableOptionWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSize.p16),
         decoration: BoxDecoration(
-          color: isSelected ? primaryColor.withOpacity(0.1) : Colors.transparent,
+          color: isSelected ? primaryColor.withValues(alpha: 0.1) : Colors.transparent,
           border: Border.all(
             color: isSelected ? primaryColor : theme.dividerColor,
           ),

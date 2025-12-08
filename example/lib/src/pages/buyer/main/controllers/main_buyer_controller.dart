@@ -3,7 +3,7 @@ import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
-import '../../../../commons/widgets/responsive/responsive.dart';
+
 import '../../../../infoStructure/languages/translation_keys.dart';
 
 class MainBuyerController extends GetxController {
@@ -20,7 +20,7 @@ class MainBuyerController extends GetxController {
     NavItemModel(
       icon: Icons.shopping_cart_outlined,
       activeIcon: Icons.shopping_cart,
-      label: "TKeys.navCart.tr",
+      label: TKeys.navCart.tr,
       isSpecial: true,
       badgeCount: cartBadge.value,
       showBadge: cartBadge.value > 0,

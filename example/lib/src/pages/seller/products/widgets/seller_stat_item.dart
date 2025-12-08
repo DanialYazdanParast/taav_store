@@ -64,7 +64,7 @@ class SellerStatItem extends StatelessWidget {
                       TextSpan(
                         text: unit,
                         style: TextStyle(
-                          color: textColor.withOpacity(0.8),
+                          color: textColor.withValues(alpha: 0.8),
                           fontSize: (valueSize ?? AppSize.f24) * 0.55,
                           fontWeight: FontWeight.w500,
                         ),

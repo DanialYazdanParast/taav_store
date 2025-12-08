@@ -1,5 +1,6 @@
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class DeleteProductDialog {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "حذف محصول",
+            TKeys.deleteProductTitle.tr,
             textAlign: TextAlign.center,
             style: Get.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
@@ -23,7 +24,7 @@ class DeleteProductDialog {
           ),
           const SizedBox(height: 16),
           Text(
-            "آیا مطمئن هستید که می‌خواهید محصول\n\"$productName\" را حذف کنید؟",
+            TKeys.confirmDeleteProductMsg.trParams({'productName': productName}),
             textAlign: TextAlign.center,
             style: Get.textTheme.bodyMedium,
           ),
@@ -32,21 +33,21 @@ class DeleteProductDialog {
             children: [
               Expanded(
                 child:
-                    ButtonWidget(
-                      "لغو",
+                ButtonWidget(
+                  TKeys.cancel.tr,
                       () => Get.back(),
-                      textColor: Get.theme.colorScheme.onSurface,
-                    ).outline(),
+                  textColor: Get.theme.colorScheme.onSurface,
+                ).outline(),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child:
-                    ButtonWidget(
-                      "حذف",
-                      onConfirm,
-                      bgColor: Colors.red,
-                      textColor: Colors.white,
-                    ).material(),
+                ButtonWidget(
+                  TKeys.deleteAction.tr,
+                  onConfirm,
+                  bgColor: Colors.red,
+                  textColor: Colors.white,
+                ).material(),
               ),
             ],
           ),

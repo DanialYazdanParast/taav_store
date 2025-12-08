@@ -1,4 +1,3 @@
-import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_form_card.dart';
@@ -16,7 +15,6 @@ class MobileLoginLayout extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;
-    final size = MediaQuery.of(context).size;
 
     return Container(
       width: double.infinity,
@@ -31,39 +29,51 @@ class MobileLoginLayout extends GetView<LoginController> {
             colorScheme.surface,
             colorScheme.surface,
           ],
-          stops: const [0.0, 0.12, 0.35, 1.0],
+          stops: const [0.0, 0.12, 0.45, 1.0],
         ),
       ),
       child: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: size.height - MediaQuery.of(context).padding.top,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  AuthMobileHeader(
-                    title: TKeys.welcome.tr,
-                    subtitle: TKeys.loginToContinue.tr,
+
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          AuthMobileHeader(
+                            title: TKeys.welcome.tr,
+                            subtitle: TKeys.loginToContinue.tr,
+                          ),
+                          AuthFormCard(
+                            variant: AuthFormVariant.mobile,
+                            child: LoginFormContent(isMobile: true),
+                          ),
+                        ],
+                      ),
+                      // فوتر صفحه
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 32, top: 24),
+                        child: AuthLinkText(
+                          prefixText: TKeys.noAccount.tr,
+                          linkText: TKeys.signUp.tr,
+                          onTap: () => Get.offNamed(AppRoutes.register),
+                        ),
+                      ),
+                    ],
                   ),
-                  AuthFormCard(
-                    variant: AuthFormVariant.mobile,
-                    child: LoginFormContent(isMobile: true),
-                  ),
-                  24.height,
-                  AuthLinkText(
-                    prefixText: TKeys.noAccount.tr,
-                    linkText: TKeys.signUp.tr,
-                    onTap: () => Get.offNamed(AppRoutes.register),
-                  ),
-                  32.height,
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

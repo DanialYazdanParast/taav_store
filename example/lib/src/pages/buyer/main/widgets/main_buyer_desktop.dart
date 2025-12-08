@@ -1,5 +1,6 @@
 
 import 'package:example/src/pages/buyer/account/view/buyer_account_screen.dart';
+import 'package:example/src/pages/buyer/cart/view/cart_screen.dart';
 import 'package:example/src/pages/buyer/products/view/buyer_products_screen.dart' show BuyerProductsScreen;
 import 'package:example/src/pages/shared/widgets/custom_sidebar.dart';
 
@@ -17,7 +18,7 @@ class MainBuyerDesktop extends GetView<MainBuyerController> {
   Widget build(BuildContext context) {
     final pages = [
       const BuyerProductsScreen(),
-      const SizedBox(),
+      const CartScreen(),
       const BuyerAccountScreen(),
     ];
 

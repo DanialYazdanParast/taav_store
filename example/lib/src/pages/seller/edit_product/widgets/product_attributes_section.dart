@@ -1,4 +1,6 @@
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
@@ -6,12 +8,10 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/pages/shared/models/color_model.dart';
 
 class ProductAttributesSection extends StatelessWidget {
-  // لیست‌ها (RxList برای اینکه Obx کار کند)
   final List<ColorModel> availableColors;
   final List<String> selectedColorNames;
   final List<String> selectedTagNames;
 
-  // توابع (Callbacks)
   final Function(String) onToggleColor;
   final Function(String) onRemoveTag;
   final VoidCallback onAddColorTap;
@@ -37,7 +37,7 @@ class ProductAttributesSection extends StatelessWidget {
       children: [
         MenuItem(
           onTap: () {},
-          title: "ویژگی‌ها",
+          title: TKeys.attributes.tr,
           color: theme.colorScheme.primary,
           icon: Icons.tune_rounded,
           padding: EdgeInsets.zero,
@@ -47,14 +47,13 @@ class ProductAttributesSection extends StatelessWidget {
         ),
         AppSize.p16.height,
         Text(
-          "رنگ‌ها",
+          TKeys.colors.tr,
           style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
         ),
         AppSize.p8.height,
 
-
         Obx(
-          () => Wrap(
+              () => Wrap(
             spacing: 12,
             runSpacing: 12,
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -68,39 +67,39 @@ class ProductAttributesSection extends StatelessWidget {
                     width: 38,
                     height: 38,
                     decoration: BoxDecoration(
-                      color: color.colorObj,
+                      color: color.hex.toColor,
                       shape: BoxShape.circle,
                       border: Border.all(
                         color:
-                            isSelected
-                                ? theme.colorScheme.primary
-                                : theme.dividerColor,
+                        isSelected
+                            ? theme.colorScheme.primary
+                            : theme.dividerColor,
                         width: isSelected ? 3 : 1.5,
                       ),
                       boxShadow:
-                          isSelected
-                              ? [
-                                BoxShadow(
-                                  color: theme.colorScheme.primary.withOpacity(
-                                    0.3,
-                                  ),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ]
-                              : null,
+                      isSelected
+                          ? [
+                        BoxShadow(
+                          color: theme.colorScheme.primary.withValues(
+                            alpha: 0.3,
+                          ),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ]
+                          : null,
                     ),
                     child:
-                        isSelected
-                            ? Icon(
-                              Icons.check,
-                              size: 20,
-                              color:
-                                  color.colorObj.computeLuminance() > 0.5
-                                      ? Colors.black
-                                      : Colors.white,
-                            )
-                            : null,
+                    isSelected
+                        ? Icon(
+                      Icons.check,
+                      size: 20,
+                      color:
+                      color.hex.toColor.computeLuminance() > 0.5
+                          ? Colors.black
+                          : Colors.white,
+                    )
+                        : null,
                   ),
                 );
               }),
@@ -114,7 +113,7 @@ class ProductAttributesSection extends StatelessWidget {
                   width: 45,
                   height: 45,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.05),
+                    color: theme.colorScheme.primary.withValues(alpha: 0.05),
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: theme.colorScheme.primary,
@@ -134,20 +133,19 @@ class ProductAttributesSection extends StatelessWidget {
 
         AppSize.p20.height,
         Text(
-          "تگ‌ها",
+          TKeys.tags.tr,
           style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
         ),
         AppSize.p8.height,
 
-
         Obx(
-          () => Wrap(
+              () => Wrap(
             spacing: AppSize.p8,
             runSpacing: AppSize.p8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               ...selectedTagNames.map(
-                (tag) => Container(
+                    (tag) => Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 8,
@@ -157,7 +155,7 @@ class ProductAttributesSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppSize.r20),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.primary.withOpacity(0.2),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.2),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -202,7 +200,7 @@ class ProductAttributesSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: theme.colorScheme.primary),
                     borderRadius: BorderRadius.circular(AppSize.r20),
-                    color: theme.colorScheme.primary.withOpacity(0.05),
+                    color: theme.colorScheme.primary.withValues(alpha: 0.05),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -214,7 +212,7 @@ class ProductAttributesSection extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "افزودن",
+                        TKeys.add.tr,
                         style: TextStyle(
                           color: theme.colorScheme.primary,
                           fontSize: 13,

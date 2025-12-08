@@ -1,4 +1,5 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
@@ -22,22 +23,27 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
         mainAxisAlignment: MainAxisAlignment.center,
         textDirection: TextDirection.rtl,
         children: [
-          SizedBox(
-            height: 60,
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder:
-                  (child, animation) =>
-                      FadeTransition(opacity: animation, child: child),
-              child: Text(
-                controller.isHidden.value ? '••••••' : '0',
-                key: ValueKey(controller.isHidden.value),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: AppSize.f36,
-                  fontWeight: FontWeight.w900,
+          Flexible(
+            child: SizedBox(
+              height: 60,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder:
+                    (child, animation) =>
+                        FadeTransition(opacity: animation, child: child),
+                child: FittedBox(
+                  child: Text(
+                    controller.isHidden.value ? '••••••' : controller.totalRevenueAmount.value.toLocalizedPrice,
+                    key: ValueKey(controller.isHidden.value),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: AppSize.f36,
+                      fontWeight: FontWeight.w900,
+                      overflow: TextOverflow.clip
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
           ),

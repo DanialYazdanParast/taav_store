@@ -28,20 +28,26 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
             ),
           ),
           AppDivider.vertical(height: 40),
-          SellerStatItem(
-            value: '۱۵۶',
-            label: TKeys.sales.tr,
-            icon: Icons.shopping_cart_outlined,
-            textColor: Colors.white,
-            subColor: Colors.white70,
+          Obx(
+            () => SellerStatItem(
+              value: controller.totalSalesCount.value.toString(),
+              label: TKeys.sales.tr,
+              icon: Icons.shopping_cart_outlined,
+              textColor: Colors.white,
+              subColor: Colors.white70,
+              state: controller.statsState.value,
+            ),
           ),
           AppDivider.vertical(height: 40),
-          SellerStatItem(
-            value: '۸',
-            label: TKeys.newOrders.tr,
-            icon: Icons.local_shipping_outlined,
-            textColor: Colors.white,
-            subColor: Colors.white70,
+          Obx(
+            () => SellerStatItem(
+              value: controller.totalItemsInCart.toString(),
+              label: TKeys.inCartItems.tr,
+              icon: Icons.shopping_bag_outlined,
+              textColor: Colors.white,
+              subColor: Colors.white70,
+              state: controller.statsState.value,
+            ),
           ),
         ],
       ),

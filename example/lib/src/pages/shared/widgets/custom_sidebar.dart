@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import '../models/nav_item_model.dart';
 import 'custom_badge.dart';
 
-
-
+import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // برای دسترسی به Get.theme و متد tr
 
 class CustomSidebar extends StatelessWidget {
   final int currentIndex;
@@ -23,13 +23,24 @@ class CustomSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
+
     return Container(
       width: 260,
-      margin: const EdgeInsets.all(AppSize.p16),
-      decoration: BoxDecoration(
-        color: Colors.black12,
 
-        borderRadius: BorderRadius.circular(AppSize.r16),
+      margin: EdgeInsets.only(
+        top: AppSize.p16,
+        left: isRtl ? 0 : AppSize.p16,
+        right: isRtl ? AppSize.p16 : 0,
+        bottom: AppSize.p16,
+      ),
+      decoration: BoxDecoration(
+        color: Get.theme.scaffoldBackgroundColor,
+
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Get.theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
       ),
 
       child: Column(
@@ -44,7 +55,7 @@ class CustomSidebar extends StatelessWidget {
               itemCount: items.length,
               itemBuilder:
                   (context, index) =>
-                  _buildNavItem(context, index, items[index]),
+                      _buildNavItem(context, index, items[index]),
             ),
           ),
 
@@ -112,9 +123,11 @@ class CustomSidebar extends StatelessWidget {
     );
   }
 
+  // --- Nav Item ---
   Widget _buildNavItem(BuildContext context, int index, NavItemModel item) {
     final colorScheme = context.theme.colorScheme;
     final isSelected = currentIndex == index;
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     if (item.isSpecial) {
       return Padding(
@@ -127,14 +140,24 @@ class CustomSidebar extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    colorScheme.primary,
-                    colorScheme.primary.withAlpha(200),
-                  ],
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
-                ),
+                gradient:
+                    isRtl
+                        ? LinearGradient(
+                          colors: [
+                            colorScheme.primary.withAlpha(200),
+                            colorScheme.primary,
+                          ],
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                        )
+                        : LinearGradient(
+                          colors: [
+                            colorScheme.primary,
+                            colorScheme.primary.withAlpha(200),
+                          ],
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                        ),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -149,7 +172,6 @@ class CustomSidebar extends StatelessWidget {
                   Icon(item.icon, color: Colors.white, size: 24),
                   const SizedBox(width: 12),
                   Expanded(
-                    // برای استفاده از فضای موجود
                     child: Text(
                       item.label,
                       style: const TextStyle(
@@ -159,7 +181,6 @@ class CustomSidebar extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   CustomBadge(badgeCount: item.badgeCount, radius: 6),
                 ],
               ),
@@ -183,14 +204,14 @@ class CustomSidebar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color:
-              isSelected
-                  ? colorScheme.primary.withAlpha(30)
-                  : Colors.transparent,
+                  isSelected
+                      ? colorScheme.primary.withAlpha(30)
+                      : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
               border:
-              isSelected
-                  ? Border.all(color: colorScheme.primary.withAlpha(50))
-                  : null,
+                  isSelected
+                      ? Border.all(color: colorScheme.primary.withAlpha(50))
+                      : null,
             ),
             child: Row(
               children: [
@@ -198,7 +219,10 @@ class CustomSidebar extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   width: 4,
                   height: isSelected ? 24 : 0,
-                  margin: const EdgeInsets.only(left: 8),
+                  margin: EdgeInsets.only(
+                    left: isRtl ? 0 : 8,
+                    right: isRtl ? 8 : 0,
+                  ),
                   decoration: BoxDecoration(
                     color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(2),
@@ -211,9 +235,9 @@ class CustomSidebar extends StatelessWidget {
                     isSelected ? item.activeIcon : item.icon,
                     key: ValueKey(isSelected),
                     color:
-                    isSelected
-                        ? colorScheme.primary
-                        : colorScheme.onSurface.withAlpha(150),
+                        isSelected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withAlpha(150),
                     size: 24,
                   ),
                 ),
@@ -225,11 +249,11 @@ class CustomSidebar extends StatelessWidget {
                     item.label,
                     style: TextStyle(
                       color:
-                      isSelected
-                          ? colorScheme.primary
-                          : colorScheme.onSurface.withAlpha(180),
+                          isSelected
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withAlpha(180),
                       fontWeight:
-                      isSelected ? FontWeight.w600 : FontWeight.w500,
+                          isSelected ? FontWeight.w600 : FontWeight.w500,
                       fontSize: 15,
                     ),
                   ),

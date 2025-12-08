@@ -37,6 +37,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_localizations:
       sdk: flutter
+  flutter_web_plugins:
+      sdk: flutter
+      
+  advanced_count_control:
+    git:
+      url: https://github.com/DanialYazdanParast/advanced_count_control.git
+      ref: main
   cupertino_icons: ^1.0.8
 
   get: ^4.7.3

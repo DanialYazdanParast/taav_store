@@ -1,5 +1,4 @@
 import 'package:example/src/commons/constants/app_size.dart';
-import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -7,38 +6,43 @@ import 'package:get/get.dart';
 
 class AnimatedAppBar<T extends GetxController> extends GetView<T> {
   final double screenWidth;
-  final bool isRtl;
   final String title;
   final RxBool isSearching;
   final TextEditingController searchController;
   final FocusNode searchFocusNode;
   final VoidCallback onFilterTap;
+  final ValueChanged<String>? onSearchChanged;
 
   const AnimatedAppBar({
     super.key,
     required this.screenWidth,
-    required this.isRtl,
     required this.isSearching,
     required this.searchController,
     required this.searchFocusNode,
     required this.title,
     required this.onFilterTap,
+    this.onSearchChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    final textDirection = Directionality.of(context);
+
     return SizedBox(
       height: 80,
       child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [_buildTitleRow(), _buildAnimatedSearchBar()],
+        alignment: AlignmentDirectional.centerStart,
+        children: [
+          _buildTitleRow(),
+          _buildAnimatedSearchBar(textDirection),
+        ],
       ),
     );
   }
 
   Widget _buildTitleRow() {
     return Obx(
-      () => AnimatedOpacity(
+          () => AnimatedOpacity(
         opacity: isSearching.value ? 0.0 : 1.0,
         duration: const Duration(milliseconds: 200),
         child: Padding(
@@ -46,16 +50,20 @@ class AnimatedAppBar<T extends GetxController> extends GetView<T> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButtonWidget(icon: Icons.filter_list, onTap: onFilterTap),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: AppSize.f18,
-                  fontWeight: FontWeight.bold,
+              IconButtonWidget(
+                icon: Icons.filter_list,
+                onTap: onFilterTap,
+              ),
+              Expanded(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Get.theme.textTheme.bodyLarge
                 ),
               ),
-              48.width,
+              const SizedBox(width: 48),
             ],
           ),
         ),
@@ -63,95 +71,101 @@ class AnimatedAppBar<T extends GetxController> extends GetView<T> {
     );
   }
 
-  Widget _buildAnimatedSearchBar() {
-    return Positioned(
-      left: isRtl ? AppSize.p16 : null,
-      right: isRtl ? null : AppSize.p16,
-      child: Obx(
-        () => AnimatedContainer(
+  Widget _buildAnimatedSearchBar(TextDirection textDirection) {
+    return Positioned.directional(
+      textDirection: textDirection,
+      end: AppSize.p16,
+
+      child: Obx(() {
+        final isActive = isSearching.value;
+        final finalWidth = screenWidth - 32;
+
+        return AnimatedContainer(
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeOutQuart,
-          width: isSearching.value ? screenWidth - 32 : 45,
-          height: 45,
+          width: isActive ? finalWidth : 40,
+          height: 40,
+          clipBehavior: Clip.hardEdge,
+
           decoration: BoxDecoration(
-            color:
-                isSearching.value
-                    ? Colors.white
-                    : Colors.white.withOpacity(0.15),
-            borderRadius: BorderRadius.circular(
-              isSearching.value ? AppSize.r12 : AppSize.r10,
+            color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(isActive ? AppSize.r12 : AppSize.r10),
+            boxShadow: isActive
+                ? [
+              BoxShadow(
+                color: Colors.black.withValues(alpha:  0.1),
+                blurRadius: AppSize.p10,
+                offset: const Offset(0, 4),
+              ),
+            ]
+                : [],
+          ),
+
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            child: SizedBox(
+              width: isActive ? finalWidth : 40,
+              height: 40,
+              child: isActive
+                  ? _buildActiveContent()
+                  : Center(child: _buildSearchButton(false)),
             ),
-            boxShadow:
-                isSearching.value
-                    ? [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: AppSize.p10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ]
-                    : [],
           ),
-          child: Stack(
-            alignment: isRtl ? Alignment.centerLeft : Alignment.centerRight,
-            children: [
-              if (isSearching.value) _buildSearchTextField(),
-              _buildSearchIconButton(),
-            ],
-          ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  Widget _buildSearchTextField() {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: isRtl ? 40 : AppSize.p10,
-        right: isRtl ? AppSize.p10 : 40,
-      ),
-      child: TextField(
-        controller: searchController,
-        focusNode: searchFocusNode,
-        textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-        style: const TextStyle(color: Colors.black87),
-        decoration: InputDecoration(
-          hintText: TKeys.searchHint.tr,
-          hintStyle: TextStyle(color: Colors.grey[400], fontSize: AppSize.f13),
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero,
-          isDense: true,
+  Widget _buildActiveContent() {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 12),
+
+            child: TextField(
+              controller: searchController,
+              focusNode: searchFocusNode,
+              onChanged: onSearchChanged,
+              style: const TextStyle(color: Colors.black87, fontSize: 14),
+              cursorColor: Colors.blue,
+              decoration: InputDecoration(
+                hintText: TKeys.searchHint.tr,
+                hintStyle: TextStyle(color: Colors.grey[400], fontSize: 13),
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+          ),
         ),
-      ),
+
+        // دکمه بستن
+        _buildSearchButton(true),
+      ],
     );
   }
 
-  Widget _buildSearchIconButton() {
-    return Positioned(
-      left: isRtl ? 0 : null,
-      right: isRtl ? null : 0,
-      child: GestureDetector(
-        onTap: () {
-          isSearching.value = !isSearching.value;
+  Widget _buildSearchButton(bool isActive) {
+    return IconButtonWidget(
+      onTap: _toggleSearch,
+      color: isActive ? Colors.grey[700] : Colors.white,
+      icon: isActive ? Icons.close : Icons.search,
+    bgColor: Colors.transparent,
 
-          if (isSearching.value) {
-            searchFocusNode.requestFocus();
-          } else {
-            searchController.clear();
-            searchFocusNode.unfocus();
-          }
-        },
-        child: Container(
-          width: 45,
-          height: 45,
-          color: Colors.transparent,
-          child: Icon(
-            isSearching.value ? Icons.close : Icons.search,
-            color: isSearching.value ? Colors.grey : Colors.white,
-            size: 22,
-          ),
-        ),
-      ),
     );
+  }
+
+  void _toggleSearch() {
+    isSearching.value = !isSearching.value;
+
+    if (isSearching.value) {
+      searchFocusNode.requestFocus();
+    } else {
+      searchController.clear();
+      onSearchChanged?.call('');
+      searchFocusNode.unfocus();
+    }
   }
 }

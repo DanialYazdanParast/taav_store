@@ -26,8 +26,6 @@ class SellerFilterPriceRange extends StatelessWidget {
           final double min = controller.minPriceLimit.value;
           final double max = controller.maxPriceLimit.value;
 
-          // فقط اگر min و max خیلی نزدیک بودن، یه مقدار منطقی اضافه کن
-          final double displayMax = max <= min ? min + 100000 : max;
 
           return Column(
             children: [

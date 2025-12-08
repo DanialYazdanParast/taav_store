@@ -50,7 +50,7 @@ class ColorSelectorWidget extends GetView<BuyerProductDetailsController> {
               width: isSelected ? 2.5 : 1,
             ),
             boxShadow: isSelected
-                ? [BoxShadow(color: colorObj.withOpacity(0.4), blurRadius: 8, offset: const Offset(0, 4))]
+                ? [BoxShadow(color: colorObj.withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(0, 4))]
                 : null,
           ),
           child: isSelected

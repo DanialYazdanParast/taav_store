@@ -54,8 +54,6 @@ class OrderItem {
       quantity: json['quantity'] is int ? json['quantity'] : int.tryParse(json['quantity'].toString()) ?? 0,
       colorHex: json['color'] ?? '',
       price: json['price'] is int ? json['price'] : int.tryParse(json['price'].toString()) ?? 0,
-
-      // ✅ اضافه شده: خواندن از جیسون
       sellerId: json['sellerId']?.toString() ?? '',
     );
   }

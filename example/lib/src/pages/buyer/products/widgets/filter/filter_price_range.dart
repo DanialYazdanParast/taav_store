@@ -44,15 +44,13 @@ class FilterPriceRange extends StatelessWidget {
                   activeTrackColor: colors.primary,
                   inactiveTrackColor: colors.surfaceContainerHighest,
                   thumbColor: colors.primary,
-                  overlayColor: colors.primary.withOpacity(0.2),
+                  overlayColor: colors.primary.withValues(alpha: 0.2),
                 ),
                 child: RangeSlider(
                   values: controller.tempPriceRange.value,
                   min: min,
                   max: safeMax,
-                  // اینجا از safeMax استفاده کن
                   divisions: ((safeMax - min) / 10000).floor().clamp(1, 1000),
-                  // اختیاری: برای تقسیمات نرم
                   onChanged: controller.updateTempPriceRange,
                 ),
               ),

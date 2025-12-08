@@ -165,7 +165,7 @@ class SellerEditController extends GetxController with MixinDialogController {
         final result = await editRepo.getProduct(productId!);
 
         if (result.isLeft) {
-          throw Exception(result.left.message ?? "خطا در دریافت محصول");
+          throw Exception(result.left.message);
         }
         product = result.right;
       }
@@ -187,12 +187,12 @@ class SellerEditController extends GetxController with MixinDialogController {
   void _populateFormFields() {
     if (product == null) return;
 
-    titleController.text = product!.title ?? '';
-    descController.text = product!.description ?? '';
-    countController.text = product!.quantity?.toString() ?? '0';
+    titleController.text = product!.title ;
+    descController.text = product!.description ;
+    countController.text = product!.quantity.toString() ;
 
-    final price = product!.price ?? 0;
-    final discount = product!.discountPrice ?? 0;
+    final price = product!.price ;
+    final discount = product!.discountPrice ;
 
     priceController.text = price.toString();
 

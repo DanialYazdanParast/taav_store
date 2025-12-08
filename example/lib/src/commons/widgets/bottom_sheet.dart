@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/constants/app_size.dart';
-import 'package:example/src/commons/extensions/space_extension.dart';
 
 class BottomSheetWidget {
   final bool isScrollControlled;
@@ -46,7 +45,7 @@ class BottomSheetWidget {
         ),
         shadows: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 32,
             offset: const Offset(0, -8),
             spreadRadius: 0,

@@ -36,7 +36,7 @@ class RegisterFormContent extends GetView<RegisterController> {
           (isMobile ? 10 : 8).height,
 
           AppTextField(
-            controller:  controller.usernameController,
+            controller: controller.usernameController,
             focusNode: controller.usernameFocus,
             labelText: TKeys.username.tr,
             hintText: TKeys.chooseUsername.tr,
@@ -88,10 +88,11 @@ class RegisterFormContent extends GetView<RegisterController> {
             labelText: TKeys.password.tr,
             showCriteria: false,
             autoValidateMode: controller.avmRegister.value,
-            validator: (value) => ValidationUtil().passwordConfirm(
-              value,
-              controller.passwordController.text, // ← اینجا text بفرست
-            ),
+            validator:
+                (value) => ValidationUtil().passwordConfirm(
+                  value,
+                  controller.passwordController.text, // ← اینجا text بفرست
+                ),
             textInputAction: TextInputAction.done,
             onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
           ),

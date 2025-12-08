@@ -201,7 +201,7 @@ class _AppTextFieldState extends State<AppTextField> {
           hintStyle: AppInputStyles.hintStyle,
           helperText: widget.helperText,
           helperStyle: AppInputStyles.helperStyle,
-          counterText: widget.counterText ??  null,
+          counterText: widget.counterText,
           filled: widget.bgColor != null,
           fillColor: widget.bgColor,
           border: AppInputStyles.normalBorder,

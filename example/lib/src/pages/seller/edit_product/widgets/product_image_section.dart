@@ -55,16 +55,16 @@ class ProductImageSection extends StatelessWidget {
       child: Container(
         height: 200, width: double.infinity,
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(AppSize.r16),
-          border: Border.all(color: theme.colorScheme.outline.withOpacity(0.3), style: BorderStyle.solid),
+          border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.3), style: BorderStyle.solid),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.all(AppSize.p16),
-              decoration: BoxDecoration(color: theme.colorScheme.primary.withOpacity(0.1), shape: BoxShape.circle),
+              decoration: BoxDecoration(color: theme.colorScheme.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
               child: Icon(Icons.add_photo_alternate_rounded, size: 32, color: theme.colorScheme.primary),
             ),
             AppSize.p12.height,
@@ -105,7 +105,7 @@ class ProductImageSection extends StatelessWidget {
             child: IconButtonWidget(
               icon: Icons.delete_outline_rounded,
               onTap: onTapRemove,
-              bgColor: Colors.red.withOpacity(0.9), color: Colors.white, size: 20,
+              bgColor: Colors.red.withValues(alpha: 0.9), color: Colors.white, size: 20,
             ),
           ),
 
@@ -114,7 +114,7 @@ class ProductImageSection extends StatelessWidget {
             child: IconButtonWidget(
               icon: Icons.edit_rounded,
               onTap: onTapPick,
-              bgColor: Colors.black.withOpacity(0.6), color: Colors.white, size: 20,
+              bgColor: Colors.black.withValues(alpha: 0.6), color: Colors.white, size: 20,
             ),
           ),
         ],

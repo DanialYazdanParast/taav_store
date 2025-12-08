@@ -1,8 +1,9 @@
 import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import '../controllers/buyer_product_details_controller.dart';
 
 class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
@@ -79,7 +80,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
           color: theme.colorScheme.onPrimary,
         ),
       ),
-      numberFormatter: _toPersianNum,
+      numberFormatter: (value) => value.toLocalizedDigit,
     );
   }
 
@@ -108,7 +109,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              "${_toPersianNum(controller.discountPercentage.toString())}٪",
+              "${controller.discountPercentage.toString().toLocalizedDigit}٪",
               style: theme.textTheme.labelSmall?.copyWith(
                 color: theme.colorScheme.onError,
                 fontWeight: FontWeight.bold,
@@ -117,7 +118,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
           ),
           const SizedBox(width: 6),
           Text(
-            _formatPrice(controller.product.value!.price),
+            controller.product.value!.price.toLocalizedPrice,
             style: theme.textTheme.bodySmall?.copyWith(
               decoration: TextDecoration.lineThrough,
               color: theme.disabledColor,
@@ -134,7 +135,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          _formatPrice(controller.effectivePrice.toInt()),
+          controller.effectivePrice.toInt().toLocalizedPrice,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -148,19 +149,5 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
         ),
       ],
     );
-  }
-
-  String _formatPrice(num price) {
-    final formatter = NumberFormat("#,###");
-    return _toPersianNum(formatter.format(price));
-  }
-
-  String _toPersianNum(String input) {
-    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    const persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-    for (int i = 0; i < english.length; i++) {
-      input = input.replaceAll(english[i], persian[i]);
-    }
-    return input;
   }
 }

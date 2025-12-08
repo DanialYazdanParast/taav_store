@@ -1,8 +1,9 @@
-import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import '../controllers/cart_controller.dart';
 import '../widgets/cart_item_widget.dart';
 
@@ -14,10 +15,7 @@ class MobileCartLayout extends GetView<CartController> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("سبد خرید", style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: "تاریخچه سفارشات", showBackButton: false),
       body: Obx(() {
         if (controller.cartItems.isEmpty) {
           return _buildEmptyState(theme);
@@ -29,7 +27,7 @@ class MobileCartLayout extends GetView<CartController> {
               child: ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemCount: controller.cartItems.length,
-                separatorBuilder: (_, __) =>  AppDivider.horizontal(space: 30),
+                separatorBuilder: (_, __) => AppDivider.horizontal(space: 30),
                 itemBuilder: (context, index) {
                   return CartItemWidget(item: controller.cartItems[index]);
                 },
@@ -47,7 +45,11 @@ class MobileCartLayout extends GetView<CartController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.shopping_cart_outlined, size: 80, color: theme.disabledColor),
+          Icon(
+            Icons.shopping_cart_outlined,
+            size: 80,
+            color: theme.disabledColor,
+          ),
           const SizedBox(height: 16),
           Text("سبد خرید شما خالی است", style: theme.textTheme.titleMedium),
         ],
@@ -61,7 +63,13 @@ class MobileCartLayout extends GetView<CartController> {
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(top: BorderSide(color: theme.dividerColor, width: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, -5))],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, -5),
+          ),
+        ],
       ),
       child: SafeArea(
         top: false,
@@ -75,13 +83,20 @@ class MobileCartLayout extends GetView<CartController> {
                   onPressed: () => controller.checkout(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.primary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  child: Text("ثبت سفارش", style: TextStyle(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    "ثبت سفارش",
+                    style: TextStyle(
+                      color: theme.colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 16),
-              // بخش قیمت (به صورت ویجت جداگانه هم می‌شود نوشت)
               _buildPriceInfo(theme),
             ],
           ),
@@ -91,25 +106,31 @@ class MobileCartLayout extends GetView<CartController> {
   }
 
   Widget _buildPriceInfo(ThemeData theme) {
-    final formatter = NumberFormat("#,###");
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (controller.hasDiscount)
           Text(
-            "سود شما: ${formatter.format(controller.totalProfit)}",
-            style: TextStyle(color: theme.colorScheme.error, fontSize: 12, fontWeight: FontWeight.bold),
+            "سود شما: ${controller.totalProfit.toLocalizedPrice}",
+            style: TextStyle(
+              color: theme.colorScheme.error,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              formatter.format(controller.totalPayablePrice),
+              controller.totalPayablePrice.toLocalizedPrice,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(width: 4),
-            const Text("تومان", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
+            const Text(
+              "تومان",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+            ),
           ],
         ),
       ],

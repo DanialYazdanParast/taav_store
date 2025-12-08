@@ -12,7 +12,6 @@ import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 
 // ایمپورت کنترلر جدید و ویجت‌های مشترک
-import '../../add_product/view/seller_add_screen.dart';
 
 import '../controllers/seller_edit_controller.dart';
 import '../widgets/product_attributes_section.dart';
@@ -297,7 +296,7 @@ class _CustomAppBar extends StatelessWidget {
           child: IconButtonWidget(
             icon: Icons.arrow_back_ios_new_rounded,
             onTap: () => Get.back(),
-            bgColor: isDesktop ? Colors.grey.withOpacity(0.1) : Colors.white.withOpacity(0.2),
+            bgColor: isDesktop ? Colors.grey.withValues(alpha: 0.1) : Colors.white.withValues(alpha: 0.2),
             color: isDesktop ? Colors.black : Colors.white,
           ),
         ),

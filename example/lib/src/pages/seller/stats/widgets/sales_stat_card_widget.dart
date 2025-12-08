@@ -1,6 +1,7 @@
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import '../models/seller_sales_stat_model.dart';
 
 class SalesStatCardWidget extends StatelessWidget {
@@ -20,11 +21,14 @@ class SalesStatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final formatter = NumberFormat("#,###");
 
-    final borderColor = isTopSeller ? const Color(0xFFFFD700) : theme.dividerColor;
+    final borderColor =
+        isTopSeller ? const Color(0xFFFFD700) : theme.dividerColor;
     final double borderWidth = isTopSeller ? (isDesktop ? 3.0 : 2.0) : 1.0;
-    final shadowColor = isTopSeller ? const Color(0xFFFFD700).withOpacity(0.3) : Colors.black.withOpacity(0.05);
+    final shadowColor =
+        isTopSeller
+            ? const Color(0xFFFFD700).withValues(alpha: 0.3)
+            : Colors.black.withValues(alpha: 0.05);
 
     return Stack(
       children: [
@@ -73,13 +77,16 @@ class SalesStatCardWidget extends StatelessWidget {
                       children: [
                         _StatInfoChip(
                           label: "تعداد فروش:",
-                          value: "${stat.totalQuantitySold} عدد",
+                          // استفاده از اکستنشن برای تعداد فروش
+                          value:
+                              "${stat.totalQuantitySold.toString().toLocalizedDigit} عدد",
                           theme: theme,
                         ),
 
                         Flexible(
                           child: Text(
-                            "${formatter.format(stat.totalRevenue)} تومان",
+                            // استفاده از اکستنشن برای مبلغ کل فروش
+                            "${stat.totalRevenue.toLocalizedPrice} تومان",
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.primary,
                               fontWeight: FontWeight.w900,
@@ -104,11 +111,17 @@ class SalesStatCardWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: const BoxDecoration(
                 color: Color(0xFFFFD700),
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(12),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.emoji_events_rounded, size: 16, color: Colors.black87),
+                  const Icon(
+                    Icons.emoji_events_rounded,
+                    size: 16,
+                    color: Colors.black87,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     "پرفروش‌ترین",
@@ -135,8 +148,10 @@ class SalesStatCardWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Text(
-                "$rank",
-                style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
+                rank.toString().toLocalizedDigit,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -150,7 +165,11 @@ class _StatInfoChip extends StatelessWidget {
   final String value;
   final ThemeData theme;
 
-  const _StatInfoChip({required this.label, required this.value, required this.theme});
+  const _StatInfoChip({
+    required this.label,
+    required this.value,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +178,7 @@ class _StatInfoChip extends StatelessWidget {
         Text(
           label,
           style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const SizedBox(width: 4),

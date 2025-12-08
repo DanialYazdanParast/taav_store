@@ -1,3 +1,4 @@
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +42,7 @@ class FilterColors extends StatelessWidget {
                       width: size,
                       height: size,
                       decoration: BoxDecoration(
-                        color: color.colorObj,
+                        color: color.hex.toColor,
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: isSelected ? colors.primary : colors.outline,
@@ -52,7 +53,9 @@ class FilterColors extends StatelessWidget {
                           isSelected
                               ? Icon(
                                 Icons.check,
-                                color: _contrast(color.colorObj),
+                                color: _contrast(
+                                  color.hex.toColor,
+                                ),
                               )
                               : null,
                     ),

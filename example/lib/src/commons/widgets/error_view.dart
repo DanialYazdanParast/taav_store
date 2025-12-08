@@ -1,9 +1,7 @@
 
-import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_png.dart';
-import 'button/button_widget.dart';
 
 class ErrorView extends StatelessWidget {
   final VoidCallback? onRetry;

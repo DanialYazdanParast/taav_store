@@ -2,7 +2,7 @@ import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/product_discount_ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/empty_widget.dart';
 import 'package:example/src/commons/widgets/bottom_sheet.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
@@ -67,13 +67,13 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
             top: -80,
             right: -150,
             size: 300,
-            color: theme.colorScheme.onPrimary.withOpacity(0.05),
+            color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
           ),
           DecorativeCircle(
             bottom: -10,
             left: -100,
             size: 300,
-            color: theme.colorScheme.onPrimary.withOpacity(0.05),
+            color: theme.colorScheme.onPrimary.withValues(alpha: 0.05),
           ),
           SafeArea(
             child: Column(

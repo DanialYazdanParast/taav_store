@@ -14,7 +14,6 @@ import 'package:example/src/pages/buyer/product_details/view/buyer_product_detai
 
 import 'package:example/src/pages/buyer/orders/views/order_history_page.dart';
 
-import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
@@ -23,7 +22,6 @@ import 'package:example/src/pages/seller/stats/commons/seller_stats_binding.dart
 import 'package:example/src/pages/seller/stats/views/seller_stats_screen.dart';
 import 'package:example/src/pages/splash/commons/splash_binding.dart';
 import 'package:example/src/pages/splash/view/splash_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -36,7 +34,7 @@ class AppPages {
   static final unknownRoute = GetPage(
     name: _Paths.notFound,
     page: () => const NotFoundScreen(),
-    transition: Transition.fadeIn,
+    transition: Transition.noTransition,
   );
 
   static final pages = [
@@ -54,13 +52,13 @@ class AppPages {
       name: _Paths.login,
       page: () => const LoginScreen(),
       binding: LoginBinding(),
-      transition: Transition.fadeIn,
+      transition:  Transition.noTransition,
     ),
     GetPage(
       name: _Paths.register,
       page: () => const RegisterScreen(),
       binding: RegisterBinding(),
-      transition: Transition.rightToLeft,
+      transition:  Transition.noTransition,
     ),
 
     // ─── Seller ─────────────────────────────────────────────────────────
@@ -125,7 +123,7 @@ class AppPages {
       name: _Paths.buyerOrders,
       page: () => const OrderHistoryPage(),
       binding: OrderHistoryBinding(),
-      transition: Transition.rightToLeft,
+      transition: Transition.downToUp,
     ),
   ];
 }

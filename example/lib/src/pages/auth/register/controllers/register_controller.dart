@@ -80,7 +80,7 @@ class RegisterController extends GetxController {
       (failure) {
         registerState.value = CurrentState.error;
         ToastUtil.show(
-          failure.message ?? 'خطا در بررسی نام کاربری',
+          failure.message ,
           type: ToastType.error,
         );
         return false;
@@ -112,7 +112,7 @@ class RegisterController extends GetxController {
       (failure) {
         registerState.value = CurrentState.error;
         ToastUtil.show(
-          failure.message ?? 'خطا در ثبت‌نام',
+          failure.message ,
           type: ToastType.error,
         );
       },

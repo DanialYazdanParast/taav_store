@@ -31,7 +31,7 @@ class MobileRegisterLayout extends GetView<RegisterController> {
             colorScheme.surface,
             colorScheme.surface,
           ],
-          stops: const [0.0, 0.12, 0.35, 1.0],
+          stops: const [0.0, 0.12, 0.45, 1.0],
         ),
       ),
       child: SafeArea(

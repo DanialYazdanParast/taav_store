@@ -86,7 +86,7 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
     return Icon(
       Icons.notifications_none_rounded,
       size: 28,
-      color: theme.iconTheme.color?.withOpacity(0.7),
+      color: theme.iconTheme.color?.withValues(alpha: 0.7),
     );
   }
 
@@ -98,7 +98,7 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
       },
       child: CircleAvatar(
         radius: AppSize.p20,
-        backgroundColor: primaryColor.withOpacity(0.2),
+        backgroundColor: primaryColor.withValues(alpha: 0.2),
         child: Icon(Icons.person, color: primaryColor),
       ),
     );

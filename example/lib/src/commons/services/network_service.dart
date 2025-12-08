@@ -1,4 +1,3 @@
-import 'dart:io' show Platform;
 
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -33,13 +32,13 @@ class NetworkService extends GetxService {
     );
   }
 
-  Map<String, dynamic> _getDefaultHeaders() {
-    return {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Accept-Language': 'fa',
-    };
-  }
+  // Map<String, dynamic> _getDefaultHeaders() {
+  //   return {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Accept-Language': 'fa',
+  //   };
+  // }
 
 
   void _configureSslPinning() {
@@ -58,7 +57,7 @@ class NetworkService extends GetxService {
   Interceptor _createDelayInterceptor() {
     return InterceptorsWrapper(
       onRequest: (options, handler) async {
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 0));
         handler.next(options);
       },
     );

@@ -252,9 +252,9 @@ class _StockChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p8, vertical: 3),
       decoration: BoxDecoration(
-        color: chipColor.withOpacity(0.1),
+        color: chipColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSize.r6),
-        border: Border.all(color: chipColor.withOpacity(0.2), width: 0.5),
+        border: Border.all(color: chipColor.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Text(
         '${TKeys.stock.tr}: $quantity',
@@ -322,7 +322,7 @@ class _ActionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSize.p8),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppSize.r8),
         ),
         child: Icon(icon, size: 18, color: color),

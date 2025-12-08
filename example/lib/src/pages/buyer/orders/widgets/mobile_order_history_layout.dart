@@ -1,5 +1,6 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/widgets/app_loading.dart';
+import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/order_history_controller.dart';
@@ -10,9 +11,8 @@ class MobileOrderHistoryLayout extends GetView<OrderHistoryController> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(title: const Text("تاریخچه سفارشات"), centerTitle: true),
+      appBar: CustomAppBar(title: "تاریخچه سفارشات" ),
       body: Obx(() {
         if (controller.pageState.value == CurrentState.loading) {
           return Center(child: AppLoading.circular(size: 50));

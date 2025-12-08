@@ -15,34 +15,31 @@ import '../repository/seller_products_repository.dart';
 import 'package:example/src/pages/seller/stats/repository/seller_stats_repository.dart';
 
 class SellerProductsController extends GetxController {
-
-  // ─── Dependencies ────────────────────────────────────────────────────────────
+  // ─── Dependencies ──────────────────
   final ISellerProductsRepository productRepo;
-  final ISellerStatsRepository statsRepo; // ✅ وابستگی جدید
-
+  final ISellerStatsRepository statsRepo;
   final MetadataService metadataService = Get.find<MetadataService>();
   final AuthService _authService = Get.find<AuthService>();
 
   SellerProductsController({
     required this.productRepo,
-    required this.statsRepo, // ✅ دریافت در سازنده
+    required this.statsRepo,
   });
 
-  // ─── State Variables (Products List) ─────────────────────────────────────────
+  // ─── State Variables (Products List) ────────────────
   final RxList<ProductModel> products = <ProductModel>[].obs;
   final Rx<CurrentState> productsState = CurrentState.idle.obs;
 
-  // ─── State Variables (Statistics) ────────────────────────────────────────────
-  // ۱. آمار فروش و درآمد
+  // ─── State Variables (Statistics) ────────────────
+
   final RxInt totalSalesCount = 0.obs;
   final RxInt totalRevenueAmount = 0.obs;
-  final Rx<CurrentState> statsState = CurrentState.idle.obs; // ✅ استیت مخصوص آمار فروش
+  final Rx<CurrentState> statsState = CurrentState.idle.obs;
 
-  // ۲. آمار سبد خرید (محصولات در انتظار خرید)
   final RxInt totalItemsInCart = 0.obs;
-  final Rx<CurrentState> cartStatsState = CurrentState.idle.obs; // ✅ استیت مخصوص آمار سبد خرید
+  final Rx<CurrentState> cartStatsState = CurrentState.idle.obs;
 
-  // ─── Filter & Search Variables ───────────────────────────────────────────────
+  // ─── Filter & Search Variables ───────────────────
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   final RxList<TagModel> availableTags = <TagModel>[].obs;
 
@@ -66,7 +63,7 @@ class SellerProductsController extends GetxController {
   late TextEditingController searchController;
   late FocusNode searchFocusNode;
 
-  // ─── Lifecycle ───────────────────────────────────────────────────────────────
+  // ─── Lifecycle ─────────────────────
   @override
   void onInit() {
     super.onInit();
@@ -81,10 +78,9 @@ class SellerProductsController extends GetxController {
 
     _syncFiltersWithService();
 
-    // فراخوانی متدها
     fetchProducts();
-    fetchTotalStats();  // ✅ دریافت آمار فروش
-    fetchInCartStats(); // ✅ دریافت آمار سبد خرید
+    fetchTotalStats();
+    fetchInCartStats();
   }
 
   @override
@@ -101,17 +97,19 @@ class SellerProductsController extends GetxController {
     ever(metadataService.tags, (data) => availableTags.assignAll(data));
   }
 
-  // ─── 1. Fetch Products Logic ────────────────────────────────────────────────
+  // ─── 1. Fetch Products Logic ──────────────────
   Future<void> fetchProducts() async {
     productsState.value = CurrentState.loading;
-    final result = await productRepo.getSellerProducts(_authService.userId.value);
+    final result = await productRepo.getSellerProducts(
+      _authService.userId.value,
+    );
 
     result.fold(
-          (failure) {
+      (failure) {
         productsState.value = CurrentState.error;
-        ToastUtil.show(failure.message ?? 'خطا', type: ToastType.error);
+        ToastUtil.show(failure.message, type: ToastType.error);
       },
-          (fetchedProducts) {
+      (fetchedProducts) {
         products.assignAll(fetchedProducts.reversed.toList());
         productsState.value = CurrentState.success;
         calculatePriceLimits(products);
@@ -119,22 +117,19 @@ class SellerProductsController extends GetxController {
     );
   }
 
-  // ─── 2. Fetch Total Sales & Revenue Logic ───────────────────────────────────
+  // ─── 2. Fetch Total Sales & Revenue Logic ───────────
   Future<void> fetchTotalStats() async {
-    statsState.value = CurrentState.loading; // شروع لودینگ
-
+    statsState.value = CurrentState.loading;
     final result = await statsRepo.getBestSellers(_authService.userId.value);
 
     result.fold(
-          (failure) {
-        statsState.value = CurrentState.error; // خطای لودینگ
-        print("Error fetching sales stats: ${failure.message}");
+      (failure) {
+        statsState.value = CurrentState.error;
       },
-          (statsList) {
+      (statsList) {
         int totalQty = 0;
         int totalRev = 0;
 
-        // جمع زدن مقادیر تمام محصولات فروخته شده
         for (var item in statsList) {
           totalQty += item.totalQuantitySold;
           totalRev += item.totalRevenue;
@@ -143,28 +138,27 @@ class SellerProductsController extends GetxController {
         totalSalesCount.value = totalQty;
         totalRevenueAmount.value = totalRev;
 
-        statsState.value = CurrentState.success; // پایان موفقیت‌آمیز
+        statsState.value = CurrentState.success;
       },
     );
   }
 
   // ─── 3. Fetch Items in Customers' Carts Logic ───────────────────────────────
   Future<void> fetchInCartStats() async {
-    cartStatsState.value = CurrentState.loading; // شروع لودینگ
-
-    final result = await productRepo.getCartItemsBySeller(_authService.userId.value);
+    cartStatsState.value = CurrentState.loading;
+    final result = await productRepo.getCartItemsBySeller(
+      _authService.userId.value,
+    );
 
     result.fold(
-          (failure) {
-        cartStatsState.value = CurrentState.error; // خطای لودینگ
-        print("Error fetching cart stats: ${failure.message}");
+      (failure) {
+        cartStatsState.value = CurrentState.error;
       },
-          (cartItems) {
-        // جمع زدن فیلد quantity تمام آیتم‌های موجود در سبد خریدها
+      (cartItems) {
         int count = cartItems.fold(0, (sum, item) => sum + item.quantity);
 
         totalItemsInCart.value = count;
-        cartStatsState.value = CurrentState.success; // پایان موفقیت‌آمیز
+        cartStatsState.value = CurrentState.success;
       },
     );
   }
@@ -174,10 +168,10 @@ class SellerProductsController extends GetxController {
     final result = await productRepo.deleteProduct(productId);
 
     result.fold(
-          (failure) {
-        ToastUtil.show(failure.message ?? 'خطا در حذف محصول', type: ToastType.error);
+      (failure) {
+        ToastUtil.show(failure.message, type: ToastType.error);
       },
-          (success) {
+      (success) {
         products.removeWhere((element) => element.id == productId);
 
         if (products.isNotEmpty) {
@@ -189,14 +183,15 @@ class SellerProductsController extends GetxController {
     );
   }
 
-  // ─── Filter Logic (بدون تغییر) ──────────────────────────────────────────────
+  // ─── Filter Logic  ──────────────────────────────────────────────
   void calculatePriceLimits(List<ProductModel> items) {
     if (items.isNotEmpty) {
-      final List<double> effectivePrices = items.map((p) {
-        return (p.discountPrice > 0 && p.discountPrice < p.price)
-            ? p.discountPrice.toDouble()
-            : p.price.toDouble();
-      }).toList();
+      final List<double> effectivePrices =
+          items.map((p) {
+            return (p.discountPrice > 0 && p.discountPrice < p.price)
+                ? p.discountPrice.toDouble()
+                : p.price.toDouble();
+          }).toList();
 
       double minP = effectivePrices.reduce(min);
       double maxP = effectivePrices.reduce(max);
@@ -209,14 +204,14 @@ class SellerProductsController extends GetxController {
       minPriceLimit.value = minP;
       maxPriceLimit.value = maxP;
 
-      if (appliedPriceRange.value.start < minP || appliedPriceRange.value.end > maxP) {
+      if (appliedPriceRange.value.start < minP ||
+          appliedPriceRange.value.end > maxP) {
         appliedPriceRange.value = RangeValues(minP, maxP);
         tempPriceRange.value = RangeValues(minP, maxP);
       }
     }
   }
 
-  // ... (سایر متدهای فیلتر و سرچ کپی شود) ...
   void initTempFilters() {
     tempPriceRange.value = appliedPriceRange.value;
     tempColorNames.assignAll(appliedColorNames);
@@ -233,7 +228,10 @@ class SellerProductsController extends GetxController {
   }
 
   void clearTempFilters() {
-    tempPriceRange.value = RangeValues(minPriceLimit.value, maxPriceLimit.value);
+    tempPriceRange.value = RangeValues(
+      minPriceLimit.value,
+      maxPriceLimit.value,
+    );
     tempColorNames.clear();
     tempTagNames.clear();
     tempOnlyAvailable.value = false;
@@ -241,22 +239,32 @@ class SellerProductsController extends GetxController {
 
   void clearAllFilters() {
     clearTempFilters();
-    appliedPriceRange.value = RangeValues(minPriceLimit.value, maxPriceLimit.value);
+    appliedPriceRange.value = RangeValues(
+      minPriceLimit.value,
+      maxPriceLimit.value,
+    );
     appliedColorNames.clear();
     appliedTagNames.clear();
     appliedOnlyAvailable.value = false;
   }
 
-  void updateTempPriceRange(RangeValues values) => tempPriceRange.value = values;
+  void updateTempPriceRange(RangeValues values) =>
+      tempPriceRange.value = values;
 
   void toggleTempColor(String colorName) {
-    if (tempColorNames.contains(colorName)) tempColorNames.remove(colorName);
-    else tempColorNames.add(colorName);
+    if (tempColorNames.contains(colorName)) {
+      tempColorNames.remove(colorName);
+    } else {
+      tempColorNames.add(colorName);
+    }
   }
 
   void toggleTempTag(String tagName) {
-    if (tempTagNames.contains(tagName)) tempTagNames.remove(tagName);
-    else tempTagNames.add(tagName);
+    if (tempTagNames.contains(tagName)) {
+      tempTagNames.remove(tagName);
+    } else {
+      tempTagNames.add(tagName);
+    }
   }
 
   List<ProductModel> get filteredProducts {
@@ -264,35 +272,46 @@ class SellerProductsController extends GetxController {
 
     if (query.value.isNotEmpty) {
       final lowerQuery = query.value.toLowerCase();
-      result = result.where((p) {
-        final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
-        final matchesTags = p.tags.any((tag) => tag.toLowerCase().contains(lowerQuery));
-        return matchesTitle || matchesTags;
-      }).toList();
+      result =
+          result.where((p) {
+            final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
+            final matchesTags = p.tags.any(
+              (tag) => tag.toLowerCase().contains(lowerQuery),
+            );
+            return matchesTitle || matchesTags;
+          }).toList();
     }
 
-    result = result.where((p) {
-      final effectivePrice = (p.discountPrice > 0 && p.discountPrice < p.price)
-          ? p.discountPrice
-          : p.price;
-      return effectivePrice >= appliedPriceRange.value.start &&
-          effectivePrice <= appliedPriceRange.value.end;
-    }).toList();
+    result =
+        result.where((p) {
+          final effectivePrice =
+              (p.discountPrice > 0 && p.discountPrice < p.price)
+                  ? p.discountPrice
+                  : p.price;
+          return effectivePrice >= appliedPriceRange.value.start &&
+              effectivePrice <= appliedPriceRange.value.end;
+        }).toList();
 
     if (appliedOnlyAvailable.value) {
       result = result.where((p) => p.quantity > 0).toList();
     }
 
     if (appliedColorNames.isNotEmpty) {
-      result = result.where((p) {
-        return appliedColorNames.every((selectedColor) => p.colors.contains(selectedColor));
-      }).toList();
+      result =
+          result.where((p) {
+            return appliedColorNames.every(
+              (selectedColor) => p.colors.contains(selectedColor),
+            );
+          }).toList();
     }
 
     if (appliedTagNames.isNotEmpty) {
-      result = result.where((p) {
-        return appliedTagNames.every((selectedTag) => p.tags.contains(selectedTag));
-      }).toList();
+      result =
+          result.where((p) {
+            return appliedTagNames.every(
+              (selectedTag) => p.tags.contains(selectedTag),
+            );
+          }).toList();
     }
 
     return result;
@@ -302,7 +321,7 @@ class SellerProductsController extends GetxController {
     int count = 0;
     bool isPriceChanged =
         (tempPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-            (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
+        (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
     count += tempColorNames.length;
@@ -315,7 +334,7 @@ class SellerProductsController extends GetxController {
     int count = 0;
     bool isPriceChanged =
         (appliedPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-            (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
+        (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
     count += appliedColorNames.length;

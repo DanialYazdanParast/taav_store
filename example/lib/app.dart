@@ -18,11 +18,9 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       title: 'Taav Store',
       debugShowCheckedModeBanner: false,
-
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeController.themeMode,
-
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
       unknownRoute: AppPages.unknownRoute,
@@ -30,7 +28,6 @@ class App extends StatelessWidget {
       locale: langController.currentLocale,
       fallbackLocale: langController.fallbackLocale,
       supportedLocales: langController.supportedLocales,
-
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

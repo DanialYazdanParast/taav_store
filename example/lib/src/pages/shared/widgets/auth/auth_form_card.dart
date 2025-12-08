@@ -22,14 +22,9 @@ class AuthFormCard extends StatelessWidget {
         color: theme.colorScheme.surface,
 
         borderRadius: BorderRadius.circular(_isMobile ? 28 : 24),
-        border:
-            _isMobile
-                ? null
-                : Border.all(
-                  color: theme.colorScheme.outlineVariant.withValues(
-                    alpha: 0.5,
-                  ),
-                ),
+        border: Border.all(
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
         boxShadow: [
           BoxShadow(
             color: theme.colorScheme.shadow.withValues(

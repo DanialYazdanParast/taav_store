@@ -84,7 +84,7 @@ class BuyerProductsController extends GetxController {
       (failure) {
         productsState.value = CurrentState.error;
         ToastUtil.show(
-          failure.message ?? 'خطا در بارگیری محصولات',
+          failure.message,
           type: ToastType.error,
         );
       },

@@ -1,6 +1,4 @@
-
 import 'package:example/src/commons/constants/app_png.dart';
-import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:flutter/material.dart';
 
 
@@ -21,20 +19,6 @@ class EmptyWidget extends StatelessWidget {
         children: [
           SizedBox(width: double.infinity),
           Image.asset(AppPng.empty, width: 250, height: 250),
-        //  16.height,
-          // Text(
-          //   title ?? 'داده ای وجود ندارد!',
-          //   // style: TextStyle(
-          //   //   color: AppColorsDark.gray400,
-          //   //   fontSize: AppSize.fontSizeMedium,
-          //   // ),
-          // ),
-
-          // if (onRetry != null)
-          //   IconButton(
-          //     onPressed: onRetry,
-          //     icon: Icon(Icons.refresh, color:Colors.grey),
-          //   ),
         ],
       ),
     );

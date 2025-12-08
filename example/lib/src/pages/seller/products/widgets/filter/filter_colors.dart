@@ -1,3 +1,4 @@
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class SellerFilterColors extends StatelessWidget {
                       width: size,
                       height: size,
                       decoration: BoxDecoration(
-                        color: color.colorObj,
+                        color: color.hex.toColor,
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: isSelected ? colors.primary : colors.outline,
@@ -51,7 +52,7 @@ class SellerFilterColors extends StatelessWidget {
                           isSelected
                               ? Icon(
                                 Icons.check,
-                                color: _contrast(color.colorObj),
+                                color: _contrast(color.hex.toColor),
                               )
                               : null,
                     ),

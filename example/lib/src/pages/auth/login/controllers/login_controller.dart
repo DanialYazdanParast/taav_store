@@ -51,41 +51,34 @@ class LoginController extends GetxController {
     final result = await loginRepository.login(username, password);
 
     result.fold(
-          (failure) {
+      (failure) {
         loginState.value = CurrentState.error;
-        ToastUtil.show(
-          failure.message ?? 'نام کاربری یا رمز عبور اشتباه است',
-          type: ToastType.error,
-        );
+        ToastUtil.show(failure.message, type: ToastType.error);
       },
-          (user) {
+      (user) {
         loginState.value = CurrentState.success;
 
         ToastUtil.show(
-          'ورود با موفقیت انجام شد. خوش آمدید ${user.username ?? ''}',
+          'ورود با موفقیت انجام شد. خوش آمدید ${user.username}',
           type: ToastType.success,
         );
 
         authService.saveUserData(
           remember: rememberMe.value,
-          uname: user.username ?? '',
+          uname: user.username,
           id: user.id,
-          type: user.userType ?? '',
+          type: user.userType,
         );
 
-        final userType = user.userType?.toLowerCase() ?? '';
+        final userType = user.userType.toLowerCase() ?? '';
 
         if (userType == "seller") {
           Get.offAllNamed(AppRoutes.sellerProducts);
         } else if (userType == "buyer") {
           Get.offAllNamed(AppRoutes.buyerProducts);
         } else {
-
-          ToastUtil.show(
-            'نوع کاربری نامعتبر است',
-            type: ToastType.error,
-          );
-          authService.logout(); // خروج کاربر
+          ToastUtil.show('نوع کاربری نامعتبر است', type: ToastType.error);
+          authService.logout();
           Get.offAllNamed(AppRoutes.login);
         }
       },

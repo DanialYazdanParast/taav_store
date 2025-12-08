@@ -335,8 +335,8 @@ class _CustomAppBar extends StatelessWidget {
             onTap: () => Get.back(),
             bgColor:
                 isDesktop
-                    ? Colors.grey.withOpacity(0.1)
-                    : Colors.white.withOpacity(0.2),
+                    ? Colors.grey.withValues(alpha: 0.1)
+                    : Colors.white.withValues(alpha: 0.2),
             color: isDesktop ? Colors.black : Colors.white,
           ),
         ),
@@ -397,13 +397,13 @@ class _TopBackground extends StatelessWidget {
             top: -60,
             right: -100,
             size: 250,
-            color: Colors.white.withOpacity(0.08),
+            color: Colors.white.withValues(alpha: 0.08),
           ),
           DecorativeCircle(
             top: 50,
             left: -80,
             size: 180,
-            color: Colors.white.withOpacity(0.08),
+            color: Colors.white.withValues(alpha: 0.08),
           ),
         ],
       ),

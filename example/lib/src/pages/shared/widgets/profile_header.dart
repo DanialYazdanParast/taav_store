@@ -28,7 +28,7 @@ class ProfileHeader extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            theme.colorScheme.primary.withOpacity(0.05),
+            theme.colorScheme.primary.withValues(alpha: 0.05),
             theme.cardColor,
           ],
         ),
@@ -66,7 +66,7 @@ class ProfileHeader extends StatelessWidget {
         color: Colors.blue[50],
         border: Border.all(color: Colors.white, width: 4),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 15, offset: const Offset(0, 8)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 15, offset: const Offset(0, 8)),
         ],
       ),
       child: const Icon(Icons.person, size: 60, color: Colors.blue),
@@ -87,7 +87,7 @@ class ProfileHeader extends StatelessWidget {
     return Obx(() => Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p12, vertical: AppSize.p4),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withOpacity(0.1),
+        color: theme.colorScheme.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(

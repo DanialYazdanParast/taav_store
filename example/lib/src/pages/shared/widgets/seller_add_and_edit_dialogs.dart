@@ -8,7 +8,6 @@ import 'package:example/src/commons/widgets/text/app_text_field.dart';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
 
 import 'package:example/src/pages/shared/controllers/mixin_dialog_controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -65,7 +64,7 @@ class SellerAddAndEditDialogs {
                   IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
-                    bgColor: Colors.grey.withOpacity(0.1),
+                    bgColor: Colors.grey.withValues(alpha: 0.1),
                     color: Get.theme.colorScheme.onSurface,
                     size: 20,
                   ),
@@ -154,7 +153,7 @@ class SellerAddAndEditDialogs {
                         Icon(
                           Icons.search_rounded,
                           size: 48,
-                          color: Get.theme.disabledColor.withOpacity(0.5),
+                          color: Get.theme.disabledColor.withValues(alpha: 0.5),
                         ),
                         AppSize.p8.height,
                         Text(
@@ -230,7 +229,7 @@ class SellerAddAndEditDialogs {
                   IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
-                    bgColor: Colors.grey.withOpacity(0.1),
+                    bgColor: Colors.grey.withValues(alpha: 0.1),
                     color: Get.theme.colorScheme.onSurface,
                     size: 20,
                   ),
@@ -314,7 +313,7 @@ class SellerAddAndEditDialogs {
               IconButtonWidget(
                 icon: Icons.close,
                 onTap: () => Get.back(),
-                bgColor: Colors.grey.withOpacity(0.1),
+                bgColor: Colors.grey.withValues(alpha: 0.1),
                 color: Get.theme.colorScheme.onSurface,
                 size: 20,
               ),
@@ -368,9 +367,9 @@ class SellerAddAndEditDialogs {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppSize.r20),
-          border: Border.all(color: color.withOpacity(0.3), width: 1.5),
+          border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -382,7 +381,7 @@ class SellerAddAndEditDialogs {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: color.withOpacity(0.2),
+                    color: color.withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -396,7 +395,7 @@ class SellerAddAndEditDialogs {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: color.withOpacity(0.8),
+                color: color.withValues(alpha: 0.8),
                 fontSize: 14,
               ),
             ),

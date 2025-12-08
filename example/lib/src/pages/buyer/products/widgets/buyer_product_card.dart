@@ -1,11 +1,11 @@
 import 'package:example/src/commons/constants/app_size.dart';
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/utils/formatters/number_formatter.dart';
 import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
-import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +19,6 @@ class BuyerProductCard extends StatelessWidget {
   final double size;
   final Function onTap;
 
-
   const BuyerProductCard({
     super.key,
     required this.productName,
@@ -27,7 +26,9 @@ class BuyerProductCard extends StatelessWidget {
     required this.discountedPrice,
     required this.discountPercent,
     required this.quantity,
-    required this.imagePath, required this.size, required this.onTap,
+    required this.imagePath,
+    required this.size,
+    required this.onTap,
   });
 
   @override
@@ -36,7 +37,7 @@ class BuyerProductCard extends StatelessWidget {
     final primaryColor = theme.colorScheme.primary;
 
     return InkWell(
-      onTap:() =>  onTap(),
+      onTap: () => onTap(),
       child: Container(
         margin:
             Responsive.isMobile
@@ -51,7 +52,11 @@ class BuyerProductCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _ProductImage(discountPercent: discountPercent, imagePath: imagePath, size: size,),
+            _ProductImage(
+              discountPercent: discountPercent,
+              imagePath: imagePath,
+              size: size,
+            ),
             AppSize.p12.width,
             _ProductInfo(
               productName: productName,
@@ -73,7 +78,11 @@ class _ProductImage extends StatelessWidget {
   final String imagePath;
   final double size;
 
-  const _ProductImage({required this.discountPercent, required this.imagePath, required this.size});
+  const _ProductImage({
+    required this.discountPercent,
+    required this.imagePath,
+    required this.size,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +93,7 @@ class _ProductImage extends StatelessWidget {
         TaavNetworkImage(
           imagePath,
           width: double.infinity,
-         height: size,
+          height: size,
           borderRadius: 10,
         ),
 
@@ -177,7 +186,6 @@ class _ProductInfo extends StatelessWidget {
   }
 }
 
-// ردیف قیمت
 class _PriceColum extends StatelessWidget {
   final String originalPrice;
   final String discountedPrice;
@@ -191,47 +199,67 @@ class _PriceColum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme;
+    final theme = Theme.of(context);
 
-    return SizedBox(
-      // height: 30,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppSize.p16.height,
-          originalPrice != discountedPrice
-              ? Text(
-                originalPrice,
-                style: TextStyle(
-                  color: theme.hintColor,
-                  fontSize: AppSize.f12,
-                  decoration: TextDecoration.lineThrough,
-                  decorationColor: theme.hintColor,
-                ),
-                overflow: TextOverflow.ellipsis,
-              )
-              : const SizedBox(height: 12),
+    final double original =
+        double.tryParse(originalPrice.replaceAll(',', '')) ?? 0;
+    final double discounted =
+        double.tryParse(discountedPrice.replaceAll(',', '')) ?? 0;
 
-          AppSize.p16.height,
-          Row(
-            children: [
-              Text(discountedPrice, style: getPriceTextStyle(discountedPrice)),
-              Flexible(
-                child: Text(
-                  ' ${TKeys.currency.tr} ',
-                  style: TextStyle(
-                    color: Colors.green[600],
-                    fontSize: AppSize.f11,
+    final bool hasDiscount = original > discounted;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (hasDiscount)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    original.toLocalizedPrice,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      decoration: TextDecoration.lineThrough,
+                      color: theme.disabledColor,
+                      fontSize: AppSize.f12,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          )
+        else
+          const SizedBox(height: 32),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              discounted.toLocalizedPrice,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.textTheme.titleMedium?.color,
+              ),
+            ),
+            const SizedBox(width: 4),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: Text(
+                TKeys.currency.tr,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10,
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

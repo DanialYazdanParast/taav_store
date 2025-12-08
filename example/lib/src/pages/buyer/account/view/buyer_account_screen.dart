@@ -17,7 +17,10 @@ class BuyerAccountScreen extends GetView<BuyerAccountController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.theme.scaffoldBackgroundColor,
+      appBar: AppBar(
+      toolbarHeight: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: Responsive(
         mobile: BuyerMobileLayout(controller: controller),
         desktop: BuyerDesktopLayout(controller: controller),
@@ -65,7 +68,7 @@ class BuyerDesktopLayout extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppSize.r16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 30,
                 offset: const Offset(0, 10),
               ),
@@ -82,7 +85,12 @@ class BuyerDesktopLayout extends StatelessWidget {
                 height: 300,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(AppSize.p32,AppSize.p32,AppSize.p32,8),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSize.p32,
+                  AppSize.p32,
+                  AppSize.p32,
+                  8,
+                ),
                 child: MenuItem(
                   icon: Icons.history_rounded,
                   color: theme.colorScheme.primary,
@@ -94,13 +102,18 @@ class BuyerDesktopLayout extends StatelessWidget {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(AppSize.p32,0,AppSize.p32,AppSize.p32),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSize.p32,
+                  0,
+                  AppSize.p32,
+                  AppSize.p32,
+                ),
                 child: IconList(
                   onLogout: controller.authService.logout,
                   showChevron: false,
                 ),
               ),
-              32.height
+              32.height,
             ],
           ),
         ),

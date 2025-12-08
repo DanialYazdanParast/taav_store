@@ -52,7 +52,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
+                            color: Colors.black.withValues(alpha: 0.05),
                             blurRadius: 20,
                           ),
                         ],
@@ -124,7 +124,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                             style: theme.textTheme.bodyLarge?.copyWith(
                               height: 1.8,
                               color: theme.textTheme.bodyMedium?.color
-                                  ?.withOpacity(0.8),
+                                  ?.withValues(alpha: 0.8),
                             ),
                           ),
                         ],

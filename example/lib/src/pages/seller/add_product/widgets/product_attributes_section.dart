@@ -1,3 +1,4 @@
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,7 +69,7 @@ class ProductAttributesSection extends StatelessWidget {
                     width: 38,
                     height: 38,
                     decoration: BoxDecoration(
-                      color: color.colorObj,
+                      color: color.hex.toColor,
                       shape: BoxShape.circle,
                       border: Border.all(
                         color:
@@ -81,8 +82,8 @@ class ProductAttributesSection extends StatelessWidget {
                           isSelected
                               ? [
                                 BoxShadow(
-                                  color: theme.colorScheme.primary.withOpacity(
-                                    0.3,
+                                  color: theme.colorScheme.primary.withValues(
+                                   alpha:  0.3,
                                   ),
                                   blurRadius: 6,
                                   offset: const Offset(0, 3),
@@ -96,7 +97,7 @@ class ProductAttributesSection extends StatelessWidget {
                               Icons.check,
                               size: 20,
                               color:
-                                  color.colorObj.computeLuminance() > 0.5
+                                  color.hex.toColor.computeLuminance() > 0.5
                                       ? Colors.black
                                       : Colors.white,
                             )
@@ -114,7 +115,7 @@ class ProductAttributesSection extends StatelessWidget {
                   width: 45,
                   height: 45,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.05),
+                    color: theme.colorScheme.primary.withValues(alpha: 0.05),
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: theme.colorScheme.primary,
@@ -157,7 +158,7 @@ class ProductAttributesSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppSize.r20),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.primary.withOpacity(0.2),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.2),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -202,7 +203,7 @@ class ProductAttributesSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: theme.colorScheme.primary),
                     borderRadius: BorderRadius.circular(AppSize.r20),
-                    color: theme.colorScheme.primary.withOpacity(0.05),
+                    color: theme.colorScheme.primary.withValues(alpha: 0.05),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

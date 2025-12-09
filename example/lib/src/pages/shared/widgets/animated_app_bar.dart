@@ -60,7 +60,9 @@ class AnimatedAppBar<T extends GetxController> extends GetView<T> {
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Get.theme.textTheme.bodyLarge
+                  style: Get.theme.textTheme.bodyLarge!.copyWith(
+                    color: Colors.white
+                  )
                 ),
               ),
               const SizedBox(width: 48),

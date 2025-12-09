@@ -22,7 +22,7 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
 
     return Container(
       height: 80,
-      padding: const EdgeInsets.symmetric(horizontal: AppSize.p16),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
       decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
       child: Row(
         children: [

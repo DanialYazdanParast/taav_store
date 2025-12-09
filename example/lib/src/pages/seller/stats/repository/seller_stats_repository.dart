@@ -34,8 +34,6 @@ class SellerStatsRepository extends BaseRepository
         for (var order in allOrders) {
           for (var item in order.items) {
 
-            // ✅ اصلاح مهم: فیلتر کردن بر اساس شناسه فروشنده
-            // اگر این آیتم متعلق به فروشنده جاری نیست، از آن رد شو
             if (item.sellerId != sellerId) continue;
 
             if (aggregatedMap.containsKey(item.productId)) {

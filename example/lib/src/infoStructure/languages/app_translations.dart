@@ -1,4 +1,3 @@
-// lib/core/localization/app_translations.dart
 
 import 'package:get/get.dart';
 

@@ -151,7 +151,7 @@ const Map<String, String> faIR = {
   TKeys.countUnit: 'عدد',
   TKeys.bestSeller: 'پرفروش‌ترین',
   TKeys.deleteProductTitle: 'حذف محصول',
-  TKeys.confirmDeleteProductMsg: 'آیا مطمئن هستید که می‌خواهید محصول\n"{productName}" را حذف کنید؟',
+  TKeys.confirmDeleteProductMsg: 'آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟',
   TKeys.deleteAction: 'حذف',
 
   // ═══ Product Creation / Editing ═══
@@ -234,5 +234,6 @@ const Map<String, String> faIR = {
   TKeys.cameraSource: 'دوربین',
   TKeys.imageGallerySource: 'گالری تصاویر',
   TKeys.productDeletedSuccessfully: 'محصول با موفقیت حذف شد',
+
 
 };

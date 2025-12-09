@@ -232,5 +232,6 @@ abstract class TKeys {
   static const String cameraSource = 'camera_source';
   static const String imageGallerySource = 'image_gallery_source';
 
-  static const String productDeletedSuccessfully = 'product_deleted_successfully'; // ✅ کلید جدید
+  static const String productDeletedSuccessfully = 'product_deleted_successfully';
+
 }

@@ -312,7 +312,7 @@ class SellerAddProductController extends GetxController
             (failure) {
           submitState.value = CurrentState.error;
           ToastUtil.show(
-            failure.message ?? TKeys.errorAddingProduct.tr,
+            failure.message,
             type: ToastType.error,
           );
         },
@@ -365,6 +365,7 @@ class SellerAddProductController extends GetxController
       final productsCtrl = Get.find<SellerProductsController>();
       productsCtrl.products.insert(0, newProduct);
       productsCtrl.calculatePriceLimits(productsCtrl.products);
+      productsCtrl.clearAllFilters();
     }
   }
 }

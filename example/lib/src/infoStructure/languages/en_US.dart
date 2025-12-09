@@ -149,7 +149,7 @@ const Map<String, String> enUS = {
   TKeys.countUnit: 'pcs',
   TKeys.bestSeller: 'Best Seller',
   TKeys.deleteProductTitle: 'Delete Product',
-  TKeys.confirmDeleteProductMsg: 'Are you sure you want to delete the product\n"{productName}"?',
+  TKeys.confirmDeleteProductMsg: 'Are you sure you want to delete the product',
   TKeys.deleteAction: 'Delete',
 
   // ═══ Product Creation / Editing ═══
@@ -232,4 +232,5 @@ const Map<String, String> enUS = {
   TKeys.cameraSource: 'Camera',
   TKeys.imageGallerySource: 'Image Gallery',
   TKeys.productDeletedSuccessfully: 'Product deleted successfully',
+
 };

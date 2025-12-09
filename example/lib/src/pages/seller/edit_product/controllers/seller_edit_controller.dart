@@ -396,6 +396,7 @@ class SellerEditController extends GetxController with MixinDialogController {
       if (index != -1) {
         productsController.products[index] = updatedProduct;
         productsController.products.refresh();
+        productsController.clearAllFilters();
       }
     }
   }

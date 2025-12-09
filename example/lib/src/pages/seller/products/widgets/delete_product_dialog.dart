@@ -24,7 +24,7 @@ class DeleteProductDialog {
           ),
           const SizedBox(height: 16),
           Text(
-            TKeys.confirmDeleteProductMsg.trParams({'productName': productName}),
+            TKeys.confirmDeleteProductMsg.tr,
             textAlign: TextAlign.center,
             style: Get.textTheme.bodyMedium,
           ),

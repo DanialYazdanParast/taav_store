@@ -342,7 +342,9 @@ class _CustomAppBar extends StatelessWidget {
           child: Text(
             TKeys.addNewProduct.tr,
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
-            style: Get.theme.textTheme.bodyLarge
+            style: Get.theme.textTheme.bodyLarge!.copyWith(
+                color: Colors.white
+            )
           ),
         ),
         if (!isDesktop) const SizedBox(width: 40),

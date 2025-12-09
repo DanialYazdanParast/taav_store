@@ -205,7 +205,6 @@ class BuyerProductsController extends GetxController {
       result = result.where((p) => p.quantity > 0).toList();
     }
 
-    // منطق اصلی فیلتر رنگ: تغییر any به every برای اعمال منطق "و" (AND)
     if (appliedColorHexes.isNotEmpty) {
       result = result.where((p) {
         return appliedColorHexes.every(

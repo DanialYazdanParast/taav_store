@@ -145,20 +145,23 @@ class CartController extends GetxController {
       "totalPrice": totalPayablePrice,
       "date": DateTime.now().toIso8601String(),
       "items":
-          cartItems
-              .map(
-                (item) => {
-                  "productId": item.productId,
-                  "productTitle": item.productTitle,
-                  "sellerId": item.sellerId,
-                  "color": item.colorHex,
-                  "quantity": item.quantity,
-                  "price": item.price,
-                  "originalPrice": item.originalPrice,
-                },
-              )
-              .toList(),
+      cartItems
+          .map(
+            (item) => {
+          "productId": item.productId,
+          "productTitle": item.productTitle,
+          "sellerId": item.sellerId,
+          "color": item.colorHex,
+          "quantity": item.quantity,
+          "price": item.price,
+          "originalPrice": item.originalPrice,
+
+          "image": item.productImage, // فرض بر این است که نام فیلد در مدل CartItemModel، "productImage" است.
+        },
+      )
+          .toList(),
     };
+
 
     final result = await _repo.submitOrder(orderData);
 

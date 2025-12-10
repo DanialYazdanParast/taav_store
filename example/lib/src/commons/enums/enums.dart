@@ -4,8 +4,6 @@ enum UserType { buyer, seller }
 
 
 
-
-
 UserType userTypeFromString(String value) {
   switch (value.toLowerCase()) {
     case 'seller':

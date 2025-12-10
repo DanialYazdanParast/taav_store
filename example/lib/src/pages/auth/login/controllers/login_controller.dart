@@ -2,7 +2,7 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
-import 'package:example/src/infoStructure/languages/translation_keys.dart'; // Import added
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,20 +17,19 @@ class LoginController extends GetxController {
   final FocusNode usernameFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
-  late TextEditingController usernameController;
-  late TextEditingController passwordController;
+  late final TextEditingController usernameController;
+  late final TextEditingController passwordController;
 
   final RxBool rememberMe = false.obs;
   final Rx<CurrentState> loginState = CurrentState.idle.obs;
 
   final GlobalKey<FormState> fkLogin = GlobalKey<FormState>();
-  late Rx<AutovalidateMode> avmLogin;
+  late final Rx<AutovalidateMode> avmLogin;
 
   @override
   void onInit() {
     usernameController = TextEditingController();
     passwordController = TextEditingController();
-
     avmLogin = AutovalidateMode.disabled.obs;
     super.onInit();
   }
@@ -45,7 +44,7 @@ class LoginController extends GetxController {
     }
 
     loginState.value = CurrentState.loading;
-    await Future.delayed(const Duration(seconds: 1));
+
     final username = usernameController.text.trim();
     final password = passwordController.text;
 
@@ -59,14 +58,9 @@ class LoginController extends GetxController {
           (user) {
         loginState.value = CurrentState.success;
 
-        // ترکیب پیام موفقیت با نام کاربری
         final successMessage =
             '${TKeys.loginSuccess.tr} ${TKeys.welcomeMessage.tr} ${user.username}';
-
-        ToastUtil.show(
-          successMessage,
-          type: ToastType.success,
-        );
+        ToastUtil.show(successMessage, type: ToastType.success);
 
         authService.saveUserData(
           remember: rememberMe.value,
@@ -75,16 +69,16 @@ class LoginController extends GetxController {
           type: user.userType,
         );
 
-        final userType = user.userType.toLowerCase() ?? '';
+        final userType = userTypeFromString(user.userType);
 
-        if (userType == "seller") {
-          Get.offAllNamed(AppRoutes.sellerProducts);
-        } else if (userType == "buyer") {
-          Get.offAllNamed(AppRoutes.buyerProducts);
-        } else {
-          ToastUtil.show(TKeys.invalidUserType.tr, type: ToastType.error);
-          authService.logout();
-          Get.offAllNamed(AppRoutes.login);
+        switch (userType) {
+          case UserType.seller:
+            Get.offAllNamed(AppRoutes.sellerProducts);
+            break;
+
+          case UserType.buyer:
+            Get.offAllNamed(AppRoutes.buyerProducts);
+            break;
         }
       },
     );
@@ -94,7 +88,6 @@ class LoginController extends GetxController {
   void onClose() {
     usernameController.dispose();
     passwordController.dispose();
-
     usernameFocus.dispose();
     passwordFocus.dispose();
     super.onClose();

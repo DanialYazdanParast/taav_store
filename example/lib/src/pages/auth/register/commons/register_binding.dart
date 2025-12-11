@@ -1,3 +1,4 @@
+
 import 'package:get/get.dart';
 import '../controllers/register_controller.dart';
 import '../repository/register_repository.dart';
@@ -8,11 +9,13 @@ class RegisterBinding extends Bindings {
   void dependencies() {
 
     Get.lazyPut<IRegisterRepository>(
-          () => RegisterRepository(network: Get.find<NetworkService>()),
+      () => RegisterRepository(network: Get.find<NetworkService>()),
     );
 
     Get.lazyPut<RegisterController>(
-          () => RegisterController(registerRepository: Get.find<IRegisterRepository>()),
+      () => RegisterController(
+        registerRepository: Get.find<IRegisterRepository>(),
+      ),
     );
   }
 }

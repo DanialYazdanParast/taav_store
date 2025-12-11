@@ -1,6 +1,7 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/pages/auth/login/controllers/login_controller.dart';
 import 'package:example/src/pages/auth/register/models/dto.dart';
 import 'package:example/src/pages/auth/register/repository/register_repository.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
@@ -106,6 +107,7 @@ class RegisterController extends GetxController {
         ToastUtil.show(failure.message, type: ToastType.error);
       },
       (newUser) {
+
         final successMsg =
             '${TKeys.registerSuccessMsg.tr} ${TKeys.loginToContinue.tr}';
 
@@ -116,8 +118,15 @@ class RegisterController extends GetxController {
           duration: const Duration(seconds: 3),
         );
 
+        Get.offNamed(
+          AppRoutes.login,
+          arguments: {
+            'username': usernameController.text,
+            'password': passwordController.text,
+          },
+        );
+
         _clearForm();
-        Get.offNamed(AppRoutes.login);
       },
     );
   }

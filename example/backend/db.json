@@ -17,6 +17,42 @@
       "password": "@aA123456",
       "userType": "seller",
       "id": 3
+    },
+    {
+      "username": "dani",
+      "password": "1234@Ddd",
+      "userType": "buyer",
+      "id": 4
+    },
+    {
+      "username": "ddddd",
+      "password": "1234@Ddd",
+      "userType": "buyer",
+      "id": 5
+    },
+    {
+      "username": "ddddds",
+      "password": "1234@Ddd",
+      "userType": "buyer",
+      "id": 6
+    },
+    {
+      "username": "ddsdd",
+      "password": "1234@Ddd",
+      "userType": "buyer",
+      "id": 7
+    },
+    {
+      "username": "dddsss",
+      "password": "1234@Ddd",
+      "userType": "buyer",
+      "id": 8
+    },
+    {
+      "username": "ddddssss",
+      "password": "1234@Ddd",
+      "userType": "buyer",
+      "id": 9
     }
   ],
   "colors": [

@@ -31,6 +31,18 @@ class LoginController extends GetxController {
     usernameController = TextEditingController();
     passwordController = TextEditingController();
     avmLogin = AutovalidateMode.disabled.obs;
+
+
+    final arguments = Get.arguments;
+    if (arguments != null && arguments is Map<String, dynamic>) {
+      if (arguments.containsKey('username')) {
+        usernameController.text = arguments['username'];
+      }
+      if (arguments.containsKey('password')) {
+        passwordController.text = arguments['password'];
+      }
+    }
+
     super.onInit();
   }
 
@@ -71,14 +83,18 @@ class LoginController extends GetxController {
 
         final userType = userTypeFromString(user.userType);
 
-        switch (userType) {
-          case UserType.seller:
-            Get.offAllNamed(AppRoutes.sellerProducts);
-            break;
+        if (userType != null) {
+          switch (userType) {
+            case UserType.seller:
+              Get.offAllNamed(AppRoutes.sellerProducts);
+              break;
 
-          case UserType.buyer:
-            Get.offAllNamed(AppRoutes.buyerProducts);
-            break;
+            case UserType.buyer:
+              Get.offAllNamed(AppRoutes.buyerProducts);
+              break;
+          }
+        } else {
+          Get.offAllNamed(AppRoutes.login);
         }
       },
     );

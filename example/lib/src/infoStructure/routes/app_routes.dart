@@ -3,48 +3,58 @@ part of 'app_pages.dart';
 abstract class AppRoutes {
   AppRoutes._();
 
-  // ─── Auth ───────────────────────────────────────────────────────────────
-  static const String splash = _Paths.splash;
-  static const String login = _Paths.login;
-  static const String register = _Paths.register;
+  // Core / Auth
+  static const splash = _Paths.splash;
+  static const auth = _Paths.auth;
+  static const login = '${_Paths.auth}${_Paths.login}';
+  static const register = '${_Paths.auth}${_Paths.register}';
 
-  // ─── Seller ─────────────────────────────────────────────────────────────
-  static const String sellerProducts = _Paths.sellerProducts;
-  static const String sellerAddProduct = _Paths.sellerAddProduct;
-  static const String sellerSettings = _Paths.sellerSettings;
-  static const String sellerEditProduct = _Paths.sellerEditProduct;
-  static const String sellerStats = _Paths.sellerStats;
-  // ─── Buyer ──────────────────────────────────────────────────────────────
-  static const String buyerProducts = _Paths.buyerProducts;
-  static const String buyerProductDetails = _Paths.buyerProductDetails;
-  static const String buyerCart = _Paths.buyerCart;
-  static const String buyerAccount = _Paths.buyerAccount;
-  static const String buyerOrders = _Paths.buyerOrders;
+  // Seller
+  static const seller = _Paths.seller;
+  static const sellerProducts = '${_Paths.seller}${_Paths.sellerProducts}';
+  static const sellerAddProduct = '${_Paths.seller}${_Paths.sellerAddProduct}';
+  static const sellerSettings = '${_Paths.seller}${_Paths.sellerSettings}';
+  static const sellerEditProduct = '${_Paths.seller}${_Paths.sellerEditProduct}';
+  static const sellerStats = '${_Paths.seller}${_Paths.sellerStats}';
 
-  static const String notFound = _Paths.notFound;
+  // Buyer
+  static const buyer = _Paths.buyer;
+  static const buyerProducts = '${_Paths.buyer}${_Paths.buyerProducts}';
+  static const buyerProductDetails = '${_Paths.buyer}${_Paths.buyerProductDetails}';
+  static const buyerCart = '${_Paths.buyer}${_Paths.buyerCart}';
+  static const buyerAccount = '${_Paths.buyer}${_Paths.buyerAccount}';
+  static const buyerOrders = '${_Paths.buyer}${_Paths.buyerOrders}';
+
+  static const notFound = _Paths.notFound;
 }
 
 abstract class _Paths {
   _Paths._();
 
-  // ─── Auth ───────────────────────────────────────────────────────────────
-  static const String splash = '/';
-  static const String login = '/login';
-  static const String register = '/register';
+  // Base
+  static const splash = '/';
+  static const notFound = '/:unknown';
 
-  // ─── Seller ─────────────────────────────────────────────────────────────
-  static const String sellerProducts = '/seller/products';
-  static const String sellerAddProduct = '/seller/add-product';
-  static const String sellerSettings = '/seller/settings';
-  static const String sellerEditProduct = '/seller/products/:id';
-  static const String sellerStats = '/seller/stats';
+  // Groups
+  static const auth = '/auth';
+  static const seller = '/seller';
+  static const buyer = '/buyer';
 
-  // ─── Buyer ──────────────────────────────────────────────────────────────
-  static const String buyerProducts = '/buyer/products';
-  static const String buyerProductDetails = '/buyer/products/:id';
-  static const String buyerCart = '/buyer/cart';
-  static const String buyerAccount = '/buyer/account';
-  static const String buyerOrders = '/buyer/orders';
+  // Auth children
+  static const login = '/login';
+  static const register = '/register';
 
-  static const String notFound = '/404';
+  // Seller children
+  static const sellerProducts = '/products';
+  static const sellerAddProduct = '/add-product';
+  static const sellerSettings = '/settings';
+  static const sellerEditProduct = '/products/:id';
+  static const sellerStats = '/stats';
+
+  // Buyer children
+  static const buyerProducts = '/products';
+  static const buyerProductDetails = '/products/:id';
+  static const buyerCart = '/cart';
+  static const buyerAccount = '/account';
+  static const buyerOrders = '/orders';
 }

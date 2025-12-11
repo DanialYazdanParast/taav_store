@@ -1,4 +1,3 @@
-// lib/src/pages/seller/main/view/main_seller_screen.dart
 
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +17,6 @@ class MainSellerScreen extends GetView<MainSellerController> {
 
   @override
   Widget build(BuildContext context) {
-    // تنظیم تب اولیه بعد از build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.currentIndex.value != initialTab) {
-        controller.setTab(initialTab);
-      }
-    });
-
     return Responsive(
       mobile: const MainSellerMobile(),
       desktop: const MainSellerDesktop(),

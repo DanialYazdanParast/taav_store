@@ -1,5 +1,3 @@
-// lib/src/pages/buyer/main/widgets/main_buyer_mobile.dart
-
 import 'package:example/src/pages/buyer/account/view/buyer_account_screen.dart';
 import 'package:example/src/pages/buyer/cart/view/cart_screen.dart';
 import 'package:example/src/pages/buyer/products/view/buyer_products_screen.dart';
@@ -22,22 +20,19 @@ class MainBuyerMobile extends GetView<MainBuyerController> {
 
     return Scaffold(
       body: Obx(
-        () => AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          child: Container(
-            key: ValueKey(controller.currentIndex.value),
-            child: pages[controller.currentIndex.value],
-          ),
+            () => IndexedStack(
+          index: controller.currentIndex.value,
+          children: pages,
         ),
       ),
       extendBody: true,
-      bottomNavigationBar: Obx(() {
-        return CustomBottomNav(
+      bottomNavigationBar: Obx(
+            () => CustomBottomNav(
           currentIndex: controller.currentIndex.value,
           items: controller.navItems,
           onTap: controller.changeTab,
-        );
-      }),
+        ),
+      ),
     );
   }
 }

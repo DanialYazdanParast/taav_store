@@ -3,7 +3,6 @@ import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
-
 import '../../../../infoStructure/languages/translation_keys.dart';
 
 class MainBuyerController extends GetxController {
@@ -36,7 +35,16 @@ class MainBuyerController extends GetxController {
   void onInit() {
     super.onInit();
     _syncIndexWithRoute();
+    _setupCartListener();
+  }
 
+  @override
+  void onReady() {
+    super.onReady();
+    _syncIndexWithRoute();
+  }
+
+  void _setupCartListener() {
     cartBadge.value = _cartController.totalCount;
 
     ever(_cartController.cartItems, (_) {
@@ -46,11 +54,12 @@ class MainBuyerController extends GetxController {
 
   void _syncIndexWithRoute() {
     final currentRoute = Get.currentRoute;
-    if (currentRoute.contains('/buyer/products') || currentRoute == '/buyer') {
+
+    if (currentRoute.contains('/products') || currentRoute == '/buyer') {
       currentIndex.value = 0;
-    } else if (currentRoute.contains('/buyer/cart')) {
+    } else if (currentRoute.contains('/cart')) {
       currentIndex.value = 1;
-    } else if (currentRoute.contains('/buyer/account')) {
+    } else if (currentRoute.contains('/account')) {
       currentIndex.value = 2;
     }
   }
@@ -66,12 +75,6 @@ class MainBuyerController extends GetxController {
 
     if (index >= 0 && index < routes.length) {
       Get.offNamed(routes[index]);
-    }
-  }
-
-  void setTab(int index) {
-    if (index >= 0 && index < navItems.length) {
-      currentIndex.value = index;
     }
   }
 

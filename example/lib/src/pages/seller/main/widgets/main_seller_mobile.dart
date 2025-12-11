@@ -12,32 +12,26 @@ class MainSellerMobile extends GetView<MainSellerController> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const SellerProductsScreen(), // تب 0: محصولات
-      const SizedBox(), // تب 1: افزودن (در موبایل نمایش داده نمی‌شه)
-      const SellerAccountScreen(), // تب 2: تنظیمات/حساب
+      const SellerProductsScreen(),
+      const SellerProductsScreen(),
+      const SellerAccountScreen(),
     ];
 
     return Scaffold(
       body: Obx(
-            () => AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          child: Container(
-            key: ValueKey(controller.currentIndex.value),
-            // اگر تب 1 (افزودن) بود، تب 0 رو نشون بده
-            child: pages[controller.currentIndex.value == 1
-                ? 0
-                : controller.currentIndex.value],
-          ),
+            () => IndexedStack(
+          index: controller.currentIndex.value,
+          children: pages,
         ),
       ),
       extendBody: true,
-      bottomNavigationBar: Obx(() {
-        return CustomBottomNav(
+      bottomNavigationBar: Obx(
+            () => CustomBottomNav(
           currentIndex: controller.currentIndex.value,
           items: controller.navItems,
-          onTap: controller.changeTab, // 🔥 مدیریت navigation
-        );
-      }),
+          onTap: controller.changeTab,
+        ),
+      ),
     );
   }
 }

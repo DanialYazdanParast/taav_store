@@ -1,5 +1,3 @@
-// lib/src/pages/seller/main/widgets/main_seller_desktop.dart
-
 import 'package:example/src/pages/seller/account/view/seller_account_screen.dart';
 import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:example/src/pages/seller/products/view/seller_products_screen.dart';
@@ -32,12 +30,9 @@ class MainSellerDesktop extends GetView<MainSellerController> {
           ),
           Expanded(
             child: Obx(
-                  () => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: Container(
-                  key: ValueKey(controller.currentIndex.value),
-                  child: pages[controller.currentIndex.value],
-                ),
+                  () => IndexedStack(
+                index: controller.currentIndex.value,
+                children: pages,
               ),
             ),
           ),

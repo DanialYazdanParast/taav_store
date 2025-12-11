@@ -37,6 +37,7 @@ class MainSellerController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    ever(currentIndex, (_) => _syncIndexWithRoute());
     _syncIndexWithRoute();
   }
 

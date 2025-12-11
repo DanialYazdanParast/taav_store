@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -86,30 +87,35 @@ class SellerEditController extends GetxController with MixinDialogController {
           (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
     );
   }
-
+  final ScrollController leftScrollController = ScrollController();
   // ─── Lifecycle ─────────────────────────
   @override
   void onInit() {
     avmEdit = AutovalidateMode.disabled.obs;
     _initControllers();
 
+    final routeParams = Get.parameters;
+    productId = routeParams['id'];
+
     final args = Get.arguments;
-    if (args is String) {
+    if (args is String && args.isNotEmpty) {
       productId = args;
-    } else {
+    }
+
+    if (productId == null || productId!.isEmpty) {
       ToastUtil.show(TKeys.invalidProductId.tr, type: ToastType.error);
-      Get.back();
+      Get.offNamed(AppRoutes.seller);
       return;
     }
 
     super.onInit();
-
     _syncWithMetadataService();
     fetchInitialData();
   }
 
   @override
   void onClose() {
+    leftScrollController.dispose();
     _disposeControllers();
     super.onClose();
   }

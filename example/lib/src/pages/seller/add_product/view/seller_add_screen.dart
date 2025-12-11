@@ -33,7 +33,7 @@ class SellerAddScreen extends GetView<SellerAddProductController> {
 class _SellerAddMobileLayout extends StatelessWidget {
   final SellerAddProductController controller;
 
-  const _SellerAddMobileLayout({required this.controller});
+   _SellerAddMobileLayout({required this.controller});
 
   void _handleImagePick(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -43,6 +43,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
       SellerAddAndEditDialogs.showImageSource(controller);
     }
   }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +113,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
         AppSize.p32,
       ),
       child: Form(
-        key: controller.formKey,
+        key: _formKey,
         child: Column(
           children: [
             Obx(
@@ -161,7 +162,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
 
             AppSize.p32.height,
 
-            _SubmitButton(controller: controller),
+            _SubmitButton(controller: controller, formKey: _formKey,),
 
             SizedBox(height: MediaQuery.of(context).padding.bottom + 20),
           ],
@@ -174,7 +175,8 @@ class _SellerAddMobileLayout extends StatelessWidget {
 class _SellerAddDesktopLayout extends StatelessWidget {
   final SellerAddProductController controller;
 
-  const _SellerAddDesktopLayout({required this.controller});
+   _SellerAddDesktopLayout({required this.controller});
+
 
   void _handleImagePick(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -184,6 +186,8 @@ class _SellerAddDesktopLayout extends StatelessWidget {
       SellerAddAndEditDialogs.showImageSource(controller);
     }
   }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +251,9 @@ class _SellerAddDesktopLayout extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Scrollbar(
+              controller:controller.leftScrollController,
               child: SingleChildScrollView(
+                controller:controller.leftScrollController,
                 padding: const EdgeInsetsDirectional.only(end: AppSize.p32),
                 child: Column(
                   children: [
@@ -282,7 +288,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
             flex: 6,
             child: SingleChildScrollView(
               child: Form(
-                key: controller.formKey,
+                key: _formKey,
                 child: Column(
                   children: [
                     ProductInfoSection(
@@ -303,7 +309,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
                       autoValidateMode: controller.avmAdd.value,
                     ),
                     48.height,
-                    _SubmitButton(controller: controller),
+                    _SubmitButton(controller: controller, formKey: _formKey,),
                   ],
                 ),
               ),
@@ -355,8 +361,8 @@ class _CustomAppBar extends StatelessWidget {
 
 class _SubmitButton extends StatelessWidget {
   final SellerAddProductController controller;
-
-  const _SubmitButton({required this.controller});
+  final GlobalKey<FormState> formKey;
+  const _SubmitButton({required this.controller, required this.formKey});
 
   @override
   Widget build(BuildContext context) {
@@ -364,7 +370,7 @@ class _SubmitButton extends StatelessWidget {
       () =>
           ButtonWidget(
             TKeys.finalSubmitProduct.tr,
-            controller.submitProduct,
+          () =>   controller.submitProduct(formKey),
             isLoading: controller.submitState.value == CurrentState.loading,
             icon: Icons.check_circle_outline_rounded,
           ).material(),

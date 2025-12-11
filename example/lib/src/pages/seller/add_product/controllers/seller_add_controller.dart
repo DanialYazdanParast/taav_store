@@ -43,7 +43,7 @@ class SellerAddProductController extends GetxController
   late FocusNode discountFocus;
   late FocusNode tagSearchFocusNode;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+//  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late Rx<AutovalidateMode> avmAdd;
 
   // ─── State Management ──────────────────
@@ -84,6 +84,7 @@ class SellerAddProductController extends GetxController
     );
   }
 
+  final ScrollController leftScrollController = ScrollController();
   // ─── Lifecycle Methods ─────────────────────
   @override
   void onInit() {
@@ -95,7 +96,8 @@ class SellerAddProductController extends GetxController
 
   @override
   void onClose() {
-    _disposeControllers();
+    leftScrollController.dispose();
+  //  _disposeControllers();
     super.onClose();
   }
 
@@ -115,21 +117,21 @@ class SellerAddProductController extends GetxController
     tagSearchFocusNode = FocusNode();
   }
 
-  void _disposeControllers() {
-    titleController.dispose();
-    descController.dispose();
-    countController.dispose();
-    priceController.dispose();
-    discountPriceController.dispose();
-    tagSearchController.dispose();
-
-    titleFocus.dispose();
-    descFocus.dispose();
-    priceFocus.dispose();
-    countFocus.dispose();
-    discountFocus.dispose();
-    tagSearchFocusNode.dispose();
-  }
+  // void _disposeControllers() {
+  //   titleController.dispose();
+  //   descController.dispose();
+  //   countController.dispose();
+  //   priceController.dispose();
+  //   discountPriceController.dispose();
+  //   tagSearchController.dispose();
+  //
+  //   titleFocus.dispose();
+  //   descFocus.dispose();
+  //   priceFocus.dispose();
+  //   countFocus.dispose();
+  //   discountFocus.dispose();
+  //   tagSearchFocusNode.dispose();
+  // }
 
   void _syncWithMetadataService() {
     try {
@@ -263,7 +265,7 @@ class SellerAddProductController extends GetxController
   }
 
   // ─── Submit Logic ────────────────────────
-  Future<void> submitProduct() async {
+  Future<void> submitProduct(GlobalKey<FormState> formKey) async {
     if (submitState.value == CurrentState.loading) return;
 
     if (!formKey.currentState!.validate()) {
@@ -355,9 +357,9 @@ class SellerAddProductController extends GetxController
     selectedTagNames.clear();
     filteredTags.clear();
     tagQuery.value = '';
-    formKey.currentState?.reset();
-    avmAdd.value = AutovalidateMode.disabled;
-    submitState.value = CurrentState.idle;
+    // formKey.currentState?.reset();
+    // avmAdd.value = AutovalidateMode.disabled;
+    // submitState.value = CurrentState.idle;
   }
 
   void _updateMainListLocally(ProductModel newProduct) {

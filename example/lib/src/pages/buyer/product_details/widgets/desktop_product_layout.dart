@@ -1,5 +1,6 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:example/src/pages/shared/widgets/custom_badge.dart';
@@ -23,7 +24,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
         title: Text(TKeys.productDetails.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
+          onPressed: () =>   Get.offAllNamed(AppRoutes.buyerProducts),
         ),
         actions: [_buildCartIcon(theme), const SizedBox(width: 16)],
       ),

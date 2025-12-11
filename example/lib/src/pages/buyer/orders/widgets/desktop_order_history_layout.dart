@@ -23,7 +23,7 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
     final Rxn<OrderModel> selectedOrder = Rxn<OrderModel>();
 
     return Scaffold(
-      appBar: CustomAppBar(title: TKeys.orderHistory.tr),
+      appBar: CustomAppBar(title: TKeys.orderHistory.tr,showBackButton: false,),
       body: Obx(() {
         if (controller.orderState.value == CurrentState.loading) {
           return Center(child: AppLoading.circular(size: 50));

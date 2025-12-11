@@ -24,14 +24,11 @@ class SplashController extends GetxController {
     appVersion.value = appInfoService.version;
   }
 
-
   void _handleNavigation() {
     final authService = Get.find<AuthService>();
 
     if (authService.rememberMe.value && authService.userId.value.isNotEmpty) {
-
       final userTypeString = authService.userType.value;
-
 
       final userType = userTypeFromString(userTypeString);
 

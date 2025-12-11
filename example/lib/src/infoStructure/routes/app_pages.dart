@@ -9,7 +9,6 @@ import 'package:example/src/pages/buyer/orders/commons/order_history_binding.dar
 import 'package:example/src/pages/buyer/orders/views/order_history_screen.dart';
 import 'package:example/src/pages/buyer/product_details/commons/buyer_product_details_binding.dart';
 import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
-import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
 import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
@@ -81,14 +80,14 @@ class AppPages {
           binding: MainSellerBinding(),
         ),
         GetPage(
-          name: _Paths.sellerSettings,
+          name: _Paths.sellerAccount,
           page: MainSellerScreen.new,
           binding: MainSellerBinding(),
         ),
         GetPage(
           name: _Paths.sellerEditProduct,
           page: SellerEditScreen.new,
-          binding: SellerEditBinding(),
+          binding: MainSellerBinding(),
           transition: Transition.downToUp,
         ),
         GetPage(
@@ -128,7 +127,7 @@ class AppPages {
         GetPage(
           name: _Paths.buyerProductDetails,
           page: BuyerProductDetailsScreen.new,
-          binding: BuyerProductDetailsBinding(),
+          binding: MainBuyerBinding(),
           transition: Transition.downToUp,
         ),
         GetPage(

@@ -13,7 +13,7 @@ abstract class AppRoutes {
   static const seller = _Paths.seller;
   static const sellerProducts = '${_Paths.seller}${_Paths.sellerProducts}';
   static const sellerAddProduct = '${_Paths.seller}${_Paths.sellerAddProduct}';
-  static const sellerSettings = '${_Paths.seller}${_Paths.sellerSettings}';
+  static const sellerSettings = '${_Paths.seller}${_Paths.sellerAccount}';
   static const sellerEditProduct = '${_Paths.seller}${_Paths.sellerEditProduct}';
   static const sellerStats = '${_Paths.seller}${_Paths.sellerStats}';
 
@@ -47,7 +47,7 @@ abstract class _Paths {
   // Seller children
   static const sellerProducts = '/products';
   static const sellerAddProduct = '/add-product';
-  static const sellerSettings = '/settings';
+  static const sellerAccount = '/account';
   static const sellerEditProduct = '/products/:id';
   static const sellerStats = '/stats';
 

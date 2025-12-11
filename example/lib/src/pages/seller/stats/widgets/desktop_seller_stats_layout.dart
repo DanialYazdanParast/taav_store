@@ -15,7 +15,7 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: TKeys.salesStatistics.tr),
+      appBar: CustomAppBar(title: TKeys.salesStatistics.tr,showBackButton: false,),
       body: Obx(() {
         if (controller.pageState.value == CurrentState.loading) {
           return Center(child: AppLoading.circular(size: 50));

@@ -1,5 +1,7 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
+import 'package:example/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:example/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
@@ -213,7 +215,9 @@ class _SellerEditDesktopLayout extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Scrollbar(
+              controller: controller.leftScrollController,
               child: SingleChildScrollView(
+              controller: controller.leftScrollController,
                 padding: const EdgeInsetsDirectional.only(end: AppSize.p32),
                 child: Column(
                   children: [
@@ -292,7 +296,10 @@ class _CustomAppBar extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: IconButtonWidget(
             icon: Icons.arrow_back_ios_new_rounded,
-            onTap: () => Get.back(),
+
+            onTap: () {
+              Get.offAllNamed(AppRoutes.sellerProducts);
+            },
             bgColor: isDesktop ? Colors.grey.withValues(alpha: 0.1) : Colors.white.withValues(alpha: 0.2),
             color: isDesktop ? Colors.black : Colors.white,
           ),

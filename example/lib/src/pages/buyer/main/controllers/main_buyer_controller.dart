@@ -34,6 +34,7 @@ class MainBuyerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    ever(currentIndex, (_) => _syncIndexWithRoute());
     _syncIndexWithRoute();
     _setupCartListener();
   }

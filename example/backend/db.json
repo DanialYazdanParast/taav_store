@@ -263,9 +263,35 @@
       "colors": [],
       "tags": [],
       "image": "http://localhost:3000/images/image-1765283885076-100195651.jpg"
+    },
+    {
+      "id": "1765484001161",
+      "title": "رررررررررررررر",
+      "description": "ررررررررررررر",
+      "price": 112,
+      "quantity": 2,
+      "discountPrice": 112,
+      "sellerId": "8",
+      "colors": [],
+      "tags": [],
+      "image": "http://localhost:3000/images/image-1765484001153-378382144.png"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "userId": "8",
+      "productId": "1765283885086",
+      "productTitle": "aaa",
+      "image": "http://localhost:3000/images/image-1765283885076-100195651.jpg",
+      "sellerId": "1",
+      "quantity": 1,
+      "color": "",
+      "price": 1,
+      "originalPrice": 1,
+      "maxStock": 1,
+      "id": 1
+    }
+  ],
   "orders": [
     {
       "buyerId": "2",

@@ -251,7 +251,6 @@ class SellerProductsController extends GetxController {
   void updateTempPriceRange(RangeValues values) =>
       tempPriceRange.value = values;
 
-  // تغییر: مدیریت کد هگز به جای نام رنگ
   void toggleTempColor(String colorHex) {
     if (tempColorHexes.contains(colorHex)) {
       tempColorHexes.remove(colorHex);

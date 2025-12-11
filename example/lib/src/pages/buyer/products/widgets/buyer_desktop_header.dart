@@ -97,8 +97,8 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
   Widget _buildProfileAvatar(Color primaryColor) {
     return InkWell(
       onTap: () {
-        final mainSellerController = Get.find<MainBuyerController>();
-        mainSellerController.changeTab(2);
+        final mainBuyerController = Get.find<MainBuyerController>();
+        mainBuyerController.changeTab(2);
       },
       child: CircleAvatar(
         radius: AppSize.p20,

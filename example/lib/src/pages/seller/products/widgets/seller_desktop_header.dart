@@ -31,8 +31,6 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
           _buildSearchField(),
           AppSize.p20.width,
           _buildFilterButton(theme),
-          AppSize.p16.width,
-          _buildAddButton(),
           AppSize.p24.width,
           _buildDivider(theme),
           AppSize.p24.width,
@@ -67,25 +65,13 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
           DialogWidget().show(const SellerFilterView());
         },
         color: theme.iconTheme.color,
-        bgColor: theme.cardColor,
+        bgColor: theme.scaffoldBackgroundColor,
         hasBorder: true,
       ),
     );
   }
 
-  Widget _buildAddButton() {
-    return SizedBox(
-      height: 48,
-      child: ButtonWidget(
-        TKeys.addProduct.tr,
-        () {},
-        icon: Icons.add_rounded,
-        radius: AppSize.r12,
-        textColor: Colors.white,
-        fontWeight: FontWeight.bold,
-      ).material(minWidth: 0),
-    );
-  }
+
 
   Widget _buildDivider(ThemeData theme) {
     return Container(height: 30, width: 1, color: theme.dividerColor);

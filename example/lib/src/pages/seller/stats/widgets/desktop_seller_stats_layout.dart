@@ -38,8 +38,8 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
 
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossAxisCount,
-                      childAspectRatio: 2.5,
+                      crossAxisCount: 3,
+                      childAspectRatio: 2,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 24,
                     ),

@@ -86,13 +86,17 @@ class MobileCartLayout extends GetView<CartController> {
             children: [
               Expanded(
                 flex: 2,
-                child:      ButtonWidget(
-                  TKeys.confirmAndPay.tr,
-                      () => controller.checkout(),
+                child: Obx(
+                  () =>
+                      ButtonWidget(
+                        TKeys.confirmAndPay.tr,
+                        () => controller.checkout(),
 
-                  isLoading:
-                  controller.cartCheckout.value == CurrentState.success,
-                ).material(),
+                        isLoading:
+                            controller.cartCheckout.value ==
+                            CurrentState.loading,
+                      ).material(),
+                ),
               ),
               const SizedBox(width: 16),
               _buildPriceInfo(theme),
@@ -112,7 +116,7 @@ class MobileCartLayout extends GetView<CartController> {
           Text(
             "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
             style: TextStyle(
-              color: theme.colorScheme.error,
+              color: Colors.green,
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),

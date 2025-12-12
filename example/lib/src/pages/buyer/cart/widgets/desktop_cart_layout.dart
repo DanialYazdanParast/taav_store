@@ -124,13 +124,11 @@ class DesktopCartLayout extends GetView<CartController> {
             ),
           ),
 
-          // Divider
           AppDivider.horizontal(
             space: 1,
             color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
           ),
 
-          // Items List
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -158,15 +156,11 @@ class DesktopCartLayout extends GetView<CartController> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Header
           buildOrderSummaryHeader(theme),
-
-          // Summary Details
           Padding(
             padding: EdgeInsets.all(AppSize.p24),
             child: Column(
               children: [
-                // Items Price
                 _buildSummaryRow(
                   theme,
                   icon: Icons.inventory_2_outlined,
@@ -175,8 +169,6 @@ class DesktopCartLayout extends GetView<CartController> {
                       "(${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? TKeys.items.tr : TKeys.item.tr})",
                   value: controller.totalOriginalPrice.toLocalizedPrice,
                 ),
-
-                // Discount
                 if (controller.hasDiscount) ...[
                   AppSize.p16.height,
                   _buildDiscountRow(
@@ -186,7 +178,6 @@ class DesktopCartLayout extends GetView<CartController> {
                   ),
                 ],
 
-                // Divider
                 AppSize.p24.height,
                 Container(
                   height: 1,
@@ -202,7 +193,6 @@ class DesktopCartLayout extends GetView<CartController> {
                 ),
                 AppSize.p24.height,
 
-                // Total
                 _buildTotalRow(
                   theme,
                   title: TKeys.cartTotal.tr,
@@ -212,7 +202,6 @@ class DesktopCartLayout extends GetView<CartController> {
             ),
           ),
 
-          // Checkout Button
           Padding(
             padding: EdgeInsets.fromLTRB(
               AppSize.p24,
@@ -220,14 +209,16 @@ class DesktopCartLayout extends GetView<CartController> {
               AppSize.p24,
               AppSize.p24,
             ),
-            child:
-                ButtonWidget(
-                  TKeys.confirmAndPay.tr,
-                  () => controller.checkout(),
+            child: Obx(
+              () =>
+                  ButtonWidget(
+                    TKeys.confirmAndPay.tr,
+                    () => controller.checkout(),
 
-                  isLoading:
-                      controller.cartCheckout.value == CurrentState.success,
-                ).material(),
+                    isLoading:
+                        controller.cartCheckout.value == CurrentState.loading,
+                  ).material(),
+            ),
           ),
         ],
       ),
@@ -246,6 +237,7 @@ class DesktopCartLayout extends GetView<CartController> {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
           Icon(
             Icons.receipt_long_outlined,
@@ -277,50 +269,62 @@ class DesktopCartLayout extends GetView<CartController> {
     String? subtitle,
     required String value,
   }) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(AppSize.p8),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withValues(alpha: 0.1),
-              borderRadius: AppSize.brCircular(AppSize.r8),
-            ),
-            child: Icon(icon, size: 18, color: theme.colorScheme.primary),
-          ),
-          AppSize.p12.width,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              if (subtitle != null)
-                Text(
-                  subtitle,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.textTheme.bodySmall?.color?.withValues(
-                      alpha: 0.6,
-                    ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(AppSize.p8),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: AppSize.brCircular(AppSize.r8),
                   ),
-                  overflow: TextOverflow.ellipsis,
+                  child: Icon(icon, size: 18, color: theme.colorScheme.primary),
                 ),
-            ],
-          ),
-          AppSize.p8.width,
-          Text(
-            "$value ${TKeys.toman.tr}",
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+                AppSize.p12.width,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.textTheme.bodySmall?.color?.withValues(
+                            alpha: 0.6,
+                          ),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+        AppSize.p8.width,
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "$value ${TKeys.toman.tr}",
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -339,41 +343,58 @@ class DesktopCartLayout extends GetView<CartController> {
           width: 1,
         ),
       ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(AppSize.p6),
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: AppSize.brCircular(AppSize.r6),
-              ),
-              child: const Icon(
-                Icons.local_offer,
-                size: 16,
-                color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(AppSize.p6),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: AppSize.brCircular(AppSize.r6),
+                    ),
+                    child: const Icon(
+                      Icons.local_offer,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                  AppSize.p12.width,
+                  Text(
+                    title,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
-            AppSize.p12.width,
-            Text(
-              title,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.green.shade700,
-                fontWeight: FontWeight.w600,
+          ),
+
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  AppSize.p8.width,
+                  Text(
+                    "$value ${TKeys.toman.tr}",
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-              overflow: TextOverflow.ellipsis,
             ),
-            AppSize.p8.width,
-            Text(
-              "$value ${TKeys.toman.tr}",
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: Colors.green.shade700,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -389,27 +410,36 @@ class DesktopCartLayout extends GetView<CartController> {
         color: theme.colorScheme.primary.withValues(alpha: 0.08),
         borderRadius: AppSize.brCircular(AppSize.r12),
       ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Row(
-          children: [
-            Text(
-              title,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-            AppSize.p8.width,
-            Text(
-              "$value ${TKeys.toman.tr}",
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+        children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-          ],
-        ),
+          ),
+          AppSize.p8.width,
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "$value ${TKeys.toman.tr}",
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

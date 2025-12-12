@@ -48,7 +48,7 @@ class MainSellerController extends GetxController {
       currentIndex.value = 0;
     } else if (currentRoute.contains('/add-product')) {
       currentIndex.value = 1;
-    } else if (currentRoute.contains('/settings')) {
+    } else if (currentRoute.contains('/account')) {
       currentIndex.value = 2;
     }
   }

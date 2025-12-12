@@ -17,6 +17,8 @@ class CartItemWidget extends GetView<CartController> {
 
   const CartItemWidget({super.key, required this.item});
 
+  static const double _imageSize = 90;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -26,67 +28,96 @@ class CartItemWidget extends GetView<CartController> {
       children: [
         TaavNetworkImage(
           item.productImage,
-          width: 90,
-          height: 90,
-          borderRadius: 12,
+          width: _imageSize,
+          height: _imageSize,
+          borderRadius: AppSize.r12,
           fit: BoxFit.cover,
         ),
-        const SizedBox(width: AppSize.p12),
+        AppSize.p12.width,
 
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                item.productTitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 6),
-
-              Row(
-                children: [
-                  Container(
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(
-                      color: item.colorHex.toColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    TKeys.selectedColor.tr,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.disabledColor,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-
-              FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${item.totalPrice.toLocalizedPrice} ${TKeys.toman.tr}",
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    16.width,
-                    _buildQuantityControl(item, theme),
-                  ],
-                ),
-              ),
+              _buildTitle(theme),
+              AppSize.p6.height,
+              _buildColorInfo(theme),
+              AppSize.p12.height,
+              _buildPriceAndQuantityControl(theme),
             ],
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildTitle(ThemeData theme) {
+    return Text(
+      item.productTitle,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: theme.textTheme.titleMedium?.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildColorInfo(ThemeData theme) {
+    return Row(
+      children: [
+        Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            color: item.colorHex.toColor,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey.shade300, width: 1.5),
+          ),
+        ),
+        AppSize.p6.width,
+        Text(
+          TKeys.selectedColor.tr,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.disabledColor,
+            fontSize: AppSize.f12,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPriceAndQuantityControl(ThemeData theme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  item.totalPrice.toLocalizedPrice,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppSize.f16,
+                  ),
+                ),
+                AppSize.p8.width,
+                Text(
+                  TKeys.toman.tr,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: AppSize.f12,
+                  ),
+                ),
+                AppSize.p16.width,
+              ],
+            ),
+          ),
+        ),
+        _buildQuantityControl(item, theme),
       ],
     );
   }
@@ -110,7 +141,7 @@ class CartItemWidget extends GetView<CartController> {
         primaryColor: theme.colorScheme.primary,
         backgroundColor: theme.scaffoldBackgroundColor,
         contentColor: theme.iconTheme.color ?? Colors.black,
-        borderSide: BorderSide(color: theme.dividerColor),
+        borderSide: BorderSide(color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5)),
         borderRadius: 8,
         textStyle: theme.textTheme.titleMedium!.copyWith(
           fontWeight: FontWeight.bold,
@@ -127,18 +158,17 @@ class CartItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double imageSize = 90;
-    const double borderRadius = 12;
+    final double borderRadius = AppSize.r12;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 1. شیمر برای تصویر محصول
         AppShimmer.rect(
           width: imageSize,
           height: imageSize,
           borderRadius: borderRadius,
         ),
-        const SizedBox(width: AppSize.p12),
+        AppSize.p12.width,
 
         Expanded(
           child: Column(
@@ -146,42 +176,44 @@ class CartItemShimmer extends StatelessWidget {
             children: [
               AppShimmer.rect(
                 width: Get.width * 0.45,
-                height: 18,
-                borderRadius: 4,
+                height: AppSize.f16,
+                borderRadius: AppSize.r4,
               ),
-              const SizedBox(height: 8),
+              AppSize.p8.height,
 
               AppShimmer.rect(
                 width: Get.width * 0.3,
-                height: 18,
-                borderRadius: 4,
+                height: AppSize.f16,
+                borderRadius: AppSize.r4,
               ),
-              const SizedBox(height: 10),
+              AppSize.p10.height,
 
               Row(
                 children: [
                   AppShimmer.circle(size: 16),
-                  6.width,
+                  AppSize.p6.width,
                   AppShimmer.rect(
                     width: Get.width * 0.2,
-                    height: 14,
-                    borderRadius: 4,
+                    height: AppSize.f14,
+                    borderRadius: AppSize.r4,
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              AppSize.p12.height,
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AppShimmer.rect(
-                    width: Get.width * 0.3,
-                    height: 20,
-                    borderRadius: 4,
+                    width: Get.width * 0.25,
+                    height: AppSize.f20,
+                    borderRadius: AppSize.r4,
                   ),
-
-
-
+                  AppShimmer.rect(
+                    width: 120,
+                    height: 36,
+                    borderRadius: AppSize.r8,
+                  ),
                 ],
               ),
             ],

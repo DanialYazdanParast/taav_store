@@ -17,6 +17,7 @@ class CartController extends GetxController {
 
   final RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final Rx<CurrentState> cartState = CurrentState.idle.obs;
+  final Rx<CurrentState> cartCheckout = CurrentState.idle.obs;
 
   String get currentUserId => _authService.userId.value;
 
@@ -139,6 +140,7 @@ class CartController extends GetxController {
 
   Future<void> checkout() async {
     if (cartItems.isEmpty) return;
+    cartCheckout.value = CurrentState.loading;
 
     final orderData = {
       "buyerId": currentUserId,
@@ -167,6 +169,7 @@ class CartController extends GetxController {
 
     result.fold(
       (failure) {
+        cartCheckout.value = CurrentState.error;
         ToastUtil.show(TKeys.orderSubmitFailed.tr, type: ToastType.error);
       },
       (_) async {
@@ -186,7 +189,7 @@ class CartController extends GetxController {
 
         final successMsg =
             '${TKeys.orderSubmitSuccess.tr} ${TKeys.stockUpdateSuccess.tr}';
-
+        cartCheckout.value = CurrentState.success;
         ToastUtil.show(successMsg, type: ToastType.success);
       },
     );

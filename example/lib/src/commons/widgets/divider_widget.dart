@@ -13,7 +13,7 @@ class AppDivider {
     final Color? color,
   }) {
     final divider = Divider(
-      color: color ?? Get.theme.dividerColor,
+      color: color ?? Get.theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
       thickness: thickness,
       height: space,
       indent: indent,
@@ -38,7 +38,7 @@ class AppDivider {
       child: VerticalDivider(
         width: space,
         thickness: thickness,
-        color: color ?? Get.theme.dividerColor,
+        color: color ?? Get.theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
       ),
     );
   }

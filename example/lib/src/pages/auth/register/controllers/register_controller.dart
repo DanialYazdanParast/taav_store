@@ -1,7 +1,6 @@
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/utils/toast_util.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
-import 'package:example/src/pages/auth/login/controllers/login_controller.dart';
 import 'package:example/src/pages/auth/register/models/dto.dart';
 import 'package:example/src/pages/auth/register/repository/register_repository.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';

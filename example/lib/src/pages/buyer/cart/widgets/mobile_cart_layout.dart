@@ -3,6 +3,7 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
@@ -85,22 +86,13 @@ class MobileCartLayout extends GetView<CartController> {
             children: [
               Expanded(
                 flex: 2,
-                child: ElevatedButton(
-                  onPressed: () => controller.checkout(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: theme.colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    TKeys.submitOrder.tr,
-                    style: TextStyle(
-                      color: theme.colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                child:      ButtonWidget(
+                  TKeys.confirmAndPay.tr,
+                      () => controller.checkout(),
+
+                  isLoading:
+                  controller.cartCheckout.value == CurrentState.success,
+                ).material(),
               ),
               const SizedBox(width: 16),
               _buildPriceInfo(theme),

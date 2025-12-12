@@ -166,7 +166,7 @@
       "title": "III",
       "description": "III",
       "price": 10,
-      "quantity": 3,
+      "quantity": 0,
       "discountPrice": 9,
       "sellerId": "1",
       "colors": [
@@ -212,7 +212,7 @@
       "title": "123",
       "description": "123",
       "price": 999999999999,
-      "quantity": 10,
+      "quantity": 1,
       "discountPrice": 999999999999,
       "sellerId": "1",
       "colors": [],
@@ -348,6 +348,34 @@
         }
       ],
       "id": 2
+    },
+    {
+      "buyerId": "2",
+      "totalPrice": 9000000000018,
+      "date": "2025-12-12T20:03:12.109",
+      "items": [
+        {
+          "productId": "1765280457268",
+          "productTitle": "123",
+          "sellerId": "1",
+          "color": "",
+          "quantity": 9,
+          "price": 999999999999,
+          "originalPrice": 999999999999,
+          "image": "http://localhost:3000/images/image-1765280457267-34613545.png"
+        },
+        {
+          "productId": "1765280257528",
+          "productTitle": "III",
+          "sellerId": "1",
+          "color": "#FF0000",
+          "quantity": 3,
+          "price": 9,
+          "originalPrice": 10,
+          "image": "http://localhost:3000/images/image-1765280257526-273861983.png"
+        }
+      ],
+      "id": 3
     }
   ]
 }

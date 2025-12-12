@@ -373,7 +373,7 @@ class SellerEditController extends GetxController with MixinDialogController {
             (failure) {
           submitState.value = CurrentState.error;
           ToastUtil.show(
-            failure.message ?? TKeys.errorUpdatingProduct.tr,
+            failure.message,
             type: ToastType.error,
           );
         },

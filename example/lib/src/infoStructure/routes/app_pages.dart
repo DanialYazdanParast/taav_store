@@ -7,7 +7,6 @@ import 'package:example/src/pages/buyer/main/commons/main_buyer_binding.dart';
 import 'package:example/src/pages/buyer/main/view/main_buyer_screen.dart';
 import 'package:example/src/pages/buyer/orders/commons/order_history_binding.dart';
 import 'package:example/src/pages/buyer/orders/views/order_history_screen.dart';
-import 'package:example/src/pages/buyer/product_details/commons/buyer_product_details_binding.dart';
 import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';

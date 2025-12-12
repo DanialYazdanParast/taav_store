@@ -6,9 +6,6 @@ import 'package:get/get.dart';
 import '../models/nav_item_model.dart';
 import 'custom_badge.dart';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // برای دسترسی به Get.theme و متد tr
-
 class CustomSidebar extends StatelessWidget {
   final int currentIndex;
   final List<NavItemModel> items;

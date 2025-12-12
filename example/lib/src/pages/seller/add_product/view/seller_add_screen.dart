@@ -323,9 +323,8 @@ class _SellerAddDesktopLayout extends StatelessWidget {
 
 class _CustomAppBar extends StatelessWidget {
   final bool isDesktop;
-  final ThemeData? theme;
 
-  const _CustomAppBar({required this.isDesktop, this.theme});
+  const _CustomAppBar({required this.isDesktop,});
 
   @override
   Widget build(BuildContext context) {

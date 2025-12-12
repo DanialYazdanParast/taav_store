@@ -129,6 +129,22 @@ abstract class TKeys {
   static const String orderDetails = 'order_details';
   static const String orderNumber = 'order_number';
 
+  // New Keys for hardcoded strings in DesktopOrderHistoryLayout
+  static const String loadingOrders = 'loading_orders';
+  static const String totalPrice = 'total_price';
+  static const String orderItems = 'order_items';
+  static const String noOrderSelected = 'no_order_selected';
+  static const String selectOrderToViewDetails = 'select_order_to_view_details';
+
+  // ═══ Status Translation Keys ═══
+  static const String statusPending = 'status_pending';
+  static const String statusProcessing = 'status_processing';
+  static const String statusShipped = 'status_shipped';
+  static const String statusDelivered = 'status_delivered';
+  static const String statusCancelled = 'status_cancelled';
+  static const String statusUnknown = 'status_unknown';
+
+
   // ═══ Seller Panel ═══
   static const String sellerPanel = 'seller_panel';
   static const String productManagement = 'product_management';
@@ -233,5 +249,4 @@ abstract class TKeys {
   static const String imageGallerySource = 'image_gallery_source';
 
   static const String productDeletedSuccessfully = 'product_deleted_successfully';
-
 }

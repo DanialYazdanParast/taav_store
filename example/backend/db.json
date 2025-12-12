@@ -212,7 +212,7 @@
       "title": "123",
       "description": "123",
       "price": 999999999999,
-      "quantity": 1,
+      "quantity": 0,
       "discountPrice": 999999999999,
       "sellerId": "1",
       "colors": [],
@@ -269,7 +269,7 @@
       "title": "رررررررررررررر",
       "description": "ررررررررررررر",
       "price": 112,
-      "quantity": 2,
+      "quantity": 0,
       "discountPrice": 112,
       "sellerId": "8",
       "colors": [],
@@ -376,6 +376,60 @@
         }
       ],
       "id": 3
+    },
+    {
+      "buyerId": "2",
+      "totalPrice": 112,
+      "date": "2025-12-12T23:15:21.692",
+      "items": [
+        {
+          "productId": "1765484001161",
+          "productTitle": "رررررررررررررر",
+          "sellerId": "8",
+          "color": "",
+          "quantity": 1,
+          "price": 112,
+          "originalPrice": 112,
+          "image": "http://localhost:3000/images/image-1765484001153-378382144.png"
+        }
+      ],
+      "id": 4
+    },
+    {
+      "buyerId": "2",
+      "totalPrice": 999999999999,
+      "date": "2025-12-12T23:16:06.557",
+      "items": [
+        {
+          "productId": "1765280457268",
+          "productTitle": "123",
+          "sellerId": "1",
+          "color": "",
+          "quantity": 1,
+          "price": 999999999999,
+          "originalPrice": 999999999999,
+          "image": "http://localhost:3000/images/image-1765280457267-34613545.png"
+        }
+      ],
+      "id": 5
+    },
+    {
+      "buyerId": "2",
+      "totalPrice": 112,
+      "date": "2025-12-12T23:16:38.871",
+      "items": [
+        {
+          "productId": "1765484001161",
+          "productTitle": "رررررررررررررر",
+          "sellerId": "8",
+          "color": "",
+          "quantity": 1,
+          "price": 112,
+          "originalPrice": 112,
+          "image": "http://localhost:3000/images/image-1765484001153-378382144.png"
+        }
+      ],
+      "id": 6
     }
   ]
 }

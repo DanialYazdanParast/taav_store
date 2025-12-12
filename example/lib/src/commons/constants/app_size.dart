@@ -24,6 +24,7 @@ class AppSize {
   static const double p20 = 20.0;
   static const double p24 = 24.0;
   static const double p32 = 32.0;
+  static const double p40 = 40.0;
 
   // Border Radius (Sorted Small to Large)
   static const double r2 = 2.0;
@@ -37,6 +38,7 @@ class AppSize {
   static const double r16 = 16.0;
   static const double r20= 20.0;
   static const double r24 = 24.0;
+  static const double r28 = 28.0;
   static const double r36 = 36.0;
 
   // Semantic Radius Names (Optional aliases)

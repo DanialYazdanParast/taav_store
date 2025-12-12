@@ -1,16 +1,16 @@
+import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
-import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
-import 'package:example/src/commons/widgets/app_loading.dart';
-import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
-import 'package:example/src/commons/widgets/network_image.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/pages/buyer/orders/controllers/order_history_controller.dart';
+import 'package:example/src/pages/buyer/orders/widgets/order_detail_content.dart';
+import 'package:example/src/pages/buyer/orders/widgets/order_history_loading.dart';
+import 'package:example/src/pages/buyer/orders/widgets/order_list_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/order_card_widget.dart';
 import '../../../shared/models/order_model.dart';
 
 class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
@@ -18,129 +18,65 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final Rxn<OrderModel> selectedOrder = Rxn<OrderModel>();
-
     return Scaffold(
-      appBar: CustomAppBar(title: TKeys.orderHistory.tr,showBackButton: false,),
       body: Obx(() {
         if (controller.orderState.value == CurrentState.loading) {
-          return Center(child: AppLoading.circular(size: 50));
+          return const OrderHistoryLoading();
         }
-
-        if (controller.orderState.value == CurrentState.loading) {
-          return EmptyWidget(title: TKeys.errorLoadingData.tr);
+        if (controller.orderState.value == CurrentState.error) {
+          return const Center(child: ErrorView());
         }
-
         if (controller.orders.isEmpty) {
-          return Center(child: ErrorView());
+          return Center(child: EmptyWidget(title: TKeys.cartEmpty.tr));
         }
 
-        if (selectedOrder.value == null && controller.orders.isNotEmpty) {
-          selectedOrder.value = controller.orders.first;
-        }
-
-        return Row(
-          children: [
-            SizedBox(
-              width: 350,
-              child: ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemCount: controller.orders.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final order = controller.orders[index];
-                  return Obx(
-                    () => OrderCardWidget(
-                      order: order,
-                      isMobile: false,
-                      isSelected: selectedOrder.value?.id == order.id,
-                      onTap: () => selectedOrder.value = order,
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            const VerticalDivider(width: 1),
-
-            Expanded(
-              child: Obx(() {
-                final order = selectedOrder.value;
-                if (order == null) return const SizedBox.shrink();
-
-                return _buildOrderDetailsView(order, theme);
-              }),
-            ),
-          ],
-        );
+        return _DesktopMasterDetailView(orders: controller.orders);
       }),
     );
   }
+}
 
-  Widget _buildOrderDetailsView(OrderModel order, ThemeData theme) {
+class _DesktopMasterDetailView extends StatefulWidget {
+  final List<OrderModel> orders;
+  const _DesktopMasterDetailView({required this.orders});
+
+  @override
+  State<_DesktopMasterDetailView> createState() => _DesktopMasterDetailViewState();
+}
+
+class _DesktopMasterDetailViewState extends State<_DesktopMasterDetailView> {
+  late OrderModel selectedOrder;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedOrder = widget.orders.first;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: Column(
+      padding: EdgeInsets.all(AppSize.p16),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "${TKeys.orderDetails.tr} #${order.id.toString().toLocalizedDigit}",
-            style: theme.textTheme.headlineMedium,
+          SizedBox(
+            width: 380,
+            child: OrderListPanel(
+              orders: widget.orders,
+              selectedOrder: selectedOrder,
+              onOrderSelected: (order) => setState(() => selectedOrder = order),
+            ),
           ),
-          const SizedBox(height: 24),
+          AppSize.p24.width,
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 300,
-                mainAxisExtent: 100,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: OrderDetailContent(
+                key: ValueKey(selectedOrder.id),
+                order: selectedOrder,
+                isDesktop: true,
               ),
-              itemCount: order.items.length,
-              itemBuilder: (context, index) {
-                final item = order.items[index];
-                return Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: theme.cardColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: theme.dividerColor),
-                  ),
-                  child: Row(
-                    children: [
-                      TaavNetworkImage(
-                        item.image,
-                        width: 70,
-                        height: 70,
-                        borderRadius: 8,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              item.productTitle,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "${item.quantity.toString().toLocalizedDigit} ${TKeys.unit.tr} × ${item.price.toLocalizedPrice}",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
             ),
           ),
         ],

@@ -118,8 +118,7 @@ const Map<String, String> enUS = {
   TKeys.yourSavings: 'Your Savings',
   TKeys.cartTotal: 'Cart Total',
   TKeys.confirmAndPay: 'Confirm and Pay',
-  TKeys.item: 'item',
-  TKeys.items: 'items',
+  TKeys.item: 'Item',
   TKeys.inCartItems: 'In Cart',
   TKeys.order: 'Order',
 
@@ -129,6 +128,23 @@ const Map<String, String> enUS = {
   TKeys.noOrdersYet: 'You haven\'t placed any orders yet',
   TKeys.orderDetails: 'Order Details',
   TKeys.orderNumber: 'Order',
+  TKeys.items: 'Order Items',
+
+  // New Keys for hardcoded strings in DesktopOrderHistoryLayout
+  TKeys.loadingOrders: 'Loading Orders...',
+  TKeys.totalPrice: 'Total Price:',
+  TKeys.orderItems: 'Order Items',
+  TKeys.noOrderSelected: 'No Order Selected',
+  TKeys.selectOrderToViewDetails: 'Select an order to view details',
+
+  // ═══ Status Translation Keys ═══
+  TKeys.statusPending: 'Pending',
+  TKeys.statusProcessing: 'Processing',
+  TKeys.statusShipped: 'Shipped',
+  TKeys.statusDelivered: 'Delivered',
+  TKeys.statusCancelled: 'Cancelled',
+  TKeys.statusUnknown: 'Unknown',
+
 
   // ═══ Seller Panel ═══
   TKeys.productManagement: 'Product Management',
@@ -215,10 +231,10 @@ const Map<String, String> enUS = {
   TKeys.badCertificate: 'Security error in connection',
   TKeys.unknownNetworkError: 'Unknown network error occurred',
   TKeys.serverErrorOccurred: 'A server error occurred',
-  // TKeys.connectionTimeout: 'Connection timed out', // Keys with missing values in the original map are placed here:
-  // TKeys.sendTimeout: 'Send timed out',
-  // TKeys.receiveTimeout: 'Receive timed out',
-  // TKeys.connectionError: 'Connection error',
+  TKeys.connectionTimeout: 'Connection timed out',
+  TKeys.sendTimeout: 'Send timed out',
+  TKeys.receiveTimeout: 'Receive timed out',
+  TKeys.connectionError: 'Connection error',
 
   TKeys.tagManagement: 'Tag Management',
   TKeys.searchTagHint: 'Search Tag...',
@@ -232,5 +248,4 @@ const Map<String, String> enUS = {
   TKeys.cameraSource: 'Camera',
   TKeys.imageGallerySource: 'Image Gallery',
   TKeys.productDeletedSuccessfully: 'Product deleted successfully',
-
 };

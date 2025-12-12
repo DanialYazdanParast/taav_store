@@ -130,7 +130,23 @@ const Map<String, String> faIR = {
   TKeys.noOrdersYet: 'هنوز سفارشی ثبت نکرده‌اید',
   TKeys.orderDetails: 'جزئیات سفارش',
   TKeys.orderNumber: 'سفارش',
-  TKeys.items: 'آیتم‌ها', // 'items' key was missing a value in the original map, adding a plausible one.
+  TKeys.items: 'اقلام سفارش',
+
+  // New Keys for hardcoded strings in DesktopOrderHistoryLayout
+  TKeys.loadingOrders: 'در حال بارگذاری سفارشات...',
+  TKeys.totalPrice: 'مبلغ کل:',
+  TKeys.orderItems: 'اقلام سفارش',
+  TKeys.noOrderSelected: 'سفارشی انتخاب نشده',
+  TKeys.selectOrderToViewDetails: 'برای مشاهده جزئیات، یک سفارش انتخاب کنید',
+
+  // ═══ Status Translation Keys ═══
+  TKeys.statusPending: 'در انتظار',
+  TKeys.statusProcessing: 'در حال پردازش',
+  TKeys.statusShipped: 'ارسال شده',
+  TKeys.statusDelivered: 'تحویل داده شده',
+  TKeys.statusCancelled: 'لغو شده',
+  TKeys.statusUnknown: 'نامشخص',
+
 
   // ═══ Seller Panel ═══
   TKeys.productManagement: 'مدیریت محصولات',
@@ -217,7 +233,7 @@ const Map<String, String> faIR = {
   TKeys.badCertificate: 'خطای امنیتی در اتصال',
   TKeys.unknownNetworkError: 'خطای ناشناخته در ارتباط با سرور',
   TKeys.serverErrorOccurred: 'خطایی از سمت سرور رخ داد',
-  TKeys.connectionTimeout: 'زمان اتصال به پایان رسید', // Adding values for missing keys based on context
+  TKeys.connectionTimeout: 'زمان اتصال به پایان رسید',
   TKeys.sendTimeout: 'زمان ارسال به پایان رسید',
   TKeys.receiveTimeout: 'زمان دریافت به پایان رسید',
   TKeys.connectionError: 'خطای ارتباطی',
@@ -234,6 +250,4 @@ const Map<String, String> faIR = {
   TKeys.cameraSource: 'دوربین',
   TKeys.imageGallerySource: 'گالری تصاویر',
   TKeys.productDeletedSuccessfully: 'محصول با موفقیت حذف شد',
-
-
 };

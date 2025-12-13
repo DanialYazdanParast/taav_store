@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +102,7 @@ class SellerEditController extends GetxController with MixinDialogController {
     }
 
     if (productId == null || productId!.isEmpty) {
-      ToastUtil.show(TKeys.invalidProductId.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.invalidProductId.tr, type: ToastType.error);
       Get.offNamed(AppRoutes.seller);
       return;
     }
@@ -185,7 +185,7 @@ class SellerEditController extends GetxController with MixinDialogController {
     } catch (e) {
       debugPrint("Error fetching data: $e");
       pageState.value = CurrentState.error;
-      ToastUtil.show(TKeys.errorFetchingProduct.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.errorFetchingProduct.tr, type: ToastType.error);
     }
   }
 
@@ -231,7 +231,7 @@ class SellerEditController extends GetxController with MixinDialogController {
         isImageDeleted.value = false;
       }
     } catch (e) {
-      ToastUtil.show(TKeys.errorSelectingImage.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.errorSelectingImage.tr, type: ToastType.error);
     }
   }
 
@@ -263,7 +263,7 @@ class SellerEditController extends GetxController with MixinDialogController {
         Get.back();
       }
     } catch (e) {
-      ToastUtil.show(TKeys.errorAddingColor.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.errorAddingColor.tr, type: ToastType.error);
     } finally {
       isAddingColor.value = false;
     }
@@ -307,14 +307,14 @@ class SellerEditController extends GetxController with MixinDialogController {
         final newTag = metadataService.tags.last;
         selectTag(newTag.name);
 
-        ToastUtil.show(TKeys.newTagAdded.tr, type: ToastType.success);
+        ToastUtil.show(LocaleKeys.newTagAdded.tr, type: ToastType.success);
 
         tagSearchController.clear();
         tagQuery.value = '';
         filteredTags.clear();
       }
     } catch (e) {
-      ToastUtil.show(TKeys.errorAddingTag.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.errorAddingTag.tr, type: ToastType.error);
     } finally {
       isAddingTag.value = false;
     }
@@ -326,13 +326,19 @@ class SellerEditController extends GetxController with MixinDialogController {
 
     if (!formKey.currentState!.validate()) {
       avmEdit.value = AutovalidateMode.always;
-      ToastUtil.show(TKeys.pleaseFixFormErrors.tr, type: ToastType.warning);
+      ToastUtil.show(
+        LocaleKeys.pleaseFixFormErrors.tr,
+        type: ToastType.warning,
+      );
       return;
     }
 
     if (selectedImage.value == null &&
         (isImageDeleted.value || product?.image == null)) {
-      ToastUtil.show(TKeys.productImageRequired.tr, type: ToastType.warning);
+      ToastUtil.show(
+        LocaleKeys.productImageRequired.tr,
+        type: ToastType.warning,
+      );
       return;
     }
 
@@ -382,7 +388,7 @@ class SellerEditController extends GetxController with MixinDialogController {
         (updatedProduct) {
           submitState.value = CurrentState.success;
           ToastUtil.show(
-            TKeys.productUpdatedSuccessfully.tr,
+            LocaleKeys.productUpdatedSuccessfully.tr,
             type: ToastType.success,
           );
 
@@ -392,7 +398,7 @@ class SellerEditController extends GetxController with MixinDialogController {
       );
     } catch (e) {
       submitState.value = CurrentState.error;
-      ToastUtil.show(TKeys.unexpectedError.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.unexpectedError.tr, type: ToastType.error);
     } finally {
       if (submitState.value != CurrentState.success) {
         submitState.value = CurrentState.idle;

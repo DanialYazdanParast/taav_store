@@ -1,4 +1,4 @@
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +25,7 @@ class NotFoundScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                TKeys.notFoundTitle.tr,
+                LocaleKeys.notFoundTitle.tr,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class NotFoundScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                TKeys.notFoundDescription.tr,
+                LocaleKeys.notFoundDescription.tr,
                 style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                 textAlign: TextAlign.center,
               ),
@@ -44,7 +44,7 @@ class NotFoundScreen extends StatelessWidget {
                   Get.offAllNamed(AppRoutes.splash);
                 },
                 icon: const Icon(Icons.home),
-                label: Text(TKeys.backToHome.tr),
+                label: Text(LocaleKeys.backToHome.tr),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,

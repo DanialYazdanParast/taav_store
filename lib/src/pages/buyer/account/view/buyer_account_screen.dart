@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/buyer/account/view/widgets/icon_list.dart';
 import 'package:taav_store/src/pages/buyer/account/view/widgets/settings_draggable_sheet.dart';
@@ -92,8 +92,8 @@ class BuyerDesktopLayout extends StatelessWidget {
                 child: MenuItem(
                   icon: Icons.history_rounded,
                   color: theme.colorScheme.primary,
-                  title: TKeys.purchaseHistory.tr,
-                  subtitle: TKeys.orderHistoryDesc.tr,
+                  title: LocaleKeys.purchaseHistory.tr,
+                  subtitle: LocaleKeys.orderHistoryDesc.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.buyerOrders),
                 ),

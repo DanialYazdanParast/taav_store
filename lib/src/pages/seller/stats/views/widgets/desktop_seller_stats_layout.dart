@@ -3,7 +3,7 @@ import 'package:taav_store/src/infrastructure/widgets/Empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_loading.dart';
 import 'package:taav_store/src/infrastructure/widgets/custom_app_bar.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +17,7 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: TKeys.salesStatistics.tr,
+        title: LocaleKeys.salesStatistics.tr,
         showBackButton: false,
       ),
       body: Obx(() {
@@ -28,7 +28,7 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
           return ErrorView();
         }
         if (controller.salesStats.isEmpty) {
-          return EmptyWidget(title: TKeys.noSalesYet.tr);
+          return EmptyWidget(title: LocaleKeys.noSalesYet.tr);
         }
 
         return Center(

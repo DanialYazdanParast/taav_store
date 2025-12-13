@@ -1,10 +1,10 @@
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
 import '../../../../infrastructure/widgets/responsive/responsive.dart';
-import '../../../../infrastructure/languages/translation_keys.dart';
 
 class MainSellerController extends GetxController {
   final RxInt currentIndex = 0.obs;
@@ -13,18 +13,18 @@ class MainSellerController extends GetxController {
     NavItemModel(
       icon: Icons.home_outlined,
       activeIcon: Icons.home_rounded,
-      label: TKeys.navHome.tr,
+      label: LocaleKeys.navHome.tr,
     ),
     NavItemModel(
       icon: Icons.add,
       activeIcon: Icons.add,
-      label: TKeys.navAddProduct.tr,
+      label: LocaleKeys.navAddProduct.tr,
       isSpecial: true,
     ),
     NavItemModel(
       icon: Icons.person_outline_rounded,
       activeIcon: Icons.person_rounded,
-      label: TKeys.navProfile.tr,
+      label: LocaleKeys.navProfile.tr,
     ),
   ];
 

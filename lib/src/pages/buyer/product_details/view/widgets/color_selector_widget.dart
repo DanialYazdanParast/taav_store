@@ -1,10 +1,9 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/buyer_product_details_controller.dart';
-
 
 class ColorSelectorWidget extends GetView<BuyerProductDetailsController> {
   const ColorSelectorWidget({super.key});
@@ -14,14 +13,15 @@ class ColorSelectorWidget extends GetView<BuyerProductDetailsController> {
     final theme = Theme.of(context);
     return Obx(() {
       final product = controller.product.value;
-      if (product == null || product.colors.isEmpty)
+      if (product == null || product.colors.isEmpty) {
         return const SizedBox.shrink();
+      }
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            TKeys.selectColor.tr,
+            LocaleKeys.selectColor.tr,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),

@@ -328,6 +328,19 @@
       "originalPrice": 1,
       "maxStock": 1,
       "id": 1
+    },
+    {
+      "userId": "",
+      "productId": "1765637464328",
+      "productTitle": "44444444",
+      "image": "http://localhost:3000/images/image-1765637464325-810830491.png",
+      "sellerId": "1",
+      "quantity": 2,
+      "color": "",
+      "price": 1,
+      "originalPrice": 2,
+      "maxStock": 2,
+      "id": 2
     }
   ],
   "orders": [

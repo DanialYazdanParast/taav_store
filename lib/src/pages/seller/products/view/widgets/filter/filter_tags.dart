@@ -1,4 +1,4 @@
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class SellerFilterTags extends StatelessWidget {
       children: [
         SizedBox(width: double.infinity),
         Text(
-          TKeys.tags.tr,
+          LocaleKeys.tags.tr,
           style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),

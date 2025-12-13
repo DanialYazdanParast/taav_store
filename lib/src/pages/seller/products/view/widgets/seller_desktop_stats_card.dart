@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -60,8 +60,8 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
     return Obx(
       () => SellerStatItem(
         value: controller.totalRevenueAmount.value.toString(),
-        unit: TKeys.currency.tr,
-        label: TKeys.totalRevenue.tr,
+        unit: LocaleKeys.currency.tr,
+        label: LocaleKeys.totalRevenue.tr,
         icon: Icons.monetization_on_outlined,
         textColor: theme.colorScheme.primary,
         subColor: theme.colorScheme.primary.withAlpha(200),
@@ -74,7 +74,7 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
       () => SellerStatItem(
         value: controller.products.length.toString(),
         state: controller.productsState.value,
-        label: TKeys.activeProducts.tr,
+        label: LocaleKeys.activeProducts.tr,
         icon: Icons.inventory_2_outlined,
         textColor: textColor,
         subColor: subColor,
@@ -86,7 +86,7 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
     return Obx(
       () => SellerStatItem(
         value: controller.totalSalesCount.value.toString(),
-        label: TKeys.successfulSales.tr,
+        label: LocaleKeys.successfulSales.tr,
         icon: Icons.shopping_cart_outlined,
         textColor: textColor,
         subColor: subColor,
@@ -102,7 +102,7 @@ class SellerDesktopStatsCard extends GetView<SellerProductsController> {
         textColor: textColor,
         subColor: subColor,
         state: controller.cartStatsState.value,
-        label: TKeys.inCartItems.tr,
+        label: LocaleKeys.inCartItems.tr,
         icon: Icons.shopping_bag_outlined,
       ),
     );

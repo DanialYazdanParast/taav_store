@@ -4,7 +4,7 @@ import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_shimmer.dart';
 import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -212,7 +212,7 @@ class _PriceRow extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              ' ${TKeys.currency.tr} ',
+              ' ${LocaleKeys.currency.tr} ',
               style: TextStyle(color: Colors.green[600], fontSize: AppSize.f11),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -259,7 +259,7 @@ class _StockChip extends StatelessWidget {
         border: Border.all(color: chipColor.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Text(
-        '${TKeys.stock.tr}: ${quantity.toLocalizedPrice}',
+        '${LocaleKeys.stock.tr}: ${quantity.toLocalizedPrice}',
         style: TextStyle(
           color: chipColor,
           fontSize: AppSize.f10,

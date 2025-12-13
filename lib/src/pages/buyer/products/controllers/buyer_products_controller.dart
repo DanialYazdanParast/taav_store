@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:taav_store/src/infrastructure/services/metadata_service.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:taav_store/src/pages/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -197,11 +197,11 @@ class BuyerProductsController extends GetxController {
 
   String getAddToCartButtonLabel(int productQuantity, int remainingStock) {
     if (productQuantity == 0) {
-      return TKeys.outOfStock.tr;
+      return LocaleKeys.outOfStock.tr;
     } else if (remainingStock <= 0) {
-      return TKeys.soldOut.tr;
+      return LocaleKeys.soldOut.tr;
     }
-    return TKeys.addToCart.tr;
+    return LocaleKeys.addToCart.tr;
   }
 
   bool isAddToCartDisabled(int productQuantity, int remainingStock) {
@@ -216,7 +216,10 @@ class BuyerProductsController extends GetxController {
     if (totalQuantityInCart < product.quantity) {
       cartController.addToCart(product, 1, selectedColor);
     } else {
-      ToastUtil.show(TKeys.stockFinishedWarning.tr, type: ToastType.warning);
+      ToastUtil.show(
+        LocaleKeys.stockFinishedWarning.tr,
+        type: ToastType.warning,
+      );
     }
   }
 

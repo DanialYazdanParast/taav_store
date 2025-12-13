@@ -4,7 +4,7 @@ import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/bottom_sheet.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/animated_app_bar.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
@@ -82,7 +82,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                   isSearching: controller.isSearching,
                   searchController: controller.searchController,
                   searchFocusNode: controller.searchFocusNode,
-                  title: TKeys.buyerPanel.tr,
+                  title: LocaleKeys.buyerPanel.tr,
                   onFilterTap: () {
                     //    controller.initTempFilters();
 

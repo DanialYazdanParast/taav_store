@@ -7,7 +7,7 @@ import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart'
 import 'package:taav_store/src/infrastructure/widgets/custom_app_bar.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +22,10 @@ class MobileCartLayout extends GetView<CartController> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: CustomAppBar(title: TKeys.orderHistory.tr, showBackButton: false),
+      appBar: CustomAppBar(
+        title: LocaleKeys.orderHistory.tr,
+        showBackButton: false,
+      ),
       body: Obx(() {
         if (controller.cartState.value == CurrentState.loading) {
           return ListView.separated(
@@ -61,7 +64,9 @@ class MobileCartLayout extends GetView<CartController> {
   }
 
   Widget _buildEmptyState(ThemeData theme) {
-    return Column(children: [EmptyWidget(title: TKeys.cartEmpty.tr), 2.height]);
+    return Column(
+      children: [EmptyWidget(title: LocaleKeys.cartEmpty.tr), 2.height],
+    );
   }
 
   Widget _buildBottomBar(ThemeData theme) {
@@ -89,7 +94,7 @@ class MobileCartLayout extends GetView<CartController> {
                 child: Obx(
                   () =>
                       ButtonWidget(
-                        TKeys.confirmAndPay.tr,
+                        LocaleKeys.confirmAndPay.tr,
                         () => controller.checkout(),
 
                         isLoading:
@@ -116,7 +121,7 @@ class MobileCartLayout extends GetView<CartController> {
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
+              "${LocaleKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
               style: TextStyle(
                 color: Colors.green,
                 fontSize: 12,
@@ -138,7 +143,7 @@ class MobileCartLayout extends GetView<CartController> {
               ),
               const SizedBox(width: 4),
               Text(
-                TKeys.toman.tr,
+                LocaleKeys.toman.tr,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 10,

@@ -4,7 +4,7 @@ import 'package:taav_store/src/infrastructure/extensions/product_discount_ext.da
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
@@ -187,7 +187,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
         Icon(Icons.inventory_2_outlined, color: primaryColor, size: 28),
         AppSize.p10.width,
         Text(
-          TKeys.shopProductList.tr,
+          LocaleKeys.shopProductList.tr,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),

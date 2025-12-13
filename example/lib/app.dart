@@ -1,4 +1,5 @@
-import 'package:taav_store/src/infrastructure/languages/app_translations.dart';
+
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/languages/localization_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
     final themeController = Get.find<ThemeController>();
 
     return GetMaterialApp(
-      title: 'Taav Store',
+      title: LocaleKeys.appTitle.tr,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
@@ -24,7 +25,7 @@ class App extends StatelessWidget {
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
       unknownRoute: AppPages.unknownRoute,
-      translations: AppTranslations(),
+      translationsKeys: AppTranslation.translations,
       locale: langController.currentLocale,
       fallbackLocale: langController.fallbackLocale,
       supportedLocales: langController.supportedLocales,

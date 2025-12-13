@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_branding_panel.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_form_card.dart';
@@ -22,8 +22,8 @@ class DesktopRegisterLayout extends StatelessWidget {
         Expanded(
           flex: 5,
           child: AuthBrandingPanel(
-            title: TKeys.joinUs.tr,
-            subtitle: TKeys.thousandsUsersTrust.tr,
+            title: LocaleKeys.joinUs.tr,
+            subtitle: LocaleKeys.thousandsUsersTrust.tr,
           ),
         ),
         Expanded(
@@ -40,14 +40,14 @@ class DesktopRegisterLayout extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        TKeys.signUpEmoji.tr,
+                        LocaleKeys.signUpEmoji.tr,
                         style: theme.textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       8.height,
                       Text(
-                        TKeys.createNewAccount.tr,
+                        LocaleKeys.createNewAccount.tr,
                         style: theme.textTheme.bodyLarge?.copyWith(
                           color: theme.colorScheme.onSurface.withValues(
                             alpha: 0.6,
@@ -61,8 +61,8 @@ class DesktopRegisterLayout extends StatelessWidget {
                       ),
                       28.height,
                       AuthLinkText(
-                        prefixText: TKeys.alreadyHaveAccount.tr,
-                        linkText: TKeys.signIn.tr,
+                        prefixText: LocaleKeys.alreadyHaveAccount.tr,
+                        linkText: LocaleKeys.signIn.tr,
                         onTap: () => Get.offNamed(AppRoutes.login),
                       ),
                     ],

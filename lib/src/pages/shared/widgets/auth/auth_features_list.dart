@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,9 +9,9 @@ class AuthFeaturesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final features = [
-      (Icons.speed_rounded, TKeys.highSpeed.tr),
-      (Icons.security_rounded, TKeys.fullSecurity.tr),
-      (Icons.support_agent_rounded, TKeys.support247.tr),
+      (Icons.speed_rounded, LocaleKeys.highSpeed.tr),
+      (Icons.security_rounded, LocaleKeys.fullSecurity.tr),
+      (Icons.support_agent_rounded, LocaleKeys.support247.tr),
     ];
 
     return Row(

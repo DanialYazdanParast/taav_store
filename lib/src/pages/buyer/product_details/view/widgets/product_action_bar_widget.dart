@@ -1,7 +1,7 @@
 import 'package:advanced_count_control/advanced_count_control.dart';
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,14 +46,14 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
     int currentQtyForColor = controller.quantityInCartForSelectedColor;
     int dynamicMaxQuantity = currentQtyForColor + controller.remainingStock;
 
-    String buttonLabel = TKeys.addToCart.tr;
+    String buttonLabel = LocaleKeys.addToCart.tr;
     bool isDisabled = false;
 
     if (product.quantity == 0) {
-      buttonLabel = TKeys.outOfStock.tr;
+      buttonLabel = LocaleKeys.outOfStock.tr;
       isDisabled = true;
     } else if (controller.remainingStock <= 0 && currentQtyForColor == 0) {
-      buttonLabel = TKeys.soldOut.tr;
+      buttonLabel = LocaleKeys.soldOut.tr;
       isDisabled = true;
     }
 
@@ -66,7 +66,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
       showAddButton: product.quantity == 0 || currentQtyForColor == 0,
       addButtonLabel: buttonLabel,
       isDisabled: isDisabled,
-      maxReachedLabel: TKeys.maximum.tr,
+      maxReachedLabel: LocaleKeys.maximum.tr,
       style: CountControlStyle(
         primaryColor: theme.colorScheme.primary,
         backgroundColor: theme.scaffoldBackgroundColor,
@@ -144,7 +144,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
         ),
         const SizedBox(width: 4),
         Text(
-          TKeys.toman.tr,
+          LocaleKeys.toman.tr,
           style: theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.bold,
           ),

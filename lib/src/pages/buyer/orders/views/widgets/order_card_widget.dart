@@ -1,10 +1,9 @@
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
-
 
 class OrderCardWidget extends StatelessWidget {
   final OrderModel order;
@@ -58,7 +57,7 @@ class OrderCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${TKeys.order.tr} #${order.id.toString().toLocalizedDigit}",
+              "${LocaleKeys.order.tr} #${order.id.toString().toLocalizedDigit}",
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.onSurface,
@@ -83,7 +82,7 @@ class OrderCardWidget extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                TKeys.toman.tr,
+                LocaleKeys.toman.tr,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w900,
                   color: theme.colorScheme.primary,

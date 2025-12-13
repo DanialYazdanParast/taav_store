@@ -1,9 +1,9 @@
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
-import '../../../../infrastructure/languages/translation_keys.dart';
 
 class MainBuyerController extends GetxController {
   final CartController _cartController = Get.find<CartController>();
@@ -14,12 +14,12 @@ class MainBuyerController extends GetxController {
     NavItemModel(
       icon: Icons.home_outlined,
       activeIcon: Icons.home_rounded,
-      label: TKeys.navHome.tr,
+      label: LocaleKeys.navHome.tr,
     ),
     NavItemModel(
       icon: Icons.shopping_cart_outlined,
       activeIcon: Icons.shopping_cart,
-      label: TKeys.navCart.tr,
+      label: LocaleKeys.navCart.tr,
       isSpecial: true,
       badgeCount: cartBadge.value,
       showBadge: cartBadge.value > 0,
@@ -27,7 +27,7 @@ class MainBuyerController extends GetxController {
     NavItemModel(
       icon: Icons.person_outline_rounded,
       activeIcon: Icons.person_rounded,
-      label: TKeys.navProfile.tr,
+      label: LocaleKeys.navProfile.tr,
     ),
   ];
 

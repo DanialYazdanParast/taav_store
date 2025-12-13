@@ -1,4 +1,4 @@
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +13,7 @@ class SplashVersionFooter extends GetView<SplashController> {
       () => Text(
         controller.appVersion.value.isEmpty
             ? ''
-            : '${TKeys.version.tr} ${controller.appVersion.value}',
+            : '${LocaleKeys.version.tr} ${controller.appVersion.value}',
         style: context.theme.textTheme.bodySmall,
       ),
     );

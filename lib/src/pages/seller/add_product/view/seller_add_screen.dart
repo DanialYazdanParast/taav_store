@@ -1,7 +1,7 @@
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_loading.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -364,7 +364,7 @@ class _CustomAppBar extends StatelessWidget {
         if (isDesktop) AppSize.p16.width,
         Expanded(
           child: Text(
-            TKeys.addNewProduct.tr,
+            LocaleKeys.addNewProduct.tr,
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
             style: Get.theme.textTheme.bodyLarge!.copyWith(color: Colors.white),
           ),
@@ -386,7 +386,7 @@ class _SubmitButton extends StatelessWidget {
     return Obx(
       () =>
           ButtonWidget(
-            TKeys.finalSubmitProduct.tr,
+            LocaleKeys.finalSubmitProduct.tr,
             () => controller.submitProduct(formKey),
             isLoading: controller.submitState.value == CurrentState.loading,
             icon: Icons.check_circle_outline_rounded,

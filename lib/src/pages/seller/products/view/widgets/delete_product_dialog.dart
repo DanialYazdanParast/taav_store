@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/dialog_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +16,7 @@ class DeleteProductDialog {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            TKeys.deleteProductTitle.tr,
+            LocaleKeys.deleteProductTitle.tr,
             textAlign: TextAlign.center,
             style: Get.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
@@ -24,7 +24,7 @@ class DeleteProductDialog {
           ),
           const SizedBox(height: 16),
           Text(
-            TKeys.confirmDeleteProductMsg.tr,
+            LocaleKeys.confirmDeleteProductMsg.tr,
             textAlign: TextAlign.center,
             style: Get.textTheme.bodyMedium,
           ),
@@ -34,7 +34,7 @@ class DeleteProductDialog {
               Expanded(
                 child:
                     ButtonWidget(
-                      TKeys.cancel.tr,
+                      LocaleKeys.cancel.tr,
                       () => Get.back(),
                       textColor: Get.theme.colorScheme.onSurface,
                     ).outline(),
@@ -43,7 +43,7 @@ class DeleteProductDialog {
               Expanded(
                 child:
                     ButtonWidget(
-                      TKeys.deleteAction.tr,
+                      LocaleKeys.deleteAction.tr,
                       onConfirm,
                       bgColor: Colors.red,
                       textColor: Colors.white,

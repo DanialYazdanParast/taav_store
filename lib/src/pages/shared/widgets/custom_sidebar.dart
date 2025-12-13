@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -98,7 +98,7 @@ class CustomSidebar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  TKeys.sellerPanel.tr,
+                  LocaleKeys.sellerPanel.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class CustomSidebar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  TKeys.productManagement.tr,
+                  LocaleKeys.productManagement.tr,
                   style: TextStyle(
                     fontSize: 12,
                     color: colorScheme.onSurface.withAlpha(150),

@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/dialog_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/text/app_search_field.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 
@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 
 import 'seller_filter_view.dart';
-
 
 class SellerDesktopHeader extends GetView<SellerProductsController> {
   const SellerDesktopHeader({super.key});
@@ -44,7 +43,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
   Widget _buildSearchField() {
     return Expanded(
       child: AppSearchField(
-        hintText: TKeys.searchHint.tr,
+        hintText: LocaleKeys.searchHint.tr,
         controller: controller.searchController,
         borderRadius: AppSize.r12,
       ),

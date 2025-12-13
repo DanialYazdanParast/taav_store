@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -344,7 +344,7 @@ class _CustomAppBar extends StatelessWidget {
         if (isDesktop) AppSize.p16.width,
         Expanded(
           child: Text(
-            TKeys.editProduct.tr,
+            LocaleKeys.editProduct.tr,
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
             style: TextStyle(
               color:
@@ -370,7 +370,7 @@ class _SubmitButton extends StatelessWidget {
     return Obx(
       () =>
           ButtonWidget(
-            TKeys.updateProduct.tr,
+            LocaleKeys.updateProduct.tr,
             controller.updateProduct,
             isLoading: controller.submitState.value == CurrentState.loading,
             icon: Icons.edit_note_rounded,

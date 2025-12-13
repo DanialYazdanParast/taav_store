@@ -1,7 +1,7 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +33,13 @@ class SellerFilterHeader extends StatelessWidget {
               ),
               10.width,
               Text(
-                TKeys.filters.tr,
+                LocaleKeys.filters.tr,
                 style: text.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
           ButtonWidget(
-            TKeys.removeAll.tr,
+            LocaleKeys.removeAll.tr,
             controller.clearTempFilters,
             icon: Icons.delete_outline_rounded,
             textColor: colors.error,

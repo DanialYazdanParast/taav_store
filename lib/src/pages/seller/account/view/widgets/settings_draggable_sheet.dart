@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 
 import 'icon_list.dart';
 
@@ -52,7 +52,7 @@ class SettingsDraggableSheet extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              TKeys.salesReports.tr,
+                              LocaleKeys.salesReports.tr,
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -64,8 +64,8 @@ class SettingsDraggableSheet extends StatelessWidget {
                       MenuItem(
                         icon: Icons.bar_chart_rounded,
                         color: theme.colorScheme.primary,
-                        title: TKeys.productSalesStats.tr,
-                        subtitle: TKeys.viewBestSellers.tr,
+                        title: LocaleKeys.productSalesStats.tr,
+                        subtitle: LocaleKeys.viewBestSellers.tr,
                         showChevron: true,
                         onTap: () => Get.toNamed(AppRoutes.sellerStats),
                       ),
@@ -78,7 +78,7 @@ class SettingsDraggableSheet extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              TKeys.settings.tr,
+                              LocaleKeys.settings.tr,
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

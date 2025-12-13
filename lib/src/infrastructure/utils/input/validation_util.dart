@@ -1,20 +1,20 @@
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:get/get.dart';
 import 'regex_util.dart';
 
 class ValidationUtil {
   String? password(final String? value) {
     if (value == null || value.isEmpty) {
-      return TKeys.validationPasswordEmpty.tr;
+      return LocaleKeys.validationPasswordEmpty.tr;
     }
     if (value.length < 8) {
-      return TKeys.validationPasswordMinLength.tr;
+      return LocaleKeys.validationPasswordMinLength.tr;
     }
     if (value.length > 60) {
-      return TKeys.validationPasswordMaxLength.tr;
+      return LocaleKeys.validationPasswordMaxLength.tr;
     }
     if (!RegexpUtil.password.hasMatch(value)) {
-      return TKeys.validationPasswordRequirements.tr;
+      return LocaleKeys.validationPasswordRequirements.tr;
     }
 
     return null;
@@ -22,10 +22,10 @@ class ValidationUtil {
 
   String? passwordConfirm(final String? value, final String mainPassword) {
     if (value == null || value.isEmpty) {
-      return TKeys.validationPasswordConfirmEmpty.tr;
+      return LocaleKeys.validationPasswordConfirmEmpty.tr;
     }
     if (value != mainPassword) {
-      return TKeys.validationPasswordMismatch.tr;
+      return LocaleKeys.validationPasswordMismatch.tr;
     }
     return null;
   }
@@ -34,23 +34,23 @@ class ValidationUtil {
     final trimmedValue = value?.trim();
 
     if (trimmedValue == null || trimmedValue.isEmpty) {
-      return TKeys.validationUsernameEmpty.tr;
+      return LocaleKeys.validationUsernameEmpty.tr;
     }
 
     if (trimmedValue.length < 4) {
-      return TKeys.validationUsernameMinLength.tr;
+      return LocaleKeys.validationUsernameMinLength.tr;
     }
 
     if (trimmedValue.length > 30) {
-      return TKeys.validationUsernameMaxLength.tr;
+      return LocaleKeys.validationUsernameMaxLength.tr;
     }
 
     if (!RegexpUtil.validUsername.hasMatch(trimmedValue)) {
-      return TKeys.validationUsernameInvalidChars.tr;
+      return LocaleKeys.validationUsernameInvalidChars.tr;
     }
 
     if (trimmedValue.contains(' ')) {
-      return TKeys.validationUsernameNoSpaces.tr;
+      return LocaleKeys.validationUsernameNoSpaces.tr;
     }
 
     return null;
@@ -58,15 +58,15 @@ class ValidationUtil {
 
   String? loginPassword(final String? value) {
     if (value == null || value.isEmpty) {
-      return TKeys.validationLoginPasswordEmpty.tr;
+      return LocaleKeys.validationLoginPasswordEmpty.tr;
     }
 
     if (value.length < 8) {
-      return TKeys.validationLoginPasswordMinLength.tr;
+      return LocaleKeys.validationLoginPasswordMinLength.tr;
     }
 
     if (!RegexpUtil.allowedPasswordChars.hasMatch(value)) {
-      return TKeys.validationLoginPasswordEnglishOnly.tr;
+      return LocaleKeys.validationLoginPasswordEnglishOnly.tr;
     }
 
     return null;
@@ -74,27 +74,27 @@ class ValidationUtil {
 
   String? requiredField(final String? value, String fieldName) {
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName ${TKeys.validationCannotBeEmpty.tr}';
+      return '$fieldName ${LocaleKeys.validationCannotBeEmpty.tr}';
     }
     if (value.length < 3) {
-      return '$fieldName ${TKeys.validationMinThreeChars.tr}';
+      return '$fieldName ${LocaleKeys.validationMinThreeChars.tr}';
     }
     return null;
   }
 
   String? number(final String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return '$fieldName ${TKeys.validationEnterValue.tr}';
+      return '$fieldName ${LocaleKeys.validationEnterValue.tr}';
     }
 
     final cleanValue = value.replaceAll(',', '');
 
     final number = int.tryParse(cleanValue);
     if (number == null) {
-      return TKeys.validationNumberInvalid.tr;
+      return LocaleKeys.validationNumberInvalid.tr;
     }
     if (number < 0) {
-      return '$fieldName ${TKeys.validationCannotBeNegative.tr}';
+      return '$fieldName ${LocaleKeys.validationCannotBeNegative.tr}';
     }
     return null;
   }
@@ -112,7 +112,7 @@ class ValidationUtil {
     final original = int.tryParse(cleanOriginal);
 
     if (discount == null) {
-      return TKeys.validationDiscountPriceInvalid.tr;
+      return LocaleKeys.validationDiscountPriceInvalid.tr;
     }
 
     if (original == null) {
@@ -120,7 +120,7 @@ class ValidationUtil {
     }
 
     if (discount > original) {
-      return TKeys.validationDiscountPriceExceedsOriginal.tr;
+      return LocaleKeys.validationDiscountPriceExceedsOriginal.tr;
     }
 
     return null;

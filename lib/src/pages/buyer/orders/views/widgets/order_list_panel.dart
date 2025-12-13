@@ -2,14 +2,12 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
 
 import 'selectable_order_card.dart';
-
-
 
 class OrderListPanel extends StatelessWidget {
   final List<OrderModel> orders;
@@ -82,7 +80,7 @@ class OrderListPanel extends StatelessWidget {
           AppSize.p12.width,
           Expanded(
             child: Text(
-              TKeys.orderHistory.tr,
+              LocaleKeys.orderHistory.tr,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

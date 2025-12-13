@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/pages/shared/models/product_model.dart';
 import 'package:taav_store/src/pages/buyer/cart/controllers/cart_controller.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart'; // Import added
+import 'package:taav_store/generated/locales.g.dart'; // Import added
 import '../repository/buyer_product_details_repository.dart';
 
 class BuyerProductDetailsController extends GetxController {
@@ -29,7 +29,7 @@ class BuyerProductDetailsController extends GetxController {
     }
 
     if (productId == null || productId!.isEmpty) {
-      ToastUtil.show(TKeys.invalidProductId.tr, type: ToastType.error);
+      ToastUtil.show(LocaleKeys.invalidProductId.tr, type: ToastType.error);
       Get.offNamed(AppRoutes.buyer);
       return;
     }
@@ -46,7 +46,7 @@ class BuyerProductDetailsController extends GetxController {
       (failure) {
         productState.value = CurrentState.error;
         ToastUtil.show(
-          TKeys.fetchProductDetailsError.tr,
+          LocaleKeys.fetchProductDetailsError.tr,
           type: ToastType.error,
         );
       },
@@ -92,7 +92,10 @@ class BuyerProductDetailsController extends GetxController {
     if (totalQuantityInCartForThisProduct < product.value!.quantity) {
       cartController.addToCart(product.value!, 1, selectedColor.value);
     } else {
-      ToastUtil.show(TKeys.stockFinishedWarning.tr, type: ToastType.warning);
+      ToastUtil.show(
+        LocaleKeys.stockFinishedWarning.tr,
+        type: ToastType.warning,
+      );
     }
   }
 

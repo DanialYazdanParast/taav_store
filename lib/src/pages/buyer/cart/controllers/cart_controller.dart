@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/pages/shared/models/product_model.dart';
 import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 
 import '../../../shared/models/cart_item_model.dart';
 import '../repository/cart_repository.dart';
@@ -63,7 +63,7 @@ class CartController extends GetxController {
         existingItem.quantity -= quantity;
         cartItems.refresh();
 
-        ToastUtil.show(TKeys.cartUpdateFailed.tr, type: ToastType.error);
+        ToastUtil.show(LocaleKeys.cartUpdateFailed.tr, type: ToastType.error);
       }, (_) => null);
     } else {
       int finalPrice =
@@ -88,11 +88,14 @@ class CartController extends GetxController {
 
       result.fold(
         (failure) {
-          ToastUtil.show(TKeys.addToCartFailed.tr, type: ToastType.error);
+          ToastUtil.show(LocaleKeys.addToCartFailed.tr, type: ToastType.error);
         },
         (addedItem) {
           cartItems.add(addedItem);
-          ToastUtil.show(TKeys.addedToCartSuccess.tr, type: ToastType.success);
+          ToastUtil.show(
+            LocaleKeys.addedToCartSuccess.tr,
+            type: ToastType.success,
+          );
         },
       );
     }
@@ -119,7 +122,7 @@ class CartController extends GetxController {
 
       result.fold((failure) {
         cartItems.insert(index, item);
-        ToastUtil.show(TKeys.itemDeleteFailed.tr, type: ToastType.error);
+        ToastUtil.show(LocaleKeys.itemDeleteFailed.tr, type: ToastType.error);
       }, (_) => null);
     }
   }
@@ -170,7 +173,7 @@ class CartController extends GetxController {
     result.fold(
       (failure) {
         cartCheckout.value = CurrentState.error;
-        ToastUtil.show(TKeys.orderSubmitFailed.tr, type: ToastType.error);
+        ToastUtil.show(LocaleKeys.orderSubmitFailed.tr, type: ToastType.error);
       },
       (_) async {
         // 1. یک کپی از آیتم‌های سبد خرید بگیرید *قبل از پاکسازی*
@@ -202,7 +205,7 @@ class CartController extends GetxController {
         }
 
         final successMsg =
-            '${TKeys.orderSubmitSuccess.tr} ${TKeys.stockUpdateSuccess.tr}';
+            '${LocaleKeys.orderSubmitSuccess.tr} ${LocaleKeys.stockUpdateSuccess.tr}';
         cartCheckout.value = CurrentState.success;
         ToastUtil.show(successMsg, type: ToastType.success);
       },

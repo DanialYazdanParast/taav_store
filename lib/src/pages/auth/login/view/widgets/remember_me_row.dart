@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_checkbox.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +24,7 @@ class RememberMeRow extends GetView<LoginController> {
             ),
             10.width,
             Text(
-              TKeys.rememberMe.tr,
+              LocaleKeys.rememberMe.tr,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
               ),

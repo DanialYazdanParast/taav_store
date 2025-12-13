@@ -1,4 +1,4 @@
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_form_card.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_link_text.dart';
@@ -47,8 +47,8 @@ class MobileLoginLayout extends GetView<LoginController> {
                       Column(
                         children: [
                           AuthMobileHeader(
-                            title: TKeys.welcome.tr,
-                            subtitle: TKeys.loginToContinue.tr,
+                            title: LocaleKeys.welcome.tr,
+                            subtitle: LocaleKeys.loginToContinue.tr,
                           ),
                           AuthFormCard(
                             variant: AuthFormVariant.mobile,
@@ -59,8 +59,8 @@ class MobileLoginLayout extends GetView<LoginController> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 32, top: 24),
                         child: AuthLinkText(
-                          prefixText: TKeys.noAccount.tr,
-                          linkText: TKeys.signUp.tr,
+                          prefixText: LocaleKeys.noAccount.tr,
+                          linkText: LocaleKeys.signUp.tr,
                           onTap: () => Get.offNamed(AppRoutes.register),
                         ),
                       ),

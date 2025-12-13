@@ -276,4 +276,10 @@ const Map<String, String> faIR = {
 
   // ═══ Auth Errors ═══
   TKeys.authInvalidCredentials: 'نام کاربری یا رمز عبور اشتباه است',
+
+  // ═══ Not Found Page ═══
+  TKeys.notFoundTitle: 'صفحه مورد نظر یافت نشد',
+  TKeys.notFoundDescription: 'آدرس وارد شده اشتباه است یا صفحه منتقل شده است.',
+  TKeys.backToHome: 'بازگشت به صفحه اصلی',
+
 };

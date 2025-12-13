@@ -273,4 +273,9 @@ abstract class TKeys {
   // ═══ Auth Errors ═══
   static const String authInvalidCredentials = 'auth_invalid_credentials';
 
+  // ═══ Not Found Page ═══
+  static const String notFoundTitle = 'not_found_title';
+  static const String notFoundDescription = 'not_found_description';
+  static const String backToHome = 'back_to_home';
+
 }

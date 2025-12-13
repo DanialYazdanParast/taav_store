@@ -273,4 +273,10 @@ const Map<String, String> enUS = {
   // ═══ Auth Errors ═══
   TKeys.authInvalidCredentials: 'Invalid username or password',
 
+
+  // ═══ Not Found Page ═══
+  TKeys.notFoundTitle: 'Page Not Found',
+  TKeys.notFoundDescription: 'The URL you entered is incorrect or the page has been moved.',
+  TKeys.backToHome: 'Back to Home',
+
 };

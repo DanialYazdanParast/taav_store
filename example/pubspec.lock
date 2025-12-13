@@ -2,7 +2,7 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   advanced_count_control:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: main
@@ -59,7 +59,7 @@ packages:
     source: hosted
     version: "0.3.5"
   cupertino_icons:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cupertino_icons
       sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
@@ -67,7 +67,7 @@ packages:
     source: hosted
     version: "1.0.8"
   dio:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: dio
       sha256: d90ee57923d1828ac14e492ca49440f65477f4bb1263575900be731a3dac66a9
@@ -83,7 +83,7 @@ packages:
     source: hosted
     version: "2.1.1"
   either_dart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: either_dart
       sha256: "0b57f6a9410ce0ba2cc340220109f545bf4bad1b06b242219f0af11ab9e84f0e"
@@ -144,7 +144,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_colorpicker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_colorpicker
       sha256: "969de5f6f9e2a570ac660fb7b501551451ea2a1ab9e2097e89475f60e07816ea"
@@ -191,7 +191,7 @@ packages:
     source: hosted
     version: "4.7.3"
   get_storage:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get_storage
       sha256: "39db1fffe779d0c22b3a744376e86febe4ade43bf65e06eab5af707dc84185a2"
@@ -215,7 +215,7 @@ packages:
     source: hosted
     version: "4.1.2"
   image_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image_picker
       sha256: "784210112be18ea55f69d7076e2c656a4e24949fa9e76429fe53af0c0f4fa320"

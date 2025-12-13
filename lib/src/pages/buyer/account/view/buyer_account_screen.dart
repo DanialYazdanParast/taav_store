@@ -1,0 +1,121 @@
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
+import 'package:taav_store/src/pages/buyer/account/view/widgets/icon_list.dart';
+import 'package:taav_store/src/pages/buyer/account/view/widgets/settings_draggable_sheet.dart';
+import 'package:taav_store/src/pages/shared/widgets/ui_components.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
+
+import '../controllers/buyer_account_controller.dart';
+import '../../../shared/widgets/profile_header.dart';
+
+class BuyerAccountScreen extends GetView<BuyerAccountController> {
+  const BuyerAccountScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(toolbarHeight: 0, backgroundColor: Colors.transparent),
+      body: Responsive(
+        mobile: BuyerMobileLayout(controller: controller),
+        desktop: BuyerDesktopLayout(controller: controller),
+      ),
+    );
+  }
+}
+
+class BuyerMobileLayout extends StatelessWidget {
+  final BuyerAccountController controller;
+
+  const BuyerMobileLayout({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ProfileHeader(
+          username: controller.authService.username,
+          userType: controller.authService.userType,
+          height: 300,
+        ),
+        SettingsDraggableSheet(onLogout: controller.authService.logout),
+      ],
+    );
+  }
+}
+
+class BuyerDesktopLayout extends StatelessWidget {
+  final BuyerAccountController controller;
+
+  const BuyerDesktopLayout({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(AppSize.p24),
+        child: Container(
+          width: 500,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: theme.cardColor,
+            borderRadius: BorderRadius.circular(AppSize.r16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 30,
+                offset: const Offset(0, 10),
+              ),
+            ],
+            border: Border.all(
+              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+            ),
+          ),
+          child: Column(
+            children: [
+              ProfileHeader(
+                username: controller.authService.username,
+                userType: controller.authService.userType,
+                height: 300,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSize.p32,
+                  AppSize.p32,
+                  AppSize.p32,
+                  8,
+                ),
+                child: MenuItem(
+                  icon: Icons.history_rounded,
+                  color: theme.colorScheme.primary,
+                  title: TKeys.purchaseHistory.tr,
+                  subtitle: TKeys.orderHistoryDesc.tr,
+                  showChevron: true,
+                  onTap: () => Get.toNamed(AppRoutes.buyerOrders),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSize.p32,
+                  0,
+                  AppSize.p32,
+                  AppSize.p32,
+                ),
+                child: IconList(
+                  onLogout: controller.authService.logout,
+                  showChevron: false,
+                ),
+              ),
+              32.height,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

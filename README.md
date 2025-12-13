@@ -81,15 +81,15 @@ View (UI) → Controller (Logic) → Repository (Data) → Service (API/Storage)
 taav_store/
 ├── lib/                          # کتابخانه اصلی (خالی)
 │
-├── example/                      # برنامه اصلی
+├── taav_store/                      # برنامه اصلی
 │   ├── lib/
 │   │   ├── main.dart
 │   │   └── src/
-│   │       ├── commons/          # ابزارهای مشترک
-│   │       ├── infoStructure/    # پیکربندی اصلی
+│   │       ├── infrastructure/          # ابزارهای مشترک
+│   │       ├── infrastructure/    # پیکربندی اصلی
 │   │       └── pages/            # صفحات
 │   │
-│   └── pubspec.yaml              # وابستگی‌های example
+│   └── pubspec.yaml              # وابستگی‌های taav_store
 │
 ├── backend/                      # سرور Mock API
 │   ├── server.js                 # سرور Node.js + Multer
@@ -106,7 +106,7 @@ taav_store/
 هر فیچر شامل:
 ```
 feature/
-├── commons/          # Bindings
+├── infrastructure/          # Bindings
 ├── controllers/      # منطق
 ├── models/           # مدل‌ها
 ├── repository/       # دسترسی به داده
@@ -232,9 +232,9 @@ adb reverse tcp:3000 tcp:3000
 
 ### 2️⃣ راه‌اندازی Flutter App
 
-#### ورود به پوشه example
+#### ورود به پوشه taav_store
 ```bash
-cd ../example
+cd ../taav_store
 ```
 
 #### نصب وابستگی‌های Flutter

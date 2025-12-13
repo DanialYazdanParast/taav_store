@@ -13,6 +13,7 @@ class BuyerProductDetailsController extends GetxController {
 
   BuyerProductDetailsController({required this.detailsRepo});
 
+
   String? productId;
   final Rxn<ProductModel> product = Rxn<ProductModel>();
   final Rx<CurrentState> productState = CurrentState.idle.obs;

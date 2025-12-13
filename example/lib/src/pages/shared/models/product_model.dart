@@ -37,4 +37,34 @@ class ProductModel {
       sellerId: json['sellerId'] ?? '',
     );
   }
+
+
+
+}
+extension ProductModelCopy on ProductModel {
+  ProductModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? image,
+    int? price,
+    int? discountPrice,
+    int? quantity,
+    String? sellerId,
+    List<String>? colors,
+    List<String>? tags,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      image: image ?? this.image,
+      price: price ?? this.price,
+      discountPrice: discountPrice ?? this.discountPrice,
+      quantity: quantity ?? this.quantity,
+      sellerId: sellerId ?? this.sellerId,
+      colors: colors ?? this.colors,
+      tags: tags ?? this.tags,
+    );
+  }
 }

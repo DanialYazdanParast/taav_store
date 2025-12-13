@@ -279,4 +279,6 @@ const Map<String, String> enUS = {
   TKeys.notFoundDescription: 'The URL you entered is incorrect or the page has been moved.',
   TKeys.backToHome: 'Back to Home',
 
+  TKeys.maximum: 'Maximum',
+
 };

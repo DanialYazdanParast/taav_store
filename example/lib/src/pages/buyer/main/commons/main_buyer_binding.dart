@@ -50,19 +50,22 @@ class MainBuyerBinding extends Bindings {
     }
 
     // ───  Controllers ───
+
+
     Get.put<CartController>(
       CartController(repo: Get.find<ICartRepository>()),
       permanent: true,
     );
-
-    Get.lazyPut<MainBuyerController>(() => MainBuyerController());
-
     Get.put<BuyerProductsController>(
       BuyerProductsController(
         productRepo: Get.find<IBuyerProductsRepository>(),
       ),
       permanent: true,
     );
+
+    Get.lazyPut<MainBuyerController>(() => MainBuyerController());
+
+
 
     Get.lazyPut<BuyerAccountController>(
       () => BuyerAccountController(),

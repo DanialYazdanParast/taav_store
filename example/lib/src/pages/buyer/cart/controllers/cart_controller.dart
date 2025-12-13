@@ -1,5 +1,6 @@
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/pages/buyer/cart/models/cart_item_dto.dart';
+import 'package:example/src/pages/buyer/products/controllers/buyer_products_controller.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
@@ -139,6 +140,7 @@ class CartController extends GetxController {
   }
 
   Future<void> checkout() async {
+
     if (cartItems.isEmpty) return;
     cartCheckout.value = CurrentState.loading;
 
@@ -158,7 +160,7 @@ class CartController extends GetxController {
           "price": item.price,
           "originalPrice": item.originalPrice,
 
-          "image": item.productImage, // فرض بر این است که نام فیلد در مدل CartItemModel، "productImage" است.
+          "image": item.productImage,
         },
       )
           .toList(),
@@ -172,20 +174,35 @@ class CartController extends GetxController {
         cartCheckout.value = CurrentState.error;
         ToastUtil.show(TKeys.orderSubmitFailed.tr, type: ToastType.error);
       },
-      (_) async {
+          (_) async {
+        // 1. یک کپی از آیتم‌های سبد خرید بگیرید *قبل از پاکسازی*
+        final List<CartItemModel> itemsToUpdateStock = List.from(cartItems);
+
+        // 2. موجودی محصول را در دیتابیس به‌روز کنید
         await Future.wait(
-          cartItems.map((item) {
+          itemsToUpdateStock.map((item) {
             int newStock = item.maxStock - item.quantity;
             if (newStock < 0) newStock = 0;
             return _repo.updateProductStock(item.productId, newStock);
           }),
         );
 
-        for (var item in List.from(cartItems)) {
+        // 3. آیتم‌ها را از سبد خرید در دیتابیس حذف کنید
+        for (var item in itemsToUpdateStock) {
           if (item.id != null) await _repo.deleteItem(item.id!);
         }
 
+
         cartItems.clear();
+
+
+        final BuyerProductsController productsController = Get.find<BuyerProductsController>();
+        for (var item in itemsToUpdateStock) {
+          productsController.updateProductStockAfterCheckout(
+            item.productId,
+            item.quantity,
+          );
+        }
 
         final successMsg =
             '${TKeys.orderSubmitSuccess.tr} ${TKeys.stockUpdateSuccess.tr}';
@@ -193,6 +210,7 @@ class CartController extends GetxController {
         ToastUtil.show(successMsg, type: ToastType.success);
       },
     );
+
   }
 
   // --- Getters & Helpers ---

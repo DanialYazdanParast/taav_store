@@ -99,7 +99,7 @@ class MobileCartLayout extends GetView<CartController> {
                 ),
               ),
               const SizedBox(width: 16),
-              _buildPriceInfo(theme),
+              Flexible(child: _buildPriceInfo(theme)),
             ],
           ),
         ),
@@ -113,27 +113,39 @@ class MobileCartLayout extends GetView<CartController> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (controller.hasDiscount)
-          Text(
-            "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              controller.totalPayablePrice.toLocalizedPrice,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            const SizedBox(width: 4),
-            Text(
-              TKeys.toman.tr,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-            ),
-          ],
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                controller.totalPayablePrice.toLocalizedPrice,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                TKeys.toman.tr,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

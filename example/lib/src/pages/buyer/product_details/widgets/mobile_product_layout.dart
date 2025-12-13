@@ -119,7 +119,6 @@ class MobileProductLayout extends GetView<BuyerProductDetailsController> {
                     child: Text(product.title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, height: 1.4)),
                   ),
 
-                  // ویجت انتخاب رنگ
                   const ColorSelectorWidget(),
                   const SizedBox(height: AppSize.p24),
 

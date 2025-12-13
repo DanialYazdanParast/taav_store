@@ -278,4 +278,7 @@ abstract class TKeys {
   static const String notFoundDescription = 'not_found_description';
   static const String backToHome = 'back_to_home';
 
+
+  static const String maximum = 'maximum';
+
 }

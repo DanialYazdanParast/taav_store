@@ -35,7 +35,7 @@ class CartItemWidget extends GetView<CartController> {
         ),
         AppSize.p12.width,
 
-        Expanded(
+        Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

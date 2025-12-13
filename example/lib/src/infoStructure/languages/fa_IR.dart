@@ -282,4 +282,6 @@ const Map<String, String> faIR = {
   TKeys.notFoundDescription: 'آدرس وارد شده اشتباه است یا صفحه منتقل شده است.',
   TKeys.backToHome: 'بازگشت به صفحه اصلی',
 
+  TKeys.maximum: 'حداکثر',
+
 };

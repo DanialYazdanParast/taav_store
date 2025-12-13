@@ -41,6 +41,12 @@ class AppTextTheme {
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
+
+      labelMedium: TextStyle(
+        color: textPrimary,
+        fontSize: 16,
+        fontWeight: FontWeight.w800,
+      ),
     );
   }
 }

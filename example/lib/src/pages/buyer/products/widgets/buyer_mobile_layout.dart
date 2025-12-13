@@ -92,7 +92,6 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                     ).show(const BuyerFilterView());
                   },
                 ),
-
                 Carousel(),
                 AppSize.p20.height,
               ],
@@ -121,7 +120,6 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
             child: Column(
               children: [
                 const HeaderSheet(),
-
                 Obx(() {
                   if (controller.productsState.value == CurrentState.loading) {
                     return Expanded(
@@ -131,7 +129,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 12,
                           crossAxisSpacing: 12,
-                          childAspectRatio: 0.60,
+                          childAspectRatio: 0.50, // 🔥 تغییر از 0.55 به 0.58
                         ),
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(
@@ -172,7 +170,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 12,
                           crossAxisSpacing: 12,
-                          childAspectRatio: 0.65,
+                          childAspectRatio: 0.50, // 🔥 تغییر از 0.50 به 0.58
                         ),
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(
@@ -183,15 +181,9 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                         itemBuilder: (context, index) {
                           final product = controller.filteredProducts[index];
                           return BuyerProductCard(
-                            productName: product.title,
-                            originalPrice: product.price.toString(),
-                            discountedPrice: product.discountPrice.toString(),
-                            discountPercent: product.discountPercentString,
-                            quantity: product.quantity,
-                            imagePath: product.image,
-                            size: Get.height * 0.15,
-                            onTap:
-                                () => mainController.goToProductDetails(
+                            product: product,
+                            imageHeight: Get.height * 0.15,
+                            onTap: () => mainController.goToProductDetails(
                               product.id,
                             ),
                           );

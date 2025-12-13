@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:example/src/commons/services/metadata_service.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,14 +17,18 @@ class BuyerProductsController extends GetxController {
 
   final MetadataService metadataService = Get.find<MetadataService>();
 
-  BuyerProductsController({required this.productRepo});
 
+  BuyerProductsController({required this.productRepo});
+  late final CartController cartController;
   // ─── State Variables ───────────────
   final RxList<ProductModel> products = <ProductModel>[].obs;
   final Rx<CurrentState> productsState = CurrentState.idle.obs;
 
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   final RxList<TagModel> availableTags = <TagModel>[].obs;
+
+  // ─── Color Selection for Each Product ───────────────
+  final RxMap<String, String> selectedColorsMap = <String, String>{}.obs;
 
   // ─── Filter Logic Variables ──────────────
   final RxDouble minPriceLimit = 0.0.obs;
@@ -49,6 +55,7 @@ class BuyerProductsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    cartController = Get.find<CartController>();
     searchController = TextEditingController();
     searchFocusNode = FocusNode();
 
@@ -92,9 +99,118 @@ class BuyerProductsController extends GetxController {
         products.assignAll(fetchedProducts.reversed.toList());
         productsState.value = CurrentState.success;
         calculatePriceLimits(products);
+        _initializeProductColors(fetchedProducts);
       },
     );
   }
+
+  // ─── Initialize Colors for Products ─────────
+  void _initializeProductColors(List<ProductModel> fetchedProducts) {
+    for (var product in fetchedProducts) {
+      if (product.colors.isNotEmpty &&
+          !selectedColorsMap.containsKey(product.id)) {
+        selectedColorsMap[product.id] = product.colors.first;
+      }
+    }
+  }
+
+  // ─── Product Card Logic ─────────
+
+  String getSelectedColor(String productId, List<String> colors) {
+    if (colors.isEmpty) return '';
+    return selectedColorsMap[productId] ?? colors.first;
+  }
+
+  void initializeProductColor(String productId, List<String> colors) {
+    if (colors.isNotEmpty && !selectedColorsMap.containsKey(productId)) {
+      selectedColorsMap[productId] = colors.first;
+    }
+  }
+
+  void selectColorForProduct(String productId, String colorHex) {
+    selectedColorsMap[productId] = colorHex;
+  }
+
+  int getTotalQuantityInCart(String productId) {
+    return cartController.cartItems
+        .where((item) => item.productId == productId)
+        .fold(0, (sum, item) => sum + item.quantity);
+  }
+
+  int getRemainingStock(String productId, int productQuantity) {
+    return productQuantity - getTotalQuantityInCart(productId);
+  }
+
+  int getCurrentQuantityForSelectedColor(
+      String productId,
+      List<String> colors,
+      ) {
+    if (colors.isEmpty) {
+      return getTotalQuantityInCart(productId);
+    }
+
+    final selectedColor = getSelectedColor(productId, colors);
+
+    final item = cartController.cartItems.firstWhereOrNull(
+          (element) =>
+      element.productId == productId && element.colorHex == selectedColor,
+    );
+    return item?.quantity ?? 0;
+  }
+
+  String getAddToCartButtonLabel(int productQuantity, int remainingStock) {
+    if (productQuantity == 0) {
+      return TKeys.outOfStock.tr;
+    } else if (remainingStock <= 0) {
+      return TKeys.soldOut.tr;
+    }
+    return TKeys.addToCart.tr;
+  }
+
+  bool isAddToCartDisabled(int productQuantity, int remainingStock) {
+    return productQuantity == 0 || remainingStock <= 0;
+  }
+
+  void addProductToCart(
+      ProductModel product,
+      String selectedColor,
+      int totalQuantityInCart,
+      ) {
+    if (totalQuantityInCart < product.quantity) {
+      cartController.addToCart(product, 1, selectedColor);
+    } else {
+      ToastUtil.show(TKeys.stockFinishedWarning.tr, type: ToastType.warning);
+    }
+  }
+
+  void decreaseProductFromCart(String productId, String selectedColor) {
+    final item = cartController.cartItems.firstWhereOrNull(
+          (element) =>
+      element.productId == productId && element.colorHex == selectedColor,
+    );
+    if (item != null) {
+      cartController.decrementItem(item);
+    }
+  }
+
+  void updateProductStockAfterCheckout(
+      String productId,
+      int purchasedQuantity,
+      ) {
+    final index = products.indexWhere((p) => p.id == productId);
+    if (index == -1) return;
+
+    final oldProduct = products[index];
+
+    final newQty = (oldProduct.quantity - purchasedQuantity).clamp(0, 1 << 31);
+
+    final updatedProduct = oldProduct.copyWith(
+      quantity: newQty,
+    );
+
+    products[index] = updatedProduct;
+  }
+
 
   // ─── Filter Logic ─────────
   void calculatePriceLimits(List<ProductModel> items) {

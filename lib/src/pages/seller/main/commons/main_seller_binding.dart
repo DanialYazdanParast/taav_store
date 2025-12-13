@@ -1,5 +1,5 @@
-import 'package:taav_store/src/commons/services/metadata_service.dart';
-import 'package:taav_store/src/commons/services/network_service.dart';
+import 'package:taav_store/src/infrastructure/services/metadata_service.dart';
+import 'package:taav_store/src/infrastructure/network/network_service.dart';
 import 'package:taav_store/src/pages/seller/account/controllers/seller_account_controller.dart';
 import 'package:taav_store/src/pages/seller/add_product/controllers/seller_add_controller.dart';
 import 'package:taav_store/src/pages/seller/add_product/repository/seller_add_repository.dart';

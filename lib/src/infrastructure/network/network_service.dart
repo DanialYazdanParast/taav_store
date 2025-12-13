@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:taav_store/src/commons/utils/toast_util.dart';
-import 'package:taav_store/src/infoStructure/commons/app_configs.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/commons/app_configs.dart';
+import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 

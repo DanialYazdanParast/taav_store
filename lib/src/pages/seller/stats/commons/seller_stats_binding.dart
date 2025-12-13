@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/services/network_service.dart';
+import 'package:taav_store/src/infrastructure/network/network_service.dart';
 import '../repository/seller_stats_repository.dart';
 import '../controllers/seller_stats_controller.dart';
 

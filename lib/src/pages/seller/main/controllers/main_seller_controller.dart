@@ -1,10 +1,10 @@
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
-import '../../../../commons/widgets/responsive/responsive.dart';
-import '../../../../infoStructure/languages/translation_keys.dart';
+import '../../../../infrastructure/widgets/responsive/responsive.dart';
+import '../../../../infrastructure/languages/translation_keys.dart';
 
 class MainSellerController extends GetxController {
   final RxInt currentIndex = 0.obs;

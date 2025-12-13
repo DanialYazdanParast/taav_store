@@ -1,5 +1,5 @@
-import 'package:taav_store/src/commons/constants/storage_keys.dart';
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/constants/storage_keys.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'storage_service.dart';
 

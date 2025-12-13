@@ -1,9 +1,8 @@
-// فایل: src/pages/buyer/orders/repository/order_repository.dart
 
 import 'package:either_dart/either.dart';
-import 'package:taav_store/src/commons/models/failure.dart';
-import 'package:taav_store/src/commons/services/base_repository.dart';
-import 'package:taav_store/src/commons/services/network_service.dart';
+import 'package:taav_store/src/infrastructure/network/failure.dart';
+import 'package:taav_store/src/infrastructure/network/base_repository.dart';
+import 'package:taav_store/src/infrastructure/network/network_service.dart';
 import '../../../shared/models/order_model.dart';
 
 abstract class IOrderRepository {

@@ -1,4 +1,4 @@
-import 'package:taav_store/src/commons/widgets/text/app_input_styles.dart';
+import 'package:taav_store/src/infrastructure/widgets/text/app_input_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

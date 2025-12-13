@@ -1,4 +1,4 @@
-import 'package:taav_store/src/commons/widgets/app_loading.dart';
+import 'package:taav_store/src/infrastructure/widgets/app_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

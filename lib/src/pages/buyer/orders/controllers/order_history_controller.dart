@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/services/auth_service.dart';
-import 'package:taav_store/src/commons/utils/toast_util.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart'; // Import added
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/services/auth_service.dart';
+import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart'; // Import added
 import '../../../shared/models/order_model.dart';
 import '../repository/order_repository.dart';
 

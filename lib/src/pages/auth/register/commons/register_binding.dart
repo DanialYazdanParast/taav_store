@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import '../controllers/register_controller.dart';
 import '../repository/register_repository.dart';
-import 'package:taav_store/src/commons/services/network_service.dart';
+import 'package:taav_store/src/infrastructure/network/network_service.dart';
 
 class RegisterBinding extends Bindings {
   @override

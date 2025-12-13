@@ -1,15 +1,15 @@
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/widgets/error_view.dart';
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/button/button_widget.dart';
-import 'package:taav_store/src/commons/widgets/responsive/responsive.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart';
+import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 
 import '../controllers/seller_edit_controller.dart';

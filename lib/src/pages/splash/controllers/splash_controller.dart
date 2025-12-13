@@ -1,7 +1,7 @@
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/services/app_info_service.dart';
-import 'package:taav_store/src/commons/services/auth_service.dart';
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/services/app_info_service.dart';
+import 'package:taav_store/src/infrastructure/services/auth_service.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {

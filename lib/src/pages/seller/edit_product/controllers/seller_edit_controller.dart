@@ -1,18 +1,18 @@
 import 'dart:convert';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 
-import 'package:taav_store/src/commons/services/auth_service.dart';
-import 'package:taav_store/src/commons/services/metadata_service.dart';
+import 'package:taav_store/src/infrastructure/services/auth_service.dart';
+import 'package:taav_store/src/infrastructure/services/metadata_service.dart';
 import 'package:taav_store/src/pages/shared/models/product_model.dart';
 import 'package:taav_store/src/pages/shared/controllers/mixin_dialog_controller.dart';
-import 'package:taav_store/src/commons/utils/toast_util.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:taav_store/src/pages/shared/models/color_model.dart';
 import 'package:taav_store/src/pages/shared/models/tag_model.dart';

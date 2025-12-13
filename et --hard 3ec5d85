@@ -41,6 +41,6 @@
 [33m34d2f11[m feat: setup localization (fa/en) and app theme infrastructure
 [33mf02f551[m feat: implement app routing and base bindings
 [33m8291534[m chore: add base dependencies (get, dio, either_dart)
-[33m68b6ede[m chore: initialize base architecture (commons, infoStructure, pages)
+[33m68b6ede[m chore: initialize base architecture (infrastructure, infrastructure, pages)
 [33m5e18074[m chore: initialize flutter project for mobile and web support
 [33m29f7acb[m Initial commit

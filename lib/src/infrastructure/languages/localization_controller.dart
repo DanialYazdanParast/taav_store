@@ -1,5 +1,5 @@
-import 'package:taav_store/src/commons/constants/storage_keys.dart';
-import 'package:taav_store/src/commons/services/storage_service.dart';
+import 'package:taav_store/src/infrastructure/constants/storage_keys.dart';
+import 'package:taav_store/src/infrastructure/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

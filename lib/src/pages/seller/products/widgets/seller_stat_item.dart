@@ -1,8 +1,8 @@
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/extensions/ext.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/app_shimmer.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/extensions/ext.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
 
 class SellerStatItem extends StatelessWidget {

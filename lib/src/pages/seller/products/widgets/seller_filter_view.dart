@@ -1,5 +1,5 @@
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/divider_widget.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,6 +1,6 @@
-import 'package:taav_store/src/commons/extensions/ext.dart';
-import 'package:taav_store/src/commons/widgets/network_image.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/extensions/ext.dart';
+import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/order_model.dart';

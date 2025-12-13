@@ -1,7 +1,7 @@
-import 'package:taav_store/src/infoStructure/languages/localization_controller.dart';
+import 'package:taav_store/src/infrastructure/languages/localization_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/constants/app_png.dart';
+import 'package:taav_store/src/infrastructure/constants/app_png.dart';
 
 class AnimatedLogo extends StatelessWidget {
   final double width;

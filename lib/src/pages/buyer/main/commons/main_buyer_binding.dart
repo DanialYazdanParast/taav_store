@@ -2,8 +2,8 @@ import 'package:taav_store/src/pages/buyer/cart/repository/cart_repository.dart'
 import 'package:taav_store/src/pages/buyer/product_details/controllers/buyer_product_details_controller.dart';
 import 'package:taav_store/src/pages/buyer/product_details/repository/buyer_product_details_repository.dart';
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/services/metadata_service.dart';
-import 'package:taav_store/src/commons/services/network_service.dart';
+import 'package:taav_store/src/infrastructure/services/metadata_service.dart';
+import 'package:taav_store/src/infrastructure/network/network_service.dart';
 import 'package:taav_store/src/pages/shared/repositories/metadata_repository.dart';
 import 'package:taav_store/src/pages/buyer/products/controllers/buyer_products_controller.dart';
 import 'package:taav_store/src/pages/buyer/products/repository/buyer_products_repository.dart';

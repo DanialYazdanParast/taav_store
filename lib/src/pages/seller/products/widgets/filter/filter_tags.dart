@@ -1,4 +1,4 @@
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

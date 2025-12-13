@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 
 class BottomSheetWidget {
   final bool isScrollControlled;

@@ -1,6 +1,6 @@
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/widgets/app_loading.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/widgets/app_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

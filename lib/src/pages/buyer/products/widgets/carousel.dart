@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:taav_store/src/commons/constants/app_png.dart';
+import 'package:taav_store/src/infrastructure/constants/app_png.dart';
 import 'package:flutter/material.dart';
 
 class Carousel extends StatefulWidget {

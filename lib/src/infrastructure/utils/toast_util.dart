@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:taav_store/src/commons/widgets/responsive/responsive.dart';
+import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

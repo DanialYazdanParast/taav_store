@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import 'package:taav_store/src/commons/models/failure.dart';
-import 'package:taav_store/src/commons/services/base_repository.dart';
-import 'package:taav_store/src/commons/services/network_service.dart';
+import 'package:taav_store/src/infrastructure/network/failure.dart';
+import 'package:taav_store/src/infrastructure/network/base_repository.dart';
+import 'package:taav_store/src/infrastructure/network/network_service.dart';
 import 'package:taav_store/src/pages/shared/models/product_model.dart';
 
 abstract class ISellerAddRepository {

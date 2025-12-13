@@ -1,18 +1,17 @@
-import 'package:taav_store/src/infoStructure/languages/app_translations.dart';
-import 'package:taav_store/src/infoStructure/languages/localization_controller.dart';
+import 'package:taav_store/src/infrastructure/languages/app_translations.dart';
+import 'package:taav_store/src/infrastructure/languages/localization_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
-import 'package:taav_store/src/infoStructure/theme/app_theme.dart';
-import 'package:taav_store/src/infoStructure/theme/theme_controller.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/theme/app_theme.dart';
+import 'package:taav_store/src/infrastructure/theme/theme_controller.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final langController = Get.find<LocalizationController>();
     final themeController = Get.find<ThemeController>();
 

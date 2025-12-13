@@ -1,7 +1,7 @@
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/app_radio.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/app_radio.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_input_label.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

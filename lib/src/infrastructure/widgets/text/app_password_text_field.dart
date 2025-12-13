@@ -1,9 +1,9 @@
-import 'package:taav_store/src/commons/widgets/text/app_input_styles.dart';
+import 'package:taav_store/src/infrastructure/widgets/text/app_input_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 
 enum PasswordStrength { weak, moderate, strong }
 

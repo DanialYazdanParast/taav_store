@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import 'package:taav_store/src/commons/models/failure.dart';
 import 'package:flutter/foundation.dart';
+
+import 'failure.dart';
 
 abstract class BaseRepository {
   @protected

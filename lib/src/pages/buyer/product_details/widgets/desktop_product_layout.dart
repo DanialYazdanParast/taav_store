@@ -1,6 +1,6 @@
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:taav_store/src/pages/shared/widgets/custom_badge.dart';

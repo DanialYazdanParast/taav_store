@@ -1,8 +1,8 @@
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/dialog_widget.dart';
-import 'package:taav_store/src/commons/widgets/text/app_search_field.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/dialog_widget.dart';
+import 'package:taav_store/src/infrastructure/widgets/text/app_search_field.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:taav_store/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:taav_store/src/pages/seller/products/widgets/seller_filter_view.dart';

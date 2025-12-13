@@ -1,9 +1,9 @@
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/Empty_widget.dart';
-import 'package:taav_store/src/commons/widgets/error_view.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/Empty_widget.dart';
+import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:taav_store/src/pages/buyer/orders/controllers/order_history_controller.dart';
 import 'package:taav_store/src/pages/buyer/orders/widgets/order_detail_content.dart';
 import 'package:taav_store/src/pages/buyer/orders/widgets/order_history_loading.dart';

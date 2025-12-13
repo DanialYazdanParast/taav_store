@@ -85,8 +85,8 @@ taav_store/
 │   ├── lib/
 │   │   ├── main.dart
 │   │   └── src/
-│   │       ├── commons/          # ابزارهای مشترک
-│   │       ├── infoStructure/    # پیکربندی اصلی
+│   │       ├── infrastructure/          # ابزارهای مشترک
+│   │       ├── infrastructure/    # پیکربندی اصلی
 │   │       └── pages/            # صفحات
 │   │
 │   └── pubspec.yaml              # وابستگی‌های taav_store
@@ -106,7 +106,7 @@ taav_store/
 هر فیچر شامل:
 ```
 feature/
-├── commons/          # Bindings
+├── infrastructure/          # Bindings
 ├── controllers/      # منطق
 ├── models/           # مدل‌ها
 ├── repository/       # دسترسی به داده

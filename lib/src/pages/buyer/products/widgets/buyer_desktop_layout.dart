@@ -1,10 +1,10 @@
-import 'package:taav_store/src/commons/constants/app_size.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/extensions/product_discount_ext.dart';
-import 'package:taav_store/src/commons/extensions/space_extension.dart';
-import 'package:taav_store/src/commons/widgets/empty_widget.dart';
-import 'package:taav_store/src/commons/widgets/error_view.dart';
-import 'package:taav_store/src/infoStructure/languages/translation_keys.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/extensions/product_discount_ext.dart';
+import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/empty_widget.dart';
+import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
+import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:taav_store/src/commons/constants/app_size.dart';
+import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:flutter/material.dart';
 
 class HeaderSheet extends StatelessWidget {

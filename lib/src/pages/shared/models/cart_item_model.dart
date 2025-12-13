@@ -46,21 +46,6 @@ class CartItemModel {
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     if (id != null) "id": id,
-  //     "userId": userId,
-  //     "productId": productId,
-  //     "productTitle": productTitle,
-  //     "image": productImage,
-  //     "sellerId": sellerId,
-  //     "quantity": quantity,
-  //     "color": colorHex,
-  //     "price": price,
-  //     "originalPrice": originalPrice,
-  //     "maxStock": maxStock,
-  //   };
-  // }
 
   int get totalPrice => price * quantity;
 }

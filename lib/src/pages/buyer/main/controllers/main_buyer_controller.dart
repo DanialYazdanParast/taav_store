@@ -1,9 +1,9 @@
-import 'package:taav_store/src/infoStructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../shared/models/nav_item_model.dart';
-import '../../../../infoStructure/languages/translation_keys.dart';
+import '../../../../infrastructure/languages/translation_keys.dart';
 
 class MainBuyerController extends GetxController {
   final CartController _cartController = Get.find<CartController>();

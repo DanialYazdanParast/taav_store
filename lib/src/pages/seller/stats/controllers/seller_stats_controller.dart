@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:taav_store/src/commons/enums/enums.dart';
-import 'package:taav_store/src/commons/services/auth_service.dart';
+import 'package:taav_store/src/infrastructure/enums/enums.dart';
+import 'package:taav_store/src/infrastructure/services/auth_service.dart';
 import '../repository/seller_stats_repository.dart';
 import '../models/seller_sales_stat_model.dart';
 

@@ -129,6 +129,22 @@ abstract class TKeys {
   static const String orderDetails = 'order_details';
   static const String orderNumber = 'order_number';
 
+  // New Keys for hardcoded strings in DesktopOrderHistoryLayout
+  static const String loadingOrders = 'loading_orders';
+  static const String totalPrice = 'total_price';
+  static const String orderItems = 'order_items';
+  static const String noOrderSelected = 'no_order_selected';
+  static const String selectOrderToViewDetails = 'select_order_to_view_details';
+
+  // ═══ Status Translation Keys ═══
+  static const String statusPending = 'status_pending';
+  static const String statusProcessing = 'status_processing';
+  static const String statusShipped = 'status_shipped';
+  static const String statusDelivered = 'status_delivered';
+  static const String statusCancelled = 'status_cancelled';
+  static const String statusUnknown = 'status_unknown';
+
+
   // ═══ Seller Panel ═══
   static const String sellerPanel = 'seller_panel';
   static const String productManagement = 'product_management';
@@ -233,5 +249,36 @@ abstract class TKeys {
   static const String imageGallerySource = 'image_gallery_source';
 
   static const String productDeletedSuccessfully = 'product_deleted_successfully';
+  static const String validationPasswordEmpty = 'validation_password_empty';
+  static const String validationPasswordMinLength = 'validation_password_min_length';
+  static const String validationPasswordMaxLength = 'validation_password_max_length';
+  static const String validationPasswordRequirements = 'validation_password_requirements';
+  static const String validationPasswordConfirmEmpty = 'validation_password_confirm_empty';
+  static const String validationPasswordMismatch = 'validation_password_mismatch';
+  static const String validationUsernameEmpty = 'validation_username_empty';
+  static const String validationUsernameMinLength = 'validation_username_min_length';
+  static const String validationUsernameMaxLength = 'validation_username_max_length';
+  static const String validationUsernameInvalidChars = 'validation_username_invalid_chars';
+  static const String validationUsernameNoSpaces = 'validation_username_no_spaces';
+  static const String validationLoginPasswordEmpty = 'validation_login_password_empty';
+  static const String validationLoginPasswordMinLength = 'validation_login_password_min_length';
+  static const String validationLoginPasswordEnglishOnly = 'validation_login_password_english_only';
+  static const String validationCannotBeEmpty = 'validation_cannot_be_empty';
+  static const String validationMinThreeChars = 'validation_min_three_chars';
+  static const String validationEnterValue = 'validation_enter_value';
+  static const String validationNumberInvalid = 'validation_number_invalid';
+  static const String validationCannotBeNegative = 'validation_cannot_be_negative';
+  static const String validationDiscountPriceInvalid = 'validation_discount_price_invalid';
+  static const String validationDiscountPriceExceedsOriginal = 'validation_discount_price_exceeds_original';
+  // ═══ Auth Errors ═══
+  static const String authInvalidCredentials = 'auth_invalid_credentials';
+
+  // ═══ Not Found Page ═══
+  static const String notFoundTitle = 'not_found_title';
+  static const String notFoundDescription = 'not_found_description';
+  static const String backToHome = 'back_to_home';
+
+
+  static const String maximum = 'maximum';
 
 }

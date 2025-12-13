@@ -13,12 +13,6 @@ class MainBuyerScreen extends GetView<MainBuyerController> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.currentIndex.value != initialTab) {
-        controller.setTab(initialTab);
-      }
-    });
-
     return Responsive(mobile: MainBuyerMobile(), desktop: MainBuyerDesktop());
   }
 }

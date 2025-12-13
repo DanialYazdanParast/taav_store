@@ -15,7 +15,7 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: TKeys.salesStatistics.tr),
+      appBar: CustomAppBar(title: TKeys.salesStatistics.tr,showBackButton: false,),
       body: Obx(() {
         if (controller.pageState.value == CurrentState.loading) {
           return Center(child: AppLoading.circular(size: 50));
@@ -34,12 +34,11 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
               padding: const EdgeInsets.all(24.0),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  int crossAxisCount = constraints.maxWidth > 1100 ? 3 : 2;
 
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossAxisCount,
-                      childAspectRatio: 2.5,
+                      crossAxisCount: 3,
+                      childAspectRatio: 2,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 24,
                     ),

@@ -66,6 +66,7 @@ class ProductActionBarWidget extends GetView<BuyerProductDetailsController> {
       showAddButton: product.quantity == 0 || currentQtyForColor == 0,
       addButtonLabel: buttonLabel,
       isDisabled: isDisabled,
+      maxReachedLabel:  TKeys.maximum.tr,
       style: CountControlStyle(
         primaryColor: theme.colorScheme.primary,
         backgroundColor: theme.scaffoldBackgroundColor,

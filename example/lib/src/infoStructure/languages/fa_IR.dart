@@ -130,7 +130,23 @@ const Map<String, String> faIR = {
   TKeys.noOrdersYet: 'هنوز سفارشی ثبت نکرده‌اید',
   TKeys.orderDetails: 'جزئیات سفارش',
   TKeys.orderNumber: 'سفارش',
-  TKeys.items: 'آیتم‌ها', // 'items' key was missing a value in the original map, adding a plausible one.
+  TKeys.items: 'اقلام سفارش',
+
+  // New Keys for hardcoded strings in DesktopOrderHistoryLayout
+  TKeys.loadingOrders: 'در حال بارگذاری سفارشات...',
+  TKeys.totalPrice: 'مبلغ کل:',
+  TKeys.orderItems: 'اقلام سفارش',
+  TKeys.noOrderSelected: 'سفارشی انتخاب نشده',
+  TKeys.selectOrderToViewDetails: 'برای مشاهده جزئیات، یک سفارش انتخاب کنید',
+
+  // ═══ Status Translation Keys ═══
+  TKeys.statusPending: 'در انتظار',
+  TKeys.statusProcessing: 'در حال پردازش',
+  TKeys.statusShipped: 'ارسال شده',
+  TKeys.statusDelivered: 'تحویل داده شده',
+  TKeys.statusCancelled: 'لغو شده',
+  TKeys.statusUnknown: 'نامشخص',
+
 
   // ═══ Seller Panel ═══
   TKeys.productManagement: 'مدیریت محصولات',
@@ -217,7 +233,7 @@ const Map<String, String> faIR = {
   TKeys.badCertificate: 'خطای امنیتی در اتصال',
   TKeys.unknownNetworkError: 'خطای ناشناخته در ارتباط با سرور',
   TKeys.serverErrorOccurred: 'خطایی از سمت سرور رخ داد',
-  TKeys.connectionTimeout: 'زمان اتصال به پایان رسید', // Adding values for missing keys based on context
+  TKeys.connectionTimeout: 'زمان اتصال به پایان رسید',
   TKeys.sendTimeout: 'زمان ارسال به پایان رسید',
   TKeys.receiveTimeout: 'زمان دریافت به پایان رسید',
   TKeys.connectionError: 'خطای ارتباطی',
@@ -235,5 +251,37 @@ const Map<String, String> faIR = {
   TKeys.imageGallerySource: 'گالری تصاویر',
   TKeys.productDeletedSuccessfully: 'محصول با موفقیت حذف شد',
 
+  TKeys.validationPasswordEmpty: 'رمز عبور نمی‌تواند خالی باشد',
+  TKeys.validationPasswordMinLength: 'رمز عبور باید حداقل ۸ کاراکتر باشد',
+  TKeys.validationPasswordMaxLength: 'رمز عبور باید حداکثر ۶۰ کاراکتر باشد',
+  TKeys.validationPasswordRequirements: 'رمز عبور باید شامل حداقل یک حرف بزرگ، یک حرف کوچک، یک عدد و یک کاراکتر خاص باشد',
+  TKeys.validationPasswordConfirmEmpty: 'لطفاً رمز عبور را تأیید کنید',
+  TKeys.validationPasswordMismatch: 'رمزهای عبور مطابقت ندارند',
+  TKeys.validationUsernameEmpty: 'نام کاربری نمی‌تواند خالی باشد',
+  TKeys.validationUsernameMinLength: 'نام کاربری باید حداقل ۴ کاراکتر باشد',
+  TKeys.validationUsernameMaxLength: 'نام کاربری نمی‌تواند بیشتر از ۳۰ کاراکتر باشد',
+  TKeys.validationUsernameInvalidChars: 'نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و _ باشد',
+  TKeys.validationUsernameNoSpaces: 'نام کاربری نمی‌تواند شامل فاصله باشد',
+  TKeys.validationLoginPasswordEmpty: 'رمز عبور نمی‌تواند خالی باشد',
+  TKeys.validationLoginPasswordMinLength: 'رمز عبور باید حداقل ۸ کاراکتر باشد',
+  TKeys.validationLoginPasswordEnglishOnly: 'رمز عبور باید با حروف انگلیسی وارد شود',
+  TKeys.validationCannotBeEmpty: 'نمی‌تواند خالی باشد',
+  TKeys.validationMinThreeChars: 'باید حداقل ۳ کاراکتر باشد',
+  TKeys.validationEnterValue: 'را وارد کنید',
+  TKeys.validationNumberInvalid: 'لطفاً عدد معتبر وارد کنید',
+  TKeys.validationCannotBeNegative: 'نمی‌تواند منفی باشد',
+  TKeys.validationDiscountPriceInvalid: 'قیمت تخفیف باید عدد باشد',
+  TKeys.validationDiscountPriceExceedsOriginal: 'قیمت با تخفیف نمی‌تواند بیشتر از قیمت اصلی باشد',
+
+
+  // ═══ Auth Errors ═══
+  TKeys.authInvalidCredentials: 'نام کاربری یا رمز عبور اشتباه است',
+
+  // ═══ Not Found Page ═══
+  TKeys.notFoundTitle: 'صفحه مورد نظر یافت نشد',
+  TKeys.notFoundDescription: 'آدرس وارد شده اشتباه است یا صفحه منتقل شده است.',
+  TKeys.backToHome: 'بازگشت به صفحه اصلی',
+
+  TKeys.maximum: 'حداکثر',
 
 };

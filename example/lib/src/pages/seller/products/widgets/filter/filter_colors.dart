@@ -18,7 +18,9 @@ class SellerFilterColors extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
+        SizedBox(width: double.infinity),
         Text(
           TKeys.colors.tr,
           style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold),

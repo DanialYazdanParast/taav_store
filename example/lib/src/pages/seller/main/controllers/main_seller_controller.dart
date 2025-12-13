@@ -1,5 +1,3 @@
-// lib/src/pages/seller/main/controllers/main_seller_controller.dart
-
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:example/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +7,8 @@ import '../../../../commons/widgets/responsive/responsive.dart';
 import '../../../../infoStructure/languages/translation_keys.dart';
 
 class MainSellerController extends GetxController {
-  // ─── Navigation State ──────────────────────────────────────────────────
   final RxInt currentIndex = 0.obs;
 
-  // ─── Nav Items ─────────────────────────────────────────────────────────
   List<NavItemModel> get navItems => [
     NavItemModel(
       icon: Icons.home_outlined,
@@ -32,29 +28,30 @@ class MainSellerController extends GetxController {
     ),
   ];
 
-  // ─── Lifecycle ─────────────────────────────────────────────────────────
   @override
   void onInit() {
     super.onInit();
     _syncIndexWithRoute();
   }
 
-  // ─── Private Methods ───────────────────────────────────────────────────
+  @override
+  void onReady() {
+    super.onReady();
+    ever(currentIndex, (_) => _syncIndexWithRoute());
+    _syncIndexWithRoute();
+  }
 
   void _syncIndexWithRoute() {
     final currentRoute = Get.currentRoute;
 
-    if (currentRoute.contains('/seller/products') ||
-        currentRoute == '/seller') {
+    if (currentRoute.contains('/products') || currentRoute == '/seller') {
       currentIndex.value = 0;
-    } else if (currentRoute.contains('/seller/add-product')) {
+    } else if (currentRoute.contains('/add-product')) {
       currentIndex.value = 1;
-    } else if (currentRoute.contains('/seller/settings')) {
+    } else if (currentRoute.contains('/account')) {
       currentIndex.value = 2;
     }
   }
-
-  // ─── Public Methods ────────────────────────────────────────────────────
 
   void changeTab(int index) {
     final item = navItems[index];
@@ -84,13 +81,6 @@ class MainSellerController extends GetxController {
     }
   }
 
-  void setTab(int index) {
-    if (index >= 0 && index < navItems.length) {
-      currentIndex.value = index;
-    }
-  }
-
-  // ─── Navigation Helpers ─────────────────────────────
 
   void goToAddProduct() {
     Get.to(
@@ -108,11 +98,7 @@ class MainSellerController extends GetxController {
     );
   }
 
-  void goToProducts() {
-    _navigateToTab(0);
-  }
+  void goToProducts() => _navigateToTab(0);
 
-  void goToSettings() {
-    _navigateToTab(2);
-  }
+  void goToSettings() => _navigateToTab(2);
 }

@@ -83,24 +83,19 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
                     sliver: SliverGrid(
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 400,
-                            mainAxisExtent: 400,
+                            maxCrossAxisExtent: 430,
+                            mainAxisExtent: 450,
                             crossAxisSpacing: AppSize.p20,
                             mainAxisSpacing: AppSize.p20,
                           ),
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final product = controller.filteredProducts[index];
                         return BuyerProductCard(
-                          productName: product.title,
-                          originalPrice: product.price.toString(),
-                          discountedPrice: product.discountPrice.toString(),
-                          discountPercent: product.discountPercentString,
-                          imagePath: product.image,
-                          quantity: product.quantity,
-                          size: 250,
-                          onTap:
-                              () =>
-                                  mainController.goToProductDetails(product.id),
+                          product: product,
+                          imageHeight: 250,
+                          onTap: () => mainController.goToProductDetails(
+                            product.id,
+                          ),
                         );
                       }, childCount: controller.filteredProducts.length),
                     ),
@@ -119,7 +114,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
   Widget _buildHeroSection(ThemeData theme) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      clipBehavior: Clip.none,
+      clipBehavior: Clip.hardEdge,
       children: [
         Container(
           height: 180,
@@ -160,7 +155,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 450,
-          mainAxisExtent: 250,
+          mainAxisExtent: 280,
           crossAxisSpacing: AppSize.p20,
           mainAxisSpacing: AppSize.p20,
         ),

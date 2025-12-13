@@ -1,6 +1,5 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
@@ -22,24 +21,21 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
 
     return Container(
       height: 80,
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
+      decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
       child: Row(
         children: [
-          AppSize.p20.width,
+
           _buildSearchField(),
           AppSize.p20.width,
           _buildFilterButton(theme),
-          AppSize.p16.width,
-          _buildAddButton(),
           AppSize.p24.width,
           _buildDivider(theme),
           AppSize.p24.width,
           _buildNotificationIcon(theme),
           AppSize.p16.width,
           _buildProfileAvatar(primaryColor),
-          AppSize.p20.width,
+
         ],
       ),
     );
@@ -67,25 +63,13 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
           DialogWidget().show(const SellerFilterView());
         },
         color: theme.iconTheme.color,
-        bgColor: theme.cardColor,
+        bgColor: theme.scaffoldBackgroundColor,
         hasBorder: true,
       ),
     );
   }
 
-  Widget _buildAddButton() {
-    return SizedBox(
-      height: 48,
-      child: ButtonWidget(
-        TKeys.addProduct.tr,
-        () {},
-        icon: Icons.add_rounded,
-        radius: AppSize.r12,
-        textColor: Colors.white,
-        fontWeight: FontWeight.bold,
-      ).material(minWidth: 0),
-    );
-  }
+
 
   Widget _buildDivider(ThemeData theme) {
     return Container(height: 30, width: 1, color: theme.dividerColor);

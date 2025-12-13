@@ -259,7 +259,7 @@ class _StockChip extends StatelessWidget {
         border: Border.all(color: chipColor.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Text(
-        '${TKeys.stock.tr}: $quantity',
+        '${TKeys.stock.tr}: ${quantity.toLocalizedPrice}',
         style: TextStyle(
           color: chipColor,
           fontSize: AppSize.f10,

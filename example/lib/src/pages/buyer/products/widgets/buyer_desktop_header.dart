@@ -1,6 +1,5 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
-import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/dialog_widget.dart';
 import 'package:example/src/commons/widgets/text/app_search_field.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
@@ -29,8 +28,6 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
           _buildSearchField(),
           AppSize.p20.width,
           _buildFilterButton(theme),
-          AppSize.p16.width,
-          _buildAddButton(),
           AppSize.p24.width,
           _buildDivider(theme),
           AppSize.p24.width,
@@ -62,25 +59,12 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
           DialogWidget().show(const BuyerFilterView());
         },
         color: theme.iconTheme.color,
-        bgColor: theme.cardColor,
+        bgColor: theme.scaffoldBackgroundColor,
         hasBorder: true,
       ),
     );
   }
 
-  Widget _buildAddButton() {
-    return SizedBox(
-      height: 48,
-      child: ButtonWidget(
-        TKeys.addProduct.tr,
-        () {},
-        icon: Icons.add_rounded,
-        radius: AppSize.r12,
-        textColor: Colors.white,
-        fontWeight: FontWeight.bold,
-      ).material(minWidth: 0),
-    );
-  }
 
   Widget _buildDivider(ThemeData theme) {
     return Container(height: 30, width: 1, color: theme.dividerColor);
@@ -97,8 +81,8 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
   Widget _buildProfileAvatar(Color primaryColor) {
     return InkWell(
       onTap: () {
-        final mainSellerController = Get.find<MainBuyerController>();
-        mainSellerController.changeTab(2);
+        final mainBuyerController = Get.find<MainBuyerController>();
+        mainBuyerController.changeTab(2);
       },
       child: CircleAvatar(
         radius: AppSize.p20,

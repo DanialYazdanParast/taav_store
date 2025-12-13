@@ -3,6 +3,7 @@ import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/custom_app_bar.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
@@ -85,25 +86,20 @@ class MobileCartLayout extends GetView<CartController> {
             children: [
               Expanded(
                 flex: 2,
-                child: ElevatedButton(
-                  onPressed: () => controller.checkout(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: theme.colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    TKeys.submitOrder.tr,
-                    style: TextStyle(
-                      color: theme.colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                child: Obx(
+                  () =>
+                      ButtonWidget(
+                        TKeys.confirmAndPay.tr,
+                        () => controller.checkout(),
+
+                        isLoading:
+                            controller.cartCheckout.value ==
+                            CurrentState.loading,
+                      ).material(),
                 ),
               ),
               const SizedBox(width: 16),
-              _buildPriceInfo(theme),
+              Flexible(child: _buildPriceInfo(theme)),
             ],
           ),
         ),
@@ -117,27 +113,39 @@ class MobileCartLayout extends GetView<CartController> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (controller.hasDiscount)
-          Text(
-            "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
-            style: TextStyle(
-              color: theme.colorScheme.error,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "${TKeys.yourProfit.tr}: ${controller.totalProfit.toLocalizedPrice}",
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              controller.totalPayablePrice.toLocalizedPrice,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            const SizedBox(width: 4),
-            Text(
-              TKeys.toman.tr,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-            ),
-          ],
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                controller.totalPayablePrice.toLocalizedPrice,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                TKeys.toman.tr,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

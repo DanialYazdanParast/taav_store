@@ -1,7 +1,9 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/extensions/ext.dart';
+import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/Empty_widget.dart';
+import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/divider_widget.dart';
 import 'package:example/src/commons/widgets/error_view.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
@@ -19,122 +21,239 @@ class DesktopCartLayout extends GetView<CartController> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(TKeys.cartTitle.tr)),
       body: Obx(() {
         if (controller.cartState.value == CurrentState.loading) {
-          return ListView.separated(
-            padding: const EdgeInsets.all(24),
-            itemCount: 3,
-            separatorBuilder: (_, __) => AppDivider.horizontal(space: 40),
-            itemBuilder: (context, index) {
-              return CartItemShimmer();
-            },
-          );
+          return _buildLoadingState();
         } else if (controller.cartState.value == CurrentState.error) {
-          return ErrorView();
+          return const Center(child: ErrorView());
         } else if (controller.cartItems.isEmpty) {
-          return EmptyWidget(title: TKeys.cartEmpty.tr,);
+          return Center(child: EmptyWidget(title: TKeys.cartEmpty.tr));
         }
-        return Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1200),
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 7,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: theme.cardColor,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: theme.dividerColor),
-                      ),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(24),
-                        itemCount: controller.cartItems.length,
-                        separatorBuilder:
-                            (_, __) => AppDivider.horizontal(space: 40),
-                        itemBuilder: (context, index) {
-                          return CartItemWidget(
-                            item: controller.cartItems[index],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(width: 32),
-
-                  Expanded(flex: 3, child: _buildOrderSummary(theme)),
-                ],
-              ),
-            ),
-          ),
-        );
+        return _buildCartContent(theme);
       }),
     );
   }
 
-  Widget _buildOrderSummary(ThemeData theme) {
+  Widget _buildLoadingState() {
+    return ListView.separated(
+      padding: EdgeInsets.all(AppSize.p24),
+      itemCount: 3,
+      separatorBuilder: (_, __) => AppSize.p16.height,
+      itemBuilder: (_, __) => const CartItemShimmer(),
+    );
+  }
+
+  Widget _buildCartContent(ThemeData theme) {
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: EdgeInsets.all(AppSize.p16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(flex: 2, child: _buildCartItemsSection(theme)),
+                AppSize.p32.width,
+                Expanded(flex: 1, child: _buildOrderSummarySection(theme)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCartItemsSection(ThemeData theme) {
     return Container(
-      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.dividerColor),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10),
-        ],
+        borderRadius: AppSize.brCircular(AppSize.r16),
+        border: Border.all(
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            TKeys.orderSummary.tr,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 24),
-
-          _buildSummaryRow(
-            "${TKeys.itemsPrice.tr} (${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? TKeys.items.tr : TKeys.item.tr})",
-            controller.totalOriginalPrice.toLocalizedPrice,
-          ),
-          if (controller.hasDiscount)
-            _buildSummaryRow(
-              TKeys.yourSavings.tr,
-              controller.totalProfit.toLocalizedPrice,
-              isDiscount: true,
-            ),
-          const Divider(height: 32),
-
-          _buildSummaryRow(
-            TKeys.cartTotal.tr,
-            controller.totalPayablePrice.toLocalizedPrice,
-            isTotal: true,
-          ),
-
-          const SizedBox(height: 32),
-
-          ElevatedButton(
-            onPressed: () => controller.checkout(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.primary,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          // Header
+          Container(
+            padding: EdgeInsets.all(AppSize.p24),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(AppSize.r16),
+                topRight: Radius.circular(AppSize.r16),
               ),
             ),
-            child: Text(
-              TKeys.confirmAndPay.tr,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.shopping_cart_outlined,
+                  color: theme.colorScheme.primary,
+                  size: 24,
+                ),
+                AppSize.p12.width,
+                Flexible(
+                  child: Text(
+                    TKeys.cartTitle.tr,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                AppSize.p8.width,
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSize.p12,
+                    vertical: AppSize.p4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: AppSize.brCircular(20),
+                  ),
+                  child: Text(
+                    controller.totalCount.toString().toLocalizedDigit,
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          AppDivider.horizontal(
+            space: 1,
+            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+          ),
+
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(AppSize.p24),
+            itemCount: controller.cartItems.length,
+            separatorBuilder:
+                (_, __) => AppDivider.horizontal(space: AppSize.p24),
+            itemBuilder: (context, index) {
+              return CartItemWidget(item: controller.cartItems[index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrderSummarySection(ThemeData theme) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: AppSize.brCircular(AppSize.r16),
+        border: Border.all(
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildOrderSummaryHeader(theme),
+          Padding(
+            padding: EdgeInsets.all(AppSize.p24),
+            child: Column(
+              children: [
+                _buildSummaryRow(
+                  theme,
+                  icon: Icons.inventory_2_outlined,
+                  title: TKeys.itemsPrice.tr,
+                  subtitle:
+                      "(${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? TKeys.items.tr : TKeys.item.tr})",
+                  value: controller.totalOriginalPrice.toLocalizedPrice,
+                ),
+                if (controller.hasDiscount) ...[
+                  AppSize.p16.height,
+                  _buildDiscountRow(
+                    theme,
+                    title: TKeys.yourSavings.tr,
+                    value: controller.totalProfit.toLocalizedPrice,
+                  ),
+                ],
+
+                AppSize.p24.height,
+                Container(
+                  height: 1,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.outlineVariant.withValues(alpha: 0),
+                        theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                        theme.colorScheme.outlineVariant.withValues(alpha: 0),
+                      ],
+                    ),
+                  ),
+                ),
+                AppSize.p24.height,
+
+                _buildTotalRow(
+                  theme,
+                  title: TKeys.cartTotal.tr,
+                  value: controller.totalPayablePrice.toLocalizedPrice,
+                ),
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              AppSize.p24,
+              0,
+              AppSize.p24,
+              AppSize.p24,
+            ),
+            child: Obx(
+              () =>
+                  ButtonWidget(
+                    TKeys.confirmAndPay.tr,
+                    () => controller.checkout(),
+
+                    isLoading:
+                        controller.cartCheckout.value == CurrentState.loading,
+                  ).material(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildOrderSummaryHeader(ThemeData theme) {
+    return Container(
+      padding: EdgeInsets.all(AppSize.p24),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(AppSize.r16),
+          topRight: Radius.circular(AppSize.r16),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+
+        children: [
+          Icon(
+            Icons.receipt_long_outlined,
+            color: theme.colorScheme.primary,
+            size: AppSize.f24,
+          ),
+          AppSize.p12.width,
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                TKeys.orderSummary.tr,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -144,29 +263,180 @@ class DesktopCartLayout extends GetView<CartController> {
   }
 
   Widget _buildSummaryRow(
-      String title,
-      String value, {
-        bool isDiscount = false,
-        bool isTotal = false,
-      }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+    ThemeData theme, {
+    required IconData icon,
+    required String title,
+    String? subtitle,
+    required String value,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(AppSize.p8),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: AppSize.brCircular(AppSize.r8),
+                  ),
+                  child: Icon(icon, size: 18, color: theme.colorScheme.primary),
+                ),
+                AppSize.p12.width,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.textTheme.bodySmall?.color?.withValues(
+                            alpha: 0.6,
+                          ),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        AppSize.p8.width,
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "$value ${TKeys.toman.tr}",
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDiscountRow(
+    ThemeData theme, {
+    required String title,
+    required String value,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(AppSize.p16),
+      decoration: BoxDecoration(
+        color: Colors.green.withValues(alpha: 0.1),
+        borderRadius: AppSize.brCircular(AppSize.r12),
+        border: Border.all(
+          color: Colors.green.withValues(alpha: 0.3),
+          width: 1,
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: isDiscount ? Colors.red : null,
-              fontWeight: isTotal ? FontWeight.bold : null,
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(AppSize.p6),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: AppSize.brCircular(AppSize.r6),
+                    ),
+                    child: const Icon(
+                      Icons.local_offer,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                  AppSize.p12.width,
+                  Text(
+                    title,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
           ),
-          Text(
-            "$value ${TKeys.toman.tr}",
-            style: TextStyle(
-              color: isDiscount ? Colors.red : null,
-              fontWeight: isTotal ? FontWeight.bold : null,
-              fontSize: isTotal ? 18 : 14,
+
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  AppSize.p8.width,
+                  Text(
+                    "$value ${TKeys.toman.tr}",
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTotalRow(
+    ThemeData theme, {
+    required String title,
+    required String value,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(AppSize.p16),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withValues(alpha: 0.08),
+        borderRadius: AppSize.brCircular(AppSize.r12),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+        children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          AppSize.p8.width,
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "$value ${TKeys.toman.tr}",
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary,
+                ),
+              ),
             ),
           ),
         ],

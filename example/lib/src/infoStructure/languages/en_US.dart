@@ -118,8 +118,7 @@ const Map<String, String> enUS = {
   TKeys.yourSavings: 'Your Savings',
   TKeys.cartTotal: 'Cart Total',
   TKeys.confirmAndPay: 'Confirm and Pay',
-  TKeys.item: 'item',
-  TKeys.items: 'items',
+  TKeys.item: 'Item',
   TKeys.inCartItems: 'In Cart',
   TKeys.order: 'Order',
 
@@ -129,6 +128,23 @@ const Map<String, String> enUS = {
   TKeys.noOrdersYet: 'You haven\'t placed any orders yet',
   TKeys.orderDetails: 'Order Details',
   TKeys.orderNumber: 'Order',
+  TKeys.items: 'Order Items',
+
+  // New Keys for hardcoded strings in DesktopOrderHistoryLayout
+  TKeys.loadingOrders: 'Loading Orders...',
+  TKeys.totalPrice: 'Total Price:',
+  TKeys.orderItems: 'Order Items',
+  TKeys.noOrderSelected: 'No Order Selected',
+  TKeys.selectOrderToViewDetails: 'Select an order to view details',
+
+  // ═══ Status Translation Keys ═══
+  TKeys.statusPending: 'Pending',
+  TKeys.statusProcessing: 'Processing',
+  TKeys.statusShipped: 'Shipped',
+  TKeys.statusDelivered: 'Delivered',
+  TKeys.statusCancelled: 'Cancelled',
+  TKeys.statusUnknown: 'Unknown',
+
 
   // ═══ Seller Panel ═══
   TKeys.productManagement: 'Product Management',
@@ -215,10 +231,10 @@ const Map<String, String> enUS = {
   TKeys.badCertificate: 'Security error in connection',
   TKeys.unknownNetworkError: 'Unknown network error occurred',
   TKeys.serverErrorOccurred: 'A server error occurred',
-  // TKeys.connectionTimeout: 'Connection timed out', // Keys with missing values in the original map are placed here:
-  // TKeys.sendTimeout: 'Send timed out',
-  // TKeys.receiveTimeout: 'Receive timed out',
-  // TKeys.connectionError: 'Connection error',
+  TKeys.connectionTimeout: 'Connection timed out',
+  TKeys.sendTimeout: 'Send timed out',
+  TKeys.receiveTimeout: 'Receive timed out',
+  TKeys.connectionError: 'Connection error',
 
   TKeys.tagManagement: 'Tag Management',
   TKeys.searchTagHint: 'Search Tag...',
@@ -232,5 +248,37 @@ const Map<String, String> enUS = {
   TKeys.cameraSource: 'Camera',
   TKeys.imageGallerySource: 'Image Gallery',
   TKeys.productDeletedSuccessfully: 'Product deleted successfully',
+
+  TKeys.validationPasswordEmpty: 'Password cannot be empty',
+  TKeys.validationPasswordMinLength: 'Password must be at least 8 characters',
+  TKeys.validationPasswordMaxLength: 'Password must be at most 60 characters',
+  TKeys.validationPasswordRequirements: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+  TKeys.validationPasswordConfirmEmpty: 'Please confirm your password',
+  TKeys.validationPasswordMismatch: 'Passwords do not match',
+  TKeys.validationUsernameEmpty: 'Username cannot be empty',
+  TKeys.validationUsernameMinLength: 'Username must be at least 4 characters',
+  TKeys.validationUsernameMaxLength: 'Username cannot exceed 30 characters',
+  TKeys.validationUsernameInvalidChars: 'Username can only contain English letters, numbers, and underscore',
+  TKeys.validationUsernameNoSpaces: 'Username cannot contain spaces',
+  TKeys.validationLoginPasswordEmpty: 'Password cannot be empty',
+  TKeys.validationLoginPasswordMinLength: 'Password must be at least 8 characters',
+  TKeys.validationLoginPasswordEnglishOnly: 'Password must be entered in English characters',
+  TKeys.validationCannotBeEmpty: 'cannot be empty',
+  TKeys.validationMinThreeChars: 'must be at least 3 characters',
+  TKeys.validationEnterValue: 'Enter',
+  TKeys.validationNumberInvalid: 'Please enter a valid number',
+  TKeys.validationCannotBeNegative: 'cannot be negative',
+  TKeys.validationDiscountPriceInvalid: 'Discount price must be a number',
+  TKeys.validationDiscountPriceExceedsOriginal: 'Discount price cannot exceed the original price',
+  // ═══ Auth Errors ═══
+  TKeys.authInvalidCredentials: 'Invalid username or password',
+
+
+  // ═══ Not Found Page ═══
+  TKeys.notFoundTitle: 'Page Not Found',
+  TKeys.notFoundDescription: 'The URL you entered is incorrect or the page has been moved.',
+  TKeys.backToHome: 'Back to Home',
+
+  TKeys.maximum: 'Maximum',
 
 };

@@ -1,4 +1,6 @@
 import 'package:example/src/pages/buyer/cart/repository/cart_repository.dart';
+import 'package:example/src/pages/buyer/product_details/controllers/buyer_product_details_controller.dart';
+import 'package:example/src/pages/buyer/product_details/repository/buyer_product_details_repository.dart';
 import 'package:get/get.dart';
 import 'package:example/src/commons/services/metadata_service.dart';
 import 'package:example/src/commons/services/network_service.dart';
@@ -33,6 +35,11 @@ class MainBuyerBinding extends Bindings {
       fenix: true,
     );
 
+    Get.lazyPut<IBuyerProductDetailsRepository>(
+      () => BuyerProductDetailsRepository(network: Get.find<NetworkService>()),
+      fenix: true,
+    );
+
     // ───  Services ───
 
     if (!Get.isRegistered<MetadataService>()) {
@@ -44,22 +51,31 @@ class MainBuyerBinding extends Bindings {
 
     // ───  Controllers ───
 
+
     Get.put<CartController>(
       CartController(repo: Get.find<ICartRepository>()),
+      permanent: true,
+    );
+    Get.put<BuyerProductsController>(
+      BuyerProductsController(
+        productRepo: Get.find<IBuyerProductsRepository>(),
+      ),
       permanent: true,
     );
 
     Get.lazyPut<MainBuyerController>(() => MainBuyerController());
 
-    Get.lazyPut<BuyerProductsController>(
-      () => BuyerProductsController(
-        productRepo: Get.find<IBuyerProductsRepository>(),
-      ),
-      fenix: true,
-    );
+
 
     Get.lazyPut<BuyerAccountController>(
       () => BuyerAccountController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<BuyerProductDetailsController>(
+      () => BuyerProductDetailsController(
+        detailsRepo: Get.find<IBuyerProductDetailsRepository>(),
+      ),
       fenix: true,
     );
   }

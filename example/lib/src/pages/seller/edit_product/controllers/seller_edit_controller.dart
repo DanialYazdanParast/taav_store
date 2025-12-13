@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ import 'package:example/src/pages/shared/models/tag_model.dart';
 import '../repository/seller_edit_repository.dart';
 
 class SellerEditController extends GetxController with MixinDialogController {
-  // ─── Dependencies ───────────────────────
+
   final ISellerEditRepository editRepo;
   final AuthService _authService = Get.find<AuthService>();
   final MetadataService metadataService = Get.find<MetadataService>();
@@ -86,30 +87,35 @@ class SellerEditController extends GetxController with MixinDialogController {
           (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
     );
   }
-
+  final ScrollController leftScrollController = ScrollController();
   // ─── Lifecycle ─────────────────────────
   @override
   void onInit() {
     avmEdit = AutovalidateMode.disabled.obs;
     _initControllers();
 
+    final routeParams = Get.parameters;
+    productId = routeParams['id'];
+
     final args = Get.arguments;
-    if (args is String) {
+    if (args is String && args.isNotEmpty) {
       productId = args;
-    } else {
+    }
+
+    if (productId == null || productId!.isEmpty) {
       ToastUtil.show(TKeys.invalidProductId.tr, type: ToastType.error);
-      Get.back();
+      Get.offNamed(AppRoutes.seller);
       return;
     }
 
     super.onInit();
-
     _syncWithMetadataService();
     fetchInitialData();
   }
 
   @override
   void onClose() {
+    leftScrollController.dispose();
     _disposeControllers();
     super.onClose();
   }
@@ -234,9 +240,10 @@ class SellerEditController extends GetxController with MixinDialogController {
   void removeImage() {
     selectedImage.value = null;
     isImageDeleted.value = true;
+
   }
 
-  // ─── Color & Tag Actions (قبلاً ترجمه شده) ─────────────────
+  // ─── Color & Tag Actions ─────────────────
   @override
   void toggleColor(String hexCode) {
     if (selectedColor.contains(hexCode)) {
@@ -367,7 +374,7 @@ class SellerEditController extends GetxController with MixinDialogController {
             (failure) {
           submitState.value = CurrentState.error;
           ToastUtil.show(
-            failure.message ?? TKeys.errorUpdatingProduct.tr,
+            failure.message,
             type: ToastType.error,
           );
         },
@@ -376,7 +383,7 @@ class SellerEditController extends GetxController with MixinDialogController {
           ToastUtil.show(TKeys.productUpdatedSuccessfully.tr, type: ToastType.success);
 
           _updateMainListLocally(updatedProduct);
-          Get.back();
+          Get.offAllNamed(AppRoutes.sellerProducts);
         },
       );
     } catch (e) {

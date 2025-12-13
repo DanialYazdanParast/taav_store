@@ -210,7 +210,7 @@ class ButtonWidget {
       height: height ?? AppSize.buttonHeight,
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: AppSize.p16), // فقط افقی
+          padding: EdgeInsets.symmetric(horizontal: AppSize.p16),
           backgroundColor: bgColor ?? Colors.transparent,
         ),
         onPressed: _shouldDisable ? null : action,

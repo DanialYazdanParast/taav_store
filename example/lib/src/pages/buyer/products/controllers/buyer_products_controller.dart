@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:example/src/commons/services/metadata_service.dart';
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:example/src/pages/buyer/cart/controllers/cart_controller.dart';
 import 'package:example/src/pages/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,10 +14,11 @@ import '../repository/buyer_products_repository.dart';
 
 class BuyerProductsController extends GetxController {
   final IBuyerProductsRepository productRepo;
-
   final MetadataService metadataService = Get.find<MetadataService>();
 
   BuyerProductsController({required this.productRepo});
+
+  late final CartController cartController;
 
   // ─── State Variables ───────────────
   final RxList<ProductModel> products = <ProductModel>[].obs;
@@ -23,6 +26,9 @@ class BuyerProductsController extends GetxController {
 
   final RxList<ColorModel> availableColors = <ColorModel>[].obs;
   final RxList<TagModel> availableTags = <TagModel>[].obs;
+
+  // ─── Color Selection for Each Product ───────────────
+  final RxMap<String, String> selectedColorsMap = <String, String>{}.obs;
 
   // ─── Filter Logic Variables ──────────────
   final RxDouble minPriceLimit = 0.0.obs;
@@ -44,11 +50,12 @@ class BuyerProductsController extends GetxController {
 
   late TextEditingController searchController;
   late FocusNode searchFocusNode;
+  Worker? _searchWorker;
 
-  // ─── Lifecycle ────────────────────
   @override
   void onInit() {
     super.onInit();
+    cartController = Get.find<CartController>();
     searchController = TextEditingController();
     searchFocusNode = FocusNode();
 
@@ -56,15 +63,19 @@ class BuyerProductsController extends GetxController {
       query.value = searchController.text.trim().toLowerCase();
     });
 
-    debounce(query, (_) {}, time: const Duration(milliseconds: 250));
+    _searchWorker = debounce(query, (_) {
+      if (query.value.isEmpty || query.value.length >= 3) {
+        fetchProducts();
+      }
+    }, time: const Duration(milliseconds: 400));
 
     _syncFiltersWithService();
-
     fetchProducts();
   }
 
   @override
   void onClose() {
+    _searchWorker?.dispose();
     searchController.dispose();
     searchFocusNode.dispose();
     super.onClose();
@@ -79,48 +90,163 @@ class BuyerProductsController extends GetxController {
 
   Future<void> fetchProducts() async {
     productsState.value = CurrentState.loading;
-    final result = await productRepo.getAllProducts();
+
+    final searchString = query.value.isNotEmpty ? query.value : '';
+
+    final result = await productRepo.getAllProducts(query: searchString);
+
     result.fold(
-          (failure) {
+      (failure) {
         productsState.value = CurrentState.error;
-        ToastUtil.show(
-          failure.message,
-          type: ToastType.error,
-        );
+        ToastUtil.show(failure.message, type: ToastType.error);
       },
-          (fetchedProducts) {
+      (fetchedProducts) {
         products.assignAll(fetchedProducts.reversed.toList());
         productsState.value = CurrentState.success;
-        calculatePriceLimits(products);
+
+        _calculateAndResetPriceLimits(fetchedProducts);
+
+        _initializeProductColors(fetchedProducts);
       },
     );
   }
 
-  // ─── Filter Logic ─────────
-  void calculatePriceLimits(List<ProductModel> items) {
-    if (items.isNotEmpty) {
-      final List<double> effectivePrices = items.map((p) {
-        return (p.discountPrice > 0 && p.discountPrice < p.price)
-            ? p.discountPrice.toDouble()
-            : p.price.toDouble();
-      }).toList();
+  void _calculateAndResetPriceLimits(List<ProductModel> items) {
+    if (items.isEmpty) {
+      minPriceLimit.value = 0.0;
+      maxPriceLimit.value = 10000000.0;
+      appliedPriceRange.value = RangeValues(0.0, 10000000.0);
+      tempPriceRange.value = RangeValues(0.0, 10000000.0);
+      return;
+    }
 
-      double minP = effectivePrices.reduce(min);
-      double maxP = effectivePrices.reduce(max);
+    final List<double> effectivePrices =
+        items.map((p) {
+          return (p.discountPrice > 0 && p.discountPrice < p.price)
+              ? p.discountPrice.toDouble()
+              : p.price.toDouble();
+        }).toList();
 
-      if (minP == maxP) {
-        minP = (minP - 10000 < 0) ? 0 : minP - 10000;
-        maxP = maxP + 10000;
-      }
-      minPriceLimit.value = minP;
-      maxPriceLimit.value = maxP;
+    double minP = effectivePrices.reduce(min);
+    double maxP = effectivePrices.reduce(max);
 
-      if (appliedPriceRange.value.start < minP ||
-          appliedPriceRange.value.end > maxP) {
-        appliedPriceRange.value = RangeValues(minP, maxP);
-        tempPriceRange.value = RangeValues(minP, maxP);
+    if (minP == maxP) {
+      minP = (minP - 10000 < 0) ? 0 : minP;
+      maxP = maxP;
+    }
+
+    minPriceLimit.value = minP;
+    maxPriceLimit.value = maxP;
+
+    appliedPriceRange.value = RangeValues(minP, maxP);
+    tempPriceRange.value = RangeValues(minP, maxP);
+  }
+
+  // ─── Initialize Colors for Products ─────────
+  void _initializeProductColors(List<ProductModel> fetchedProducts) {
+    for (var product in fetchedProducts) {
+      if (product.colors.isNotEmpty &&
+          !selectedColorsMap.containsKey(product.id)) {
+        selectedColorsMap[product.id] = product.colors.first;
       }
     }
+  }
+
+  // ─── Product Card Logic ─────────
+  String getSelectedColor(String productId, List<String> colors) {
+    if (colors.isEmpty) return '';
+    return selectedColorsMap[productId] ?? colors.first;
+  }
+
+  void initializeProductColor(String productId, List<String> colors) {
+    if (colors.isNotEmpty && !selectedColorsMap.containsKey(productId)) {
+      selectedColorsMap[productId] = colors.first;
+    }
+  }
+
+  void selectColorForProduct(String productId, String colorHex) {
+    selectedColorsMap[productId] = colorHex;
+  }
+
+  int getTotalQuantityInCart(String productId) {
+    return cartController.cartItems
+        .where((item) => item.productId == productId)
+        .fold(0, (sum, item) => sum + item.quantity);
+  }
+
+  int getRemainingStock(String productId, int productQuantity) {
+    return productQuantity - getTotalQuantityInCart(productId);
+  }
+
+  int getCurrentQuantityForSelectedColor(
+    String productId,
+    List<String> colors,
+  ) {
+    if (colors.isEmpty) {
+      return getTotalQuantityInCart(productId);
+    }
+
+    final selectedColor = getSelectedColor(productId, colors);
+
+    final item = cartController.cartItems.firstWhereOrNull(
+      (element) =>
+          element.productId == productId && element.colorHex == selectedColor,
+    );
+    return item?.quantity ?? 0;
+  }
+
+  String getAddToCartButtonLabel(int productQuantity, int remainingStock) {
+    if (productQuantity == 0) {
+      return TKeys.outOfStock.tr;
+    } else if (remainingStock <= 0) {
+      return TKeys.soldOut.tr;
+    }
+    return TKeys.addToCart.tr;
+  }
+
+  bool isAddToCartDisabled(int productQuantity, int remainingStock) {
+    return productQuantity == 0 || remainingStock <= 0;
+  }
+
+  void addProductToCart(
+    ProductModel product,
+    String selectedColor,
+    int totalQuantityInCart,
+  ) {
+    if (totalQuantityInCart < product.quantity) {
+      cartController.addToCart(product, 1, selectedColor);
+    } else {
+      ToastUtil.show(TKeys.stockFinishedWarning.tr, type: ToastType.warning);
+    }
+  }
+
+  void decreaseProductFromCart(String productId, String selectedColor) {
+    final item = cartController.cartItems.firstWhereOrNull(
+      (element) =>
+          element.productId == productId && element.colorHex == selectedColor,
+    );
+    if (item != null) {
+      cartController.decrementItem(item);
+    }
+  }
+
+  void updateProductStockAfterCheckout(
+    String productId,
+    int purchasedQuantity,
+  ) {
+    final index = products.indexWhere((p) => p.id == productId);
+    if (index == -1) return;
+
+    final oldProduct = products[index];
+    final newQty = (oldProduct.quantity - purchasedQuantity).clamp(0, 1 << 31);
+    final updatedProduct = oldProduct.copyWith(quantity: newQty);
+    products[index] = updatedProduct;
+  }
+
+  // ─── Filter Logic ─────────
+
+  void calculatePriceLimits(List<ProductModel> items) {
+    _calculateAndResetPriceLimits(items);
   }
 
   void initTempFilters() {
@@ -149,14 +275,18 @@ class BuyerProductsController extends GetxController {
   }
 
   void clearAllFilters() {
-    clearTempFilters();
-    appliedPriceRange.value = RangeValues(
-      minPriceLimit.value,
-      maxPriceLimit.value,
-    );
+    final fullMin = minPriceLimit.value;
+    final fullMax = maxPriceLimit.value;
+
+    tempPriceRange.value = RangeValues(fullMin, fullMax);
+    appliedPriceRange.value = RangeValues(fullMin, fullMax);
+
     appliedColorHexes.clear();
+    tempColorHexes.clear();
     appliedTagNames.clear();
+    tempTagNames.clear();
     appliedOnlyAvailable.value = false;
+    tempOnlyAvailable.value = false;
   }
 
   void updateTempPriceRange(RangeValues values) =>
@@ -181,56 +311,47 @@ class BuyerProductsController extends GetxController {
   List<ProductModel> get filteredProducts {
     List<ProductModel> result = products.toList();
 
-    if (query.value.isNotEmpty) {
-      final lowerQuery = query.value.toLowerCase();
-      result = result.where((p) {
-        final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
-        final matchesTags = p.tags.any(
-              (tag) => tag.toLowerCase().contains(lowerQuery),
-        );
-        return matchesTitle || matchesTags;
-      }).toList();
-    }
-
-    result = result.where((p) {
-      final effectivePrice =
-      (p.discountPrice > 0 && p.discountPrice < p.price)
-          ? p.discountPrice
-          : p.price;
-      return effectivePrice >= appliedPriceRange.value.start &&
-          effectivePrice <= appliedPriceRange.value.end;
-    }).toList();
+    result =
+        result.where((p) {
+          final effectivePrice =
+              (p.discountPrice > 0 && p.discountPrice < p.price)
+                  ? p.discountPrice
+                  : p.price;
+          return effectivePrice >= appliedPriceRange.value.start &&
+              effectivePrice <= appliedPriceRange.value.end;
+        }).toList();
 
     if (appliedOnlyAvailable.value) {
       result = result.where((p) => p.quantity > 0).toList();
     }
 
     if (appliedColorHexes.isNotEmpty) {
-      result = result.where((p) {
-        return appliedColorHexes.every(
+      result =
+          result.where((p) {
+            return appliedColorHexes.every(
               (selectedHex) => p.colors.contains(selectedHex),
-        );
-      }).toList();
+            );
+          }).toList();
     }
 
     if (appliedTagNames.isNotEmpty) {
-      result = result.where((p) {
-        return appliedTagNames.any(
+      result =
+          result.where((p) {
+            return appliedTagNames.any(
               (selectedTag) => p.tags.contains(selectedTag),
-        );
-      }).toList();
+            );
+          }).toList();
     }
 
     return result;
   }
 
   // ─── Filter Count Logic ─────────────
-
   int get totalTempFilters {
     int count = 0;
     bool isPriceChanged =
         (tempPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-            (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
+        (maxPriceLimit.value - tempPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
     count += tempColorHexes.length;
@@ -243,7 +364,7 @@ class BuyerProductsController extends GetxController {
     int count = 0;
     bool isPriceChanged =
         (appliedPriceRange.value.start - minPriceLimit.value).abs() > 1 ||
-            (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
+        (maxPriceLimit.value - appliedPriceRange.value.end).abs() > 1;
 
     if (isPriceChanged) count++;
     count += appliedColorHexes.length;
@@ -253,7 +374,6 @@ class BuyerProductsController extends GetxController {
   }
 
   // ─── UI Actions ──────────────────────────────
-
   void toggleSearch() {
     isSearching.value = !isSearching.value;
     if (isSearching.value) {
@@ -263,6 +383,11 @@ class BuyerProductsController extends GetxController {
     } else {
       searchController.clear();
       searchFocusNode.unfocus();
+      query.value = '';
+
+      _resetNonPriceFilters();
+
+      fetchProducts();
     }
   }
 
@@ -272,6 +397,19 @@ class BuyerProductsController extends GetxController {
       searchController.clear();
       query.value = '';
       searchFocusNode.unfocus();
+
+      _resetNonPriceFilters();
+
+      fetchProducts();
     }
+  }
+
+  void _resetNonPriceFilters() {
+    appliedColorHexes.clear();
+    tempColorHexes.clear();
+    appliedTagNames.clear();
+    tempTagNames.clear();
+    appliedOnlyAvailable.value = false;
+    tempOnlyAvailable.value = false;
   }
 }

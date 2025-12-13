@@ -1,3 +1,4 @@
+import 'package:example/src/commons/enums/enums.dart';
 import 'package:example/src/commons/services/app_info_service.dart';
 import 'package:example/src/commons/services/auth_service.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
@@ -27,12 +28,20 @@ class SplashController extends GetxController {
     final authService = Get.find<AuthService>();
 
     if (authService.rememberMe.value && authService.userId.value.isNotEmpty) {
-      final type = authService.userType.value.toLowerCase();
+      final userTypeString = authService.userType.value;
 
-      if (type == 'seller') {
-        Get.offAllNamed(AppRoutes.sellerProducts);
-      } else if (type == 'buyer') {
-        Get.offAllNamed(AppRoutes.buyerProducts);
+      final userType = userTypeFromString(userTypeString);
+
+      if (userType != null) {
+        switch (userType) {
+          case UserType.seller:
+            Get.offAllNamed(AppRoutes.sellerProducts);
+            break;
+
+          case UserType.buyer:
+            Get.offAllNamed(AppRoutes.buyerProducts);
+            break;
+        }
       } else {
         Get.offAllNamed(AppRoutes.login);
       }

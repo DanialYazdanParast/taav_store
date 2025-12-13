@@ -39,48 +39,57 @@ class SettingsDraggableSheet extends StatelessWidget {
             ),
             child: Column(
               children: [
-                HeaderSheet(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
-                  child: Row(
-                    children: [
-                      Text(
-                        TKeys.myOrders.tr,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                MenuItem(
-                  icon: Icons.history_rounded,
-                  color: theme.colorScheme.primary,
-                  title: TKeys.purchaseHistory.tr,
-                  subtitle: TKeys.orderHistoryDesc.tr,
-                  showChevron: true,
-                  onTap: () => Get.toNamed(AppRoutes.buyerOrders),
-                ),
-
-                AppSize.p24.height,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSize.p24),
-                  child: Row(
-                    children: [
-                      Text(
-                        TKeys.settings.tr,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                AppSize.p16.height,
+                const HeaderSheet(),
                 Expanded(
                   child: ListView(
                     controller: scrollController,
-                    children: [IconList(onLogout: onLogout), 50.height],
+                    padding: EdgeInsets.zero,
+                    children: [
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppSize.p24),
+                        child: Row(
+                          children: [
+                            Text(
+                              TKeys.myOrders.tr,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      MenuItem(
+                        icon: Icons.history_rounded,
+                        color: theme.colorScheme.primary,
+                        title: TKeys.purchaseHistory.tr,
+                        subtitle: TKeys.orderHistoryDesc.tr,
+                        showChevron: true,
+                        onTap: () => Get.toNamed(AppRoutes.buyerOrders),
+                      ),
+
+                      AppSize.p24.height,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppSize.p24),
+                        child: Row(
+                          children: [
+                            Text(
+                              TKeys.settings.tr,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      AppSize.p16.height,
+
+                      IconList(onLogout: onLogout),
+
+                      50.height,
+                    ],
                   ),
                 ),
               ],

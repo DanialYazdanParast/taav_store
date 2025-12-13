@@ -16,7 +16,9 @@ class FilterTags extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
+        SizedBox(width: double.infinity),
         Text(
           TKeys.tags.tr,
           style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold),

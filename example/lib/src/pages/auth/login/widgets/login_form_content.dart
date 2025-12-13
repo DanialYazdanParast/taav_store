@@ -21,48 +21,50 @@ class LoginFormContent extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Form(
       key: controller.fkLogin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AuthInputLabel(
-            text: TKeys.username.tr,
-            icon: Icons.person_outline_rounded,
-          ),
-          (isMobile ? 12 : 8).height,
-          AppTextField(
-            controller: controller.usernameController,
-            focusNode: controller.usernameFocus,
-            labelText: TKeys.username.tr,
-            hintText: TKeys.enterUsername.tr,
-            textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) {
-              FocusScope.of(context).requestFocus(controller.passwordFocus);
-            },
-            autoValidateMode: controller.avmLogin.value,
-            validator: ValidationUtil().username,
-          ),
-          (isMobile ? 20 : 24).height,
-          AuthInputLabel(
-            text: TKeys.password.tr,
-            icon: Icons.lock_outline_rounded,
-          ),
-          (isMobile ? 12 : 8).height,
-          AppPasswordTextField(
-            controller: controller.passwordController,
-            focusNode: controller.passwordFocus,
-            hintText: TKeys.enterPassword.tr,
-            labelText: TKeys.password.tr,
-            showCriteria: false,
-            validator: ValidationUtil().loginPassword,
-            autoValidateMode: controller.avmLogin.value,
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-          ),
-          (isMobile ? 16 : 20).height,
-          RememberMeRow(),
-          (isMobile ? 28 : 32).height,
-          LoginButton(),
-        ],
+      child: Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AuthInputLabel(
+              text: TKeys.username.tr,
+              icon: Icons.person_outline_rounded,
+            ),
+            (isMobile ? 12 : 8).height,
+            AppTextField(
+              controller: controller.usernameController,
+              focusNode: controller.usernameFocus,
+              labelText: TKeys.username.tr,
+              hintText: TKeys.enterUsername.tr,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) {
+                FocusScope.of(context).requestFocus(controller.passwordFocus);
+              },
+              autoValidateMode: controller.avmLogin.value,
+              validator: ValidationUtil().username,
+            ),
+            (isMobile ? 20 : 24).height,
+            AuthInputLabel(
+              text: TKeys.password.tr,
+              icon: Icons.lock_outline_rounded,
+            ),
+            (isMobile ? 12 : 8).height,
+            AppPasswordTextField(
+              controller: controller.passwordController,
+              focusNode: controller.passwordFocus,
+              hintText: TKeys.enterPassword.tr,
+              labelText: TKeys.password.tr,
+              showCriteria: false,
+              validator: ValidationUtil().loginPassword,
+              autoValidateMode: controller.avmLogin.value,
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
+            ),
+            (isMobile ? 16 : 20).height,
+            RememberMeRow(),
+            (isMobile ? 28 : 32).height,
+            LoginButton(),
+          ],
+        ),
       ),
     );
   }

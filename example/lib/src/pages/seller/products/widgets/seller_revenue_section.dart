@@ -19,12 +19,13 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
 
   Widget _buildAmountRow() {
     return Obx(() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        textDirection: TextDirection.rtl,
-        children: [
-          Flexible(
-            child: SizedBox(
+      return FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: TextDirection.rtl,
+          children: [
+            SizedBox(
               height: 60,
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
@@ -33,26 +34,28 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
                         FadeTransition(opacity: animation, child: child),
                 child: FittedBox(
                   child: Text(
-                    controller.isHidden.value ? '••••••' : controller.totalRevenueAmount.value.toLocalizedPrice,
+                    controller.isHidden.value
+                        ? '••••••'
+                        : controller.totalRevenueAmount.value.toLocalizedPrice,
                     key: ValueKey(controller.isHidden.value),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: AppSize.f36,
+                      fontSize: AppSize.f26,
                       fontWeight: FontWeight.w900,
-                      overflow: TextOverflow.clip
+                      overflow: TextOverflow.clip,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
             ),
-          ),
-          AppSize.p8.width,
-          Text(
-            TKeys.currency.tr,
-            style: TextStyle(color: Colors.white70, fontSize: AppSize.f14),
-          ),
-        ],
+            AppSize.p8.width,
+            Text(
+              TKeys.currency.tr,
+              style: TextStyle(color: Colors.white70, fontSize: AppSize.f12),
+            ),
+          ],
+        ),
       );
     });
   }

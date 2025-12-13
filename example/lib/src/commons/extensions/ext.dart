@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 extension StringExtensions on String {
 
-
   Color get toColor {
     try {
       String hexString = replaceAll('#', '');
@@ -15,9 +14,22 @@ extension StringExtensions on String {
 
       return Color(int.parse('0x$hexString'));
     } catch (e) {
-
       return Colors.black;
     }
+  }
+
+  String get toLocalizedPrice {
+
+    String result = this;
+    if (result.contains('.')) {
+      result = result.split('.')[0];
+    }
+
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+
+    String formatted = result.replaceAllMapped(reg, (Match match) => '${match[1]},');
+
+    return formatted.toLocalizedDigit;
   }
 
   String get toLocalizedDigit {
@@ -34,13 +46,7 @@ extension StringExtensions on String {
 extension PriceExtensions on num {
 
   String get toLocalizedPrice {
-    String result = toString();
-    if (result.contains('.')) {
-      result = result.split('.')[0];
-    }
-    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
-    String formatted = result.replaceAllMapped(reg, (Match match) => '${match[1]},');
-    return formatted.toLocalizedDigit;
+    return toString().toLocalizedPrice;
   }
 }
 

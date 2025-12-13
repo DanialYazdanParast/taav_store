@@ -34,13 +34,19 @@ class SalesStatCardWidget extends StatelessWidget {
     final double borderWidth = isTopSeller ? (isDesktop ? 3.0 : 2.0) : 1.0;
     final shadowColor =
         isTopSeller
-            ? theme.colorScheme.primary.withValues(alpha: 0.3)
-            : Colors.black.withValues(alpha: 0.05);
+            ? theme.colorScheme.primary.withValues(alpha:0.3)
+            : Colors.black.withValues(alpha:0.05);
+
+    final double imageSize = isDesktop ? 90 : 70;
+    final double horizontalSpacing = isDesktop ? 24 : 16;
+    final double cardPadding = isDesktop ? 20 : 12;
+    final double titleFontSize = isDesktop ? 18 : 14;
+    final double priceFontSize = isDesktop ? 16 : 14;
 
     return Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(isDesktop ? 20 : 12),
+          padding: EdgeInsets.all(cardPadding),
           decoration: BoxDecoration(
             color: theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(16),
@@ -57,12 +63,12 @@ class SalesStatCardWidget extends StatelessWidget {
             children: [
               TaavNetworkImage(
                 stat.image,
-                width: isDesktop ? 90 : 70,
-                height: isDesktop ? 90 : 70,
+                width: imageSize,
+                height: imageSize,
                 borderRadius: 12,
                 fit: BoxFit.cover,
               ),
-              SizedBox(width: isDesktop ? 24 : 16),
+              SizedBox(width: horizontalSpacing),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,27 +80,34 @@ class SalesStatCardWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: isDesktop ? 18 : 14,
+                        fontSize: titleFontSize,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _StatInfoChip(
                           label: TKeys.soldCount.tr,
                           value:
                               "${stat.totalQuantitySold.toString().toLocalizedDigit} ${TKeys.countUnit.tr}",
                           theme: theme,
+                          isDesktop: isDesktop,
                         ),
 
-                        Flexible(
+                        AppSize.p8.height,
+
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
                           child: Text(
                             "${stat.totalRevenue.toLocalizedPrice} ${TKeys.currency.tr}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.primary,
                               fontWeight: FontWeight.w900,
-                              fontSize: isDesktop ? 16 : 14,
+                              fontSize: priceFontSize,
                             ),
                           ),
                         ),
@@ -110,8 +123,8 @@ class SalesStatCardWidget extends StatelessWidget {
         if (isTopSeller)
           Positioned(
             top: 0,
-            left: isRtl ? 20 : null,
-            right: isRtl ? null : 20,
+            left: isRtl ? cardPadding : null,
+            right: isRtl ? null : cardPadding,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -143,8 +156,8 @@ class SalesStatCardWidget extends StatelessWidget {
         if (!isTopSeller)
           Positioned(
             top: 12,
-            left: isRtl ? 20 : null,
-            right: isRtl ? null : 20,
+            left: isRtl ? cardPadding : null,
+            right: isRtl ? null : cardPadding,
             child: Container(
               width: 28,
               height: 28,
@@ -170,31 +183,50 @@ class _StatInfoChip extends StatelessWidget {
   final String label;
   final String value;
   final ThemeData theme;
+  final bool isDesktop;
 
   const _StatInfoChip({
     required this.label,
     required this.value,
     required this.theme,
+    this.isDesktop = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+    final double labelFontSize = isDesktop ? 12 : 11;
+    final double valueFontSize = isDesktop ? 14 : 12;
+
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha:0.6),
+                fontSize: labelFontSize,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(width: 4),
-        Text(
-          value,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.bold,
+          const SizedBox(width: 4),
+          Flexible(
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: valueFontSize,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

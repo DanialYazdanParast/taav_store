@@ -106,6 +106,7 @@ class RegisterController extends GetxController {
         ToastUtil.show(failure.message, type: ToastType.error);
       },
       (newUser) {
+
         final successMsg =
             '${TKeys.registerSuccessMsg.tr} ${TKeys.loginToContinue.tr}';
 
@@ -116,8 +117,15 @@ class RegisterController extends GetxController {
           duration: const Duration(seconds: 3),
         );
 
+        Get.offNamed(
+          AppRoutes.login,
+          arguments: {
+            'username': usernameController.text,
+            'password': passwordController.text,
+          },
+        );
+
         _clearForm();
-        Get.offNamed(AppRoutes.login);
       },
     );
   }

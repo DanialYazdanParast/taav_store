@@ -6,13 +6,8 @@ import 'package:example/src/pages/auth/register/view/register_screen.dart';
 import 'package:example/src/pages/buyer/main/commons/main_buyer_binding.dart';
 import 'package:example/src/pages/buyer/main/view/main_buyer_screen.dart';
 import 'package:example/src/pages/buyer/orders/commons/order_history_binding.dart';
-import 'package:example/src/pages/buyer/product_details/commons/buyer_product_details_binding.dart';
-import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
-// ✅ ایمپورت‌های جدید برای صفحه سفارشات (مسیر را بر اساس پروژه خود چک کنید)
-
 import 'package:example/src/pages/buyer/orders/views/order_history_screen.dart';
-
-import 'package:example/src/pages/seller/edit_product/commons/seller_edit_binding.dart';
+import 'package:example/src/pages/buyer/product_details/view/buyer_product_details_screen.dart';
 import 'package:example/src/pages/seller/edit_product/view/seller_edit_screen.dart';
 import 'package:example/src/pages/seller/main/commons/main_seller_binding.dart';
 import 'package:example/src/pages/seller/main/view/main_seller_screen.dart';
@@ -31,95 +26,120 @@ class AppPages {
 
   static final unknownRoute = GetPage(
     name: _Paths.notFound,
-    page: () => const NotFoundScreen(),
+    page: NotFoundScreen.new,
     transition: Transition.noTransition,
   );
 
-  static final pages = [
+  static final pages = <GetPage>[
+    // Splash
     GetPage(
       name: _Paths.splash,
-      page: () => const SplashScreen(),
+      page: SplashScreen.new,
       binding: SplashBinding(),
       transition: Transition.noTransition,
     ),
 
-    // ─── Auth ───────────────────────────────────────────────────────────
+    // Auth
     GetPage(
-      name: _Paths.login,
-      page: () => const LoginScreen(),
+      name: _Paths.auth,
+      page: NotFoundScreen.new,
       binding: LoginBinding(),
-      transition:  Transition.noTransition,
-    ),
-    GetPage(
-      name: _Paths.register,
-      page: () => const RegisterScreen(),
-      binding: RegisterBinding(),
-      transition:  Transition.noTransition,
-    ),
-
-    // ─── Seller ─────────────────────────────────────────────────────────
-    GetPage(
-      name: _Paths.sellerProducts,
-      page: () => const MainSellerScreen(initialTab: 0),
-      binding: MainSellerBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
-      name: _Paths.sellerAddProduct,
-      page: () => const MainSellerScreen(initialTab: 1),
-      binding: MainSellerBinding(),
-      transition: Transition.noTransition,
+      children: [
+        GetPage(
+          name: _Paths.login,
+          page: LoginScreen.new,
+          binding: LoginBinding(),
+        ),
+        GetPage(
+          name: _Paths.register,
+          page: RegisterScreen.new,
+          binding: RegisterBinding(),
+        ),
+        GetPage(
+          name: _Paths.notFound,
+          page: NotFoundScreen.new,
+        ),
+      ],
     ),
 
+    // Seller
     GetPage(
-      name: _Paths.sellerSettings,
-      page: () => const MainSellerScreen(initialTab: 2),
+      name: _Paths.seller,
+      page: MainSellerScreen.new,
       binding: MainSellerBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
-      name: _Paths.sellerEditProduct,
-      page: () => const SellerEditScreen(),
-      binding: SellerEditBinding(),
-      transition: Transition.downToUp,
-    ),
-    GetPage(
-      name: _Paths.sellerStats,
-      page: () => const SellerStatsScreen(),
-      binding: SellerStatsBinding(),
-      transition: Transition.downToUp,
-    ),
-    // ─── Buyer ──────────────────────────────────────────────────────────
-    GetPage(
-      name: _Paths.buyerProducts,
-      page: () => const MainBuyerScreen(initialTab: 0),
-      binding: MainBuyerBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
-      name: _Paths.buyerCart,
-      page: () => const MainBuyerScreen(initialTab: 1),
-      binding: MainBuyerBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
-      name: _Paths.buyerAccount,
-      page: () => const MainBuyerScreen(initialTab: 2),
-      binding: MainBuyerBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
-      name: _Paths.buyerProductDetails,
-      page: () => const BuyerProductDetailsScreen(),
-      binding: BuyerProductDetailsBinding(),
-      transition: Transition.downToUp,
+      children: [
+        GetPage(
+          name: _Paths.sellerProducts,
+          page: MainSellerScreen.new,
+          binding: MainSellerBinding(),
+        ),
+        GetPage(
+          name: _Paths.sellerAddProduct,
+          page: MainSellerScreen.new,
+          binding: MainSellerBinding(),
+        ),
+        GetPage(
+          name: _Paths.sellerAccount,
+          page: MainSellerScreen.new,
+          binding: MainSellerBinding(),
+        ),
+        GetPage(
+          name: _Paths.sellerEditProduct,
+          page: SellerEditScreen.new,
+          binding: MainSellerBinding(),
+          transition: Transition.downToUp,
+        ),
+        GetPage(
+          name: _Paths.sellerStats,
+          page: SellerStatsScreen.new,
+          binding: SellerStatsBinding(),
+          transition: Transition.downToUp,
+        ),
+        GetPage(
+          name: _Paths.notFound,
+          page: NotFoundScreen.new,
+        ),
+      ],
     ),
 
+    // Buyer
     GetPage(
-      name: _Paths.buyerOrders,
-      page: () => const OrderHistoryScreen(),
-      binding: OrderHistoryBinding(),
-      transition: Transition.downToUp,
+      name: _Paths.buyer,
+      page: MainBuyerScreen.new,
+      binding: MainBuyerBinding(),
+      children: [
+        GetPage(
+          name: _Paths.buyerProducts,
+          page: MainBuyerScreen.new,
+          binding: MainBuyerBinding(),
+        ),
+        GetPage(
+          name: _Paths.buyerCart,
+          page: MainBuyerScreen.new,
+          binding: MainBuyerBinding(),
+        ),
+        GetPage(
+          name: _Paths.buyerAccount,
+          page: MainBuyerScreen.new,
+          binding: MainBuyerBinding(),
+        ),
+        GetPage(
+          name: _Paths.buyerProductDetails,
+          page: BuyerProductDetailsScreen.new,
+          binding: MainBuyerBinding(),
+          transition: Transition.downToUp,
+        ),
+        GetPage(
+          name: _Paths.buyerOrders,
+          page: OrderHistoryScreen.new,
+          binding: OrderHistoryBinding(),
+          transition: Transition.downToUp,
+        ),
+        GetPage(
+          name: _Paths.notFound,
+          page: NotFoundScreen.new,
+        ),
+      ],
     ),
   ];
 }

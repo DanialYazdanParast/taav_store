@@ -27,7 +27,6 @@ class MetadataService extends GetxService {
     tagsResult.fold((l) {}, (data) => tags.assignAll(data));
   }
 
-  // افزودن تگ جدید (تمیز و استاندارد)
   Future<bool> addNewTag(String name) async {
     final result = await repository.createNewTag(name);
     return result.fold(

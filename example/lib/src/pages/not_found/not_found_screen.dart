@@ -1,4 +1,4 @@
-
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:example/src/infoStructure/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,33 +9,24 @@ class NotFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('خطای 404'),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.error_outline,
-                size: 100,
-                color: Colors.grey.shade400,
-              ),
-              const SizedBox(height: 24),
               Text(
                 '404',
                 style: TextStyle(
-                  fontSize: 72,
+                  fontSize: 160,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade700,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'صفحه مورد نظر یافت نشد',
-                style: TextStyle(
+              Text(
+                TKeys.notFoundTitle.tr,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -43,11 +34,8 @@ class NotFoundScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'آدرس وارد شده اشتباه است یا صفحه منتقل شده است.',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
+                TKeys.notFoundDescription.tr,
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
@@ -56,7 +44,7 @@ class NotFoundScreen extends StatelessWidget {
                   Get.offAllNamed(AppRoutes.splash);
                 },
                 icon: const Icon(Icons.home),
-                label: const Text('بازگشت به صفحه اصلی'),
+                label: Text(TKeys.backToHome.tr),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,

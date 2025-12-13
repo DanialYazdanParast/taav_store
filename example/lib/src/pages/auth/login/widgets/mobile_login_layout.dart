@@ -33,15 +33,12 @@ class MobileLoginLayout extends GetView<LoginController> {
         ),
       ),
       child: SafeArea(
-
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
@@ -59,7 +56,6 @@ class MobileLoginLayout extends GetView<LoginController> {
                           ),
                         ],
                       ),
-                      // فوتر صفحه
                       Padding(
                         padding: const EdgeInsets.only(bottom: 32, top: 24),
                         child: AuthLinkText(

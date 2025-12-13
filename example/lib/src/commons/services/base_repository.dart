@@ -3,8 +3,6 @@ import 'package:either_dart/either.dart';
 import 'package:example/src/commons/models/failure.dart';
 import 'package:flutter/foundation.dart';
 
-
-
 abstract class BaseRepository {
   @protected
   Future<Either<Failure, T>> safeCall<T>({

@@ -250,4 +250,30 @@ const Map<String, String> faIR = {
   TKeys.cameraSource: 'دوربین',
   TKeys.imageGallerySource: 'گالری تصاویر',
   TKeys.productDeletedSuccessfully: 'محصول با موفقیت حذف شد',
+
+  TKeys.validationPasswordEmpty: 'رمز عبور نمی‌تواند خالی باشد',
+  TKeys.validationPasswordMinLength: 'رمز عبور باید حداقل ۸ کاراکتر باشد',
+  TKeys.validationPasswordMaxLength: 'رمز عبور باید حداکثر ۶۰ کاراکتر باشد',
+  TKeys.validationPasswordRequirements: 'رمز عبور باید شامل حداقل یک حرف بزرگ، یک حرف کوچک، یک عدد و یک کاراکتر خاص باشد',
+  TKeys.validationPasswordConfirmEmpty: 'لطفاً رمز عبور را تأیید کنید',
+  TKeys.validationPasswordMismatch: 'رمزهای عبور مطابقت ندارند',
+  TKeys.validationUsernameEmpty: 'نام کاربری نمی‌تواند خالی باشد',
+  TKeys.validationUsernameMinLength: 'نام کاربری باید حداقل ۴ کاراکتر باشد',
+  TKeys.validationUsernameMaxLength: 'نام کاربری نمی‌تواند بیشتر از ۳۰ کاراکتر باشد',
+  TKeys.validationUsernameInvalidChars: 'نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و _ باشد',
+  TKeys.validationUsernameNoSpaces: 'نام کاربری نمی‌تواند شامل فاصله باشد',
+  TKeys.validationLoginPasswordEmpty: 'رمز عبور نمی‌تواند خالی باشد',
+  TKeys.validationLoginPasswordMinLength: 'رمز عبور باید حداقل ۸ کاراکتر باشد',
+  TKeys.validationLoginPasswordEnglishOnly: 'رمز عبور باید با حروف انگلیسی وارد شود',
+  TKeys.validationCannotBeEmpty: 'نمی‌تواند خالی باشد',
+  TKeys.validationMinThreeChars: 'باید حداقل ۳ کاراکتر باشد',
+  TKeys.validationEnterValue: 'را وارد کنید',
+  TKeys.validationNumberInvalid: 'لطفاً عدد معتبر وارد کنید',
+  TKeys.validationCannotBeNegative: 'نمی‌تواند منفی باشد',
+  TKeys.validationDiscountPriceInvalid: 'قیمت تخفیف باید عدد باشد',
+  TKeys.validationDiscountPriceExceedsOriginal: 'قیمت با تخفیف نمی‌تواند بیشتر از قیمت اصلی باشد',
+
+
+  // ═══ Auth Errors ═══
+  TKeys.authInvalidCredentials: 'نام کاربری یا رمز عبور اشتباه است',
 };

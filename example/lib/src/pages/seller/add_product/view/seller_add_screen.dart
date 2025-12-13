@@ -293,9 +293,9 @@ class _SellerAddDesktopLayout extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      theme.colorScheme.outlineVariant.withOpacity(0),
+                      theme.colorScheme.outlineVariant.withValues(alpha: 0),
                       theme.colorScheme.outlineVariant,
-                      theme.colorScheme.outlineVariant.withOpacity(0),
+                      theme.colorScheme.outlineVariant.withValues(alpha:0),
                     ],
                   ),
                 ),

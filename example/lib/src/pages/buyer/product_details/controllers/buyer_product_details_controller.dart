@@ -110,7 +110,7 @@ class BuyerProductDetailsController extends GetxController {
     }
   }
 
-  // ─── ویژگی‌های محاسباتی ───
+
   double get effectivePrice {
     if (product.value == null) return 0;
     return (product.value!.discountPrice > 0 &&

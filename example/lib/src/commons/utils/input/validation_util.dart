@@ -1,20 +1,21 @@
+import 'package:example/src/infoStructure/languages/translation_keys.dart';
+import 'package:get/get.dart';
 import 'regex_util.dart';
 
 class ValidationUtil {
 
-
   String? password(final String? value) {
     if (value == null || value.isEmpty) {
-      return 'رمز عبور نمی‌تواند خالی باشد';
+      return TKeys.validationPasswordEmpty.tr;
     }
     if (value.length < 8) {
-      return 'رمز عبور باید حداقل ۸ کاراکتر باشد';
+      return TKeys.validationPasswordMinLength.tr;
     }
     if (value.length > 60) {
-      return 'رمز عبور باید حداکثر ۶۰ کاراکتر باشد';
+      return TKeys.validationPasswordMaxLength.tr;
     }
     if (!RegexpUtil.password.hasMatch(value)) {
-      return 'رمز عبور باید شامل حداقل یک حرف بزرگ، یک حرف کوچک، یک عدد و یک کاراکتر خاص باشد';
+      return TKeys.validationPasswordRequirements.tr;
     }
 
     return null;
@@ -22,37 +23,35 @@ class ValidationUtil {
 
   String? passwordConfirm(final String? value, final String mainPassword) {
     if (value == null || value.isEmpty) {
-      return 'لطفاً رمز عبور را تأیید کنید';
+      return TKeys.validationPasswordConfirmEmpty.tr;
     }
     if (value != mainPassword) {
-      return 'رمزهای عبور مطابقت ندارند';
+      return TKeys.validationPasswordMismatch.tr;
     }
     return null;
   }
-
-
 
   String? username(final String? value) {
     final trimmedValue = value?.trim();
 
     if (trimmedValue == null || trimmedValue.isEmpty) {
-      return 'نام کاربری نمی‌تواند خالی باشد';
+      return TKeys.validationUsernameEmpty.tr;
     }
 
     if (trimmedValue.length < 4) {
-      return 'نام کاربری باید حداقل ۴ کاراکتر باشد';
+      return TKeys.validationUsernameMinLength.tr;
     }
 
     if (trimmedValue.length > 30) {
-      return 'نام کاربری نمی‌تواند بیشتر از ۳۰ کاراکتر باشد';
+      return TKeys.validationUsernameMaxLength.tr;
     }
 
     if (!RegexpUtil.validUsername.hasMatch(trimmedValue)) {
-      return 'نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و _ باشد';
+      return TKeys.validationUsernameInvalidChars.tr;
     }
 
     if (trimmedValue.contains(' ')) {
-      return 'نام کاربری نمی‌تواند شامل فاصله باشد';
+      return TKeys.validationUsernameNoSpaces.tr;
     }
 
     return null;
@@ -60,51 +59,48 @@ class ValidationUtil {
 
   String? loginPassword(final String? value) {
     if (value == null || value.isEmpty) {
-      return 'رمز عبور نمی‌تواند خالی باشد';
+      return TKeys.validationLoginPasswordEmpty.tr;
     }
 
     if (value.length < 8) {
-      return 'رمز عبور باید حداقل ۸ کاراکتر باشد';
+      return TKeys.validationLoginPasswordMinLength.tr;
     }
 
     if (!RegexpUtil.allowedPasswordChars.hasMatch(value)) {
-      return 'رمز عبور باید با حروف انگلیسی وارد شود';
+      return TKeys.validationLoginPasswordEnglishOnly.tr;
     }
 
     return null;
   }
 
-
   String? requiredField(final String? value, String fieldName) {
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName نمی‌تواند خالی باشد';
+      return '$fieldName ${TKeys.validationCannotBeEmpty.tr}';
     }
     if (value.length < 3) {
-      return '$fieldName باید حداقل ۳ کاراکتر باشد';
+      return '$fieldName ${TKeys.validationMinThreeChars.tr}';
     }
     return null;
   }
 
   String? number(final String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return '$fieldName را وارد کنید';
+      return '$fieldName ${TKeys.validationEnterValue.tr}';
     }
-
 
     final cleanValue = value.replaceAll(',', '');
 
     final number = int.tryParse(cleanValue);
     if (number == null) {
-      return 'لطفاً عدد معتبر وارد کنید';
+      return TKeys.validationNumberInvalid.tr;
     }
     if (number < 0) {
-      return '$fieldName نمی‌تواند منفی باشد';
+      return '$fieldName ${TKeys.validationCannotBeNegative.tr}';
     }
     return null;
   }
 
   String? discountPrice(final String? discountVal, final String? originalPriceVal) {
-
     if (discountVal == null || discountVal.isEmpty) return null;
 
     final cleanDiscount = discountVal.replaceAll(',', '');
@@ -114,7 +110,7 @@ class ValidationUtil {
     final original = int.tryParse(cleanOriginal);
 
     if (discount == null) {
-      return 'قیمت تخفیف باید عدد باشد';
+      return TKeys.validationDiscountPriceInvalid.tr;
     }
 
     if (original == null) {
@@ -122,7 +118,7 @@ class ValidationUtil {
     }
 
     if (discount > original) {
-      return 'قیمت با تخفیف نمی‌تواند بیشتر از قیمت اصلی باشد';
+      return TKeys.validationDiscountPriceExceedsOriginal.tr;
     }
 
     return null;

@@ -21,7 +21,7 @@ import 'package:example/src/pages/shared/models/tag_model.dart';
 import '../repository/seller_edit_repository.dart';
 
 class SellerEditController extends GetxController with MixinDialogController {
-  // ─── Dependencies ───────────────────────
+
   final ISellerEditRepository editRepo;
   final AuthService _authService = Get.find<AuthService>();
   final MetadataService metadataService = Get.find<MetadataService>();

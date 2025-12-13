@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

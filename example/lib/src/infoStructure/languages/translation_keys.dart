@@ -249,4 +249,28 @@ abstract class TKeys {
   static const String imageGallerySource = 'image_gallery_source';
 
   static const String productDeletedSuccessfully = 'product_deleted_successfully';
+  static const String validationPasswordEmpty = 'validation_password_empty';
+  static const String validationPasswordMinLength = 'validation_password_min_length';
+  static const String validationPasswordMaxLength = 'validation_password_max_length';
+  static const String validationPasswordRequirements = 'validation_password_requirements';
+  static const String validationPasswordConfirmEmpty = 'validation_password_confirm_empty';
+  static const String validationPasswordMismatch = 'validation_password_mismatch';
+  static const String validationUsernameEmpty = 'validation_username_empty';
+  static const String validationUsernameMinLength = 'validation_username_min_length';
+  static const String validationUsernameMaxLength = 'validation_username_max_length';
+  static const String validationUsernameInvalidChars = 'validation_username_invalid_chars';
+  static const String validationUsernameNoSpaces = 'validation_username_no_spaces';
+  static const String validationLoginPasswordEmpty = 'validation_login_password_empty';
+  static const String validationLoginPasswordMinLength = 'validation_login_password_min_length';
+  static const String validationLoginPasswordEnglishOnly = 'validation_login_password_english_only';
+  static const String validationCannotBeEmpty = 'validation_cannot_be_empty';
+  static const String validationMinThreeChars = 'validation_min_three_chars';
+  static const String validationEnterValue = 'validation_enter_value';
+  static const String validationNumberInvalid = 'validation_number_invalid';
+  static const String validationCannotBeNegative = 'validation_cannot_be_negative';
+  static const String validationDiscountPriceInvalid = 'validation_discount_price_invalid';
+  static const String validationDiscountPriceExceedsOriginal = 'validation_discount_price_exceeds_original';
+  // ═══ Auth Errors ═══
+  static const String authInvalidCredentials = 'auth_invalid_credentials';
+
 }

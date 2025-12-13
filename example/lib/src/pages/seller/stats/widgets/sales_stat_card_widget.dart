@@ -34,8 +34,8 @@ class SalesStatCardWidget extends StatelessWidget {
     final double borderWidth = isTopSeller ? (isDesktop ? 3.0 : 2.0) : 1.0;
     final shadowColor =
         isTopSeller
-            ? theme.colorScheme.primary.withOpacity(0.3)
-            : Colors.black.withOpacity(0.05);
+            ? theme.colorScheme.primary.withValues(alpha:0.3)
+            : Colors.black.withValues(alpha:0.05);
 
     final double imageSize = isDesktop ? 90 : 70;
     final double horizontalSpacing = isDesktop ? 24 : 16;
@@ -208,7 +208,7 @@ class _StatInfoChip extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.6),
+                color: theme.colorScheme.onSurface.withValues(alpha:0.6),
                 fontSize: labelFontSize,
               ),
             ),

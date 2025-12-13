@@ -23,6 +23,7 @@ class SellerAddProductController extends GetxController
   final ISellerAddRepository addRepo;
 
   AuthService get _authService => Get.find<AuthService>();
+
   MetadataService get metadataService => Get.find<MetadataService>();
 
   SellerAddProductController({required this.addRepo});
@@ -43,7 +44,7 @@ class SellerAddProductController extends GetxController
   late FocusNode discountFocus;
   late FocusNode tagSearchFocusNode;
 
-//  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  //  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late Rx<AutovalidateMode> avmAdd;
 
   // ─── State Management ──────────────────
@@ -80,11 +81,12 @@ class SellerAddProductController extends GetxController
   bool get showAddButton {
     if (tagQuery.value.isEmpty) return false;
     return !availableTags.any(
-          (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
+      (tag) => tag.name.toLowerCase() == tagQuery.value.toLowerCase(),
     );
   }
 
   final ScrollController leftScrollController = ScrollController();
+
   // ─── Lifecycle Methods ─────────────────────
   @override
   void onInit() {
@@ -97,7 +99,7 @@ class SellerAddProductController extends GetxController
   @override
   void onClose() {
     leftScrollController.dispose();
-  //  _disposeControllers();
+    //  _disposeControllers();
     super.onClose();
   }
 
@@ -221,8 +223,10 @@ class SellerAddProductController extends GetxController
     } else {
       filteredTags.assignAll(
         availableTags
-            .where((tag) =>
-            tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()))
+            .where(
+              (tag) =>
+                  tag.name.toLowerCase().contains(tagQuery.value.toLowerCase()),
+            )
             .toList(),
       );
     }
@@ -275,7 +279,10 @@ class SellerAddProductController extends GetxController
     }
 
     if (selectedImage.value == null) {
-      ToastUtil.show(TKeys.pleaseSelectProductImage.tr, type: ToastType.warning);
+      ToastUtil.show(
+        TKeys.pleaseSelectProductImage.tr,
+        type: ToastType.warning,
+      );
       return;
     }
 
@@ -284,9 +291,10 @@ class SellerAddProductController extends GetxController
     try {
       final cleanPrice = priceController.text.replaceAll(',', '');
       final cleanCount = countController.text.replaceAll(',', '');
-      final cleanDiscount = discountPriceController.text.trim().isEmpty
-          ? cleanPrice
-          : discountPriceController.text.replaceAll(',', '');
+      final cleanDiscount =
+          discountPriceController.text.trim().isEmpty
+              ? cleanPrice
+              : discountPriceController.text.replaceAll(',', '');
 
       final formData = dio.FormData.fromMap({
         'title': titleController.text,
@@ -297,30 +305,31 @@ class SellerAddProductController extends GetxController
         'sellerId': _authService.userId.value,
         'colors': jsonEncode(selectedColor),
         'tags': jsonEncode(selectedTagNames),
-        'image': kIsWeb
-            ? dio.MultipartFile.fromBytes(
-          await selectedImage.value!.readAsBytes(),
-          filename: selectedImage.value!.name,
-        )
-            : await dio.MultipartFile.fromFile(
-          selectedImage.value!.path,
-          filename: selectedImage.value!.name,
-        ),
+        'image':
+            kIsWeb
+                ? dio.MultipartFile.fromBytes(
+                  await selectedImage.value!.readAsBytes(),
+                  filename: selectedImage.value!.name,
+                )
+                : await dio.MultipartFile.fromFile(
+                  selectedImage.value!.path,
+                  filename: selectedImage.value!.name,
+                ),
       });
 
       final result = await addRepo.addProduct(formData);
 
       result.fold(
-            (failure) {
+        (failure) {
           submitState.value = CurrentState.error;
-          ToastUtil.show(
-            failure.message,
-            type: ToastType.error,
-          );
+          ToastUtil.show(failure.message, type: ToastType.error);
         },
-            (newProduct) {
+        (newProduct) {
           submitState.value = CurrentState.success;
-          ToastUtil.show(TKeys.productAddedSuccessfully.tr, type: ToastType.success);
+          ToastUtil.show(
+            TKeys.productAddedSuccessfully.tr,
+            type: ToastType.success,
+          );
 
           _updateMainListLocally(newProduct);
 

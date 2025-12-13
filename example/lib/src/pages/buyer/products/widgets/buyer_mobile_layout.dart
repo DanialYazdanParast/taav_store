@@ -85,7 +85,7 @@ class BuyerMobileLayout extends GetView<BuyerProductsController> {
                   searchFocusNode: controller.searchFocusNode,
                   title: TKeys.buyerPanel.tr,
                   onFilterTap: () {
-                    controller.initTempFilters();
+                //    controller.initTempFilters();
 
                     BottomSheetWidget(
                       isScrollControlled: true,

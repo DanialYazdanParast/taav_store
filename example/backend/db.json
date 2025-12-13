@@ -212,7 +212,7 @@
       "title": "123",
       "description": "123",
       "price": 888888888888,
-      "quantity": 9000,
+      "quantity": 8999,
       "discountPrice": 888888888888,
       "sellerId": "1",
       "colors": [],
@@ -289,6 +289,30 @@
       ],
       "tags": [],
       "image": "http://localhost:3000/images/image-1765587483166-992854086.png"
+    },
+    {
+      "id": "1765637385688",
+      "title": "cvvvv",
+      "description": "cvcxv",
+      "price": 1111111111,
+      "quantity": 22,
+      "discountPrice": 11111111,
+      "sellerId": "1",
+      "colors": [],
+      "tags": [],
+      "image": "http://localhost:3000/images/image-1765637385679-577363618.png"
+    },
+    {
+      "id": "1765637464328",
+      "title": "44444444",
+      "description": "255555555555",
+      "price": 2,
+      "quantity": 2,
+      "discountPrice": 1,
+      "sellerId": "1",
+      "colors": [],
+      "tags": [],
+      "image": "http://localhost:3000/images/image-1765637464325-810830491.png"
     }
   ],
   "cart": [
@@ -304,32 +328,6 @@
       "originalPrice": 1,
       "maxStock": 1,
       "id": 1
-    },
-    {
-      "userId": "2",
-      "productId": "1765280679218",
-      "productTitle": "KIF",
-      "image": "http://localhost:3000/images/image-1765280679216-828710004.png",
-      "sellerId": "3",
-      "quantity": 1,
-      "color": "312908",
-      "price": 999,
-      "originalPrice": 1000,
-      "maxStock": 10,
-      "id": 2
-    },
-    {
-      "userId": "2",
-      "productId": "1765587483271",
-      "productTitle": "ccccccc",
-      "image": "http://localhost:3000/images/image-1765587483166-992854086.png",
-      "sellerId": "1",
-      "quantity": 19,
-      "color": "#FF0000",
-      "price": 3333333333,
-      "originalPrice": 3333333333,
-      "maxStock": 31,
-      "id": 3
     }
   ],
   "orders": [
@@ -698,6 +696,24 @@
         }
       ],
       "id": 17
+    },
+    {
+      "buyerId": "2",
+      "totalPrice": 888888888888,
+      "date": "2025-12-13T18:10:14.248",
+      "items": [
+        {
+          "productId": "1765280457268",
+          "productTitle": "123",
+          "sellerId": "1",
+          "color": "",
+          "quantity": 1,
+          "price": 888888888888,
+          "originalPrice": 888888888888,
+          "image": "http://localhost:3000/images/image-1765587448593-489658452.png"
+        }
+      ],
+      "id": 18
     }
   ]
 }

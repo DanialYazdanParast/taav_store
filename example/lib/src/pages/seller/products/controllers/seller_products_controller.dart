@@ -30,7 +30,6 @@ class SellerProductsController extends GetxController {
   final Rx<CurrentState> productsState = CurrentState.idle.obs;
 
   // ─── State Variables (Statistics) ────────────────
-
   final RxInt totalSalesCount = 0.obs;
   final RxInt totalRevenueAmount = 0.obs;
   final Rx<CurrentState> statsState = CurrentState.idle.obs;
@@ -61,6 +60,7 @@ class SellerProductsController extends GetxController {
 
   late TextEditingController searchController;
   late FocusNode searchFocusNode;
+  Worker? _searchWorker;
 
   // ─── Lifecycle ─────────────────────
   @override
@@ -73,7 +73,15 @@ class SellerProductsController extends GetxController {
       query.value = searchController.text.trim().toLowerCase();
     });
 
-    debounce(query, (_) {}, time: const Duration(milliseconds: 250));
+    _searchWorker = debounce(
+      query,
+          (_) {
+        if (query.value.isEmpty || query.value.length >= 3) {
+          fetchProducts();
+        }
+      },
+      time: const Duration(milliseconds: 400),
+    );
 
     _syncFiltersWithService();
 
@@ -84,6 +92,7 @@ class SellerProductsController extends GetxController {
 
   @override
   void onClose() {
+    _searchWorker?.dispose();
     searchController.dispose();
     searchFocusNode.dispose();
     super.onClose();
@@ -99,8 +108,12 @@ class SellerProductsController extends GetxController {
   // ─── 1. Fetch Products Logic ──────────────────
   Future<void> fetchProducts() async {
     productsState.value = CurrentState.loading;
+
+    final searchString = query.value.isNotEmpty ? query.value : null;
+
     final result = await productRepo.getSellerProducts(
       _authService.userId.value,
+      query: searchString,
     );
 
     result.fold(
@@ -111,9 +124,80 @@ class SellerProductsController extends GetxController {
           (fetchedProducts) {
         products.assignAll(fetchedProducts.reversed.toList());
         productsState.value = CurrentState.success;
-        calculatePriceLimits(products);
+
+        _calculateAndResetPriceLimits(fetchedProducts);
       },
     );
+  }
+
+
+  void _calculateAndResetPriceLimits(List<ProductModel> items) {
+    if (items.isEmpty) {
+      minPriceLimit.value = 0.0;
+      maxPriceLimit.value = 10000000.0;
+      appliedPriceRange.value = RangeValues(0.0, 10000000.0);
+      tempPriceRange.value = RangeValues(0.0, 10000000.0);
+      return;
+    }
+
+    final List<double> effectivePrices = items.map((p) {
+      return (p.discountPrice > 0 && p.discountPrice < p.price)
+          ? p.discountPrice.toDouble()
+          : p.price.toDouble();
+    }).toList();
+
+    double minP = effectivePrices.reduce(min);
+    double maxP = effectivePrices.reduce(max);
+
+    if (minP == maxP) {
+      minP = (minP - 10000 < 0) ? 0 : minP ;
+      maxP = maxP ;
+    }
+
+    minPriceLimit.value = minP;
+    maxPriceLimit.value = maxP;
+
+
+    appliedPriceRange.value = RangeValues(minP, maxP);
+    tempPriceRange.value = RangeValues(minP, maxP);
+  }
+
+
+  void recalculateAndResetFilters() {
+    if (products.isEmpty) {
+      minPriceLimit.value = 0.0;
+      maxPriceLimit.value = 10000000.0;
+      appliedPriceRange.value = RangeValues(0.0, 10000000.0);
+      tempPriceRange.value = RangeValues(0.0, 10000000.0);
+      return;
+    }
+
+    final List<double> effectivePrices = products.map((p) {
+      return (p.discountPrice > 0 && p.discountPrice < p.price)
+          ? p.discountPrice.toDouble()
+          : p.price.toDouble();
+    }).toList();
+
+    double minP = effectivePrices.reduce(min);
+    double maxP = effectivePrices.reduce(max);
+
+    if (minP == maxP) {
+      minP = (minP - 10000 < 0) ? 0 : minP - 10000;
+      maxP = maxP + 10000;
+    }
+
+    minPriceLimit.value = minP;
+    maxPriceLimit.value = maxP;
+
+    appliedPriceRange.value = RangeValues(minP, maxP);
+    tempPriceRange.value = RangeValues(minP, maxP);
+
+    appliedColorHexes.clear();
+    tempColorHexes.clear();
+    appliedTagNames.clear();
+    tempTagNames.clear();
+    appliedOnlyAvailable.value = false;
+    tempOnlyAvailable.value = false;
   }
 
   // ─── 2. Fetch Total Sales & Revenue Logic ───────────
@@ -174,40 +258,23 @@ class SellerProductsController extends GetxController {
         products.removeWhere((element) => element.id == productId);
 
         if (products.isNotEmpty) {
-          calculatePriceLimits(products);
+          recalculateAndResetFilters();
+        } else {
+          _calculateAndResetPriceLimits([]);
         }
-        ToastUtil.show(TKeys.productDeletedSuccessfully.tr, type: ToastType.success);
+
+        ToastUtil.show(
+            TKeys.productDeletedSuccessfully.tr, type: ToastType.success);
         if (Get.isDialogOpen == true) Get.back();
       },
     );
   }
 
   // ─── Filter Logic ──────────────────────────────────────────────
+
+
   void calculatePriceLimits(List<ProductModel> items) {
-    if (items.isNotEmpty) {
-      final List<double> effectivePrices = items.map((p) {
-        return (p.discountPrice > 0 && p.discountPrice < p.price)
-            ? p.discountPrice.toDouble()
-            : p.price.toDouble();
-      }).toList();
-
-      double minP = effectivePrices.reduce(min);
-      double maxP = effectivePrices.reduce(max);
-
-      if (minP == maxP) {
-        minP = (minP - 10000 < 0) ? 0 : minP - 10000;
-        maxP = maxP + 10000;
-      }
-
-      minPriceLimit.value = minP;
-      maxPriceLimit.value = maxP;
-
-      if (appliedPriceRange.value.start < minP ||
-          appliedPriceRange.value.end > maxP) {
-        appliedPriceRange.value = RangeValues(minP, maxP);
-        tempPriceRange.value = RangeValues(minP, maxP);
-      }
-    }
+    _calculateAndResetPriceLimits(items);
   }
 
   void initTempFilters() {
@@ -237,15 +304,18 @@ class SellerProductsController extends GetxController {
   }
 
   void clearAllFilters() {
-    clearTempFilters();
-    appliedPriceRange.value = RangeValues(
-      minPriceLimit.value,
-      maxPriceLimit.value,
-    );
+    final fullMin = minPriceLimit.value;
+    final fullMax = maxPriceLimit.value;
+
+    tempPriceRange.value = RangeValues(fullMin, fullMax);
+    appliedPriceRange.value = RangeValues(fullMin, fullMax);
 
     appliedColorHexes.clear();
+    tempColorHexes.clear();
     appliedTagNames.clear();
+    tempTagNames.clear();
     appliedOnlyAvailable.value = false;
+    tempOnlyAvailable.value = false;
   }
 
   void updateTempPriceRange(RangeValues values) =>
@@ -270,16 +340,6 @@ class SellerProductsController extends GetxController {
   List<ProductModel> get filteredProducts {
     List<ProductModel> result = products.toList();
 
-    if (query.value.isNotEmpty) {
-      final lowerQuery = query.value.toLowerCase();
-      result = result.where((p) {
-        final matchesTitle = p.title.toLowerCase().contains(lowerQuery);
-        final matchesTags = p.tags.any(
-              (tag) => tag.toLowerCase().contains(lowerQuery),
-        );
-        return matchesTitle || matchesTags;
-      }).toList();
-    }
 
     result = result.where((p) {
       final effectivePrice =
@@ -289,6 +349,7 @@ class SellerProductsController extends GetxController {
       return effectivePrice >= appliedPriceRange.value.start &&
           effectivePrice <= appliedPriceRange.value.end;
     }).toList();
+
 
     if (appliedOnlyAvailable.value) {
       result = result.where((p) => p.quantity > 0).toList();
@@ -302,6 +363,7 @@ class SellerProductsController extends GetxController {
         );
       }).toList();
     }
+
 
     if (appliedTagNames.isNotEmpty) {
       result = result.where((p) {
@@ -349,6 +411,11 @@ class SellerProductsController extends GetxController {
     } else {
       searchController.clear();
       searchFocusNode.unfocus();
+      query.value = '';
+
+      _resetNonPriceFilters();
+
+      fetchProducts();
     }
   }
 
@@ -360,6 +427,20 @@ class SellerProductsController extends GetxController {
       searchController.clear();
       query.value = '';
       searchFocusNode.unfocus();
+
+
+      _resetNonPriceFilters();
+
+      fetchProducts();
     }
+  }
+
+  void _resetNonPriceFilters() {
+    appliedColorHexes.clear();
+    tempColorHexes.clear();
+    appliedTagNames.clear();
+    tempTagNames.clear();
+    appliedOnlyAvailable.value = false;
+    tempOnlyAvailable.value = false;
   }
 }

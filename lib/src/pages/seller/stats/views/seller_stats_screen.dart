@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/seller_stats_controller.dart';
-import '../widgets/desktop_seller_stats_layout.dart';
-import '../widgets/mobile_seller_stats_layout.dart';
+import 'widgets/desktop_seller_stats_layout.dart';
+import 'widgets/mobile_seller_stats_layout.dart';
 
 class SellerStatsScreen extends GetView<SellerStatsController> {
   const SellerStatsScreen({super.key});

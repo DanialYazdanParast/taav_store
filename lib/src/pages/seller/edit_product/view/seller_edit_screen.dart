@@ -13,10 +13,10 @@ import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 
 import '../controllers/seller_edit_controller.dart';
-import '../widgets/product_attributes_section.dart';
-import '../widgets/product_image_section.dart';
-import '../widgets/product_info_section.dart';
-import '../widgets/product_pricing_section.dart';
+import 'widgets/product_attributes_section.dart';
+import 'widgets/product_image_section.dart';
+import 'widgets/product_info_section.dart';
+import 'widgets/product_pricing_section.dart';
 
 class SellerEditScreen extends GetView<SellerEditController> {
   const SellerEditScreen({super.key});

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/order_history_controller.dart';
-import '../widgets/desktop_order_history_layout.dart';
-import '../widgets/mobile_order_history_layout.dart';
+import 'widgets/desktop_order_history_layout.dart';
+import 'widgets/mobile_order_history_layout.dart';
 
 class OrderHistoryScreen extends GetView<OrderHistoryController> {
   const OrderHistoryScreen({super.key});

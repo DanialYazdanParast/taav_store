@@ -7,9 +7,9 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 
 import '../controllers/seller_account_controller.dart';
-import '../widgets/settings_draggable_sheet.dart';
+import 'widgets/settings_draggable_sheet.dart';
 import '../../../shared/widgets/profile_header.dart';
-import '../widgets/icon_list.dart';
+import 'widgets/icon_list.dart';
 
 class SellerAccountScreen extends GetView<SellerAccountController> {
   const SellerAccountScreen({super.key});

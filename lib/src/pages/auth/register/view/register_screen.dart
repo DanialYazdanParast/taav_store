@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/register_controller.dart';
-import '../widgets/desktop_register_layout.dart';
-import '../widgets/mobile_register_layout.dart';
+import 'widgets/desktop_register_layout.dart';
+import 'widgets/mobile_register_layout.dart';
+
 
 class RegisterScreen extends GetView<RegisterController> {
   const RegisterScreen({super.key});

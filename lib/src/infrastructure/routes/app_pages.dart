@@ -49,11 +49,13 @@ class AppPages {
           name: _Paths.login,
           page: LoginScreen.new,
           binding: LoginBinding(),
+          transition: Transition.noTransition,
         ),
         GetPage(
           name: _Paths.register,
           page: RegisterScreen.new,
           binding: RegisterBinding(),
+          transition: Transition.noTransition,
         ),
         GetPage(name: _Paths.notFound, page: NotFoundScreen.new),
       ],

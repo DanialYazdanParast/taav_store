@@ -2,7 +2,6 @@ import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_loading.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
 import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
-import 'package:taav_store/src/pages/seller/add_product/widgets/product_info_section.dart';
 import 'package:taav_store/src/pages/shared/widgets/seller_add_and_edit_dialogs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +12,12 @@ import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart'
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
+
 import '../controllers/seller_add_controller.dart';
-import '../widgets/product_attributes_section.dart';
-import '../widgets/product_image_section.dart';
-import '../widgets/product_pricing_section.dart';
+import 'widgets/product_attributes_section.dart';
+import 'widgets/product_info_section.dart';
+import 'widgets/product_image_section.dart';
+import 'widgets/product_pricing_section.dart';
 
 class SellerAddScreen extends GetView<SellerAddProductController> {
   const SellerAddScreen({super.key});

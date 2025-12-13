@@ -33,7 +33,7 @@ class SellerAddScreen extends GetView<SellerAddProductController> {
 class _SellerAddMobileLayout extends StatelessWidget {
   final SellerAddProductController controller;
 
-   _SellerAddMobileLayout({required this.controller});
+  _SellerAddMobileLayout({required this.controller});
 
   void _handleImagePick(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -43,6 +43,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
       SellerAddAndEditDialogs.showImageSource(controller);
     }
   }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -162,7 +163,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
 
             AppSize.p32.height,
 
-            _SubmitButton(controller: controller, formKey: _formKey,),
+            _SubmitButton(controller: controller, formKey: _formKey),
 
             SizedBox(height: MediaQuery.of(context).padding.bottom + 20),
           ],
@@ -175,8 +176,7 @@ class _SellerAddMobileLayout extends StatelessWidget {
 class _SellerAddDesktopLayout extends StatelessWidget {
   final SellerAddProductController controller;
 
-   _SellerAddDesktopLayout({required this.controller});
-
+  _SellerAddDesktopLayout({required this.controller});
 
   void _handleImagePick(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -198,19 +198,19 @@ class _SellerAddDesktopLayout extends StatelessWidget {
         child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 1000),
-            padding: const EdgeInsets.only(bottom: AppSize.p24),
+            padding: const EdgeInsets.only(bottom: AppSize.p16),
             child: Column(
               children: [
-              //  _CustomAppBar(isDesktop: true, theme: theme),
+                //  _CustomAppBar(isDesktop: true, theme: theme),
                 AppSize.p20.height,
                 Expanded(
                   child: Card(
-                    color: theme.colorScheme.surface,
+                    color: theme.scaffoldBackgroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.0),
 
                       side: BorderSide(
-                        width: 2.0,
+                        width: 1.0,
                         color: theme.colorScheme.outlineVariant.withValues(
                           alpha: 0.5,
                         ),
@@ -225,7 +225,6 @@ class _SellerAddDesktopLayout extends StatelessWidget {
                           );
                         case CurrentState.error:
                           return Center(child: ErrorView());
-                        case CurrentState.idle:
                         case CurrentState.success:
                           return _buildDesktopContent(context, theme);
                         default:
@@ -251,9 +250,9 @@ class _SellerAddDesktopLayout extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Scrollbar(
-              controller:controller.leftScrollController,
+              controller: controller.leftScrollController,
               child: SingleChildScrollView(
-                controller:controller.leftScrollController,
+                controller: controller.leftScrollController,
                 padding: const EdgeInsetsDirectional.only(end: AppSize.p32),
                 child: Column(
                   children: [
@@ -283,7 +282,26 @@ class _SellerAddDesktopLayout extends StatelessWidget {
               ),
             ),
           ),
-          const VerticalDivider(width: 48),
+          SizedBox(
+            width: 50,
+            child: Center(
+              child: Container(
+                height: 700,
+                width: 1,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      theme.colorScheme.outlineVariant.withOpacity(0),
+                      theme.colorScheme.outlineVariant,
+                      theme.colorScheme.outlineVariant.withOpacity(0),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             flex: 6,
             child: SingleChildScrollView(
@@ -309,7 +327,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
                       autoValidateMode: controller.avmAdd.value,
                     ),
                     48.height,
-                    _SubmitButton(controller: controller, formKey: _formKey,),
+                    _SubmitButton(controller: controller, formKey: _formKey),
                   ],
                 ),
               ),
@@ -324,7 +342,7 @@ class _SellerAddDesktopLayout extends StatelessWidget {
 class _CustomAppBar extends StatelessWidget {
   final bool isDesktop;
 
-  const _CustomAppBar({required this.isDesktop,});
+  const _CustomAppBar({required this.isDesktop});
 
   @override
   Widget build(BuildContext context) {
@@ -347,9 +365,7 @@ class _CustomAppBar extends StatelessWidget {
           child: Text(
             TKeys.addNewProduct.tr,
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
-            style: Get.theme.textTheme.bodyLarge!.copyWith(
-                color: Colors.white
-            )
+            style: Get.theme.textTheme.bodyLarge!.copyWith(color: Colors.white),
           ),
         ),
         if (!isDesktop) const SizedBox(width: 40),
@@ -361,6 +377,7 @@ class _CustomAppBar extends StatelessWidget {
 class _SubmitButton extends StatelessWidget {
   final SellerAddProductController controller;
   final GlobalKey<FormState> formKey;
+
   const _SubmitButton({required this.controller, required this.formKey});
 
   @override
@@ -369,7 +386,7 @@ class _SubmitButton extends StatelessWidget {
       () =>
           ButtonWidget(
             TKeys.finalSubmitProduct.tr,
-          () =>   controller.submitProduct(formKey),
+            () => controller.submitProduct(formKey),
             isLoading: controller.submitState.value == CurrentState.loading,
             icon: Icons.check_circle_outline_rounded,
           ).material(),

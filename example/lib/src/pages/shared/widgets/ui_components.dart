@@ -58,11 +58,11 @@ class MenuItem extends StatelessWidget {
     required this.color,
     required this.title,
     required this.onTap,
-    this.subtitle, // دیگر required نیست
+    this.subtitle,
     this.isDestructive = false,
     this.showChevron = true,
-    this.padding = const EdgeInsets.all(AppSize.p12), // مقدار پیش‌فرض
-    this.iconContainerSize = 48.0, // مقدار پیش‌فرض سایز کانتینر
+    this.padding = const EdgeInsets.all(AppSize.p12),
+    this.iconContainerSize = 48.0,
     this.iconSize = 24.0,
   });
 
@@ -73,7 +73,7 @@ class MenuItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppSize.r16),
       hoverColor: color.withValues(alpha: 0.05),
       child: Padding(
-        padding: padding, // استفاده از پدینگ کاستوم
+        padding: padding,
         child: Row(
           children: [
             Container(
@@ -86,7 +86,7 @@ class MenuItem extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center, // اگر سابتایتل نباشد، تایتل وسط قرار می‌گیرد
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     title,
@@ -98,7 +98,7 @@ class MenuItem extends StatelessWidget {
                           : Get.theme.textTheme.bodyLarge?.color,
                     ),
                   ),
-                  // شرط برای نمایش سابتایتل فقط در صورت وجود
+
                   if (subtitle != null && subtitle!.isNotEmpty) ...[
                     AppSize.p4.height,
                     Text(
@@ -118,7 +118,6 @@ class MenuItem extends StatelessWidget {
   }
 }
 
-// گزینه قابل انتخاب (برای زبان و تم)
 class SelectableOptionWidget extends StatelessWidget {
   final String title;
   final bool isSelected;
@@ -178,7 +177,6 @@ class SelectableOptionWidget extends StatelessWidget {
   }
 }
 
-// دکمه‌های تایید و انصراف
 class ActionButtonsWidget extends StatelessWidget {
   final String cancelText;
   final String confirmText;

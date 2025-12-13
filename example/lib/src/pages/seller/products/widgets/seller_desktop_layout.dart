@@ -32,6 +32,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
           Expanded(
             child: CustomScrollView(
               slivers: [
+
                 SliverToBoxAdapter(
                   child: Column(
                     children: [_buildHeroSection(theme), AppSize.p20.height],
@@ -124,7 +125,7 @@ class SellerDesktopLayout extends GetView<SellerProductsController> {
   Widget _buildHeroSection(ThemeData theme) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      clipBehavior: Clip.none,
+      clipBehavior: Clip.hardEdge,
       children: [
         Container(
           height: 180,

@@ -1,5 +1,4 @@
 import 'package:example/src/commons/extensions/ext.dart';
-import 'package:example/src/pages/shared/widgets/ui_components.dart';
 import 'package:example/src/infoStructure/languages/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,16 +34,28 @@ class ProductAttributesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MenuItem(
-          onTap: () {},
-          title: TKeys.attributes.tr,
-          color: theme.colorScheme.primary,
-          icon: Icons.tune_rounded,
-          padding: EdgeInsets.zero,
-          iconSize: 20,
-          iconContainerSize: 40,
-          showChevron: false,
+        Row(
+          children: [
+            Container(
+              width: 8,
+              height: 30,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(AppSize.r12),
+              ),
+            ),
+            8.width,
+            Text(
+              TKeys.attributes.tr,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: AppSize.f16,
+                color: Get.theme.textTheme.bodyLarge?.color,
+              ),
+            ),
+          ],
         ),
+
         AppSize.p16.height,
         Text(
           TKeys.colors.tr,
@@ -53,7 +64,7 @@ class ProductAttributesSection extends StatelessWidget {
         AppSize.p8.height,
 
         Obx(
-              () => Wrap(
+          () => Wrap(
             spacing: 12,
             runSpacing: 12,
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -71,35 +82,35 @@ class ProductAttributesSection extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(
                         color:
-                        isSelected
-                            ? theme.colorScheme.primary
-                            : theme.dividerColor,
+                            isSelected
+                                ? theme.colorScheme.primary
+                                : theme.dividerColor,
                         width: isSelected ? 3 : 1.5,
                       ),
                       boxShadow:
-                      isSelected
-                          ? [
-                        BoxShadow(
-                          color: theme.colorScheme.primary.withValues(
-                            alpha: 0.3,
-                          ),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]
-                          : null,
+                          isSelected
+                              ? [
+                                BoxShadow(
+                                  color: theme.colorScheme.primary.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ]
+                              : null,
                     ),
                     child:
-                    isSelected
-                        ? Icon(
-                      Icons.check,
-                      size: 20,
-                      color:
-                      color.hex.toColor.computeLuminance() > 0.5
-                          ? Colors.black
-                          : Colors.white,
-                    )
-                        : null,
+                        isSelected
+                            ? Icon(
+                              Icons.check,
+                              size: 20,
+                              color:
+                                  color.hex.toColor.computeLuminance() > 0.5
+                                      ? Colors.black
+                                      : Colors.white,
+                            )
+                            : null,
                   ),
                 );
               }),
@@ -139,13 +150,13 @@ class ProductAttributesSection extends StatelessWidget {
         AppSize.p8.height,
 
         Obx(
-              () => Wrap(
+          () => Wrap(
             spacing: AppSize.p8,
             runSpacing: AppSize.p8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               ...selectedTagNames.map(
-                    (tag) => Container(
+                (tag) => Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 8,

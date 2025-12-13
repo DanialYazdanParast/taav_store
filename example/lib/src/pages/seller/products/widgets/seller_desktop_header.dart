@@ -22,12 +22,11 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
 
     return Container(
       height: 80,
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.p20),
+      decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
       child: Row(
         children: [
-          AppSize.p20.width,
+
           _buildSearchField(),
           AppSize.p20.width,
           _buildFilterButton(theme),
@@ -37,7 +36,7 @@ class SellerDesktopHeader extends GetView<SellerProductsController> {
           _buildNotificationIcon(theme),
           AppSize.p16.width,
           _buildProfileAvatar(primaryColor),
-          AppSize.p20.width,
+
         ],
       ),
     );

@@ -11,7 +11,6 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/button/button_widget.dart';
 import 'package:example/src/commons/widgets/responsive/responsive.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
-import 'package:example/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 
 import '../controllers/seller_edit_controller.dart';
 import '../widgets/product_attributes_section.dart';
@@ -56,38 +55,33 @@ class _SellerEditMobileLayout extends StatelessWidget {
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         behavior: HitTestBehavior.translucent,
-        child: Stack(
-          children: [
-            _TopBackground(color: primaryColor),
-            SafeArea(
-              bottom: false,
-              child: Column(
-                children: [
-                  _CustomAppBar(isDesktop: false),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: theme.scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(AppSize.r12)),
-                      ),
-                      child: Obx(() {
-                        switch (controller.pageState.value) {
-                          case CurrentState.loading:
-                            return const Center(child: CircularProgressIndicator());
-                          case CurrentState.error:
-                            return ErrorView(onRetry: () => controller.fetchInitialData());
-                          case CurrentState.success:
-                            return _buildFormContent(context, theme);
-                          default:
-                            return const SizedBox();
-                        }
-                      }),
-                    ),
+        child: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              _CustomAppBar(isDesktop: false),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: theme.scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(AppSize.r12)),
                   ),
-                ],
+                  child: Obx(() {
+                    switch (controller.pageState.value) {
+                      case CurrentState.loading:
+                        return const Center(child: CircularProgressIndicator());
+                      case CurrentState.error:
+                        return ErrorView(onRetry: () => controller.fetchInitialData());
+                      case CurrentState.success:
+                        return _buildFormContent(context, theme);
+                      default:
+                        return const SizedBox();
+                    }
+                  }),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -171,18 +165,18 @@ class _SellerEditDesktopLayout extends StatelessWidget {
         child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 1000),
-            padding: const EdgeInsets.only(bottom: AppSize.p24),
+            padding: const EdgeInsets.only(bottom: AppSize.p16),
             child: Column(
               children: [
                 _CustomAppBar(isDesktop: true, theme: theme),
                 AppSize.p20.height,
                 Expanded(
                   child: Card(
-                    color: theme.colorScheme.surface,
+                    color: theme.scaffoldBackgroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.0),
                       side: BorderSide(
-                        width: 2.0,
+                        width: 1.0,
                         color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
                       ),
                     ),
@@ -222,8 +216,10 @@ class _SellerEditDesktopLayout extends StatelessWidget {
                   children: [
                     Obx(
                           () => ProductImageSection(
-                        selectedImage: controller.selectedImage.value,
-                        existingImageUrl: controller.product?.image,
+                            selectedImage: controller.selectedImage.value,
+                            existingImageUrl: controller.isImageDeleted.value
+                                ? null
+                                : controller.product?.image,
                         onTapPick: () => _handleImagePick(context),
                         onTapRemove: controller.removeImage,
                       ),
@@ -243,7 +239,26 @@ class _SellerEditDesktopLayout extends StatelessWidget {
               ),
             ),
           ),
-          const VerticalDivider(width: 48),
+          SizedBox(
+            width: 50,
+            child: Center(
+              child: Container(
+                height: 700,
+                width: 1,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      theme.colorScheme.outlineVariant.withOpacity(0),
+                      theme.colorScheme.outlineVariant,
+                      theme.colorScheme.outlineVariant.withOpacity(0),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             flex: 6,
             child: SingleChildScrollView(
@@ -295,7 +310,6 @@ class _CustomAppBar extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: IconButtonWidget(
             icon: Icons.arrow_back_ios_new_rounded,
-
             onTap: () {
               Get.offAllNamed(AppRoutes.sellerProducts);
             },
@@ -335,25 +349,6 @@ class _SubmitButton extends StatelessWidget {
         isLoading: controller.submitState.value == CurrentState.loading,
         icon: Icons.edit_note_rounded,
       ).material(),
-    );
-  }
-}
-
-class _TopBackground extends StatelessWidget {
-  final Color color;
-  const _TopBackground({required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: 0, left: 0, right: 0, height: 300,
-      child: Stack(
-        children: [
-          Container(color: color),
-          DecorativeCircle(top: -60, right: -100, size: 250, color: Colors.white.withValues(alpha: 0.08)),
-          DecorativeCircle(top: 50, left: -80, size: 180, color: Colors.white.withValues(alpha: 0.08)),
-        ],
-      ),
     );
   }
 }

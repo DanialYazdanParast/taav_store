@@ -240,9 +240,10 @@ class SellerEditController extends GetxController with MixinDialogController {
   void removeImage() {
     selectedImage.value = null;
     isImageDeleted.value = true;
+
   }
 
-  // ─── Color & Tag Actions (قبلاً ترجمه شده) ─────────────────
+  // ─── Color & Tag Actions ─────────────────
   @override
   void toggleColor(String hexCode) {
     if (selectedColor.contains(hexCode)) {
@@ -382,7 +383,7 @@ class SellerEditController extends GetxController with MixinDialogController {
           ToastUtil.show(TKeys.productUpdatedSuccessfully.tr, type: ToastType.success);
 
           _updateMainListLocally(updatedProduct);
-          Get.back();
+          Get.offAllNamed(AppRoutes.sellerProducts);
         },
       );
     } catch (e) {

@@ -35,15 +35,26 @@ class ProductAttributesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MenuItem(
-          onTap: () {},
-          title: TKeys.attributes.tr,
-          color: theme.colorScheme.primary,
-          icon: Icons.tune_rounded,
-          padding: EdgeInsets.zero,
-          iconSize: 20,
-          iconContainerSize: 40,
-          showChevron: false,
+        Row(
+          children: [
+            Container(
+              width: 8,
+              height: 30,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withValues(alpha:  0.5),
+                borderRadius: BorderRadius.circular(AppSize.r12),
+              ),
+            ),
+            8.width,
+            Text(
+              TKeys.attributes.tr,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: AppSize.f16,
+                color: Get.theme.textTheme.bodyLarge?.color,
+              ),
+            ),
+          ],
         ),
         AppSize.p16.height,
         Text(

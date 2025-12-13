@@ -119,7 +119,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
   Widget _buildHeroSection(ThemeData theme) {
     return Stack(
       alignment: Alignment.bottomCenter,
-      clipBehavior: Clip.none,
+      clipBehavior: Clip.hardEdge,
       children: [
         Container(
           height: 180,

@@ -1,5 +1,6 @@
 import 'package:example/src/commons/constants/app_size.dart';
 import 'package:example/src/commons/enums/enums.dart';
+import 'package:example/src/commons/extensions/ext.dart';
 import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/commons/widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -45,34 +46,37 @@ class SellerStatItem extends StatelessWidget {
                 borderRadius: 6,
               ),
             )
-            : Directionality(
-              textDirection: TextDirection.rtl,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: value,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: valueSize ?? AppSize.f24,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-
-                    if (unit != null) ...[
-                      const TextSpan(text: ' '),
+            : FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text.rich(
+                  TextSpan(
+                    children: [
                       TextSpan(
-                        text: unit,
+                        text: value.toLocalizedPrice,
                         style: TextStyle(
-                          color: textColor.withValues(alpha: 0.8),
-                          fontSize: (valueSize ?? AppSize.f24) * 0.55,
-                          fontWeight: FontWeight.w500,
+                          color: textColor,
+                          fontSize: valueSize ?? AppSize.f24,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
+
+                      if (unit != null) ...[
+                        const TextSpan(text: ' '),
+                        TextSpan(
+                          text: unit,
+                          style: TextStyle(
+                            color: textColor.withValues(alpha: 0.8),
+                            fontSize: (valueSize ?? AppSize.f24) * 0.55,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
 

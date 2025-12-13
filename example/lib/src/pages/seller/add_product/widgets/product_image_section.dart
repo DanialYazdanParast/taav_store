@@ -10,7 +10,6 @@ import 'package:example/src/commons/extensions/space_extension.dart';
 import 'package:example/src/pages/shared/widgets/icon_button_widget.dart';
 
 class ProductImageSection extends StatelessWidget {
-
   final XFile? selectedImage;
   final String? existingImageUrl;
   final VoidCallback onTapPick;
@@ -28,21 +27,35 @@ class ProductImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final hasImage = selectedImage != null || (existingImageUrl != null && existingImageUrl!.isNotEmpty);
+    final hasImage =
+        selectedImage != null ||
+        (existingImageUrl != null && existingImageUrl!.isNotEmpty);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MenuItem(
-          onTap: () {},
-          title: TKeys.productImage.tr,
-          color: theme.colorScheme.primary,
-          icon: Icons.image,
-          padding: EdgeInsets.zero,
-          iconSize: 20,
-          iconContainerSize: 40,
-          showChevron: false,
+        Row(
+          children: [
+            Container(
+              width: 8,
+              height: 30,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withValues(alpha:  0.5),
+                borderRadius: BorderRadius.circular(AppSize.r12),
+              ),
+            ),
+            8.width,
+            Text(
+              TKeys.productImage.tr,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: AppSize.f16,
+                color: Get.theme.textTheme.bodyLarge?.color,
+              ),
+            ),
+          ],
         ),
+
         AppSize.p12.height,
 
         hasImage
@@ -60,24 +73,40 @@ class ProductImageSection extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(AppSize.r16),
       child: Container(
-        height: 200, width: double.infinity,
+        height: 200,
+        width: double.infinity,
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+          color: theme.colorScheme.surfaceContainerHighest.withValues(
+            alpha: 0.3,
+          ),
           borderRadius: BorderRadius.circular(AppSize.r16),
-          border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.3), style: BorderStyle.solid),
+          border: Border.all(
+            color: theme.colorScheme.outline.withValues(alpha: 0.3),
+            style: BorderStyle.solid,
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.all(AppSize.p16),
-              decoration: BoxDecoration(color: theme.colorScheme.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
-              child: Icon(Icons.add_photo_alternate_rounded, size: 32, color: theme.colorScheme.primary),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.add_photo_alternate_rounded,
+                size: 32,
+                color: theme.colorScheme.primary,
+              ),
             ),
             AppSize.p12.height,
             Text(
               TKeys.uploadImage.tr,
-              style: TextStyle(color: theme.colorScheme.onSurfaceVariant, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: theme.colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -110,20 +139,26 @@ class ProductImageSection extends StatelessWidget {
           ),
 
           Positioned(
-            top: 10, right: 10,
+            top: 10,
+            right: 10,
             child: IconButtonWidget(
               icon: Icons.delete_outline_rounded,
               onTap: onTapRemove,
-              bgColor: Colors.red.withValues(alpha: 0.9), color: Colors.white, size: 20,
+              bgColor: Colors.red.withValues(alpha: 0.9),
+              color: Colors.white,
+              size: 20,
             ),
           ),
 
           Positioned(
-            top: 10, left: 10,
+            top: 10,
+            left: 10,
             child: IconButtonWidget(
               icon: Icons.edit_rounded,
               onTap: onTapPick,
-              bgColor: Colors.black.withValues(alpha: 0.6), color: Colors.white, size: 20,
+              bgColor: Colors.black.withValues(alpha: 0.6),
+              color: Colors.white,
+              size: 20,
             ),
           ),
         ],

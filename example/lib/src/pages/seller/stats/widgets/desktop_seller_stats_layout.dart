@@ -34,7 +34,6 @@ class DesktopSellerStatsLayout extends GetView<SellerStatsController> {
               padding: const EdgeInsets.all(24.0),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  int crossAxisCount = constraints.maxWidth > 1100 ? 3 : 2;
 
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

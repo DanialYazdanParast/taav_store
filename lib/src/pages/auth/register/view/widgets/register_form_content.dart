@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/utils/input/validation_util.dart';
 import 'package:taav_store/src/infrastructure/widgets/text/app_password_text_field.dart';
 import 'package:taav_store/src/infrastructure/widgets/text/app_text_field.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_input_label.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +29,7 @@ class RegisterFormContent extends GetView<RegisterController> {
             (isMobile ? 20 : 24).height,
 
             AuthInputLabel(
-              text: TKeys.username.tr,
+              text: LocaleKeys.username.tr,
               icon: Icons.person_outline_rounded,
               style: AuthInputLabelStyle.secondary,
             ),
@@ -39,8 +39,8 @@ class RegisterFormContent extends GetView<RegisterController> {
             AppTextField(
               controller: controller.usernameController,
               focusNode: controller.usernameFocus,
-              labelText: TKeys.username.tr,
-              hintText: TKeys.chooseUsername.tr,
+              labelText: LocaleKeys.username.tr,
+              hintText: LocaleKeys.chooseUsername.tr,
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) {
                 FocusScope.of(context).requestFocus(controller.passwordFocus);
@@ -51,7 +51,7 @@ class RegisterFormContent extends GetView<RegisterController> {
             (isMobile ? 16 : 20).height,
 
             AuthInputLabel(
-              text: TKeys.password.tr,
+              text: LocaleKeys.password.tr,
               icon: Icons.lock_outline_rounded,
               style: AuthInputLabelStyle.secondary,
             ),
@@ -61,8 +61,8 @@ class RegisterFormContent extends GetView<RegisterController> {
             AppPasswordTextField(
               controller: controller.passwordController,
               focusNode: controller.passwordFocus,
-              hintText: TKeys.minCharacters.tr,
-              labelText: TKeys.password.tr,
+              hintText: LocaleKeys.minCharacters.tr,
+              labelText: LocaleKeys.password.tr,
               showCriteria: true,
               validator: ValidationUtil().password,
               autoValidateMode: controller.avmRegister.value,
@@ -77,7 +77,7 @@ class RegisterFormContent extends GetView<RegisterController> {
             (isMobile ? 16 : 20).height,
 
             AuthInputLabel(
-              text: TKeys.confirmPassword.tr,
+              text: LocaleKeys.confirmPassword.tr,
               icon: Icons.lock_outline_rounded,
               style: AuthInputLabelStyle.secondary,
             ),
@@ -85,8 +85,8 @@ class RegisterFormContent extends GetView<RegisterController> {
             AppPasswordTextField(
               controller: controller.confirmPasswordController,
               focusNode: controller.confirmPasswordFocus,
-              hintText: TKeys.repeatPassword.tr,
-              labelText: TKeys.password.tr,
+              hintText: LocaleKeys.repeatPassword.tr,
+              labelText: LocaleKeys.password.tr,
               showCriteria: false,
               autoValidateMode: controller.avmRegister.value,
               validator:

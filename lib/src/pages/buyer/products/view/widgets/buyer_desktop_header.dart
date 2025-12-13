@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/dialog_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/text/app_search_field.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,7 +42,7 @@ class BuyerDesktopHeader extends GetView<BuyerProductsController> {
   Widget _buildSearchField() {
     return Expanded(
       child: AppSearchField(
-        hintText: TKeys.searchHint.tr,
+        hintText: LocaleKeys.searchHint.tr,
         controller: controller.searchController,
         borderRadius: AppSize.r12,
       ),

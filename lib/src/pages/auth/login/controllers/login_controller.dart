@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/services/auth_service.dart';
 import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -70,7 +70,7 @@ class LoginController extends GetxController {
         loginState.value = CurrentState.success;
 
         final successMessage =
-            '${TKeys.loginSuccess.tr} ${TKeys.welcomeMessage.tr} ${user.username}';
+            '${LocaleKeys.loginSuccess.tr} ${LocaleKeys.welcomeMessage.tr} ${user.username}';
         ToastUtil.show(successMessage, type: ToastType.success);
 
         authService.saveUserData(

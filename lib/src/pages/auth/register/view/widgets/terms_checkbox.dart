@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_checkbox.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,9 +36,9 @@ class TermsCheckbox extends StatelessWidget {
                   height: 1.5,
                 ),
                 children: [
-                  TextSpan(text: TKeys.acceptTermsText.tr),
+                  TextSpan(text: LocaleKeys.acceptTermsText.tr),
                   TextSpan(
-                    text: TKeys.termsAndConditions.tr,
+                    text: LocaleKeys.termsAndConditions.tr,
                     style: TextStyle(
                       color: theme.colorScheme.secondary,
                       fontWeight: FontWeight.w600,
@@ -46,7 +46,7 @@ class TermsCheckbox extends StatelessWidget {
                     recognizer:
                         TapGestureRecognizer()..onTap = onTermsTap ?? () {},
                   ),
-                  TextSpan(text: TKeys.acceptTermsSuffix.tr),
+                  TextSpan(text: LocaleKeys.acceptTermsSuffix.tr),
                 ],
               ),
             ),

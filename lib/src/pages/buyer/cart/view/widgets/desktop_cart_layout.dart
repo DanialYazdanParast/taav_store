@@ -6,7 +6,7 @@ import 'package:taav_store/src/infrastructure/widgets/Empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +27,7 @@ class DesktopCartLayout extends GetView<CartController> {
         } else if (controller.cartState.value == CurrentState.error) {
           return const Center(child: ErrorView());
         } else if (controller.cartItems.isEmpty) {
-          return Center(child: EmptyWidget(title: TKeys.cartEmpty.tr));
+          return Center(child: EmptyWidget(title: LocaleKeys.cartEmpty.tr));
         }
         return _buildCartContent(theme);
       }),
@@ -95,7 +95,7 @@ class DesktopCartLayout extends GetView<CartController> {
                 AppSize.p12.width,
                 Flexible(
                   child: Text(
-                    TKeys.cartTitle.tr,
+                    LocaleKeys.cartTitle.tr,
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -164,16 +164,16 @@ class DesktopCartLayout extends GetView<CartController> {
                 _buildSummaryRow(
                   theme,
                   icon: Icons.inventory_2_outlined,
-                  title: TKeys.itemsPrice.tr,
+                  title: LocaleKeys.itemsPrice.tr,
                   subtitle:
-                      "(${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? TKeys.items.tr : TKeys.item.tr})",
+                      "(${controller.totalCount.toString().toLocalizedDigit} ${controller.totalCount > 1 ? LocaleKeys.items.tr : LocaleKeys.item.tr})",
                   value: controller.totalOriginalPrice.toLocalizedPrice,
                 ),
                 if (controller.hasDiscount) ...[
                   AppSize.p16.height,
                   _buildDiscountRow(
                     theme,
-                    title: TKeys.yourSavings.tr,
+                    title: LocaleKeys.yourSavings.tr,
                     value: controller.totalProfit.toLocalizedPrice,
                   ),
                 ],
@@ -195,7 +195,7 @@ class DesktopCartLayout extends GetView<CartController> {
 
                 _buildTotalRow(
                   theme,
-                  title: TKeys.cartTotal.tr,
+                  title: LocaleKeys.cartTotal.tr,
                   value: controller.totalPayablePrice.toLocalizedPrice,
                 ),
               ],
@@ -212,7 +212,7 @@ class DesktopCartLayout extends GetView<CartController> {
             child: Obx(
               () =>
                   ButtonWidget(
-                    TKeys.confirmAndPay.tr,
+                    LocaleKeys.confirmAndPay.tr,
                     () => controller.checkout(),
 
                     isLoading:
@@ -250,7 +250,7 @@ class DesktopCartLayout extends GetView<CartController> {
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
               child: Text(
-                TKeys.orderSummary.tr,
+                LocaleKeys.orderSummary.tr,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -317,7 +317,7 @@ class DesktopCartLayout extends GetView<CartController> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              "$value ${TKeys.toman.tr}",
+              "$value ${LocaleKeys.toman.tr}",
               style: theme.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -384,7 +384,7 @@ class DesktopCartLayout extends GetView<CartController> {
                 children: [
                   AppSize.p8.width,
                   Text(
-                    "$value ${TKeys.toman.tr}",
+                    "$value ${LocaleKeys.toman.tr}",
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: Colors.green.shade700,
                       fontWeight: FontWeight.bold,
@@ -431,7 +431,7 @@ class DesktopCartLayout extends GetView<CartController> {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "$value ${TKeys.toman.tr}",
+                "$value ${LocaleKeys.toman.tr}",
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,

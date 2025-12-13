@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_form_card.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_link_text.dart';
@@ -46,8 +46,8 @@ class MobileRegisterLayout extends GetView<RegisterController> {
               child: Column(
                 children: [
                   AuthMobileHeader(
-                    title: TKeys.createAccount.tr,
-                    subtitle: TKeys.enterInfoToStart.tr,
+                    title: LocaleKeys.createAccount.tr,
+                    subtitle: LocaleKeys.enterInfoToStart.tr,
                   ),
 
                   AuthFormCard(
@@ -58,8 +58,8 @@ class MobileRegisterLayout extends GetView<RegisterController> {
                   20.height,
 
                   AuthLinkText(
-                    prefixText: TKeys.alreadyHaveAccount.tr,
-                    linkText: TKeys.signIn.tr,
+                    prefixText: LocaleKeys.alreadyHaveAccount.tr,
+                    linkText: LocaleKeys.signIn.tr,
                     onTap: () => Get.offNamed(AppRoutes.login),
                   ),
                   24.height,

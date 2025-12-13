@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -89,9 +89,9 @@ class SalesStatCardWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _StatInfoChip(
-                          label: TKeys.soldCount.tr,
+                          label: LocaleKeys.soldCount.tr,
                           value:
-                              "${stat.totalQuantitySold.toString().toLocalizedDigit} ${TKeys.countUnit.tr}",
+                              "${stat.totalQuantitySold.toString().toLocalizedDigit} ${LocaleKeys.countUnit.tr}",
                           theme: theme,
                           isDesktop: isDesktop,
                         ),
@@ -101,7 +101,7 @@ class SalesStatCardWidget extends StatelessWidget {
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            "${stat.totalRevenue.toLocalizedPrice} ${TKeys.currency.tr}",
+                            "${stat.totalRevenue.toLocalizedPrice} ${LocaleKeys.currency.tr}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
@@ -142,7 +142,7 @@ class SalesStatCardWidget extends StatelessWidget {
                   ),
                   4.width,
                   Text(
-                    TKeys.bestSeller.tr,
+                    LocaleKeys.bestSeller.tr,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: Colors.black87,
                       fontWeight: FontWeight.w900,

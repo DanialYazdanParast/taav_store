@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
 
 import 'package:flutter/material.dart';
@@ -30,9 +30,9 @@ class OrderDetailsSummaryCard extends StatelessWidget {
           _buildSummaryItem(
             theme,
             icon: Icons.inventory_2_outlined,
-            label: TKeys.items.tr,
+            label: LocaleKeys.items.tr,
             value:
-                '${order.items.length.toString().toLocalizedDigit} ${TKeys.item.tr}',
+                '${order.items.length.toString().toLocalizedDigit} ${LocaleKeys.item.tr}',
             color: theme.colorScheme.primary,
           ),
 
@@ -45,8 +45,9 @@ class OrderDetailsSummaryCard extends StatelessWidget {
           _buildSummaryItem(
             theme,
             icon: Icons.payments_outlined,
-            label: TKeys.totalPrice.tr,
-            value: "${order.totalPrice.toLocalizedPrice} ${TKeys.toman.tr}",
+            label: LocaleKeys.totalPrice.tr,
+            value:
+                "${order.totalPrice.toLocalizedPrice} ${LocaleKeys.toman.tr}",
             color: Colors.green,
           ),
         ],

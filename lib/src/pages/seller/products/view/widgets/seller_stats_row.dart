@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +21,7 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
             () => SellerStatItem(
               value: controller.products.length.toString(),
               state: controller.productsState.value,
-              label: TKeys.products.tr,
+              label: LocaleKeys.products.tr,
               icon: Icons.inventory_2_outlined,
               textColor: Colors.white,
               subColor: Colors.white70,
@@ -31,7 +31,7 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
           Obx(
             () => SellerStatItem(
               value: controller.totalSalesCount.value.toString(),
-              label: TKeys.sales.tr,
+              label: LocaleKeys.sales.tr,
               icon: Icons.shopping_cart_outlined,
               textColor: Colors.white,
               subColor: Colors.white70,
@@ -42,7 +42,7 @@ class SellerStatsRowMobile extends GetView<SellerProductsController> {
           Obx(
             () => SellerStatItem(
               value: controller.totalItemsInCart.toString(),
-              label: TKeys.inCartItems.tr,
+              label: LocaleKeys.inCartItems.tr,
               icon: Icons.shopping_bag_outlined,
               textColor: Colors.white,
               subColor: Colors.white70,

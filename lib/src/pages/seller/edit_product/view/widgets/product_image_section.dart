@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +45,7 @@ class ProductImageSection extends StatelessWidget {
             ),
             8.width,
             Text(
-              TKeys.productImage.tr,
+              LocaleKeys.productImage.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: AppSize.f16,
@@ -101,7 +101,7 @@ class ProductImageSection extends StatelessWidget {
             ),
             AppSize.p12.height,
             Text(
-              TKeys.uploadImage.tr,
+              LocaleKeys.uploadImage.tr,
               style: TextStyle(
                 color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w500,

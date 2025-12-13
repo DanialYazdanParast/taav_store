@@ -18,7 +18,7 @@ import 'package:taav_store/src/infrastructure/widgets/button/button_widget.dart'
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 
 class SellerAddAndEditDialogs {
   SellerAddAndEditDialogs._();
@@ -62,7 +62,7 @@ class SellerAddAndEditDialogs {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PopupTitleWidget(TKeys.tagManagement.tr),
+                  PopupTitleWidget(LocaleKeys.tagManagement.tr),
                   IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
@@ -80,7 +80,7 @@ class SellerAddAndEditDialogs {
                     Expanded(
                       child: AppSearchField(
                         controller: controller.tagSearchController,
-                        hintText: TKeys.searchTagHint.tr,
+                        hintText: LocaleKeys.searchTagHint.tr,
                         onChanged: controller.onTagSearchChanged,
                         prefixWidget: const Icon(Icons.search),
                       ),
@@ -128,7 +128,7 @@ class SellerAddAndEditDialogs {
                     if (controller.filteredTags.isEmpty) {
                       return Center(
                         child: Text(
-                          TKeys.tagNotFound.tr,
+                          LocaleKeys.tagNotFound.tr,
                           style: TextStyle(color: Get.theme.disabledColor),
                         ),
                       );
@@ -159,7 +159,7 @@ class SellerAddAndEditDialogs {
                         ),
                         AppSize.p8.height,
                         Text(
-                          TKeys.searchTagNamePrompt.tr,
+                          LocaleKeys.searchTagNamePrompt.tr,
                           style: TextStyle(color: Get.theme.disabledColor),
                         ),
                       ],
@@ -170,7 +170,7 @@ class SellerAddAndEditDialogs {
               AppSize.p12.height,
 
               ButtonWidget(
-                TKeys.confirmAndClose.tr,
+                LocaleKeys.confirmAndClose.tr,
                 () => Get.back(),
               ).material(),
             ],
@@ -230,7 +230,7 @@ class SellerAddAndEditDialogs {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PopupTitleWidget(TKeys.addNewColor.tr),
+                  PopupTitleWidget(LocaleKeys.addNewColor.tr),
                   IconButtonWidget(
                     icon: Icons.close,
                     onTap: () => Get.back(),
@@ -250,7 +250,7 @@ class SellerAddAndEditDialogs {
                       AppTextField(
                         controller: nameCtrl,
                         focusNode: nameFocus,
-                        hintText: TKeys.colorNameHint.tr,
+                        hintText: LocaleKeys.colorNameHint.tr,
                         prefixWidget: const Icon(Icons.format_color_text),
                       ),
                       const SizedBox(height: 16),
@@ -274,7 +274,7 @@ class SellerAddAndEditDialogs {
               Obx(
                 () =>
                     ButtonWidget(
-                      TKeys.confirmAndAdd.tr,
+                      LocaleKeys.confirmAndAdd.tr,
                       () {
                         nameFocus.unfocus();
                         if (nameCtrl.text.isNotEmpty) {
@@ -283,7 +283,7 @@ class SellerAddAndEditDialogs {
                           controller.addNewColor(nameCtrl.text, hexCode);
                         } else {
                           ToastUtil.show(
-                            TKeys.pleaseEnterColorNameWarning.tr,
+                            LocaleKeys.pleaseEnterColorNameWarning.tr,
                             type: ToastType.warning,
                           );
                         }
@@ -313,7 +313,7 @@ class SellerAddAndEditDialogs {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              PopupTitleWidget(TKeys.productImage.tr),
+              PopupTitleWidget(LocaleKeys.productImage.tr),
               IconButtonWidget(
                 icon: Icons.close,
                 onTap: () => Get.back(),
@@ -331,7 +331,7 @@ class SellerAddAndEditDialogs {
               Expanded(
                 child: _buildSourceOption(
                   icon: Icons.camera_alt_rounded,
-                  label: TKeys.cameraSource.tr,
+                  label: LocaleKeys.cameraSource.tr,
                   color: Colors.blueAccent,
                   onTap: () {
                     Get.back();
@@ -343,7 +343,7 @@ class SellerAddAndEditDialogs {
               Expanded(
                 child: _buildSourceOption(
                   icon: Icons.photo_library_rounded,
-                  label: TKeys.imageGallerySource.tr,
+                  label: LocaleKeys.imageGallerySource.tr,
                   color: Colors.purpleAccent,
                   onTap: () {
                     Get.back();

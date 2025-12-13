@@ -3,7 +3,7 @@ import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/auth/register/models/dto.dart';
 import 'package:taav_store/src/pages/auth/register/repository/register_repository.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,7 +57,7 @@ class RegisterController extends GetxController {
       return;
     }
     if (!acceptTerms.value) {
-      ToastUtil.show(TKeys.acceptTermsWarning.tr, type: ToastType.warning);
+      ToastUtil.show(LocaleKeys.acceptTermsWarning.tr, type: ToastType.warning);
       return;
     }
 
@@ -83,7 +83,10 @@ class RegisterController extends GetxController {
       (exists) {
         if (exists) {
           registerState.value = CurrentState.error;
-          ToastUtil.show(TKeys.usernameAlreadyExists.tr, type: ToastType.error);
+          ToastUtil.show(
+            LocaleKeys.usernameAlreadyExists.tr,
+            type: ToastType.error,
+          );
           return false;
         }
         return true;
@@ -107,7 +110,7 @@ class RegisterController extends GetxController {
       },
       (newUser) {
         final successMsg =
-            '${TKeys.registerSuccessMsg.tr} ${TKeys.loginToContinue.tr}';
+            '${LocaleKeys.registerSuccessMsg.tr} ${LocaleKeys.loginToContinue.tr}';
 
         registerState.value = CurrentState.success;
         ToastUtil.show(

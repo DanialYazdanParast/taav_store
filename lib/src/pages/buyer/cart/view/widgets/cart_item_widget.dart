@@ -4,13 +4,12 @@ import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_shimmer.dart';
 import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/models/cart_item_model.dart';
 import '../../controllers/cart_controller.dart';
-
 
 class CartItemWidget extends GetView<CartController> {
   final CartItemModel item;
@@ -74,7 +73,7 @@ class CartItemWidget extends GetView<CartController> {
         ),
         AppSize.p6.width,
         Text(
-          TKeys.selectedColor.tr,
+          LocaleKeys.selectedColor.tr,
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.disabledColor,
             fontSize: AppSize.f12,
@@ -104,7 +103,7 @@ class CartItemWidget extends GetView<CartController> {
                 ),
                 AppSize.p8.width,
                 Text(
-                  TKeys.toman.tr,
+                  LocaleKeys.toman.tr,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w400,
                     fontSize: AppSize.f12,

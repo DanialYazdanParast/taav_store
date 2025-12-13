@@ -1,7 +1,7 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +51,7 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
             ),
             AppSize.p8.width,
             Text(
-              TKeys.currency.tr,
+              LocaleKeys.currency.tr,
               style: TextStyle(color: Colors.white70, fontSize: AppSize.f12),
             ),
           ],
@@ -79,7 +79,7 @@ class SellerRevenueSection extends GetView<SellerProductsController> {
         ),
         AppSize.p4.width,
         Text(
-          TKeys.totalRevenue.tr,
+          LocaleKeys.totalRevenue.tr,
           style: TextStyle(color: Colors.white70, fontSize: AppSize.f14),
         ),
       ],

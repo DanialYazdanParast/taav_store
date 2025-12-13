@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/services/auth_service.dart';
 import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart'; // Import added
+import 'package:taav_store/generated/locales.g.dart'; // Import added
 import '../../../shared/models/order_model.dart';
 import '../repository/order_repository.dart';
 
@@ -31,7 +31,7 @@ class OrderHistoryController extends GetxController {
     result.fold(
       (failure) {
         orderState.value = CurrentState.error;
-        ToastUtil.show(TKeys.fetchOrdersError.tr, type: ToastType.error);
+        ToastUtil.show(LocaleKeys.fetchOrdersError.tr, type: ToastType.error);
       },
       (fetchedOrders) {
         fetchedOrders.sort((a, b) => b.date.compareTo(a.date));

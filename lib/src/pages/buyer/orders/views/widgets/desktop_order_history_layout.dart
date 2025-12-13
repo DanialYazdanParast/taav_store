@@ -3,9 +3,7 @@ import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/Empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:taav_store/src/pages/buyer/orders/controllers/order_history_controller.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
@@ -28,7 +26,7 @@ class DesktopOrderHistoryLayout extends GetView<OrderHistoryController> {
           return const Center(child: ErrorView());
         }
         if (controller.orders.isEmpty) {
-          return Center(child: EmptyWidget(title: TKeys.cartEmpty.tr));
+          return Center(child: EmptyWidget());
         }
 
         return _DesktopMasterDetailView(orders: controller.orders);

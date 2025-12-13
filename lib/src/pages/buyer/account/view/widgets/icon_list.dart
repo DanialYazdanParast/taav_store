@@ -2,7 +2,7 @@ import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 import 'package:taav_store/src/infrastructure/languages/localization_controller.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/theme/theme_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 
 import '../../../../shared/widgets/ui_components.dart' show MenuItem;
 import 'settings_dialogs.dart';
-
 
 class IconList extends StatelessWidget {
   final VoidCallback onLogout;
@@ -29,11 +28,11 @@ class IconList extends StatelessWidget {
         MenuItem(
           icon: Icons.language,
           color: theme.colorScheme.primary,
-          title: TKeys.appLanguage.tr,
+          title: LocaleKeys.appLanguage.tr,
           subtitle:
               locController.currentLocale.languageCode == 'fa'
-                  ? TKeys.farsi.tr
-                  : TKeys.english.tr,
+                  ? LocaleKeys.farsi.tr
+                  : LocaleKeys.english.tr,
           showChevron: showChevron,
           onTap: () => SettingsDialogs.showLanguage(locController),
         ),
@@ -41,8 +40,9 @@ class IconList extends StatelessWidget {
         MenuItem(
           icon: Icons.dark_mode_outlined,
           color: theme.colorScheme.primary,
-          title: TKeys.appTheme.tr,
-          subtitle: Get.isDarkMode ? TKeys.darkMode.tr : TKeys.lightMode.tr,
+          title: LocaleKeys.appTheme.tr,
+          subtitle:
+              Get.isDarkMode ? LocaleKeys.darkMode.tr : LocaleKeys.lightMode.tr,
           showChevron: showChevron,
           onTap: () => SettingsDialogs.showTheme(themeController),
         ),
@@ -50,11 +50,11 @@ class IconList extends StatelessWidget {
         MenuItem(
           icon: Icons.logout_rounded,
           color: Colors.redAccent,
-          title: TKeys.logout.tr,
+          title: LocaleKeys.logout.tr,
           subtitle:
               Responsive.isMobile
-                  ? TKeys.logoutDescMobile.tr
-                  : TKeys.logoutDescWeb.tr,
+                  ? LocaleKeys.logoutDescMobile.tr
+                  : LocaleKeys.logoutDescWeb.tr,
           isDestructive: true,
           showChevron: showChevron,
           onTap: () => SettingsDialogs.showLogout(onLogout),

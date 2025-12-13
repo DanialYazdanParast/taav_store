@@ -5,7 +5,7 @@ import 'package:taav_store/src/infrastructure/widgets/Empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/bottom_sheet.dart';
 import 'package:taav_store/src/infrastructure/widgets/custom_app_bar.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
@@ -21,7 +21,7 @@ class MobileOrderHistoryLayout extends GetView<OrderHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: TKeys.orderHistory.tr),
+      appBar: CustomAppBar(title: LocaleKeys.orderHistory.tr),
       body: Obx(() {
         if (controller.orderState.value == CurrentState.loading) {
           return const OrderHistoryLoading();
@@ -30,7 +30,7 @@ class MobileOrderHistoryLayout extends GetView<OrderHistoryController> {
           return const Center(child: ErrorView());
         }
         if (controller.orders.isEmpty) {
-          return Center(child: EmptyWidget(title: TKeys.cartEmpty.tr));
+          return Center(child: EmptyWidget());
         }
 
         return _MobileOrderListView(orders: controller.orders);

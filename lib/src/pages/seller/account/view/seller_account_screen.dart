@@ -1,4 +1,4 @@
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
@@ -92,8 +92,8 @@ class SellerDesktopLayout extends StatelessWidget {
                 child: MenuItem(
                   icon: Icons.bar_chart_rounded,
                   color: theme.colorScheme.primary,
-                  title: TKeys.productSalesStats.tr,
-                  subtitle: TKeys.viewBestSellers.tr,
+                  title: LocaleKeys.productSalesStats.tr,
+                  subtitle: LocaleKeys.viewBestSellers.tr,
                   showChevron: true,
                   onTap: () => Get.toNamed(AppRoutes.sellerStats),
                 ),

@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
@@ -22,7 +22,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(TKeys.productDetails.tr),
+        title: Text(LocaleKeys.productDetails.tr),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Get.offAllNamed(AppRoutes.buyerProducts),
@@ -113,7 +113,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
 
                           // توضیحات
                           Text(
-                            TKeys.productDescription.tr,
+                            LocaleKeys.productDescription.tr,
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

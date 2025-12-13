@@ -7,10 +7,8 @@ import 'package:taav_store/src/infrastructure/widgets/dialog_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
 import 'package:taav_store/src/infrastructure/languages/localization_controller.dart';
 import 'package:taav_store/src/infrastructure/theme/theme_controller.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/widgets/ui_components.dart';
-
-
 
 class SettingsDialogs {
   SettingsDialogs._();
@@ -37,10 +35,10 @@ class SettingsDialogs {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          PopupTitleWidget(TKeys.selectLanguage.tr),
+          PopupTitleWidget(LocaleKeys.selectLanguage.tr),
           AppSize.p24.height,
           SelectableOptionWidget(
-            title: TKeys.farsi.tr,
+            title: LocaleKeys.farsi.tr,
             isSelected: controller.currentLocale.languageCode == 'fa',
             onTap: () {
               controller.changeLocale(const Locale('fa', 'IR'));
@@ -49,7 +47,7 @@ class SettingsDialogs {
           ),
           AppSize.p12.height,
           SelectableOptionWidget(
-            title: TKeys.english.tr,
+            title: LocaleKeys.english.tr,
             isSelected: controller.currentLocale.languageCode == 'en',
             onTap: () {
               controller.changeLocale(const Locale('en', 'US'));
@@ -68,7 +66,7 @@ class SettingsDialogs {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          PopupTitleWidget(TKeys.appTheme.tr),
+          PopupTitleWidget(LocaleKeys.appTheme.tr),
           AppSize.p24.height,
           ..._themeOptions.map(
             (option) => Padding(
@@ -111,17 +109,17 @@ class SettingsDialogs {
             ),
           ),
           AppSize.p16.height,
-          PopupTitleWidget(TKeys.logout.tr),
+          PopupTitleWidget(LocaleKeys.logout.tr),
           AppSize.p8.height,
           Text(
-            TKeys.confirmLogoutMsg.tr,
+            LocaleKeys.confirmLogoutMsg.tr,
             textAlign: TextAlign.center,
             style: const TextStyle(color: Colors.grey),
           ),
           AppSize.p32.height,
           ActionButtonsWidget(
-            cancelText: TKeys.cancel.tr,
-            confirmText: TKeys.yesLogout.tr,
+            cancelText: LocaleKeys.cancel.tr,
+            confirmText: LocaleKeys.yesLogout.tr,
             onConfirm: onLogout,
             confirmColor: Colors.red,
           ),
@@ -133,17 +131,17 @@ class SettingsDialogs {
 
   static const List<Map<String, dynamic>> _themeOptions = [
     {
-      'title': TKeys.themeLightTitle,
+      'title': LocaleKeys.themeLightTitle,
       'icon': Icons.wb_sunny_rounded,
       'mode': ThemeMode.light,
     },
     {
-      'title': TKeys.themeDarkTitle,
+      'title': LocaleKeys.themeDarkTitle,
       'icon': Icons.nightlight_round,
       'mode': ThemeMode.dark,
     },
     {
-      'title': TKeys.systemMode,
+      'title': LocaleKeys.systemMode,
       'icon': Icons.settings_brightness_rounded,
       'mode': ThemeMode.system,
     },

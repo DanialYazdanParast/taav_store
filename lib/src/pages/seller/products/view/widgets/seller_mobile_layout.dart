@@ -5,7 +5,7 @@ import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/bottom_sheet.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/seller/main/controllers/main_seller_controller.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/animated_app_bar.dart';
@@ -87,7 +87,7 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                   isSearching: controller.isSearching,
                   searchController: controller.searchController,
                   searchFocusNode: controller.searchFocusNode,
-                  title: TKeys.sellerPanel.tr,
+                  title: LocaleKeys.sellerPanel.tr,
                   onFilterTap: () {
                     controller.initTempFilters();
 

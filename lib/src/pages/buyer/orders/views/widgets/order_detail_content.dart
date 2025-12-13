@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/divider_widget.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
 
 import 'order_details_summary_card.dart';
 import 'order_item_card.dart';
-
 
 class OrderDetailContent extends StatelessWidget {
   final OrderModel order;
@@ -73,7 +72,7 @@ class OrderDetailContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  TKeys.orderDetails.tr,
+                  LocaleKeys.orderDetails.tr,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color:
@@ -84,7 +83,7 @@ class OrderDetailContent extends StatelessWidget {
                 ),
                 if (!isDesktop) AppSize.p4.height,
                 Text(
-                  '${TKeys.orderNumber.tr} #${order.id.toString().toLocalizedDigit}',
+                  '${LocaleKeys.orderNumber.tr} #${order.id.toString().toLocalizedDigit}',
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -141,7 +140,7 @@ class OrderDetailContent extends StatelessWidget {
           AppSize.p12.width,
           Expanded(
             child: Text(
-              TKeys.orderItems.tr,
+              LocaleKeys.orderItems.tr,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

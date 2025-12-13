@@ -1,13 +1,12 @@
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_radio.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_input_label.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/register_controller.dart';
-
 
 class UserTypeSelector extends GetView<RegisterController> {
   const UserTypeSelector({super.key});
@@ -18,7 +17,7 @@ class UserTypeSelector extends GetView<RegisterController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AuthInputLabel(
-          text: TKeys.accountType.tr,
+          text: LocaleKeys.accountType.tr,
           icon: Icons.badge_outlined,
           style: AuthInputLabelStyle.secondary,
         ),
@@ -27,13 +26,13 @@ class UserTypeSelector extends GetView<RegisterController> {
           () => Row(
             children: [
               RadioOption(
-                title: TKeys.buyer.tr,
+                title: LocaleKeys.buyer.tr,
                 isSelected: controller.userType.value == UserType.buyer,
                 onTap: () => controller.userType.value = UserType.buyer,
               ),
               24.width,
               RadioOption(
-                title: TKeys.seller.tr,
+                title: LocaleKeys.seller.tr,
                 isSelected: controller.userType.value == UserType.seller,
                 onTap: () => controller.userType.value = UserType.seller,
               ),

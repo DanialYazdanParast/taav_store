@@ -1,5 +1,5 @@
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
@@ -46,7 +46,7 @@ class ProductAttributesSection extends StatelessWidget {
             ),
             8.width,
             Text(
-              TKeys.attributes.tr,
+              LocaleKeys.attributes.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: AppSize.f16,
@@ -58,7 +58,7 @@ class ProductAttributesSection extends StatelessWidget {
 
         AppSize.p16.height,
         Text(
-          TKeys.colors.tr,
+          LocaleKeys.colors.tr,
           style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
         ),
         AppSize.p8.height,
@@ -144,7 +144,7 @@ class ProductAttributesSection extends StatelessWidget {
 
         AppSize.p20.height,
         Text(
-          TKeys.tags.tr,
+          LocaleKeys.tags.tr,
           style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
         ),
         AppSize.p8.height,
@@ -223,7 +223,7 @@ class ProductAttributesSection extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        TKeys.add.tr,
+                        LocaleKeys.add.tr,
                         style: TextStyle(
                           color: theme.colorScheme.primary,
                           fontSize: 13,

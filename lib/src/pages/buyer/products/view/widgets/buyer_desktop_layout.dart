@@ -3,7 +3,7 @@ import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/empty_widget.dart';
 import 'package:taav_store/src/infrastructure/widgets/error_view.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/auth/auth_decorative_circle.dart';
 import 'package:flutter/material.dart';
@@ -171,7 +171,7 @@ class BuyerDesktopLayout extends GetView<BuyerProductsController> {
         Icon(Icons.inventory_2_outlined, color: primaryColor, size: 28),
         AppSize.p10.width,
         Text(
-          TKeys.shopProductList.tr,
+          LocaleKeys.shopProductList.tr,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),

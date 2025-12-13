@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:taav_store/src/infrastructure/services/metadata_service.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
@@ -259,7 +259,7 @@ class SellerProductsController extends GetxController {
         }
 
         ToastUtil.show(
-          TKeys.productDeletedSuccessfully.tr,
+          LocaleKeys.productDeletedSuccessfully.tr,
           type: ToastType.success,
         );
         if (Get.isDialogOpen == true) Get.back();

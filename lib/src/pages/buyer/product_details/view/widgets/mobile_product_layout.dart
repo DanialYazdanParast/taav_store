@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/buyer/main/controllers/main_buyer_controller.dart';
 import 'package:taav_store/src/pages/shared/widgets/header_sheet.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
@@ -154,7 +154,7 @@ class MobileProductLayout extends GetView<BuyerProductDetailsController> {
                   const SizedBox(height: AppSize.p24),
 
                   Text(
-                    TKeys.productDescription.tr,
+                    LocaleKeys.productDescription.tr,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

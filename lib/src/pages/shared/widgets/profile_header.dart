@@ -1,6 +1,6 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/widgets/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,7 +105,7 @@ class ProfileHeader extends StatelessWidget {
   Widget _buildUsername(ThemeData theme) {
     return Obx(
       () => Text(
-        username.value.isNotEmpty ? username.value : TKeys.guestUser.tr,
+        username.value.isNotEmpty ? username.value : LocaleKeys.guestUser.tr,
         style: theme.textTheme.headlineSmall?.copyWith(
           fontWeight: FontWeight.bold,
           color: theme.textTheme.titleLarge?.color,

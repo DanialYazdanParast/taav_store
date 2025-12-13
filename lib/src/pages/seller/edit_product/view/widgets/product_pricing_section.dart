@@ -1,7 +1,7 @@
 import 'package:taav_store/src/infrastructure/utils/formatters/number_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/text/app_text_field.dart';
@@ -37,7 +37,7 @@ class ProductPricingSection extends StatelessWidget {
             Expanded(
               flex: 2,
               child: AppTextField(
-                hintText: TKeys.priceTomanHint.tr,
+                hintText: LocaleKeys.priceTomanHint.tr,
                 controller: priceController,
                 keyboardType: TextInputType.number,
                 prefixWidget: const Icon(Icons.attach_money_rounded, size: 20),
@@ -45,8 +45,10 @@ class ProductPricingSection extends StatelessWidget {
                 counterText: '',
                 inputFormatters: [ThousandsFormatter()],
                 validator:
-                    (value) =>
-                        ValidationUtil().number(value, TKeys.priceLabel.tr),
+                    (value) => ValidationUtil().number(
+                      value,
+                      LocaleKeys.priceLabel.tr,
+                    ),
                 autoValidateMode: autoValidateMode,
                 focusNode: priceFocus,
                 textInputAction: TextInputAction.next,
@@ -58,7 +60,7 @@ class ProductPricingSection extends StatelessWidget {
             Expanded(
               flex: 1,
               child: AppTextField(
-                hintText: TKeys.quantity.tr,
+                hintText: LocaleKeys.quantity.tr,
                 controller: countController,
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
@@ -67,7 +69,7 @@ class ProductPricingSection extends StatelessWidget {
                 inputFormatters: [ThousandsFormatter()],
                 validator:
                     (value) =>
-                        ValidationUtil().number(value, TKeys.quantity.tr),
+                        ValidationUtil().number(value, LocaleKeys.quantity.tr),
                 autoValidateMode: autoValidateMode,
                 focusNode: countFocus,
                 textInputAction: TextInputAction.next,
@@ -79,7 +81,7 @@ class ProductPricingSection extends StatelessWidget {
         ),
         AppSize.p16.height,
         AppTextField(
-          hintText: TKeys.discountPriceHint.tr,
+          hintText: LocaleKeys.discountPriceHint.tr,
           controller: discountController,
           keyboardType: TextInputType.number,
           prefixWidget: const Icon(Icons.discount_outlined, size: 20),

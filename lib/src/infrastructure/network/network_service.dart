@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/commons/app_configs.dart';
 import 'package:taav_store/src/infrastructure/utils/toast_util.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -166,26 +166,25 @@ class NetworkService extends GetxService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return TKeys.timeoutMessage.tr;
+        return LocaleKeys.timeoutMessage.tr;
 
       case DioExceptionType.badResponse:
         return _parseResponseError(error.response);
 
       case DioExceptionType.cancel:
-        return TKeys.requestCancelled.tr;
+        return LocaleKeys.requestCancelled.tr;
 
       case DioExceptionType.connectionError:
-        return TKeys.checkInternetConnection.tr;
+        return LocaleKeys.checkInternetConnection.tr;
 
       case DioExceptionType.badCertificate:
-        return TKeys.badCertificate.tr;
+        return LocaleKeys.badCertificate.tr;
 
       case DioExceptionType.unknown:
-      default:
-        if (error.message != null && error.message!.contains('Exception')) {
-          return TKeys.unknownNetworkError.tr;
+      if (error.message != null && error.message!.contains('Exception')) {
+          return LocaleKeys.unknownNetworkError.tr;
         }
-        return error.message ?? TKeys.unexpectedError.tr;
+        return error.message ?? LocaleKeys.unexpectedError.tr;
     }
   }
 

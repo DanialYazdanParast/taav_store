@@ -6,7 +6,7 @@ import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
 import 'package:taav_store/src/infrastructure/widgets/app_shimmer.dart';
 import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
 import 'package:taav_store/src/infrastructure/widgets/responsive/responsive.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/buyer/products/controllers/buyer_products_controller.dart';
 import 'package:taav_store/src/pages/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,6 @@ class BuyerProductCard extends GetView<BuyerProductsController> {
 
     controller.initializeProductColor(product.id, product.colors);
 
-    final currentQty = controller.getTotalQuantityInCart(product.id);
 
     return Obx(() {
       final ProductModel updatedProduct = controller.products.firstWhere(
@@ -122,7 +121,8 @@ class _ProductImage extends StatelessWidget {
           top: AppSize.p6,
           left: AppSize.p6,
           child: _Badge(
-            text: '${product.quantity.toLocalizedPrice} ${TKeys.stock.tr} ',
+            text:
+                '${product.quantity.toLocalizedPrice} ${LocaleKeys.stock.tr} ',
             color: context.theme.colorScheme.primary,
           ),
         ),
@@ -235,7 +235,7 @@ class _PriceRow extends StatelessWidget {
               const SizedBox(width: 4),
 
               Text(
-                TKeys.currency.tr,
+                LocaleKeys.currency.tr,
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -345,7 +345,7 @@ class _AddToCartSection extends GetView<BuyerProductsController> {
                   controller.decreaseProductFromCart(product.id, selectedColor),
           showAddButton: currentQty == 0 || isOutOfStock,
           addButtonLabel:
-              isOutOfStock ? TKeys.outOfStock.tr : TKeys.addToCart.tr,
+              isOutOfStock ? LocaleKeys.outOfStock.tr : LocaleKeys.addToCart.tr,
           isDisabled: isOutOfStock,
           style: CountControlStyle(
             primaryColor: theme.colorScheme.primary,

@@ -1,7 +1,7 @@
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
-import 'package:taav_store/src/infrastructure/languages/translation_keys.dart';
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/shared/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +49,7 @@ class SelectableOrderCard extends StatelessWidget {
                       fit: BoxFit.scaleDown,
                       alignment: Alignment.centerRight,
                       child: Text(
-                        '${TKeys.order.tr} #${order.id.toString().toLocalizedDigit}',
+                        '${LocaleKeys.order.tr} #${order.id.toString().toLocalizedDigit}',
                         style: theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -81,7 +81,7 @@ class SelectableOrderCard extends StatelessWidget {
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            '${order.items.length.toString().toLocalizedDigit} ${TKeys.item.tr}',
+                            '${order.items.length.toString().toLocalizedDigit} ${LocaleKeys.item.tr}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                             ),
@@ -100,7 +100,7 @@ class SelectableOrderCard extends StatelessWidget {
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      TKeys.totalPrice.tr,
+                      LocaleKeys.totalPrice.tr,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -123,7 +123,7 @@ class SelectableOrderCard extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "${order.totalPrice.toLocalizedPrice} ${TKeys.toman.tr}",
+                          "${order.totalPrice.toLocalizedPrice} ${LocaleKeys.toman.tr}",
                           style: theme.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.green.shade700,

@@ -26,6 +26,16 @@ class CartController extends GetxController {
   void onInit() {
     super.onInit();
     loadCart();
+
+    ever(_authService.userId, (String? newId) {
+      if (newId != null && newId.isNotEmpty) {
+        cartItems.clear();
+        cartState.value = CurrentState.idle;
+        loadCart();
+      } else {
+        cartItems.clear();
+      }
+    });
   }
 
   Future<void> loadCart() async {

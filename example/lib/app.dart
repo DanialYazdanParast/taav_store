@@ -1,13 +1,12 @@
-import 'package:example/src/infoStructure/languages/translation_keys.dart';
+
+import 'package:taav_store/generated/locales.g.dart';
+import 'package:taav_store/src/infrastructure/languages/localization_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'src/infoStructure/languages/localization_controller.dart';
-import 'src/infoStructure/routes/app_pages.dart';
-import 'src/infoStructure/theme/app_theme.dart';
-import 'src/infoStructure/languages/app_translations.dart';
-import 'src/infoStructure/theme/theme_controller.dart';
+import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
+import 'package:taav_store/src/infrastructure/theme/app_theme.dart';
+import 'package:taav_store/src/infrastructure/theme/theme_controller.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,8 +15,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final langController = Get.find<LocalizationController>();
     final themeController = Get.find<ThemeController>();
+
     return GetMaterialApp(
-      title: TKeys.appTitle.tr,
+      title: LocaleKeys.appTitle.tr,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
@@ -25,7 +25,7 @@ class App extends StatelessWidget {
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
       unknownRoute: AppPages.unknownRoute,
-      translations: AppTranslations(),
+      translationsKeys: AppTranslation.translations,
       locale: langController.currentLocale,
       fallbackLocale: langController.fallbackLocale,
       supportedLocales: langController.supportedLocales,

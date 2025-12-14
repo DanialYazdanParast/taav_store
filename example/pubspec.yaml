@@ -39,20 +39,10 @@ dependencies:
       sdk: flutter
   flutter_web_plugins:
       sdk: flutter
-      
-  advanced_count_control:
-    git:
-      url: https://github.com/DanialYazdanParast/advanced_count_control.git
-      ref: main
 
-  cupertino_icons: ^1.0.8
 
   get: ^4.7.3
-  dio: ^5.9.0
-  either_dart: ^1.0.0
-  get_storage: ^2.1.1
-  flutter_colorpicker: ^1.1.0
-  image_picker: ^1.2.1
+
 
 dev_dependencies:
   flutter_test:
@@ -77,9 +67,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/png/
-    - pubspec.yaml
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

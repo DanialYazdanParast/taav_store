@@ -215,7 +215,7 @@ feature/
 │   └── widgets/      # کامپوننت‌های UI
 ```
 
-> **نکته مهم:** پوشه `src` از `example/lib/` به `lib/` منتقل شده و backend در `example/backend/` قرار دارد.
+> **نکته:** سرور با استفاده از `json-server` برای REST API و `multer` برای آپلود فایل پیاده‌سازی شده است.
 
 ---
 

@@ -1,5 +1,6 @@
 import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/routes/app_pages.dart';
+import 'package:taav_store/src/pages/seller/add_product/controllers/seller_add_controller.dart';
 import 'package:taav_store/src/pages/seller/add_product/view/seller_add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,6 +83,10 @@ class MainSellerController extends GetxController {
   }
 
   void goToAddProduct() {
+    if (Get.isRegistered<SellerAddProductController>()) {
+      final addController = Get.find<SellerAddProductController>();
+      addController.resetInitialState();
+    }
     Get.to(
       () => SellerAddScreen(),
       transition: Transition.downToUp,

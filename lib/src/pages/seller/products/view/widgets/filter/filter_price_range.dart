@@ -1,3 +1,4 @@
+import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/utils/formatters/number_formatter.dart';
 import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
@@ -34,21 +35,20 @@ class SellerFilterPriceRange extends StatelessWidget {
                   _label(
                     colors,
                     text,
-                    FormatUtil.currency(controller.tempPriceRange.value.start),
+                    controller.tempPriceRange.value.start.toLocalizedPrice,
                   ),
                   _label(
                     colors,
                     text,
-                    FormatUtil.currency(controller.tempPriceRange.value.end),
+                    controller.tempPriceRange.value.end.toLocalizedPrice,
                   ),
                 ],
               ),
               RangeSlider(
                 values: controller.tempPriceRange.value,
                 min: min,
-                max: max, // همیشه max واقعی رو بده
+                max: max,
                 onChanged: (values) {
-                  // اینجا یه محدودیت هوشمند اعمال کن
                   final newStart = values.start.clamp(min, max);
                   final newEnd = values.end.clamp(min, max);
                   controller.updateTempPriceRange(

@@ -69,6 +69,17 @@ class SellerProductsController extends GetxController {
     searchController = TextEditingController();
     searchFocusNode = FocusNode();
 
+    ever(_authService.userId, (String? newId) {
+      if (newId != null && newId.isNotEmpty) {
+        products.clear();
+        totalSalesCount.value = 0;
+        totalRevenueAmount.value = 0;
+        fetchProducts();
+        fetchTotalStats();
+        fetchInCartStats();
+      }
+    });
+
     searchController.addListener(() {
       query.value = searchController.text.trim().toLowerCase();
     });

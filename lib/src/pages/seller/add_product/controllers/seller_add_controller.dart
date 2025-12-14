@@ -16,6 +16,7 @@ import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:taav_store/src/pages/seller/products/controllers/seller_products_controller.dart';
 import 'package:taav_store/src/pages/shared/models/color_model.dart';
 import 'package:taav_store/src/pages/shared/models/tag_model.dart';
+import '../models/add_product_dto.dart';
 import '../repository/seller_add_repository.dart';
 
 class SellerAddProductController extends GetxController
@@ -94,13 +95,31 @@ class SellerAddProductController extends GetxController
     _initControllers();
     super.onInit();
     _syncWithMetadataService();
+    resetInitialState();
   }
 
   @override
   void onClose() {
     leftScrollController.dispose();
-    //  _disposeControllers();
+    _disposeControllers();
     super.onClose();
+  }
+
+  void resetInitialState() {
+
+    titleController.clear();
+    descController.clear();
+    countController.clear();
+    priceController.clear();
+    discountPriceController.clear();
+    tagSearchController.clear();
+    selectedImage.value = null;
+    selectedColor.clear();
+    selectedTagNames.clear();
+    filteredTags.clear();
+    tagQuery.value = '';
+    avmAdd.value = AutovalidateMode.disabled;
+    submitState.value = CurrentState.idle;
   }
 
   void _initControllers() {
@@ -119,21 +138,21 @@ class SellerAddProductController extends GetxController
     tagSearchFocusNode = FocusNode();
   }
 
-  // void _disposeControllers() {
-  //   titleController.dispose();
-  //   descController.dispose();
-  //   countController.dispose();
-  //   priceController.dispose();
-  //   discountPriceController.dispose();
-  //   tagSearchController.dispose();
-  //
-  //   titleFocus.dispose();
-  //   descFocus.dispose();
-  //   priceFocus.dispose();
-  //   countFocus.dispose();
-  //   discountFocus.dispose();
-  //   tagSearchFocusNode.dispose();
-  // }
+  void _disposeControllers() {
+    titleController.dispose();
+    descController.dispose();
+    countController.dispose();
+    priceController.dispose();
+    discountPriceController.dispose();
+    tagSearchController.dispose();
+
+    titleFocus.dispose();
+    descFocus.dispose();
+    priceFocus.dispose();
+    countFocus.dispose();
+    discountFocus.dispose();
+    tagSearchFocusNode.dispose();
+  }
 
   void _syncWithMetadataService() {
     try {
@@ -271,7 +290,6 @@ class SellerAddProductController extends GetxController
     }
   }
 
-  // ─── Submit Logic ────────────────────────
   Future<void> submitProduct(GlobalKey<FormState> formKey) async {
     if (submitState.value == CurrentState.loading) return;
 
@@ -302,28 +320,27 @@ class SellerAddProductController extends GetxController
               ? cleanPrice
               : discountPriceController.text.replaceAll(',', '');
 
-      final formData = dio.FormData.fromMap({
-        'title': titleController.text,
-        'description': descController.text,
-        'price': int.tryParse(cleanPrice) ?? 0,
-        'quantity': int.tryParse(cleanCount) ?? 0,
-        'discountPrice': int.tryParse(cleanDiscount) ?? 0,
-        'sellerId': _authService.userId.value,
-        'colors': jsonEncode(selectedColor),
-        'tags': jsonEncode(selectedTagNames),
-        'image':
-            kIsWeb
-                ? dio.MultipartFile.fromBytes(
-                  await selectedImage.value!.readAsBytes(),
-                  filename: selectedImage.value!.name,
-                )
-                : await dio.MultipartFile.fromFile(
-                  selectedImage.value!.path,
-                  filename: selectedImage.value!.name,
-                ),
-      });
+      String? base64Image;
+      if (selectedImage.value != null) {
+        final bytes = await selectedImage.value!.readAsBytes();
+        base64Image = base64Encode(bytes);
+      } else {
+        debugPrint('❌ No image selected');
+      }
 
-      final result = await addRepo.addProduct(formData);
+      final productDto = AddProductDto(
+        title: titleController.text,
+        description: descController.text,
+        price: int.tryParse(cleanPrice) ?? 0,
+        quantity: int.tryParse(cleanCount) ?? 0,
+        discountPrice: int.tryParse(cleanDiscount) ?? 0,
+        sellerId: _authService.userId.value,
+        colors: selectedColor,
+        tags: selectedTagNames,
+        image: base64Image,
+      );
+
+      final result = await addRepo.addProduct(productDto);
 
       result.fold(
         (failure) {
@@ -332,19 +349,21 @@ class SellerAddProductController extends GetxController
         },
         (newProduct) {
           submitState.value = CurrentState.success;
+
           ToastUtil.show(
             LocaleKeys.productAddedSuccessfully.tr,
             type: ToastType.success,
           );
 
           _updateMainListLocally(newProduct);
-
+          _resetForm(formKey);
           if (Responsive.isDesktop) {
-            _resetForm();
             if (Get.isRegistered<MainSellerController>()) {
               Get.find<MainSellerController>().changeTab(0);
             }
           } else {
+            _resetForm(formKey);
+
             Get.back();
           }
         },
@@ -353,14 +372,10 @@ class SellerAddProductController extends GetxController
       submitState.value = CurrentState.error;
       debugPrint("Submit Error: $e");
       ToastUtil.show(LocaleKeys.unexpectedError.tr, type: ToastType.error);
-    } finally {
-      if (submitState.value != CurrentState.success) {
-        submitState.value = CurrentState.idle;
-      }
     }
   }
 
-  void _resetForm() {
+  void _resetForm(GlobalKey<FormState> formKey) {
     titleController.clear();
     descController.clear();
     countController.clear();
@@ -372,8 +387,10 @@ class SellerAddProductController extends GetxController
     selectedTagNames.clear();
     filteredTags.clear();
     tagQuery.value = '';
-    // formKey.currentState?.reset();
-    // avmAdd.value = AutovalidateMode.disabled;
+    if (formKey.currentState != null) {
+      formKey.currentState!.reset();
+    }
+    avmAdd.value = AutovalidateMode.disabled;
     // submitState.value = CurrentState.idle;
   }
 

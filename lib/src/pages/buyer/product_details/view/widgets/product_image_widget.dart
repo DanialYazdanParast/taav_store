@@ -1,6 +1,7 @@
 import 'package:taav_store/src/infrastructure/enums/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
 
 import '../../controllers/buyer_product_details_controller.dart';
 
@@ -18,6 +19,8 @@ class ProductImageWidget extends GetView<BuyerProductDetailsController> {
 
   @override
   Widget build(BuildContext context) {
+    final double radiusValue = borderRadius?.topLeft.x ?? 0.0;
+
     return SizedBox(
       height: height,
       width: width,
@@ -26,21 +29,20 @@ class ProductImageWidget extends GetView<BuyerProductDetailsController> {
         final product = controller.product.value;
 
         if (isLoading || product == null) {
-          return Container(color: Colors.grey.withValues(alpha: 0.1));
+          return ClipRRect(
+            borderRadius: borderRadius ?? BorderRadius.zero,
+            child: Container(
+              color: Colors.grey.withValues(alpha: 0.1),
+            ),
+          );
         }
 
-        return ClipRRect(
-          borderRadius: borderRadius ?? BorderRadius.zero,
-          child: Image.network(
-            product.image,
-            fit: BoxFit.cover,
-            errorBuilder:
-                (_, __, ___) => const Icon(
-                  Icons.image_not_supported,
-                  color: Colors.grey,
-                  size: 50,
-                ),
-          ),
+        return TaavNetworkImage(
+          product.image,
+          height: height,
+          width: width,
+          borderRadius: radiusValue,
+          fit: BoxFit.cover,
         );
       }),
     );

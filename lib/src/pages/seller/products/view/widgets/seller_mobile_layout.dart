@@ -161,7 +161,6 @@ class SellerMobileLayout extends GetView<SellerProductsController> {
                         child: SingleChildScrollView(
                           controller: scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
-
                           child: EmptyWidget(),
                         ),
                       );

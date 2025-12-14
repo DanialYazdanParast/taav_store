@@ -17,6 +17,7 @@ import 'package:taav_store/src/pages/seller/products/controllers/seller_products
 import 'package:taav_store/src/pages/shared/models/color_model.dart';
 import 'package:taav_store/src/pages/shared/models/tag_model.dart';
 
+import '../models/edit_product_dto.dart';
 import '../repository/seller_edit_repository.dart';
 
 class SellerEditController extends GetxController with MixinDialogController {
@@ -326,19 +327,12 @@ class SellerEditController extends GetxController with MixinDialogController {
 
     if (!formKey.currentState!.validate()) {
       avmEdit.value = AutovalidateMode.always;
-      ToastUtil.show(
-        LocaleKeys.pleaseFixFormErrors.tr,
-        type: ToastType.warning,
-      );
+      ToastUtil.show(LocaleKeys.pleaseFixFormErrors.tr, type: ToastType.warning);
       return;
     }
 
-    if (selectedImage.value == null &&
-        (isImageDeleted.value || product?.image == null)) {
-      ToastUtil.show(
-        LocaleKeys.productImageRequired.tr,
-        type: ToastType.warning,
-      );
+    if (selectedImage.value == null && isImageDeleted.value) {
+      ToastUtil.show(LocaleKeys.productImageRequired.tr, type: ToastType.warning);
       return;
     }
 
@@ -347,45 +341,37 @@ class SellerEditController extends GetxController with MixinDialogController {
     try {
       final cleanPrice = priceController.text.replaceAll(',', '');
       final cleanCount = countController.text.replaceAll(',', '');
-      final cleanDiscount =
-          discountPriceController.text.trim().isEmpty
-              ? cleanPrice
-              : discountPriceController.text.replaceAll(',', '');
+      final cleanDiscount = discountPriceController.text.trim().isEmpty
+          ? cleanPrice
+          : discountPriceController.text.replaceAll(',', '');
 
-      final Map<String, dynamic> mapData = {
-        'title': titleController.text,
-        'description': descController.text,
-        'price': int.tryParse(cleanPrice) ?? 0,
-        'quantity': int.tryParse(cleanCount) ?? 0,
-        'discountPrice': int.tryParse(cleanDiscount) ?? 0,
-        'sellerId': _authService.userId.value,
-        'colors': jsonEncode(selectedColor),
-        'tags': jsonEncode(selectedTagNames),
-      };
-
+      String? base64Image;
       if (selectedImage.value != null) {
-        mapData['image'] =
-            kIsWeb
-                ? dio.MultipartFile.fromBytes(
-                  await selectedImage.value!.readAsBytes(),
-                  filename: selectedImage.value!.name,
-                )
-                : await dio.MultipartFile.fromFile(
-                  selectedImage.value!.path,
-                  filename: selectedImage.value!.name,
-                );
+        final bytes = await selectedImage.value!.readAsBytes();
+        base64Image = base64Encode(bytes);
       }
 
-      final formData = dio.FormData.fromMap(mapData);
+      final editDto = EditProductDto(
+        title: titleController.text,
+        description: descController.text,
+        price: int.tryParse(cleanPrice) ?? 0,
+        quantity: int.tryParse(cleanCount) ?? 0,
+        discountPrice: int.tryParse(cleanDiscount) ?? 0,
+        sellerId: _authService.userId.value,
+        colors: selectedColor,
+        tags: selectedTagNames,
+        image: base64Image,
+      );
 
-      final result = await editRepo.updateProduct(product!.id, formData);
+
+      final result = await editRepo.updateProduct(product!.id, editDto);
 
       result.fold(
-        (failure) {
+            (failure) {
           submitState.value = CurrentState.error;
           ToastUtil.show(failure.message, type: ToastType.error);
         },
-        (updatedProduct) {
+            (updatedProduct) {
           submitState.value = CurrentState.success;
           ToastUtil.show(
             LocaleKeys.productUpdatedSuccessfully.tr,
@@ -398,6 +384,7 @@ class SellerEditController extends GetxController with MixinDialogController {
       );
     } catch (e) {
       submitState.value = CurrentState.error;
+      debugPrint("Update Error: $e");
       ToastUtil.show(LocaleKeys.unexpectedError.tr, type: ToastType.error);
     } finally {
       if (submitState.value != CurrentState.success) {
@@ -415,8 +402,10 @@ class SellerEditController extends GetxController with MixinDialogController {
       if (index != -1) {
         productsController.products[index] = updatedProduct;
         productsController.products.refresh();
-        productsController.clearAllFilters();
+        productsController.recalculateAndResetFilters();
       }
     }
   }
 }
+
+

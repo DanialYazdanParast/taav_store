@@ -1,3 +1,4 @@
+import 'package:taav_store/generated/locales.g.dart';
 import 'package:taav_store/src/infrastructure/widgets/text/app_input_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -171,8 +172,8 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
             },
 
             inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\s')), // حذف اسپیس
-              // فقط حروف انگلیسی و اعداد و سیمبل‌ها
+              FilteringTextInputFormatter.deny(RegExp(r'\s')),
+
               FilteringTextInputFormatter.allow(
                 RegExp(r'[a-zA-Z0-9!@#\$%^&*(),.?":{}|<>]'),
               ),
@@ -235,13 +236,22 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildRequirementRow('حداقل ۸ کاراکتر', hasMinLength),
           _buildRequirementRow(
-            'حداقل یک حرف بزرگ و کوچک',
+              LocaleKeys.passwordRuleMinChars.tr,
+              hasMinLength
+          ),
+          _buildRequirementRow(
+            LocaleKeys.passwordRuleMixedCase.tr,
             hasLowercase && hasUppercase,
           ),
-          _buildRequirementRow('حداقل یک عدد', hasDigit),
-          _buildRequirementRow('کاراکتر ویژه (@ # \$ %)', hasSpecialChar),
+          _buildRequirementRow(
+              LocaleKeys.passwordRuleDigit.tr,
+              hasDigit
+          ),
+          _buildRequirementRow(
+              LocaleKeys.passwordRuleSpecial.tr,
+              hasSpecialChar
+          ),
         ],
       ),
     );

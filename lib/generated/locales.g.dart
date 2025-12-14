@@ -248,6 +248,10 @@ class LocaleKeys {
   static const notFoundDescription = 'notFoundDescription';
   static const backToHome = 'backToHome';
   static const maximum = 'maximum';
+  static const passwordRuleMinChars = 'passwordRuleMinChars';
+  static const passwordRuleMixedCase = 'passwordRuleMixedCase';
+  static const passwordRuleDigit = 'passwordRuleDigit';
+  static const passwordRuleSpecial = 'passwordRuleSpecial';
 }
 
 class Locales {
@@ -489,6 +493,10 @@ class Locales {
         'The URL you entered is incorrect or the page has been moved.',
     'backToHome': 'Back to Home',
     'maximum': 'Maximum',
+    'passwordRuleMinChars': 'At least 8 characters',
+    'passwordRuleMixedCase': 'Uppercase & Lowercase letters',
+    'passwordRuleDigit': 'At least one number',
+    'passwordRuleSpecial': 'Special character (@ # \$ %)',
   };
   static const fa_IR = {
     'appTitle': 'فروشگاه تاو',
@@ -730,5 +738,9 @@ class Locales {
     'notFoundDescription': 'آدرس وارد شده اشتباه است یا صفحه منتقل شده است.',
     'backToHome': 'بازگشت به صفحه اصلی',
     'maximum': 'حداکثر',
+    'passwordRuleMinChars': 'حداقل ۸ کاراکتر',
+    'passwordRuleMixedCase': 'حداقل یک حرف بزرگ و کوچک',
+    'passwordRuleDigit': 'حداقل یک عدد',
+    'passwordRuleSpecial': 'کاراکتر ویژه (@ # \$ %)',
   };
 }

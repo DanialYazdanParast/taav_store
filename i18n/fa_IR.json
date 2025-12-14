@@ -228,5 +228,9 @@
   "notFoundTitle": "صفحه مورد نظر یافت نشد",
   "notFoundDescription": "آدرس وارد شده اشتباه است یا صفحه منتقل شده است.",
   "backToHome": "بازگشت به صفحه اصلی",
-  "maximum": "حداکثر"
+  "maximum": "حداکثر",
+  "passwordRuleMinChars": "حداقل ۸ کاراکتر",
+  "passwordRuleMixedCase": "حداقل یک حرف بزرگ و کوچک",
+  "passwordRuleDigit": "حداقل یک عدد",
+  "passwordRuleSpecial": "کاراکتر ویژه (@ # $ %)"
 }

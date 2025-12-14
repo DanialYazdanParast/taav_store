@@ -24,22 +24,36 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+
+    // 👇 لاجیک هوشمند برای انتخاب عکس
+    String imageSource = '';
+    if (json['image'] != null && json['image'].toString().isNotEmpty) {
+      imageSource = json['image'];
+    } else if (json['imageBase64'] != null && json['imageBase64'].toString().isNotEmpty) {
+      imageSource = json['imageBase64'];
+    }
+
     return ProductModel(
       id: json['id'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
-      quantity: json['quantity'] ?? 0,
-      price: json['price'] ?? 0,
-      discountPrice: json['discountPrice'] ?? 0,
-      image: json['image'] ?? '',
+      quantity: _parseInt(json['quantity']),
+      price: _parseInt(json['price']),
+      discountPrice: _parseInt(json['discountPrice']),
+
+      image: imageSource, // 👈 اینجا مقدار نهایی را پاس میدهیم
+
       colors: List<String>.from(json['colors'] ?? []),
       tags: List<String>.from(json['tags'] ?? []),
       sellerId: json['sellerId'] ?? '',
     );
   }
 
-
-
+  static int _parseInt(dynamic value) {
+    if (value == null) return 0;
+    if (value is int) return value;
+    return int.tryParse(value.toString()) ?? 0;
+  }
 }
 extension ProductModelCopy on ProductModel {
   ProductModel copyWith({

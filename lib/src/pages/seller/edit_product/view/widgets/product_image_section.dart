@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taav_store/src/infrastructure/constants/app_size.dart';
 import 'package:taav_store/src/infrastructure/extensions/space_extension.dart';
+import 'package:taav_store/src/infrastructure/widgets/network_image.dart';
 import 'package:taav_store/src/pages/shared/widgets/icon_button_widget.dart';
 
 class ProductImageSection extends StatelessWidget {
@@ -54,9 +55,7 @@ class ProductImageSection extends StatelessWidget {
             ),
           ],
         ),
-
         AppSize.p12.height,
-
         hasImage
             ? _buildSelectedImage(theme)
             : _buildPlaceholder(theme, context),
@@ -114,54 +113,68 @@ class ProductImageSection extends StatelessWidget {
   }
 
   Widget _buildSelectedImage(ThemeData theme) {
-    ImageProvider imageProvider;
+    Widget imageWidget;
 
     if (selectedImage != null) {
-      if (kIsWeb) {
-        imageProvider = NetworkImage(selectedImage!.path);
-      } else {
-        imageProvider = FileImage(File(selectedImage!.path));
-      }
+      imageWidget =
+          kIsWeb
+              ? Image.network(
+                selectedImage!.path,
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              )
+              : Image.file(
+                File(selectedImage!.path),
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              );
+
+      imageWidget = ClipRRect(
+        borderRadius: BorderRadius.circular(AppSize.r16),
+        child: imageWidget,
+      );
+    } else if (existingImageUrl != null && existingImageUrl!.isNotEmpty) {
+      imageWidget = TaavNetworkImage(
+        existingImageUrl!,
+        height: 200,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        borderRadius: AppSize.r16,
+      );
     } else {
-      imageProvider = NetworkImage(existingImageUrl!);
+      imageWidget = const SizedBox();
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppSize.r16),
-      child: Stack(
-        children: [
-          Image(
-            image: imageProvider,
-            height: 200,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
+    return Stack(
+      children: [
+        imageWidget,
 
-          Positioned(
-            top: 10,
-            right: 10,
-            child: IconButtonWidget(
-              icon: Icons.delete_outline_rounded,
-              onTap: onTapRemove,
-              bgColor: Colors.red.withValues(alpha: 0.9),
-              color: Colors.white,
-              size: 20,
-            ),
+        Positioned(
+          top: 10,
+          right: 10,
+          child: IconButtonWidget(
+            icon: Icons.delete_outline_rounded,
+            onTap: onTapRemove,
+            bgColor: Colors.red.withValues(alpha: 0.9),
+            color: Colors.white,
+            size: 20,
           ),
+        ),
 
-          Positioned(
-            top: 10,
-            left: 10,
-            child: IconButtonWidget(
-              icon: Icons.edit_rounded,
-              onTap: onTapPick,
-              bgColor: Colors.black.withValues(alpha: 0.6),
-              color: Colors.white,
-              size: 20,
-            ),
+        Positioned(
+          top: 10,
+          left: 10,
+          child: IconButtonWidget(
+            icon: Icons.edit_rounded,
+            onTap: onTapPick,
+            bgColor: Colors.black.withValues(alpha: 0.6),
+            color: Colors.white,
+            size: 20,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

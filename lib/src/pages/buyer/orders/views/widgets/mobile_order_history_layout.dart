@@ -22,19 +22,21 @@ class MobileOrderHistoryLayout extends GetView<OrderHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: LocaleKeys.orderHistory.tr),
-      body: Obx(() {
-        if (controller.orderState.value == CurrentState.loading) {
-          return const OrderHistoryLoading();
-        }
-        if (controller.orderState.value == CurrentState.error) {
-          return const Center(child: ErrorView());
-        }
-        if (controller.orders.isEmpty) {
-          return Center(child: EmptyWidget());
-        }
-
-        return _MobileOrderListView(orders: controller.orders);
-      }),
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.orderState.value == CurrentState.loading) {
+            return const OrderHistoryLoading();
+          }
+          if (controller.orderState.value == CurrentState.error) {
+            return const Center(child: ErrorView());
+          }
+          if (controller.orders.isEmpty) {
+            return Center(child: EmptyWidget());
+          }
+        
+          return _MobileOrderListView(orders: controller.orders);
+        }),
+      ),
     );
   }
 }

@@ -16,34 +16,36 @@ class MobileSellerStatsLayout extends GetView<SellerStatsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: LocaleKeys.salesStatistics.tr),
-      body: Obx(() {
-        if (controller.pageState.value == CurrentState.loading) {
-          return Center(child: AppLoading.circular(size: 50));
-        }
-        if (controller.pageState.value == CurrentState.error) {
-          return ErrorView();
-        }
-        if (controller.salesStats.isEmpty) {
-          return EmptyWidget(title: LocaleKeys.noSalesYet.tr);
-        }
-
-        return RefreshIndicator(
-          onRefresh: () => controller.loadStats(),
-          child: ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemCount: controller.salesStats.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 16),
-            itemBuilder: (context, index) {
-              return SalesStatCardWidget(
-                stat: controller.salesStats[index],
-                isTopSeller: index == 0,
-                rank: index + 1,
-                isDesktop: false,
-              );
-            },
-          ),
-        );
-      }),
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.pageState.value == CurrentState.loading) {
+            return Center(child: AppLoading.circular(size: 50));
+          }
+          if (controller.pageState.value == CurrentState.error) {
+            return ErrorView();
+          }
+          if (controller.salesStats.isEmpty) {
+            return EmptyWidget(title: LocaleKeys.noSalesYet.tr);
+          }
+        
+          return RefreshIndicator(
+            onRefresh: () => controller.loadStats(),
+            child: ListView.separated(
+              padding: const EdgeInsets.all(16),
+              itemCount: controller.salesStats.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemBuilder: (context, index) {
+                return SalesStatCardWidget(
+                  stat: controller.salesStats[index],
+                  isTopSeller: index == 0,
+                  rank: index + 1,
+                  isDesktop: false,
+                );
+              },
+            ),
+          );
+        }),
+      ),
     );
   }
 }

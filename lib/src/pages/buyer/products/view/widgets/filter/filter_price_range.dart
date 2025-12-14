@@ -1,3 +1,4 @@
+import 'package:taav_store/src/infrastructure/extensions/ext.dart';
 import 'package:taav_store/src/infrastructure/utils/formatters/number_formatter.dart';
 import 'package:taav_store/generated/locales.g.dart';
 
@@ -35,8 +36,17 @@ class FilterPriceRange extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _label(colors, text, FormatUtil.currency(min)),
-                  _label(colors, text, FormatUtil.currency(safeMax)),
+                
+                  _label(
+                    colors,
+                    text,
+                    controller.tempPriceRange.value.start.toLocalizedPrice,
+                  ),
+                  _label(
+                    colors,
+                    text,
+                    controller.tempPriceRange.value.end.toLocalizedPrice,
+                  ),
                 ],
               ),
               SliderTheme(

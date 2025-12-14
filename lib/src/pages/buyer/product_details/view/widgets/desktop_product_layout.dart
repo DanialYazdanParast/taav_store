@@ -59,7 +59,7 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                       ),
                       padding: const EdgeInsets.all(24),
                       child: ProductImageWidget(
-                        height: 500, // ارتفاع ثابت برای زیبایی در وب
+                        height: 500,
                         width: double.infinity,
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -68,7 +68,6 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
 
                   const SizedBox(width: 40),
 
-                  // ─── ستون سمت راست: جزئیات و دکمه خرید ───
                   Expanded(
                     flex: 4,
                     child: SingleChildScrollView(
@@ -85,7 +84,6 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                             ),
                           const SizedBox(height: 12),
 
-                          // عنوان
                           Text(
                             product.title,
                             style: theme.textTheme.headlineMedium?.copyWith(
@@ -94,7 +92,6 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                           ),
                           const SizedBox(height: 32),
 
-                          // قیمت و دکمه خرید (که ویجت جدا کردیم)
                           Container(
                             padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
@@ -107,11 +104,9 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                           ),
                           const SizedBox(height: 32),
 
-                          // انتخاب رنگ
                           const ColorSelectorWidget(),
                           const SizedBox(height: 32),
 
-                          // توضیحات
                           Text(
                             LocaleKeys.productDescription.tr,
                             style: theme.textTheme.titleLarge?.copyWith(
@@ -153,7 +148,8 @@ class DesktopProductLayout extends GetView<BuyerProductDetailsController> {
                 final mainSellerController = Get.find<MainBuyerController>();
                 Get.back();
                 mainSellerController.changeTab(1);
-              }, // Get.toNamed('/cart');
+              },
+              // Get.toNamed('/cart');
               hasBorder: true,
               size: 20,
               color: theme.colorScheme.onSurface,

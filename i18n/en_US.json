@@ -228,5 +228,11 @@
   "notFoundTitle": "Page Not Found",
   "notFoundDescription": "The URL you entered is incorrect or the page has been moved.",
   "backToHome": "Back to Home",
-  "maximum": "Maximum"
+  "maximum": "Maximum",
+  "passwordRuleMinChars": "At least 8 characters",
+  "passwordRuleMixedCase": "Uppercase & Lowercase letters",
+  "passwordRuleDigit": "At least one number",
+  "passwordRuleSpecial": "Special character (@ # $ %)"
+
+
 }

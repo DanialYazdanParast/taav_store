@@ -79,39 +79,140 @@ View (UI) → Controller (Logic) → Repository (Data) → Service (API/Storage)
 
 ```
 taav_store/
-├── lib/                          # کتابخانه اصلی (خالی)
-│
-├── taav_store/                      # برنامه اصلی
-│   ├── lib/
-│   │   ├── main.dart
-│   │   └── src/
-│   │       ├── infrastructure/          # ابزارهای مشترک
-│   │       ├── infrastructure/    # پیکربندی اصلی
-│   │       └── pages/            # صفحات
+├── lib/                         # کتابخانه اصلی
+│   ├── taav_store.dart          # Entry point کتابخانه
+│   ├── generated/               # فایل‌های تولید شده
+│   │   └── locales.g.dart
 │   │
-│   └── pubspec.yaml              # وابستگی‌های taav_store
+│   └── src/                     # سورس اصلی (منتقل شده از example)
+│       ├── infrastructure/      # زیرساخت و پیکربندی
+│       │   ├── commons/         # تنظیمات کلی
+│       │   │   └── app_configs.dart
+│       │   ├── constants/       # ثابت‌ها
+│       │   │   ├── app_png.dart
+│       │   │   ├── app_size.dart
+│       │   │   └── storage_keys.dart
+│       │   ├── di/              # Dependency Injection
+│       │   │   └── service_locator.dart
+│       │   ├── enums/           # Enumerations
+│       │   ├── extensions/      # توابع کمکی
+│       │   ├── languages/       # چندزبانه
+│       │   │   └── localization_controller.dart
+│       │   ├── network/         # شبکه و API
+│       │   │   ├── base_repository.dart
+│       │   │   ├── failure.dart
+│       │   │   └── network_service.dart
+│       │   ├── routes/          # مسیریابی
+│       │   │   ├── app_pages.dart
+│       │   │   └── app_routes.dart
+│       │   ├── services/        # سرویس‌ها
+│       │   │   ├── app_info_service.dart
+│       │   │   ├── auth_service.dart
+│       │   │   ├── metadata_service.dart
+│       │   │   └── storage_service.dart
+│       │   ├── theme/           # تم و ظاهر
+│       │   │   ├── app_theme.dart
+│       │   │   ├── theme_controller.dart
+│       │   │   └── config/
+│       │   │       ├── app_colors.dart
+│       │   │       ├── app_color_scheme.dart
+│       │   │       └── app_text_theme.dart
+│       │   ├── utils/           # ابزارهای کمکی
+│       │   │   ├── toast_util.dart
+│       │   │   ├── formatters/
+│       │   │   │   └── number_formatter.dart
+│       │   │   └── input/
+│       │   │       ├── regex_util.dart
+│       │   │       └── validation_util.dart
+│       │   └── widgets/         # ویجت‌های مشترک
+│       │       ├── app_checkbox.dart
+│       │       ├── app_loading.dart
+│       │       ├── custom_app_bar.dart
+│       │       ├── dialog_widget.dart
+│       │       ├── network_image.dart
+│       │       ├── button/
+│       │       ├── responsive/
+│       │       └── text/
+│       │
+│       ├── pages/               # صفحات برنامه
+│       │   ├── auth/            # احراز هویت
+│       │   │   ├── login/
+│       │   │   │   ├── commons/
+│       │   │   │   │   └── login_binding.dart
+│       │   │   │   ├── controllers/
+│       │   │   │   │   └── login_controller.dart
+│       │   │   │   ├── repository/
+│       │   │   │   │   └── login_repository.dart
+│       │   │   │   └── view/
+│       │   │   │       ├── login_screen.dart
+│       │   │   │       └── widgets/
+│       │   │   └── register/
+│       │   │
+│       │   ├── buyer/           # پنل خریدار
+│       │   │   ├── account/
+│       │   │   ├── cart/
+│       │   │   ├── main/
+│       │   │   ├── orders/
+│       │   │   ├── products/
+│       │   │   └── product_details/
+│       │   │
+│       │   ├── seller/          # پنل فروشنده
+│       │   │   ├── account/
+│       │   │   ├── add_product/
+│       │   │   ├── edit_product/
+│       │   │   ├── main/
+│       │   │   ├── products/
+│       │   │   └── stats/
+│       │   │
+│       │   ├── shared/          # مشترک بین پنل‌ها
+│       │   │   ├── controllers/
+│       │   │   ├── models/
+│       │   │   ├── repositories/
+│       │   │   └── widgets/
+│       │   │
+│       │   ├── splash/          # صفحه اولیه
+│       │   └── not_found/       # صفحه 404
+│       │
+│       └── components/          # کامپوننت‌های قابل استفاده مجدد
 │
-├── backend/                      # سرور Mock API
-│   ├── server.js                 # سرور Node.js + Multer
-│   ├── db.json                   # دیتابیس JSON
-│   ├── package.json              # وابستگی‌ها
-│   ├── package-lock.json         
-│   └── public/
-│       └── images/               # تصاویر آپلود شده
+├── example/                     # برنامه نمونه
+│   ├── lib/
+│   │   ├── main.dart            # نقطه ورود برنامه
+│   │   └── app.dart             # تنظیمات اپلیکیشن
+│   │
+│   ├── backend/                 # سرور Mock API (داخل example)
+│   │   ├── server.js            # سرور Node.js + Multer
+│   │   ├── db.json              # دیتابیس JSON
+│   │   ├── package.json
+│   │   └── public/
+│   │       └── images/          # تصاویر آپلود شده
+│   │
+│   ├── web/                     # فایل‌های وب
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   └── icons/
+│   │
+│   ├── test/                    # تست‌های example
+│   └── pubspec.yaml             # وابستگی‌های example
 │
-├── test/                         # تست‌ها
-└── README.md                     # مستندات
+├── i18n/                        # فایل‌های ترجمه
+│   ├── en_US.json
+│   └── fa_IR.json
+│
+├── test/                        # تست‌های اصلی
+├── pubspec.yaml                 # وابستگی‌های اصلی
+└── README.md
 ```
 
-هر فیچر شامل:
+### ساختار هر فیچر:
 ```
 feature/
-├── infrastructure/          # Bindings
-├── controllers/      # منطق
-├── models/           # مدل‌ها
-├── repository/       # دسترسی به داده
-├── view/             # UI
-└── widgets/          # کامپوننت‌ها
+├── commons/          # Bindings (Dependency Injection)
+├── controllers/      # منطق کنترلر (Business Logic)
+├── models/           # مدل‌های داده (DTO)
+├── repository/       # دسترسی به داده (API Calls)
+├── view/             # رابط کاربری (UI)
+│   └── widgets/      # کامپوننت‌های UI
 ```
 
 > **نکته:** سرور با استفاده از `json-server` برای REST API و `multer` برای آپلود فایل پیاده‌سازی شده است.
@@ -202,7 +303,7 @@ AdvancedCountControl(
 #### کلون پروژه
 ```bash
 git clone https://github.com/DanialYazdanParast/taav_store.git
-cd taav_store/backend
+cd taav_store/example/backend
 ```
 
 #### نصب وابستگی‌ها
@@ -232,9 +333,9 @@ adb reverse tcp:3000 tcp:3000
 
 ### 2️⃣ راه‌اندازی Flutter App
 
-#### ورود به پوشه taav_store
+#### ورود به پوشه example
 ```bash
-cd ../taav_store
+cd ../  # برگشت به example/
 ```
 
 #### نصب وابستگی‌های Flutter
@@ -249,7 +350,7 @@ flutter run
 
 #### اجرای تست‌ها (از روت پروژه)
 ```bash
-cd ..
+cd ../../  # برگشت به taav_store/
 flutter test
 ```
 
@@ -434,6 +535,7 @@ adb reverse tcp:3000 tcp:3000
 
 ### خطای وابستگی‌های Flutter
 ```bash
+# از پوشه example
 flutter clean
 flutter pub get
 flutter run
